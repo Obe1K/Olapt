@@ -1,0 +1,177 @@
+## food | Еда и напитки
+comida | n f | food | еда
+refeição | n f pl=refeições | meal | приём пищи
+pequeno-almoço | n m | breakfast | завтрак | café da manhã
+almoço | n m | lunch | обед
+lanche | n m | snack, afternoon snack | перекус, полдник
+jantar | n m | dinner | ужин
+pão | n m pl=pães | bread | хлеб
+água | n f | water | вода
+leite | n m | milk | молоко
+café | n m | coffee | кофе
+chá | n m | tea | чай
+sumo | n m | juice | сок | suco
+vinho | n m | wine | вино
+vinho tinto | n m | red wine | красное вино
+vinho branco | n m | white wine | белое вино
+cerveja | n f | beer | пиво
+bebida | n f | drink | напиток
+sopa | n f | soup | суп
+arroz | n m | rice | рис
+massa | n f | pasta, dough | макароны, паста, тесто
+batata | n f | potato | картофель
+batatas fritas | n f | french fries, chips | картофель фри, чипсы
+carne | n f | meat | мясо
+frango | n m | chicken | курица
+porco | n m | pork, pig | свинина, свинья
+vaca | n f | beef, cow | говядина, корова
+peixe | n m | fish | рыба
+bacalhau | n m | cod | треска
+sardinha | n f | sardine | сардина
+camarão | n m pl=camarões | shrimp | креветка
+marisco | n m | seafood, shellfish | морепродукты
+polvo | n m | octopus | осьминог
+ovo | n m | egg | яйцо
+queijo | n m | cheese | сыр
+manteiga | n f | butter | сливочное масло
+azeite | n m | olive oil | оливковое масло
+sal | n m | salt | соль
+pimenta | n f | pepper | перец
+açúcar | n m | sugar | сахар
+mel | n m | honey | мёд
+fruta | n f | fruit | фрукт, фрукты
+maçã | n f | apple | яблоко
+laranja | n f | orange | апельсин
+banana | n f | banana | банан
+limão | n m pl=limões | lemon | лимон
+morango | n m | strawberry | клубника
+uva | n f | grape | виноград
+pera | n f | pear | груша
+melancia | n f | watermelon | арбуз
+ananás | n m | pineapple | ананас | abacaxi
+pêssego | n m | peach | персик
+tomate | n m | tomato | помидор
+cebola | n f | onion | лук
+alho | n m | garlic | чеснок
+cenoura | n f | carrot | морковь
+alface | n f | lettuce | салат (латук)
+pepino | n m | cucumber | огурец
+couve | n f | cabbage, kale | капуста
+feijão | n m pl=feijões | bean | фасоль
+legumes | n m | vegetables | овощи
+salada | n f | salad | салат
+sobremesa | n f | dessert | десерт
+bolo | n m | cake | торт, пирог
+pastel de nata | n m | custard tart | паштел-де-ната (заварное пирожное)
+gelado | n m | ice cream | мороженое | sorvete
+chocolate | n m | chocolate | шоколад
+iogurte | n m | yoghurt | йогурт
+presunto | n m | cured ham | ветчина, хамон
+chouriço | n m | chorizo sausage | колбаса чоризо
+sandes | n f | sandwich | бутерброд, сэндвич | sanduíche
+tosta mista | n f | toasted ham and cheese sandwich | горячий бутерброд с ветчиной и сыром
+hambúrguer | n m pl=hambúrgueres | hamburger | гамбургер
+pizza | n f | pizza | пицца
+molho | n m | sauce | соус
+bica | n f | espresso (Lisbon) | эспрессо (в Лиссабоне) | cafezinho | В Порту эспрессо называют «cimbalino».
+galão | n m | milky coffee in a glass | кофе с молоком в стакане
+fresco | adj f=fresca | fresh | свежий, прохладный
+vegetariano | adj f=vegetariana | vegetarian | вегетарианский
+fome | n f | hunger | голод
+sede | n f | thirst | жажда
+
+## restaurant | В ресторане и кафе
+restaurante | n m | restaurant | ресторан
+pastelaria | n f | pastry shop, café | кондитерская, кафе
+padaria | n f | bakery | пекарня
+mercado | n m | market | рынок
+supermercado | n m | supermarket | супермаркет
+talho | n m | butcher's shop | мясная лавка | açougue
+peixaria | n f | fishmonger | рыбная лавка
+mesa | n f | table | стол
+cadeira | n f | chair | стул
+ementa | n f | menu | меню | cardápio
+prato | n m | plate, dish | тарелка, блюдо
+copo | n m | glass | стакан, бокал
+garfo | n m | fork | вилка
+faca | n f | knife | нож
+colher | n f pl=colheres | spoon | ложка
+chávena | n f | cup | чашка | xícara
+guardanapo | n m | napkin | салфетка
+garrafa | n f | bottle | бутылка
+conta | n f | bill, account | счёт
+gorjeta | n f | tip | чаевые
+reserva | n f | reservation | бронь
+empregado de mesa | n m | waiter | официант | garçom
+prato do dia | n m | dish of the day | блюдо дня
+entrada | n f | starter, entrance | закуска, вход
+prato principal | n m | main course | основное блюдо
+cozinha | n f | kitchen, cuisine | кухня
+cozinheiro | n m f=cozinheira | cook | повар
+forno | n m | oven | духовка, печь
+panela | n f | pot | кастрюля
+tigela | n f | bowl | миска
+quente | adj | hot, warm | горячий, тёплый
+doce | adj | sweet | сладкий
+salgado | adj f=salgada | salty | солёный
+picante | adj | spicy | острый
+amargo | adj f=amarga | bitter | горький
+cru | adj f=crua | raw | сырой
+cozido | adj f=cozida | cooked, boiled | варёный
+frito | adj f=frita | fried | жареный
+grelhado | adj f=grelhada | grilled | жаренный на гриле
+assado | adj f=assada | roasted, baked | запечённый
+
+## home | Дом
+casa | n f | house, home | дом, жильё
+apartamento | n m | apartment | квартира
+quarto | n m | bedroom, room | спальня, комната
+sala | n f | living room, room | гостиная, зал
+casa de banho | n f | bathroom, toilet | ванная, туалет | banheiro
+cama | n f | bed | кровать
+sofá | n m | sofa | диван
+janela | n f | window | окно
+porta | n f | door | дверь
+parede | n f | wall | стена
+chão | n m | floor, ground | пол, земля
+teto | n m | ceiling | потолок
+telhado | n m | roof | крыша
+escada | n f | stairs | лестница
+elevador | n m | lift, elevator | лифт
+varanda | n f | balcony | балкон
+jardim | n m pl=jardins | garden | сад
+garagem | n f pl=garagens | garage | гараж
+chave | n f | key | ключ
+frigorífico | n m | fridge | холодильник | geladeira
+fogão | n m pl=fogões | cooker, stove | плита
+máquina de lavar | n f | washing machine | стиральная машина
+duche | n m | shower | душ | chuveiro
+banho | n m | bath | ванна, купание
+toalha | n f | towel | полотенце
+sabonete | n m | soap | мыло
+escova de dentes | n f | toothbrush | зубная щётка
+pasta de dentes | n f | toothpaste | зубная паста | creme dental
+espelho | n m | mirror | зеркало
+candeeiro | n m | lamp | лампа, светильник | luminária, abajur
+luz | n f pl=luzes | light | свет
+televisão | n f pl=televisões | television | телевидение, телевизор
+quadro | n m | picture, board | картина, доска
+tapete | n m | rug, carpet | ковёр
+cortina | n f | curtain | занавеска, штора
+almofada | n f | cushion, pillow | подушка (диванная)
+travesseiro | n m | pillow | подушка (для сна)
+lençol | n m pl=lençóis | sheet | простыня
+cobertor | n m | blanket | одеяло
+armário | n m | cupboard, wardrobe | шкаф
+gaveta | n f | drawer | выдвижной ящик
+prateleira | n f | shelf | полка
+lixo | n m | rubbish, trash | мусор
+vassoura | n f | broom | веник, метла
+aspirador | n m | vacuum cleaner | пылесос
+aluguer | n m | rent | аренда, прокат | aluguel
+renda | n f | rent (monthly) | арендная плата
+prédio | n m | building | здание, многоэтажный дом
+andar | n m | floor (of a building) | этаж
+rés-do-chão | n m | ground floor | первый этаж | térreo
+código postal | n m | postcode | почтовый индекс
+mudança | n f | move, change | переезд, перемена

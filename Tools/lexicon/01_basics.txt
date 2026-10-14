@@ -1,0 +1,217 @@
+# Формат строки:  pt | pos [род] [f=жен.форма] [pl=мн.число] | en | ru | br (бразильский вариант) | note (пояснение по-русски)
+# pos: n, v, adj, adv, prep, conj, pron, det, num, interj, phrase
+# Род существительных: m, f, mf (одна форма для обоих родов)
+# Орфография: Acordo Ortográfico (AO90), как в современной Португалии.
+
+## greetings | Приветствия и фразы
+olá | interj | hello, hi | привет, здравствуйте
+bom dia | phrase | good morning | доброе утро
+boa tarde | phrase | good afternoon | добрый день
+boa noite | phrase | good evening, good night | добрый вечер, спокойной ночи
+adeus | interj | goodbye | до свидания
+até logo | phrase | see you later | до скорого
+até amanhã | phrase | see you tomorrow | до завтра
+tchau | interj | bye | пока
+obrigado | interj | thank you (man speaking) | спасибо (говорит мужчина) | | Мужчина говорит «obrigado», женщина — «obrigada».
+obrigada | interj | thank you (woman speaking) | спасибо (говорит женщина)
+muito obrigado | phrase | thank you very much | большое спасибо
+de nada | phrase | you're welcome | не за что, пожалуйста (в ответ)
+por favor | phrase | please | пожалуйста (просьба)
+com licença | phrase | excuse me | разрешите, с вашего позволения
+desculpe | interj | sorry, excuse me | извините
+desculpa | interj | sorry (informal) | извини
+sim | adv | yes | да
+não | adv | no, not | нет, не
+talvez | adv | maybe, perhaps | может быть, возможно
+com certeza | phrase | certainly, for sure | конечно, наверняка
+claro que sim | phrase | of course | конечно да
+está bem | phrase | okay, all right | хорошо, ладно
+não faz mal | phrase | no problem, never mind | ничего страшного
+tudo bem | phrase | all good, okay | всё хорошо, всё в порядке
+como estás | phrase | how are you (informal) | как ты поживаешь
+como está | phrase | how are you (formal) | как вы поживаете
+bem, obrigado | phrase | fine, thank you | хорошо, спасибо
+muito prazer | phrase | nice to meet you | очень приятно
+chamo-me | phrase | my name is | меня зовут
+como se chama | phrase | what is your name (formal) | как вас зовут
+como te chamas | phrase | what is your name (informal) | как тебя зовут
+de onde é | phrase | where are you from (formal) | откуда вы
+sou de | phrase | I am from | я из
+não percebo | phrase | I don't understand | я не понимаю
+não sei | phrase | I don't know | я не знаю
+fala inglês | phrase | do you speak English | вы говорите по-английски
+não falo português | phrase | I don't speak Portuguese | я не говорю по-португальски
+pode repetir | phrase | can you repeat | вы можете повторить
+mais devagar, por favor | phrase | more slowly, please | помедленнее, пожалуйста
+como se diz | phrase | how do you say | как сказать
+o que quer dizer | phrase | what does it mean | что это значит
+quanto custa | phrase | how much does it cost | сколько стоит
+onde fica | phrase | where is (location) | где находится
+onde é a casa de banho | phrase | where is the toilet | где туалет
+a conta, por favor | phrase | the bill, please | счёт, пожалуйста
+bom apetite | phrase | enjoy your meal | приятного аппетита
+saúde | interj | cheers, bless you | будьте здоровы, за здоровье
+parabéns | interj | congratulations | поздравляю
+boa sorte | phrase | good luck | удачи
+boa viagem | phrase | have a good trip | счастливого пути
+bem-vindo | adj f=bem-vinda | welcome | добро пожаловать
+feliz Natal | phrase | merry Christmas | с Рождеством
+feliz aniversário | phrase | happy birthday | с днём рождения
+bom fim de semana | phrase | have a good weekend | хороших выходных
+tenho fome | phrase | I am hungry | я голоден
+tenho sede | phrase | I am thirsty | я хочу пить
+preciso de ajuda | phrase | I need help | мне нужна помощь
+socorro | interj | help | помогите
+que horas são | phrase | what time is it | который час
+estou perdido | phrase | I am lost | я заблудился
+
+## pronouns | Местоимения и вопросительные слова
+eu | pron | I | я
+tu | pron | you (informal) | ты | | В Португалии «tu» — обычное обращение к другу, ровеснику, ребёнку.
+ele | pron | he | он
+ela | pron | she | она
+você | pron | you (polite) | вы (вежливое) | | | В Португалии «você» может звучать холодно или фамильярно; вежливее обращаться по имени или в 3-м лице («o Pedro quer café?»).
+nós | pron | we | мы
+vocês | pron | you (plural) | вы (мн. число)
+eles | pron | they (masculine) | они (м.р.)
+elas | pron | they (feminine) | они (ж.р.)
+quem | pron | who | кто
+o que | pron | what | что
+que | conj | that, than | что, чем
+qual | pron | which, what | какой, который
+quais | pron | which (plural) | какие, которые
+quanto | pron | how much | сколько
+quantos | pron | how many | сколько (о счётных)
+onde | adv | where | где, куда
+quando | adv | when | когда
+como | adv | how, like | как
+porquê | adv | why (at the end of a sentence) | почему (в конце фразы)
+por que | adv | why | почему
+porque | conj | because | потому что
+aqui | adv | here | здесь, тут
+ali | adv | over there | там (вдали)
+lá | adv | there | там, туда
+cá | adv | here (toward the speaker) | сюда
+isto | pron | this (thing) | это (рядом со мной)
+isso | pron | that (thing) | это, то (рядом с собеседником)
+aquilo | pron | that (thing over there) | то (вдали)
+este | det f=esta | this | этот
+esse | det f=essa | that | тот (рядом с собеседником)
+aquele | det f=aquela | that (over there) | тот (вдали)
+meu | det f=minha | my | мой
+teu | det f=tua | your (informal) | твой
+seu | det f=sua | his, her, your (formal) | его, её, ваш
+nosso | det f=nossa | our | наш
+alguém | pron | someone | кто-то
+ninguém | pron | nobody | никто
+algo | pron | something | что-то
+nada | pron | nothing | ничего
+tudo | pron | everything | всё
+todos | pron | everyone, all | все
+cada | det | each, every | каждый
+outro | adj f=outra | other, another | другой, ещё один
+mesmo | adj f=mesma | same | тот же, самый
+próprio | adj f=própria | own | собственный
+
+## numbers | Числа
+zero | num | zero | ноль
+um | num f=uma | one | один
+dois | num f=duas | two | два
+três | num | three | три
+quatro | num | four | четыре
+cinco | num | five | пять
+seis | num | six | шесть
+sete | num | seven | семь
+oito | num | eight | восемь
+nove | num | nine | девять
+dez | num | ten | десять
+onze | num | eleven | одиннадцать
+doze | num | twelve | двенадцать
+treze | num | thirteen | тринадцать
+catorze | num | fourteen | четырнадцать | quatorze
+quinze | num | fifteen | пятнадцать
+dezasseis | num | sixteen | шестнадцать | dezesseis
+dezassete | num | seventeen | семнадцать | dezessete
+dezoito | num | eighteen | восемнадцать
+dezanove | num | nineteen | девятнадцать | dezenove
+vinte | num | twenty | двадцать
+trinta | num | thirty | тридцать
+quarenta | num | forty | сорок
+cinquenta | num | fifty | пятьдесят
+sessenta | num | sixty | шестьдесят
+setenta | num | seventy | семьдесят
+oitenta | num | eighty | восемьдесят
+noventa | num | ninety | девяносто
+cem | num | hundred | сто
+duzentos | num | two hundred | двести
+quinhentos | num | five hundred | пятьсот
+mil | num | thousand | тысяча
+milhão | n m pl=milhões | million | миллион
+primeiro | adj f=primeira | first | первый
+segundo | adj f=segunda | second | второй
+terceiro | adj f=terceira | third | третий
+último | adj f=última | last | последний
+metade | n f | half | половина
+dúzia | n f | dozen | дюжина
+número | n m | number | номер, число
+
+## time | Время, дни и месяцы
+tempo | n m | time, weather | время, погода
+dia | n m | day | день
+semana | n f | week | неделя
+fim de semana | n m | weekend | выходные
+mês | n m pl=meses | month | месяц
+ano | n m | year | год
+hora | n f | hour | час
+minuto | n m | minute | минута
+segundo | n m | second (time) | секунда
+manhã | n f | morning | утро
+tarde | n f | afternoon | вторая половина дня
+noite | n f | night, evening | ночь, вечер
+meio-dia | n m | noon | полдень
+meia-noite | n f | midnight | полночь
+hoje | adv | today | сегодня
+ontem | adv | yesterday | вчера
+amanhã | adv | tomorrow | завтра
+agora | adv | now | сейчас
+depois | adv | afterwards, later | потом, позже
+antes | adv | before | раньше, до
+cedo | adv | early | рано
+tarde | adv | late | поздно
+sempre | adv | always | всегда
+nunca | adv | never | никогда
+às vezes | adv | sometimes | иногда
+já | adv | already | уже
+ainda | adv | still, yet | ещё, всё ещё
+segunda-feira | n f | Monday | понедельник
+terça-feira | n f | Tuesday | вторник
+quarta-feira | n f | Wednesday | среда
+quinta-feira | n f | Thursday | четверг
+sexta-feira | n f | Friday | пятница
+sábado | n m | Saturday | суббота
+domingo | n m | Sunday | воскресенье
+janeiro | n m | January | январь
+fevereiro | n m | February | февраль
+março | n m | March | март
+abril | n m | April | апрель
+maio | n m | May | май
+junho | n m | June | июнь
+julho | n m | July | июль
+agosto | n m | August | август
+setembro | n m | September | сентябрь
+outubro | n m | October | октябрь
+novembro | n m | November | ноябрь
+dezembro | n m | December | декабрь
+primavera | n f | spring | весна
+verão | n m pl=verões | summer | лето
+outono | n m | autumn | осень
+inverno | n m | winter | зима
+data | n f | date | дата
+calendário | n m | calendar | календарь
+horário | n m | timetable, schedule | расписание, график
+relógio | n m | clock, watch | часы
+aniversário | n m | birthday, anniversary | день рождения, годовщина
+feriado | n m | public holiday | праздничный день
+férias | n f | holidays, vacation | отпуск, каникулы | | | Слово употребляется только во множественном числе: «as férias».
+hoje em dia | phrase | nowadays | в наши дни
+daqui a pouco | phrase | in a little while | через некоторое время

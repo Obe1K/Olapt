@@ -1,0 +1,107 @@
+## people | Люди и семья
+pessoa | n f | person | человек
+gente | n f | people | люди | | | «A gente» в разговорной речи означает «мы».
+homem | n m pl=homens | man | мужчина
+mulher | n f pl=mulheres | woman, wife | женщина, жена
+rapaz | n m pl=rapazes | boy, young man | парень, мальчик | garoto, moço
+rapariga | n f | girl, young woman | девушка, девочка | menina, garota | В Бразилии слово «rapariga» может звучать грубо — там говорят «menina», «garota», «moça».
+menino | n m | little boy | мальчик
+menina | n f | little girl | девочка
+criança | n f | child | ребёнок
+miúdo | n m f=miúda | kid | ребёнок, малыш (разг.) | criança, garoto
+bebé | n mf | baby | младенец, малыш | bebê
+jovem | n mf pl=jovens | young person | молодой человек
+adulto | n m f=adulta | adult | взрослый
+idoso | n m f=idosa | elderly person | пожилой человек
+senhor | n m pl=senhores | gentleman, sir, Mr. | господин, сеньор
+senhora | n f | lady, madam, Mrs. | госпожа, сеньора
+família | n f | family | семья
+pais | n m | parents | родители | | | Слово «pais» во множественном числе означает «родители»: «os meus pais».
+pai | n m | father | отец, папа
+mãe | n f | mother | мать, мама
+filho | n m | son | сын
+filha | n f | daughter | дочь
+irmão | n m pl=irmãos | brother | брат
+irmã | n f | sister | сестра
+avô | n m | grandfather | дедушка
+avó | n f | grandmother | бабушка
+neto | n m f=neta | grandchild | внук, внучка
+tio | n m | uncle | дядя
+tia | n f | aunt | тётя
+primo | n m f=prima | cousin | двоюродный брат, двоюродная сестра
+sobrinho | n m f=sobrinha | nephew, niece | племянник, племянница
+marido | n m | husband | муж
+esposa | n f | wife | жена, супруга
+namorado | n m f=namorada | boyfriend, girlfriend | парень, девушка (в отношениях)
+genro | n m | son-in-law | зять
+nora | n f | daughter-in-law | невестка
+sogro | n m f=sogra | father-in-law, mother-in-law | тесть, свекор, тёща, свекровь
+cunhado | n m f=cunhada | brother-in-law, sister-in-law | шурин, зять, золовка, свояченица
+amigo | n m f=amiga | friend | друг, подруга
+colega | n mf | colleague | коллега
+vizinho | n m f=vizinha | neighbour | сосед, соседка
+convidado | n m f=convidada | guest | гость
+estrangeiro | n m f=estrangeira | foreigner | иностранец
+cidadão | n m pl=cidadãos | citizen | гражданин
+casal | n m pl=casais | couple | пара, супруги
+nome | n m | name | имя, название
+apelido | n m | surname | фамилия | sobrenome | В Бразилии «apelido» означает «прозвище».
+idade | n f | age | возраст
+morada | n f | address | адрес | endereço
+
+## body | Тело и здоровье
+corpo | n m | body | тело
+cabeça | n f | head | голова
+cara | n f | face | лицо
+rosto | n m | face | лицо
+olho | n m | eye | глаз
+nariz | n m | nose | нос
+boca | n f | mouth | рот
+orelha | n f | ear | ухо
+cabelo | n m | hair | волосы
+dente | n m | tooth | зуб
+língua | n f | tongue, language | язык
+pescoço | n m | neck | шея
+ombro | n m | shoulder | плечо
+braço | n m | arm | рука (от плеча до кисти)
+mão | n f pl=mãos | hand | рука (кисть)
+dedo | n m | finger | палец
+peito | n m | chest | грудь
+costas | n f | back | спина
+barriga | n f | belly, stomach | живот
+perna | n f | leg | нога
+joelho | n m | knee | колено
+pé | n m | foot | ступня, нога
+coração | n m pl=corações | heart | сердце
+sangue | n m | blood | кровь
+pele | n f | skin | кожа
+osso | n m | bone | кость
+voz | n f pl=vozes | voice | голос
+saúde | n f | health | здоровье
+doença | n f | illness, disease | болезнь
+médico | n m f=médica | doctor | врач
+enfermeiro | n m f=enfermeira | nurse | медбрат, медсестра
+dentista | n mf | dentist | стоматолог
+hospital | n m pl=hospitais | hospital | больница
+farmácia | n f | pharmacy | аптека
+dor | n f pl=dores | pain | боль
+febre | n f | fever | температура, лихорадка
+constipação | n f pl=constipações | cold | простуда | resfriado
+gripe | n f | flu | грипп
+tosse | n f | cough | кашель
+alergia | n f | allergy | аллергия
+medicamento | n m | medicine | лекарство | remédio
+comprimido | n m | pill, tablet | таблетка
+receita | n f | prescription, recipe | рецепт
+consulta | n f | appointment, consultation | приём, консультация
+ambulância | n f | ambulance | скорая помощь
+urgência | n f | emergency room | неотложная помощь | pronto-socorro
+seguro de saúde | n m | health insurance | медицинская страховка
+dor de cabeça | n f | headache | головная боль
+dor de dentes | n f | toothache | зубная боль
+dor de barriga | n f | stomachache | боль в животе
+doente | adj | sick, ill | больной
+saudável | adj | healthy | здоровый
+ferido | adj f=ferida | injured | раненый
+cansaço | n m | tiredness | усталость
+sono | n m | sleep, sleepiness | сон, сонливость
