@@ -1,0 +1,91 @@
+name: UI tests and screenshots
+
+on:
+  workflow_dispatch:
+
+jobs:
+  ui:
+    runs-on: macos-26
+    timeout-minutes: 60
+    steps:
+      - name: Получить код
+        uses: actions/checkout@v4
+
+      - name: Выбрать Xcode 26
+        run: |
+          XC=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          if [ -z "$XC" ]; then
+            echo "Xcode 26 не найден"
+            exit 1
+          fi
+          sudo xcode-select -s "$XC/Contents/Developer"
+          xcodebuild -version
+
+      - name: Собрать приложение
+        run: |
+          set -o pipefail
+          xcodebuild build \
+            -project OlaPT.xcodeproj \
+            -scheme OlaPT \
+            -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tail -n 40
+
+      - name: Подготовить симулятор и установить приложение
+        run: |
+          UDID=$(python3 UITests/pick_simulator.py)
+          echo "UDID=$UDID" >> "$GITHUB_ENV"
+          xcrun simctl boot "$UDID"
+          xcrun simctl bootstatus "$UDID" -b
+          APP=$(find build/Build/Products -maxdepth 2 -name "OlaPT.app" | head -1)
+          xcrun simctl install "$UDID" "$APP"
+          xcrun simctl listapps "$UDID" | grep -i olapt || true
+
+      - name: Создать проект тестов (XcodeGen)
+        run: |
+          brew install xcodegen
+          cd UITests
+          xcodegen generate
+
+      - name: Запустить автотесты
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project UITests/OlaPTUITests.xcodeproj \
+            -scheme OlaPTUITests \
+            -destination "id=$UDID" \
+            -derivedDataPath uibuild \
+            -resultBundlePath result.xcresult \
+            CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tee uitests.log
+
+      - name: Достать скриншоты
+        if: always()
+        run: |
+          xcrun xcresulttool export attachments --path result.xcresult --output-path shots || true
+          python3 UITests/rename_shots.py shots shots_named || true
+          ls shots_named | head -80 || true
+
+      - name: Сводка
+        if: always()
+        run: |
+          {
+            echo "### Результат автотестов"
+            echo '```'
+            grep -E "Test Case .* (passed|failed)|error:|STEP .*FAILED" uitests.log | sort -u | head -80 || true
+            echo '```'
+            echo "Скриншотов: $(ls shots_named 2>/dev/null | grep -c png || true)"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Сохранить результаты
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-results
+          path: |
+            shots_named
+            uitests.log
+          if-no-files-found: ignore
