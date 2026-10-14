@@ -68,6 +68,10 @@ final class ScreenshotTests: XCTestCase {
     }
 
     private func clear(_ field: XCUIElement, count: Int) {
+        // После скрытия клавиатуры у поля нет фокуса — сначала касаемся его.
+        if field.waitForExistence(timeout: 4) {
+            field.tap()
+        }
         let deletes = String(repeating: XCUIKeyboardKey.delete.rawValue, count: count)
         field.typeText(deletes)
     }
