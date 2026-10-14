@@ -1,0 +1,83 @@
+name: Build
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-26
+    timeout-minutes: 40
+    steps:
+      - name: Получить код
+        uses: actions/checkout@v4
+
+      - name: Выбрать Xcode 26
+        run: |
+          XC=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          if [ -z "$XC" ]; then
+            echo "Xcode 26 не найден. Установлены:"
+            ls /Applications | grep -i xcode || true
+            exit 1
+          fi
+          sudo xcode-select -s "$XC/Contents/Developer"
+          xcodebuild -version
+
+      - name: Сборка (проверка компиляции)
+        run: |
+          set -o pipefail
+          xcodebuild build \
+            -project OlaPT.xcodeproj \
+            -scheme OlaPT \
+            -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tee build.log
+
+      - name: Показать ошибки в сводке
+        if: always()
+        run: |
+          {
+            echo "### Ошибки и предупреждения компилятора"
+            echo '```'
+            grep -E "error:|warning:" build.log | sort -u | head -80 || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Запустить в симуляторе и сделать скриншот
+        continue-on-error: true
+        run: |
+          APP=$(find build/Build/Products -maxdepth 2 -name "OlaPT.app" | head -1)
+          echo "App: $APP"
+          UDID=$(python3 - <<'PY'
+          import json, subprocess
+          out = subprocess.check_output(["xcrun", "simctl", "list", "devices", "available", "-j"])
+          data = json.loads(out)["devices"]
+          best = None
+          for runtime in sorted(data.keys()):
+              if "iOS" not in runtime:
+                  continue
+              for d in data[runtime]:
+                  if d["name"].startswith("iPhone") and "Pro" in d["name"]:
+                      best = d["udid"]
+          print(best or "")
+          PY
+          )
+          echo "Simulator: $UDID"
+          xcrun simctl boot "$UDID"
+          xcrun simctl bootstatus "$UDID" -b
+          xcrun simctl install "$UDID" "$APP"
+          xcrun simctl launch "$UDID" com.example.olapt
+          sleep 8
+          xcrun simctl io "$UDID" screenshot screenshot-launch.png
+
+      - name: Сохранить лог и скриншот
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-results
+          path: |
+            build.log
+            screenshot-launch.png
+          if-no-files-found: ignore
