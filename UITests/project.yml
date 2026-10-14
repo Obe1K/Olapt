@@ -1,0 +1,41 @@
+# Проект для автотестов. Генерируется на сборочной машине программой XcodeGen (xcodegen generate).
+# Тесты запускают уже установленное приложение Olá PT по его Bundle ID; сами исходники приложения здесь не нужны.
+name: OlaPTUITests
+options:
+  deploymentTarget:
+    iOS: "16.0"
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    GENERATE_INFOPLIST_FILE: YES
+    CODE_SIGNING_ALLOWED: NO
+targets:
+  Host:
+    type: application
+    platform: iOS
+    sources:
+      - Host
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.olapt.uitesthost
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+  OlaPTUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - Tests
+    dependencies:
+      - target: Host
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.olapt.uitests
+        TEST_TARGET_NAME: Host
+schemes:
+  OlaPTUITests:
+    build:
+      targets:
+        Host: all
+        OlaPTUITests: all
+    test:
+      targets:
+        - OlaPTUITests
