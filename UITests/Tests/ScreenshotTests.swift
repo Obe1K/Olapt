@@ -91,6 +91,19 @@ final class ScreenshotTests: XCTestCase {
         }
     }
 
+    /// Скрывает клавиатуру нажатием клавиши «Найти»/«Готово» (поиск остаётся активным).
+    private func dismissKeyboard() {
+        for label in ["Найти", "Search", "search", "Готово", "Done", "return"] {
+            let key = app.keyboards.buttons[label]
+            if key.exists {
+                key.tap()
+                note("keyboard dismissed via " + label)
+                return
+            }
+        }
+        note("keyboard: no dismiss key found")
+    }
+
     private func scrollUntilVisible(_ element: XCUIElement, maxSwipes: Int = 6) {
         var swipes = 0
         while !(element.exists && element.isHittable) && swipes < maxSwipes {
@@ -118,29 +131,44 @@ final class ScreenshotTests: XCTestCase {
 
         let field = app.searchFields.firstMatch
         typeInto(field, "casa", "search field")
+        dismissKeyboard()
         shot("02_search_casa")
 
         // Другие запросы: английский и форма глагола.
         clear(field, count: 4)
         typeInto(field, "house", "search field")
+        dismissKeyboard()
         shot("03_search_house")
         clear(field, count: 5)
         typeInto(field, "falamos", "search field")
+        dismissKeyboard()
         shot("04_search_verb_form")
         clear(field, count: 7)
         typeInto(field, "casa", "search field")
+        dismissKeyboard()
 
-        tap(app.cells.element(boundBy: 0), "first search result")
+        tap(app.staticTexts["a casa"].firstMatch, "result: a casa")
         shot("05_word_card")
+        app.swipeUp()
+        shot("06_word_card_bottom")
 
         let save = app.buttons["Сохранить в коллекцию"]
         scrollUntilVisible(save)
         if tap(save, "save to collection") {
-            shot("06_collection_picker")
+            shot("07_collection_picker")
             typeInto(app.textFields["Название"], "Моя первая коллекция", "collection name field")
+            shot("08_collection_name_typed")
             tap(app.buttons["Создать и добавить"], "create and add")
-            shot("07_card_after_save")
+            shot("09_card_after_save")
         }
+
+        // Карточка глагола со ссылкой на спряжение.
+        back()
+        clear(field, count: 4)
+        typeInto(field, "falar", "search field")
+        dismissKeyboard()
+        tap(app.staticTexts["falar"].firstMatch, "result: falar")
+        shot("09b_verb_card")
     }
 
     func testB_CollectionsAndExercises() {
@@ -214,8 +242,11 @@ final class ScreenshotTests: XCTestCase {
         shot("36_verb_feedback")
         tap(app.buttons["Закрыть"], "close verb trainer")
 
-        tap(app.segmentedControls.buttons["Написать форму"], "mode: typing")
+        let typingMode = app.segmentedControls.buttons["Написать форму"]
+        scrollUntilVisible(typingMode)
+        tap(typingMode, "mode: typing")
         tap(app.buttons["Начать"], "start verb trainer (typing)")
+        typeInto(app.textFields["Форма глагола"], "fa", "verb answer field")
         shot("37_verb_question_typing")
         tap(app.buttons["Не знаю"], "give up verb")
         shot("38_verb_typing_feedback")
@@ -225,13 +256,13 @@ final class ScreenshotTests: XCTestCase {
     func testD_Settings() {
         tapTab("Настройки")
         shot("40_settings")
-        app.swipeUp()
-        shot("41_settings_bottom")
-        app.swipeDown()
         tap(app.staticTexts["Словари и импорт"], "dictionaries link")
         shot("42_dictionaries")
         back()
-        tap(app.staticTexts["Конфиденциальность"], "privacy link")
+        let privacy = app.staticTexts["Конфиденциальность"]
+        scrollUntilVisible(privacy)
+        shot("41_settings_bottom")
+        tap(privacy, "privacy link")
         shot("43_privacy")
     }
 }

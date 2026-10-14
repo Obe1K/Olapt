@@ -133,17 +133,22 @@ struct VerbTrainerSetupView: View {
                 .pickerStyle(.segmented)
             }
 
-            Section {
-                Button {
-                    start()
-                } label: {
-                    Text("Начать")
-                        .font(.headline)
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .disabled(!canStart)
+        }
+        // Кнопка всегда видна внизу, а не спрятана в конце длинного списка времён.
+        .safeAreaInset(edge: .bottom) {
+            Button {
+                start()
+            } label: {
+                Text("Начать")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
             }
+            .buttonStyle(.borderedProminent)
+            .controlSize(.large)
+            .disabled(!canStart)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
+            .background(.bar)
         }
         .navigationTitle("Тренировка глаголов")
         .navigationBarTitleDisplayMode(.inline)
