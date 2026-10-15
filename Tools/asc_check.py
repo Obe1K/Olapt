@@ -12,6 +12,7 @@ GET https://api.appstoreconnect.apple.com/v1/apps?limit=1.
 """
 import base64
 import json
+import os
 import subprocess
 import sys
 import time
@@ -58,6 +59,46 @@ def make_jwt(key_file: str, issuer: str, key_id: str) -> str:
     return (signing_input + b"." + b64u(der_to_raw(der))).decode()
 
 
+def api_get(key_file: str, issuer: str, key_id: str, path: str) -> tuple:
+    """GET к App Store Connect API. Возвращает (HTTP-код или 0, разобранный JSON или None)."""
+    try:
+        token = make_jwt(key_file, issuer, key_id)
+        req = urllib.request.Request("https://api.appstoreconnect.apple.com" + path,
+                                     headers={"Authorization": "Bearer " + token})
+        with urllib.request.urlopen(req, timeout=30) as r:
+            return r.status, json.loads(r.read().decode() or "{}")
+    except urllib.error.HTTPError as e:
+        try:
+            return e.code, json.loads(e.read().decode())
+        except Exception:
+            return e.code, None
+    except Exception:
+        return 0, None
+
+
+def probe(key_file: str, issuer: str, key_id: str, bundle_id: str) -> None:
+    """Печатает, что видит этот ключ: Bundle ID, карточку приложения, сертификаты, права."""
+    checks = [
+        ("Bundle ID зарегистрирован", "/v1/bundleIds?filter[identifier]=%s&limit=1" % bundle_id),
+        ("Карточка приложения создана", "/v1/apps?filter[bundleId]=%s&limit=1" % bundle_id),
+        ("Сертификаты команды", "/v1/certificates?limit=10"),
+        ("Устройства команды", "/v1/devices?limit=5"),
+        ("Список пользователей (нужна роль Admin)", "/v1/users?limit=1"),
+    ]
+    for title, path in checks:
+        code, body = api_get(key_file, issuer, key_id, path)
+        extra = ""
+        if code == 200 and body is not None:
+            data = body.get("data", [])
+            extra = ", найдено: %d" % len(data)
+            if "certificates" in path:
+                kinds = sorted(set(d.get("attributes", {}).get("certificateType", "?") for d in data))
+                extra += " (%s)" % ", ".join(kinds)
+        elif body and body.get("errors"):
+            extra = " (%s)" % body["errors"][0].get("code", "")
+        print("%s: HTTP %d%s" % (title, code, extra))
+
+
 def check(key_file: str, issuer: str, key_id: str) -> tuple:
     """Возвращает (рабочий?, описание)."""
     try:
@@ -98,6 +139,7 @@ def main() -> int:
         label = "из секрета" if i == 0 else "запасной №%d" % i
         print("Key ID (%s), длина %d: %s" % (label, len(kid), msg))
         if ok:
+            probe(key_file, issuer, kid, os.environ.get("BUNDLE_ID", ""))
             print("OK " + kid)
             return 0
     return 1

@@ -74,6 +74,7 @@ jobs:
           # После успешной загрузки строку можно удалить.
           ASC_KEY_ID_CANDIDATES: "53VA5T36RX JV733WA573"
         run: |
+          export BUNDLE_ID=$(grep -m1 'PRODUCT_BUNDLE_IDENTIFIER' OlaPT.xcodeproj/project.pbxproj | sed 's/.*= *//; s/;.*//; s/"//g')
           KEY_ID=$(printf '%s' "$ASC_KEY_ID" | tr -d '[:space:]')
           ISSUER=$(printf '%s' "$ASC_ISSUER_ID" | tr -d '[:space:]')
           TEAM=$(printf '%s' "$APPLE_TEAM_ID" | tr -d '[:space:]')
