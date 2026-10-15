@@ -78,12 +78,22 @@ https://developer.apple.com/account → **Membership details** → **Team ID** (
    - Pricing: Free.
 3. **Add for Review** → **Submit**. Проверка обычно занимает 1–2 дня.
 
+## Как это устроено внутри
+
+Встроенная «облачная подпись» xcodebuild на ключе API не работает (ошибка `Cannot verify client's JWT headers`), поэтому workflow делает подпись сам:
+1. `Tools/asc_check.py` проверяет ключ запросом к API Apple и показывает, зарегистрирован ли Bundle ID и есть ли карточка приложения.
+2. Архив собирается без подписи.
+3. `Tools/asc_release.py` через API выпускает временный сертификат Apple Distribution и профиль App Store, после запуска они удаляются.
+4. Архив экспортируется с этой подписью (запасной вариант: `Tools/pack_ipa.sh`), IPA загружается командой `xcrun altool --upload-package`.
+
 ## Частые ошибки
 
-| Сообщение в логе | Что делать |
+Шаги проверки пишут итог в аннотации запуска (страница запуска, блок Annotations).
+
+| Сообщение | Что делать |
 |---|---|
-| `No Accounts with App Store Connect Access` / `Failure to authenticate` | Ключ индивидуальный, не командный, либо неверные Key ID / Issuer ID / содержимое `.p8`. Создайте командный ключ заново. |
-| `No profiles for 'ваш.bundle.id' were found` | Bundle ID не зарегистрирован (шаг 2) или не совпадает с тем, что в проекте. |
-| `Cloud signing permission error` / не может создать сертификат | Дайте ключу роль **Admin** (шаг 4). |
-| `Your team has no devices from which to generate a provisioning profile` на шаге «Архив» | Нужно, чтобы архив не требовал профиля разработчика. Пришлите лог: я переключу архив на сборку без подписи, а подпись останется на экспорте. |
-| `The bundle version must be higher than the previously uploaded version` | Номер сборки уже использован. Запустите workflow ещё раз. |
+| `Не задан секрет …` | Нет секрета или он назван иначе. Имена: `ASC_KEY_ID`, `ASC_ISSUER_ID`, `ASC_KEY_P8`, `APPLE_TEAM_ID`. |
+| `Apple не принимает ни один из ключей` | Key ID, Issuer ID и текст `.p8` не от одного ключа. Issuer ID берётся на странице Team Keys. |
+| `Bundle ID … не зарегистрирован` или `карточка приложения … не найдена` | Выполните шаги 2–3 инструкции. |
+| `не удалось выпустить сертификат` | У команды уже максимум сертификатов Apple Distribution: удалите лишние на developer.apple.com → Certificates. |
+| `The bundle version must be higher …` | Номер сборки уже использован. Запустите workflow ещё раз. |

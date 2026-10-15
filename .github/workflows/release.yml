@@ -212,7 +212,7 @@ jobs:
           # Ошибки дублируются как аннотации запуска, чтобы их было видно без скачивания логов.
           {
             grep -hE "error:|FAILED|Failure|No profiles|No Accounts|not found|rovisioning|igning|requires a development team" archive.log export.log 2>/dev/null || true
-            grep -hiE "error|fail|invalid|denied|rejected" sign.log upload.log 2>/dev/null || true
+            grep -hiE "error|fail|invalid|denied|rejected" sign.log upload.log 2>/dev/null | grep -viE "no errors|SUCCEEDED" || true
           } | awk '!seen[$0]++' | head -10 | while IFS= read -r line; do
               esc=$(printf '%s' "$line" | cut -c1-450 | sed 's/%/%25/g')
               echo "::error::$esc"
@@ -232,7 +232,7 @@ jobs:
             echo
             echo "Строки с ошибками:"
             echo '```'
-            grep -hiE "error|FAILED|Failure|No profiles|not found" archive.log sign.log export.log upload.log 2>/dev/null | head -40 || true
+            grep -hiE "error|FAILED|Failure|No profiles|not found" archive.log sign.log export.log upload.log 2>/dev/null | grep -viE "no errors|SUCCEEDED" | head -40 || true
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
