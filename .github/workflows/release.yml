@@ -1,0 +1,145 @@
+name: Release to TestFlight
+
+# Запускается только вручную: Actions → «Release to TestFlight» → Run workflow.
+# Собирает приложение в Release, подписывает его облачной подписью Apple
+# (ключ App Store Connect API) и загружает сборку в App Store Connect / TestFlight.
+#
+# Нужны четыре секрета репозитория (Settings → Secrets and variables → Actions):
+#   ASC_KEY_ID      — Key ID ключа App Store Connect API
+#   ASC_ISSUER_ID   — Issuer ID (UUID на странице Integrations)
+#   ASC_KEY_P8      — ПОЛНОЕ содержимое файла AuthKey_XXXX.p8 (вместе со строками BEGIN/END)
+#   APPLE_TEAM_ID   — Team ID (10 символов, developer.apple.com → Membership details)
+# Подробная инструкция: AppStore/06_upload_to_testflight.md
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: macos-26
+    timeout-minutes: 60
+    env:
+      ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+      ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+    steps:
+      - name: Получить код
+        uses: actions/checkout@v4
+
+      - name: Проверить настройки
+        run: |
+          fail=0
+          for v in ASC_KEY_ID ASC_ISSUER_ID ASC_KEY_P8 APPLE_TEAM_ID; do
+            if [ -z "${!v}" ]; then
+              echo "::error::Не задан секрет $v (Settings → Secrets and variables → Actions)."
+              fail=1
+            fi
+          done
+          BID=$(grep -m1 'PRODUCT_BUNDLE_IDENTIFIER' OlaPT.xcodeproj/project.pbxproj | sed 's/.*= *//; s/;.*//; s/"//g')
+          echo "Bundle ID в проекте: $BID"
+          if [ "$BID" = "com.example.olapt" ]; then
+            echo "::error::В проекте всё ещё com.example.olapt. Замените его на свой Bundle ID (см. AppStore/06_upload_to_testflight.md)."
+            fail=1
+          fi
+          exit $fail
+
+      - name: Выбрать Xcode 26
+        run: |
+          XC=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          if [ -z "$XC" ]; then
+            echo "Xcode 26 не найден. Установлены:"
+            ls /Applications | grep -i xcode || true
+            exit 1
+          fi
+          sudo xcode-select -s "$XC/Contents/Developer"
+          xcodebuild -version
+
+      - name: Положить ключ App Store Connect
+        run: |
+          mkdir -p "$HOME/.appstoreconnect/private_keys"
+          KEY_PATH="$HOME/.appstoreconnect/private_keys/AuthKey_${ASC_KEY_ID}.p8"
+          printf '%s\n' "$ASC_KEY_P8" > "$KEY_PATH"
+          chmod 600 "$KEY_PATH"
+          echo "KEY_PATH=$KEY_PATH" >> "$GITHUB_ENV"
+          # Проверка формата (само содержимое не печатается)
+          head -1 "$KEY_PATH" | grep -q "BEGIN PRIVATE KEY" || {
+            echo "::error::ASC_KEY_P8 должен содержать весь файл .p8, включая строку -----BEGIN PRIVATE KEY-----"
+            exit 1
+          }
+
+      - name: Архив (Release)
+        run: |
+          set -o pipefail
+          BUILD_NUMBER="${GITHUB_RUN_NUMBER}"
+          echo "Номер сборки: $BUILD_NUMBER"
+          xcodebuild archive \
+            -project OlaPT.xcodeproj \
+            -scheme OlaPT \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath build/OlaPT.xcarchive \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$KEY_PATH" \
+            -authenticationKeyID "$ASC_KEY_ID" \
+            -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
+            DEVELOPMENT_TEAM="$APPLE_TEAM_ID" \
+            CURRENT_PROJECT_VERSION="$BUILD_NUMBER" \
+            2>&1 | tee archive.log
+
+      - name: Подписать и загрузить в App Store Connect
+        run: |
+          set -o pipefail
+          cat > ExportOptions.plist <<EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key><string>app-store-connect</string>
+            <key>destination</key><string>upload</string>
+            <key>teamID</key><string>${APPLE_TEAM_ID}</string>
+            <key>signingStyle</key><string>automatic</string>
+            <key>uploadSymbols</key><true/>
+          </dict>
+          </plist>
+          EOF
+          xcodebuild -exportArchive \
+            -archivePath build/OlaPT.xcarchive \
+            -exportOptionsPlist ExportOptions.plist \
+            -exportPath build/export \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$KEY_PATH" \
+            -authenticationKeyID "$ASC_KEY_ID" \
+            -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
+            2>&1 | tee export.log
+
+      - name: Итог
+        if: always()
+        run: |
+          {
+            echo "## Release to TestFlight"
+            echo
+            echo "Номер сборки: ${GITHUB_RUN_NUMBER}"
+            echo
+            echo "Если все шаги зелёные, сборка загружена. Она появится в App Store Connect → ваше приложение → TestFlight через 5–30 минут (статус «Обработка»)."
+            echo
+            echo "Строки с ошибками:"
+            echo '```'
+            grep -hE "error:|\*\* .* FAILED|Failure|No profiles|No Accounts|not found" archive.log export.log 2>/dev/null | head -40 || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Убрать ключ
+        if: always()
+        run: rm -f "$HOME/.appstoreconnect/private_keys/AuthKey_${ASC_KEY_ID}.p8"
+
+      - name: Сохранить логи
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-logs
+          path: |
+            archive.log
+            export.log
+            build/export/*.log
+          if-no-files-found: ignore

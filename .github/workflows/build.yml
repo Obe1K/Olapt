@@ -1,5 +1,6 @@
 name: Build
 
+# Запускается при каждой загрузке файлов в репозиторий и вручную (вкладка Actions → Build → Run workflow).
 on:
   push:
   workflow_dispatch:

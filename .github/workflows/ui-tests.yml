@@ -1,5 +1,6 @@
 name: UI tests and screenshots
 
+# Запускается только вручную: вкладка Actions → «UI tests and screenshots» → Run workflow.
 on:
   workflow_dispatch:
 
