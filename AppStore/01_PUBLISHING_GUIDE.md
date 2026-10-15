@@ -28,7 +28,7 @@
 1. Откройте `OlaPT/OlaPT.xcodeproj` двойным щелчком.
 2. В левой панели выберите проект **OlaPT** → таргет **OlaPT** → вкладка **Signing & Capabilities**.
 3. **Team** — выберите свою команду (после входа: Xcode → Settings → Accounts → «+» → Apple ID).
-4. **Bundle Identifier** — замените `com.example.olapt` на свой уникальный, например `com.ваше-имя.olapt`. Он должен совпасть с тем, что вы создадите в App Store Connect, и **изменить его потом нельзя**.
+4. **Bundle Identifier** — в проекте уже стоит `com.obe1k.olapt` (замена: `python3 Tools/set_bundle_id.py новый.id`). Он должен совпасть с тем, что вы создадите в App Store Connect, и **изменить его потом нельзя**.
 5. Вкладка **General**: проверьте *Display Name* («Olá PT»), *Version* (1.0), *Build* (1), *Minimum Deployments* (iOS 16.0), *iPhone* only.
 6. Проект создан в формате Xcode 16; Xcode 26 может предложить «Update to recommended settings» — можно принять.
 
@@ -170,7 +170,7 @@ The interface language is Russian; dictionaries are English and Russian to Europ
 | 2.3 Неточные метаданные | Не обещайте в описании того, чего нет (ни «10 000 слов», ни «ИИ»). Тексты из `02_listing_ru.md` написаны честно. |
 | 2.3.7 Скриншоты не соответствуют | Делайте скриншоты из самого приложения. |
 | Использование чужого контента | Словари составлены с нуля, сторонних данных нет. Если добавите чужие словари — проверьте лицензию. |
-| Placeholder Bundle ID | Замените `com.example.olapt`. |
+| Placeholder Bundle ID | Уже заменён на `com.obe1k.olapt`. |
 
 ---
 

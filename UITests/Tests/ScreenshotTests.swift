@@ -6,7 +6,7 @@ import XCTest
 final class ScreenshotTests: XCTestCase {
 
     /// Bundle ID приложения. Если вы смените его в Xcode, поменяйте и здесь.
-    private let bundleID = "com.example.olapt"
+    private let bundleID = "com.obe1k.olapt"
 
     private var app: XCUIApplication!
     private var steps: [String] = []

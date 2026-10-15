@@ -1,14 +1,14 @@
 # Политика конфиденциальности — Olá PT
 
-> Перед публикацией замените `[ВАШЕ ИМЯ]` и `[ВАШ E-MAIL]`, поставьте дату и разместите текст на странице, которая открывается без входа (GitHub Pages, Notion, сайт). Ссылку вставьте в App Store Connect → App Information → Privacy Policy URL.
+> Эта политика опубликована на странице `docs/privacy.html` (GitHub Pages). Ссылку вставьте в App Store Connect → App Information → Privacy Policy URL. При изменении текста правьте и этот файл, и `docs/privacy.html`.
 
 ---
 
 ## Русская версия
 
-**Дата вступления в силу:** [ДАТА]
-**Разработчик:** [ВАШЕ ИМЯ]
-**Контакт:** [ВАШ E-MAIL]
+**Дата вступления в силу:** 15 октября 2026
+**Разработчик:** Obe1K
+**Контакт:** 7chaner@gmail.com
 
 Приложение «Olá PT» (далее — «Приложение») уважает вашу конфиденциальность. Эта политика объясняет, какие данные обрабатывает Приложение.
 
@@ -37,15 +37,15 @@
 Если политика изменится, новая версия будет опубликована на этой странице с новой датой.
 
 **9. Контакты.**
-По любым вопросам: [ВАШ E-MAIL].
+По любым вопросам: 7chaner@gmail.com.
 
 ---
 
 ## English version
 
-**Effective date:** [DATE]
-**Developer:** [YOUR NAME]
-**Contact:** [YOUR E-MAIL]
+**Effective date:** 15 October 2026
+**Developer:** Obe1K
+**Contact:** 7chaner@gmail.com
 
 "Olá PT" (the "App") respects your privacy. This policy explains what data the App handles.
 
@@ -74,4 +74,4 @@ To delete all App data, delete the App from your device. You can also reset prog
 If this policy changes, the new version will be posted on this page with a new date.
 
 **9. Contact.**
-Questions: [YOUR E-MAIL].
+Questions: 7chaner@gmail.com.

@@ -36,7 +36,7 @@ OlaPT/
 
 ## Как открыть и запустить
 1. Нужен Mac с Xcode 26+ (с 28.04.2026 Apple принимает в App Store только сборки из Xcode 26+). Нет Mac — см. раздел 9 в `AppStore/01_PUBLISHING_GUIDE.md`.
-2. Откройте `OlaPT.xcodeproj`, в *Signing & Capabilities* выберите Team и замените Bundle Identifier `com.example.olapt` на свой.
+2. Откройте `OlaPT.xcodeproj`, в *Signing & Capabilities* выберите Team и Bundle Identifier уже `com.obe1k.olapt`; Team выберите свой.
 3. Выберите симулятор iPhone и нажмите ⌘R.
 
 Полная инструкция по подписи, тестированию и отправке в App Store: `AppStore/01_PUBLISHING_GUIDE.md`.

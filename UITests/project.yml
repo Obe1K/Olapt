@@ -17,7 +17,7 @@ targets:
       - Host
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.example.olapt.uitesthost
+        PRODUCT_BUNDLE_IDENTIFIER: com.obe1k.olapt.uitesthost
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
   OlaPTUITests:
     type: bundle.ui-testing
@@ -28,7 +28,7 @@ targets:
       - target: Host
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.example.olapt.uitests
+        PRODUCT_BUNDLE_IDENTIFIER: com.obe1k.olapt.uitests
         TEST_TARGET_NAME: Host
 schemes:
   OlaPTUITests:

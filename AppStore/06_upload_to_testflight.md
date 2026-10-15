@@ -10,7 +10,18 @@
 
 Bundle ID — уникальное имя приложения в обратной записи, например `com.ivanov.olapt` (латиница, цифры, точки). Потом его нельзя изменить, поэтому выберите окончательный вариант.
 
-Замена в проекте: `python3 Tools/set_bundle_id.py com.ivanov.olapt` (или попросите Claude — он поправит все четыре файла сам).
+**Выбран:** `com.obe1k.olapt`, он уже прописан в проекте. Если понадобится другой, замена одной командой: `python3 Tools/set_bundle_id.py новый.id` (или попросите Claude).
+
+## 1а. Опубликуйте политику конфиденциальности (GitHub Pages)
+
+Страницы уже лежат в папке `docs/` репозитория. Осталось включить их показ:
+1. Репозиторий → **Settings** → слева **Pages**.
+2. **Source**: *Deploy from a branch*. **Branch**: `main`, папка **/docs** → **Save**.
+3. Через 1–2 минуты страницы откроются по адресам (проверьте в браузере, в том числе с телефона):
+   - политика: `https://obe1k.github.io/Olapt/privacy.html`
+   - поддержка: `https://obe1k.github.io/Olapt/`
+
+Первый адрес вставьте в App Store Connect в поле **Privacy Policy URL**, второй в **Support URL**.
 
 ## 2. Зарегистрируйте Bundle ID
 
@@ -60,7 +71,7 @@ https://developer.apple.com/account → **Membership details** → **Team ID** (
 2. Версия для магазина: **iOS App** → **1.0 Prepare for Submission**:
    - скриншоты (папка `OlaPT_screenshots`, размер 6.9″);
    - описание, ключевые слова, подзаголовок: `AppStore/02_listing_ru.md`;
-   - **Privacy Policy URL**: адрес страницы с политикой (`AppStore/03_privacy_policy.md`, подставьте имя и e-mail);
+   - **Privacy Policy URL**: `https://obe1k.github.io/Olapt/privacy.html`; **Support URL**: `https://obe1k.github.io/Olapt/`;
    - **App Privacy**: «Data Not Collected»;
    - Age Rating: ответьте «нет» на все вопросы (получится 4+);
    - в блоке **Build** нажмите **+** и выберите загруженную сборку;
