@@ -75,6 +75,7 @@ jobs:
           ASC_KEY_ID_CANDIDATES: "53VA5T36RX JV733WA573"
         run: |
           export BUNDLE_ID=$(grep -m1 'PRODUCT_BUNDLE_IDENTIFIER' OlaPT.xcodeproj/project.pbxproj | sed 's/.*= *//; s/;.*//; s/"//g')
+          MARKETING_VERSION=$(grep -m1 'MARKETING_VERSION' OlaPT.xcodeproj/project.pbxproj | sed 's/.*= *//; s/;.*//; s/"//g')
           KEY_ID=$(printf '%s' "$ASC_KEY_ID" | tr -d '[:space:]')
           ISSUER=$(printf '%s' "$ASC_ISSUER_ID" | tr -d '[:space:]')
           TEAM=$(printf '%s' "$APPLE_TEAM_ID" | tr -d '[:space:]')
@@ -93,17 +94,20 @@ jobs:
             exit 1
           fi
           USED=$(printf '%s\n' "$OUT" | sed -n 's/^OK //p' | tail -1)
-          echo "KEY_ID_USED=$USED" >> "$GITHUB_ENV"
-          echo "ISSUER_USED=$ISSUER" >> "$GITHUB_ENV"
-          echo "TEAM_USED=$TEAM" >> "$GITHUB_ENV"
+          {
+            echo "KEY_ID_USED=$USED"
+            echo "ISSUER_USED=$ISSUER"
+            echo "TEAM_USED=$TEAM"
+            echo "BUNDLE_ID=$BUNDLE_ID"
+            echo "MARKETING_VERSION=$MARKETING_VERSION"
+          } >> "$GITHUB_ENV"
 
       - name: Архив (Release)
         run: |
           set -o pipefail
           BUILD_NUMBER="${GITHUB_RUN_NUMBER}"
           echo "Номер сборки: $BUILD_NUMBER"
-          # Архив без подписи: подпись для App Store ставится на шаге экспорта
-          # (облачная подпись Apple не требует зарегистрированных устройств).
+          # Архив без подписи: подпись ставится позже сертификатом, выпущенным через API Apple.
           xcodebuild archive \
             -project OlaPT.xcodeproj \
             -scheme OlaPT \
@@ -114,44 +118,108 @@ jobs:
             CURRENT_PROJECT_VERSION="$BUILD_NUMBER" \
             2>&1 | tee archive.log
 
-      - name: Подписать и загрузить в App Store Connect
+      - name: Сертификат и профиль (через API Apple)
+        run: |
+          set -euo pipefail
+          mkdir -p build/sign
+          python3 Tools/asc_release.py setup "$KEY_PATH" "$ISSUER_USED" "$KEY_ID_USED" "$BUNDLE_ID" build/sign 2>&1 | tee sign.log
+          cat build/sign/env.txt >> "$GITHUB_ENV"
+          # Временная ключница с сертификатом
+          KC_PASS=$(uuidgen)
+          echo "::add-mask::$KC_PASS"
+          KC="$RUNNER_TEMP/release.keychain-db"
+          echo "KC_PATH=$KC" >> "$GITHUB_ENV"
+          /usr/bin/openssl x509 -inform der -in build/sign/cert.cer -out build/sign/cert.pem
+          /usr/bin/openssl pkcs12 -export -inkey build/sign/dist.key -in build/sign/cert.pem -out build/sign/dist.p12 -passout "pass:$KC_PASS"
+          security create-keychain -p "$KC_PASS" "$KC"
+          security set-keychain-settings -lut 21600 "$KC"
+          security unlock-keychain -p "$KC_PASS" "$KC"
+          security import build/sign/dist.p12 -k "$KC" -P "$KC_PASS" -A
+          for g in G3 G4 G5 G6; do
+            curl -fsSL "https://www.apple.com/certificateauthority/AppleWWDRCA${g}.cer" -o "build/sign/wwdr${g}.cer" \
+              && security import "build/sign/wwdr${g}.cer" -k "$KC" -A || true
+          done
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$KC_PASS" "$KC" > /dev/null
+          security list-keychains -d user -s "$KC" $(security list-keychains -d user | sed 's/"//g')
+          security default-keychain -s "$KC"
+          IDENTITY=$(security find-identity -v -p codesigning "$KC" | sed -n 's/.*"\(.*\)".*/\1/p' | head -1)
+          if [ -z "$IDENTITY" ]; then
+            echo "error: в ключнице нет действительного подписывающего сертификата"
+            security find-identity -p codesigning "$KC" || true
+            exit 1
+          fi
+          echo "Подпись: сертификат найден"
+          echo "IDENTITY=$IDENTITY" >> "$GITHUB_ENV"
+          # Профиль
+          security cms -D -i build/sign/profile.mobileprovision > build/sign/profile.plist
+          PUUID=$(/usr/libexec/PlistBuddy -c 'Print :UUID' build/sign/profile.plist)
+          for d in "$HOME/Library/MobileDevice/Provisioning Profiles" "$HOME/Library/Developer/Xcode/UserData/Provisioning Profiles"; do
+            mkdir -p "$d"
+            cp build/sign/profile.mobileprovision "$d/$PUUID.mobileprovision"
+          done
+          echo "PROFILE_UUID=$PUUID" >> "$GITHUB_ENV"
+
+      - name: Подписать и собрать IPA
         run: |
           set -o pipefail
+          mkdir -p build/export
           cat > ExportOptions.plist <<EOF
           <?xml version="1.0" encoding="UTF-8"?>
           <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
           <plist version="1.0">
           <dict>
             <key>method</key><string>app-store-connect</string>
-            <key>destination</key><string>upload</string>
+            <key>destination</key><string>export</string>
             <key>teamID</key><string>${TEAM_USED}</string>
-            <key>signingStyle</key><string>automatic</string>
-            <key>uploadSymbols</key><true/>
+            <key>signingStyle</key><string>manual</string>
+            <key>signingCertificate</key><string>Apple Distribution</string>
+            <key>provisioningProfiles</key>
+            <dict>
+              <key>${BUNDLE_ID}</key><string>${PROFILE_NAME}</string>
+            </dict>
           </dict>
           </plist>
           EOF
-          xcodebuild -exportArchive \
-            -archivePath build/OlaPT.xcarchive \
-            -exportOptionsPlist ExportOptions.plist \
-            -exportPath build/export \
-            -allowProvisioningUpdates \
-            -authenticationKeyPath "$KEY_PATH" \
-            -authenticationKeyID "$KEY_ID_USED" \
-            -authenticationKeyIssuerID "$ISSUER_USED" \
-            2>&1 | tee export.log
+          if ! xcodebuild -exportArchive \
+              -archivePath build/OlaPT.xcarchive \
+              -exportOptionsPlist ExportOptions.plist \
+              -exportPath build/export \
+              2>&1 | tee export.log; then
+            echo "::warning::exportArchive не сработал, собираю IPA вручную"
+            bash Tools/pack_ipa.sh 2>&1 | tee -a export.log
+          fi
+          ls -la build/export
+          ls build/export/*.ipa
+
+      - name: Загрузить в App Store Connect
+        run: |
+          set -o pipefail
+          IPA=$(ls build/export/*.ipa | head -1)
+          echo "IPA: $IPA"
+          cp "$KEY_PATH" "$HOME/.appstoreconnect/private_keys/AuthKey_${KEY_ID_USED}.p8"
+          if ! xcrun altool --upload-package "$IPA" --type ios \
+              --apple-id "$APP_APPLE_ID" --bundle-id "$BUNDLE_ID" \
+              --bundle-version "$GITHUB_RUN_NUMBER" --bundle-short-version-string "$MARKETING_VERSION" \
+              --apiKey "$KEY_ID_USED" --apiIssuer "$ISSUER_USED" 2>&1 | tee upload.log; then
+            echo "::warning::--upload-package не сработал, пробую --upload-app"
+            xcrun altool --upload-app -f "$IPA" --type ios \
+              --apiKey "$KEY_ID_USED" --apiIssuer "$ISSUER_USED" 2>&1 | tee -a upload.log
+          fi
 
       - name: Итог
         if: always()
         run: |
           # Ошибки дублируются как аннотации запуска, чтобы их было видно без скачивания логов.
-          grep -hE "error:|FAILED|Failure|No profiles|No Accounts|not found|rovisioning|igning|requires a development team" archive.log export.log 2>/dev/null \
-            | awk '!seen[$0]++' | head -8 | while IFS= read -r line; do
+          {
+            grep -hE "error:|FAILED|Failure|No profiles|No Accounts|not found|rovisioning|igning|requires a development team" archive.log export.log 2>/dev/null || true
+            grep -hiE "error|fail|invalid|denied|rejected" sign.log upload.log 2>/dev/null || true
+          } | awk '!seen[$0]++' | head -10 | while IFS= read -r line; do
               esc=$(printf '%s' "$line" | cut -c1-450 | sed 's/%/%25/g')
               echo "::error::$esc"
             done || true
-          for f in archive.log export.log; do
+          for f in archive.log sign.log export.log upload.log; do
             if [ -s "$f" ]; then
-              tailtxt=$(tail -n 25 "$f" | cut -c1-300 | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')
+              tailtxt=$(tail -n 20 "$f" | cut -c1-300 | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')
               echo "::notice title=Конец $f::$tailtxt"
             fi
           done
@@ -164,13 +232,19 @@ jobs:
             echo
             echo "Строки с ошибками:"
             echo '```'
-            grep -hE "error:|\*\* .* FAILED|Failure|No profiles|No Accounts|not found" archive.log export.log 2>/dev/null | head -40 || true
+            grep -hiE "error|FAILED|Failure|No profiles|not found" archive.log sign.log export.log upload.log 2>/dev/null | head -40 || true
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Убрать ключ
+      - name: Очистка (удалить временный сертификат, профиль и ключ)
         if: always()
-        run: rm -f "$HOME/.appstoreconnect/private_keys/AuthKey_release.p8"
+        run: |
+          if [ -f build/sign/env.txt ] && [ -n "${KEY_ID_USED:-}" ] && [ -f "${KEY_PATH:-/nonexistent}" ]; then
+            python3 Tools/asc_release.py cleanup "$KEY_PATH" "$ISSUER_USED" "$KEY_ID_USED" build/sign/env.txt || true
+          fi
+          if [ -n "${KC_PATH:-}" ]; then security delete-keychain "$KC_PATH" || true; fi
+          rm -f "$HOME"/.appstoreconnect/private_keys/AuthKey_*.p8
+          rm -rf build/sign
 
       - name: Сохранить логи
         if: always()
@@ -179,6 +253,7 @@ jobs:
           name: release-logs
           path: |
             archive.log
+            sign.log
             export.log
-            build/export/*.log
+            upload.log
           if-no-files-found: ignore
