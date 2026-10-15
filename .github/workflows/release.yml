@@ -116,6 +116,18 @@ jobs:
       - name: Итог
         if: always()
         run: |
+          # Ошибки дублируются как аннотации запуска, чтобы их было видно без скачивания логов.
+          grep -hE "error:|FAILED|Failure|No profiles|No Accounts|not found|rovisioning|igning|requires a development team" archive.log export.log 2>/dev/null \
+            | awk '!seen[$0]++' | head -8 | while IFS= read -r line; do
+              esc=$(printf '%s' "$line" | cut -c1-450 | sed 's/%/%25/g')
+              echo "::error::$esc"
+            done || true
+          for f in archive.log export.log; do
+            if [ -s "$f" ]; then
+              tailtxt=$(tail -n 25 "$f" | cut -c1-300 | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')
+              echo "::notice title=Конец $f::$tailtxt"
+            fi
+          done
           {
             echo "## Release to TestFlight"
             echo
