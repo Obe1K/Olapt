@@ -58,8 +58,8 @@ jobs:
       - name: Положить ключ App Store Connect
         run: |
           mkdir -p "$HOME/.appstoreconnect/private_keys"
-          KEY_PATH="$HOME/.appstoreconnect/private_keys/AuthKey_${ASC_KEY_ID}.p8"
-          printf '%s\n' "$ASC_KEY_P8" > "$KEY_PATH"
+          KEY_PATH="$HOME/.appstoreconnect/private_keys/AuthKey_release.p8"
+          printf '%s\n' "$ASC_KEY_P8" | tr -d '\r' > "$KEY_PATH"
           chmod 600 "$KEY_PATH"
           echo "KEY_PATH=$KEY_PATH" >> "$GITHUB_ENV"
           # Проверка формата (само содержимое не печатается)
@@ -67,6 +67,34 @@ jobs:
             echo "::error::ASC_KEY_P8 должен содержать весь файл .p8, включая строку -----BEGIN PRIVATE KEY-----"
             exit 1
           }
+
+      - name: Проверить ключ (запрос к Apple)
+        env:
+          # Временная диагностика: если ключ из секрета не подошёл, пробуем эти Key ID.
+          # После успешной загрузки строку можно удалить.
+          ASC_KEY_ID_CANDIDATES: "53VA5T36RX JV733WA573"
+        run: |
+          KEY_ID=$(printf '%s' "$ASC_KEY_ID" | tr -d '[:space:]')
+          ISSUER=$(printf '%s' "$ASC_ISSUER_ID" | tr -d '[:space:]')
+          TEAM=$(printf '%s' "$APPLE_TEAM_ID" | tr -d '[:space:]')
+          echo "::add-mask::$KEY_ID"
+          echo "::add-mask::$ISSUER"
+          echo "::add-mask::$TEAM"
+          LENS="Длины значений: Key ID = ${#KEY_ID} (нужно 10), Issuer ID = ${#ISSUER} (нужно 36), Team ID = ${#TEAM} (нужно 10)."
+          echo "$LENS"
+          RC=0
+          OUT=$(python3 Tools/asc_check.py "$KEY_PATH" "$ISSUER" "$KEY_ID" $ASC_KEY_ID_CANDIDATES) || RC=$?
+          echo "$OUT"
+          DETAILS=$(printf '%s\n%s' "$LENS" "$OUT" | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')
+          echo "::notice title=Проверка ключа Apple::$DETAILS"
+          if [ "$RC" -ne 0 ]; then
+            echo "::error::Apple не принимает ни один из ключей. Проверьте, что ASC_ISSUER_ID это Issuer ID со страницы Team Keys, а ASC_KEY_P8 это текст файла .p8 именно того ключа, чей Key ID указан в ASC_KEY_ID."
+            exit 1
+          fi
+          USED=$(printf '%s\n' "$OUT" | sed -n 's/^OK //p' | tail -1)
+          echo "KEY_ID_USED=$USED" >> "$GITHUB_ENV"
+          echo "ISSUER_USED=$ISSUER" >> "$GITHUB_ENV"
+          echo "TEAM_USED=$TEAM" >> "$GITHUB_ENV"
 
       - name: Архив (Release)
         run: |
@@ -95,7 +123,7 @@ jobs:
           <dict>
             <key>method</key><string>app-store-connect</string>
             <key>destination</key><string>upload</string>
-            <key>teamID</key><string>${APPLE_TEAM_ID}</string>
+            <key>teamID</key><string>${TEAM_USED}</string>
             <key>signingStyle</key><string>automatic</string>
             <key>uploadSymbols</key><true/>
           </dict>
@@ -107,8 +135,8 @@ jobs:
             -exportPath build/export \
             -allowProvisioningUpdates \
             -authenticationKeyPath "$KEY_PATH" \
-            -authenticationKeyID "$ASC_KEY_ID" \
-            -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
+            -authenticationKeyID "$KEY_ID_USED" \
+            -authenticationKeyIssuerID "$ISSUER_USED" \
             2>&1 | tee export.log
 
       - name: Итог
@@ -141,7 +169,7 @@ jobs:
 
       - name: Убрать ключ
         if: always()
-        run: rm -f "$HOME/.appstoreconnect/private_keys/AuthKey_${ASC_KEY_ID}.p8"
+        run: rm -f "$HOME/.appstoreconnect/private_keys/AuthKey_release.p8"
 
       - name: Сохранить логи
         if: always()
