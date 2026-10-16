@@ -62,7 +62,7 @@ enum PackImporter {
             }
             if translations.isEmpty { continue }
             entries.append(PackEntry(pt: pt, pos: nil, g: nil, f: nil, pl: nil, tr: translations,
-                                     topic: nil, br: nil, note: nil))
+                                     topic: nil, br: nil, note: nil, lv: nil))
         }
         if entries.isEmpty { throw ImportError.empty }
         let id = "import-" + UUID().uuidString.prefix(8).lowercased()

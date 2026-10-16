@@ -326,6 +326,34 @@ final class AppModel: ObservableObject {
         return custom.toWord()
     }
 
+    /// Добавляет несколько своих слов за раз (индекс перестраивается один раз).
+    /// Если такое своё слово уже есть, используется оно. Возвращает id слов.
+    func addCustomWords(_ items: [(pt: String, translations: [String: [String]])]) -> [String] {
+        var ids: [String] = []
+        var changed = false
+        for item in items {
+            let trimmed = item.pt.trimmingCharacters(in: .whitespacesAndNewlines)
+            if trimmed.isEmpty { continue }
+            if let existing = user.customWords.first(where: { $0.pt.lowercased() == trimmed.lowercased() }) {
+                ids.append(existing.wordID)
+                continue
+            }
+            var cleanTr: [String: [String]] = [:]
+            for (lang, list) in item.translations {
+                let parts = list.flatMap { $0.split(separator: ",").map(String.init) }
+                let clean = parts.map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { !$0.isEmpty }
+                if !clean.isEmpty { cleanTr[lang] = clean }
+            }
+            if cleanTr.isEmpty { continue }
+            let custom = CustomWord(pt: trimmed, pos: "", gender: "", translations: cleanTr)
+            user.customWords.append(custom)
+            ids.append(custom.wordID)
+            changed = true
+        }
+        if changed { rebuildIndex() }
+        return ids
+    }
+
     func deleteCustomWord(wordID: String) {
         user.customWords.removeAll { $0.wordID == wordID }
         for i in user.collections.indices {

@@ -25,10 +25,24 @@ final class DictionaryIndex {
     /// язык → нормализованный перевод → id слов с таким переводом (для синонимов в упражнениях)
     let translationIndex: [String: [String: Set<String>]]
 
+    /// Уровни CEFR, которые встречаются в словарях, по порядку: A1, A2, B1…
+    let levels: [String]
+
     private let wordsByTopic: [String: [Word]]
+    private let wordsByLevel: [String: [Word]]
     private let foldedPT: [String]
     private let foldedTr: [[String]]
     private let formIndex: [String: [VerbFormHit]]
+    /// Для распознавания текста: точное написание (нижний регистр, с диакритикой) → индексы слов
+    private let exactPT: [String: [Int]]
+    /// То же без диакритики («fold»)
+    private let foldedPTMap: [String: [Int]]
+    /// Формы множественного числа и женского рода → индексы слов
+    private let inflectedExact: [String: [Int]]
+    private let inflectedFolded: [String: [Int]]
+    private let indexByID: [String: Int]
+    /// Самое длинное выражение в словах (для поиска выражений в тексте)
+    let maxPhraseWords: Int
 
     init(packs: [PackFile], custom: [Word], verbs: VerbLibrary) {
         var ordered: [Word] = []
@@ -61,7 +75,7 @@ final class DictionaryIndex {
                         pt: pt, pos: pos,
                         gender: e.g ?? "", feminine: e.f ?? "", plural: e.pl ?? "",
                         topic: e.topic ?? "", brazilian: e.br ?? "", note: e.note ?? "",
-                        translations: [:], isCustom: false)
+                        translations: [:], isCustom: false, level: e.lv ?? "")
                     ordered.append(w)
                     let newIndex = ordered.count - 1
                     posKeyToIndex[lowerPT + "|" + pos] = newIndex
@@ -75,6 +89,7 @@ final class DictionaryIndex {
                 if ordered[i].topic.isEmpty, let tp = e.topic { ordered[i].topic = tp }
                 if ordered[i].brazilian.isEmpty, let b = e.br { ordered[i].brazilian = b }
                 if ordered[i].note.isEmpty, let n = e.note { ordered[i].note = n }
+                if ordered[i].level.isEmpty, let lv = e.lv { ordered[i].level = lv }
                 var list = ordered[i].translations[pack.lang] ?? []
                 for t in e.tr {
                     let tt = t.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -93,15 +108,45 @@ final class DictionaryIndex {
 
         var byIDMap: [String: Word] = [:]
         var topicMap: [String: [Word]] = [:]
+        var levelMap: [String: [Word]] = [:]
         var fPT: [String] = []
         var fTr: [[String]] = []
         var trIndex: [String: [String: Set<String>]] = [:]
-        for w in ordered {
+        var exact: [String: [Int]] = [:]
+        var foldedMap: [String: [Int]] = [:]
+        var inflExact: [String: [Int]] = [:]
+        var inflFolded: [String: [Int]] = [:]
+        var idToIndex: [String: Int] = [:]
+        var longestPhrase = 1
+
+        func put(_ map: inout [String: [Int]], _ key: String, _ i: Int) {
+            if key.isEmpty { return }
+            var list = map[key] ?? []
+            if !list.contains(i) {
+                list.append(i)
+                map[key] = list
+            }
+        }
+
+        for (i, w) in ordered.enumerated() {
             byIDMap[w.id] = w
+            idToIndex[w.id] = i
             if !w.topic.isEmpty {
                 topicMap[w.topic, default: []].append(w)
             }
-            fPT.append(TextUtil.fold(w.pt))
+            if !w.level.isEmpty {
+                levelMap[w.level, default: []].append(w)
+            }
+            let foldedSelf = TextUtil.fold(w.pt)
+            fPT.append(foldedSelf)
+            put(&exact, w.pt.lowercased(), i)
+            put(&foldedMap, foldedSelf, i)
+            let wordsInPhrase = foldedSelf.split(separator: " ").count
+            if wordsInPhrase > longestPhrase { longestPhrase = wordsInPhrase }
+            for form in Inflection.forms(of: w) {
+                put(&inflExact, form.lowercased(), i)
+                put(&inflFolded, TextUtil.fold(form), i)
+            }
             var folded: [String] = []
             for (lang, list) in w.translations {
                 for t in list {
@@ -148,6 +193,14 @@ final class DictionaryIndex {
         self.languages = langs
         self.topics = topicList
         self.wordsByTopic = topicMap
+        self.wordsByLevel = levelMap
+        self.levels = levelMap.keys.sorted()
+        self.exactPT = exact
+        self.foldedPTMap = foldedMap
+        self.inflectedExact = inflExact
+        self.inflectedFolded = inflFolded
+        self.indexByID = idToIndex
+        self.maxPhraseWords = min(longestPhrase, 6)
         self.foldedPT = fPT
         self.foldedTr = fTr
         self.formIndex = forms
@@ -164,6 +217,73 @@ final class DictionaryIndex {
 
     func topicName(_ id: String) -> String {
         return topics.first(where: { $0.id == id })?.name ?? id
+    }
+
+    func words(inLevel level: String) -> [Word] {
+        return wordsByLevel[level] ?? []
+    }
+
+    /// Слова уровня, сгруппированные по темам (в порядке тем словаря).
+    func topics(inLevel level: String) -> [(topic: TopicInfo, words: [Word])] {
+        let list = words(inLevel: level)
+        var byTopic: [String: [Word]] = [:]
+        for w in list { byTopic[w.topic, default: []].append(w) }
+        var result: [(topic: TopicInfo, words: [Word])] = []
+        for t in topics {
+            if let ws = byTopic[t.id], !ws.isEmpty { result.append((t, ws)) }
+        }
+        return result
+    }
+
+    // MARK: - Слова в тексте (распознавание с фото)
+
+    /// Ищет слово из текста: точное написание, формы глаголов, множественное число и женский род,
+    /// затем то же без учёта диакритики. Возвращает слово и пояснение («форма глагола falar»).
+    func lookupToken(_ raw: String) -> (word: Word, hint: String)? {
+        let t = raw.lowercased()
+        let f = TextUtil.fold(t)
+        if f.isEmpty { return nil }
+
+        if let i = exactPT[t]?.first { return (words[i], "") }
+        if let hit = formIndex[f]?.first(where: { $0.form.lowercased() == t }),
+           let w = byID[hit.verbWordID] {
+            return (w, "форма глагола «\(w.pt)»")
+        }
+        if let i = inflectedExact[t]?.first { return (words[i], "форма слова «\(words[i].pt)»") }
+        if let i = foldedPTMap[f]?.first { return (words[i], "") }
+        if let hit = formIndex[f]?.first, let w = byID[hit.verbWordID] {
+            return (w, "форма глагола «\(w.pt)»")
+        }
+        if let i = inflectedFolded[f]?.first { return (words[i], "форма слова «\(words[i].pt)»") }
+
+        // Глагол с местоимением через дефис: «chama-se», «levantei-me», «comprá-lo».
+        let parts = t.split(separator: "-").map(String.init)
+        if parts.count >= 2, let first = parts.first, !first.isEmpty, Inflection.clitics.contains(parts[1]) {
+            var candidates: [String] = []
+            if ["lo", "la", "los", "las"].contains(parts[1]) {
+                candidates.append(contentsOf: Inflection.infinitivesBeforeLo(first))
+            }
+            candidates.append(first)
+            for c in candidates {
+                if let found = lookupToken(c) {
+                    let w = found.word
+                    let isVerb = w.isVerb
+                    return (w, isVerb ? "форма глагола «\(w.pt)»" : found.hint)
+                }
+            }
+        }
+        return nil
+    }
+
+    /// Ищет выражение из нескольких слов («bom dia», «pequeno-almoço») по тексту без диакритики.
+    func lookupPhrase(_ tokens: [String]) -> Word? {
+        if tokens.count < 2 { return nil }
+        let key = TextUtil.fold(tokens.joined(separator: " "))
+        guard let list = foldedPTMap[key] else { return nil }
+        for i in list where words[i].pt.contains(" ") || words[i].pt.contains("-") {
+            return words[i]
+        }
+        return nil
     }
 
     // MARK: - Поиск
@@ -199,7 +319,7 @@ final class DictionaryIndex {
 
         if let hits = formIndex[q] {
             for h in hits {
-                if let i = words.firstIndex(where: { $0.id == h.verbWordID }) {
+                if let i = indexByID[h.verbWordID] {
                     let label = h.personLabel.isEmpty ? "" : ", " + h.personLabel
                     hints[i] = "форма «\(h.form)» — \(h.tenseName)\(label)"
                     let current = scores[i] ?? 0

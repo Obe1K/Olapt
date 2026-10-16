@@ -30,6 +30,8 @@ struct PackEntry: Codable {
     var topic: String?
     var br: String?
     var note: String?
+    /// Уровень CEFR: "A1", "A2", "B1"… (необязательно)
+    var lv: String?
 }
 
 /// Краткая информация о словаре для экрана «Словари».
@@ -57,6 +59,8 @@ struct Word: Identifiable, Hashable {
     var note: String
     var translations: [String: [String]]
     var isCustom: Bool
+    /// Уровень CEFR («A1», «A2», «B1») или пустая строка.
+    var level: String = ""
 
     static func makeID(pt: String, pos: String) -> String {
         return pt.lowercased() + "|" + pos

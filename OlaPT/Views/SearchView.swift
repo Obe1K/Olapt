@@ -6,6 +6,7 @@ struct SearchView: View {
     @EnvironmentObject var model: AppModel
     @State private var query = ""
     @State private var showEditor = false
+    @State private var dictionaryTerm: IdentifiedTerm?
 
     private var trimmedQuery: String {
         return query.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -38,6 +39,9 @@ struct SearchView: View {
         .sheet(isPresented: $showEditor) {
             CustomWordEditor(prefill: trimmedQuery)
         }
+        .sheet(item: $dictionaryTerm) { term in
+            SystemDictionaryView(term: term.text)
+        }
     }
 
     // MARK: Секции
@@ -55,7 +59,24 @@ struct SearchView: View {
         }
     }
 
+    @ViewBuilder
     private var topicsSection: some View {
+        if !model.index.levels.isEmpty {
+            Section(header: Text("Обзор по уровням")) {
+                ForEach(model.index.levels, id: \.self) { level in
+                    NavigationLink {
+                        LevelTopicsView(level: level)
+                    } label: {
+                        HStack {
+                            Text(Levels.title(level))
+                            Spacer()
+                            Text("\(model.index.words(inLevel: level).count)")
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                }
+            }
+        }
         Section(header: Text("Обзор по темам")) {
             ForEach(model.index.topics) { topic in
                 NavigationLink {
@@ -76,9 +97,14 @@ struct SearchView: View {
     private var resultsSection: some View {
         let found = results
         if found.isEmpty {
-            Section {
+            Section(footer: Text("Словарь iOS работает без интернета, если он загружен: при первом открытии нажмите «Управлять» и скачайте, например, «Português — English».")) {
                 EmptyHint(title: "Ничего не найдено",
-                          message: "Проверьте написание или добавьте слово в свой словарь.")
+                          message: "Проверьте написание, посмотрите слово в словаре iOS или добавьте его в свой словарь.")
+                Button {
+                    dictionaryTerm = IdentifiedTerm(text: trimmedQuery)
+                } label: {
+                    Label("Посмотреть «\(trimmedQuery)» в словаре iOS", systemImage: "character.book.closed")
+                }
                 Button {
                     showEditor = true
                 } label: {
@@ -97,11 +123,137 @@ struct SearchView: View {
             }
             Section {
                 Button {
+                    dictionaryTerm = IdentifiedTerm(text: trimmedQuery)
+                } label: {
+                    Label("Посмотреть в словаре iOS", systemImage: "character.book.closed")
+                }
+                Button {
                     showEditor = true
                 } label: {
                     Label("Нет нужного слова? Добавить своё", systemImage: "plus.circle")
                 }
             }
+        }
+    }
+}
+
+// MARK: - Наборы по уровням
+
+enum Levels {
+    static func title(_ level: String) -> String {
+        switch level {
+        case "A1": return "A1 — начальный"
+        case "A2": return "A2 — элементарный"
+        case "B1": return "B1 — средний"
+        case "B2": return "B2 — выше среднего"
+        default: return level
+        }
+    }
+}
+
+struct LevelsView: View {
+    @EnvironmentObject var model: AppModel
+
+    var body: some View {
+        List {
+            Section(footer: Text("Уровни по шкале CEFR. Откройте уровень и выберите тему, чтобы создать коллекцию поменьше, или возьмите все слова уровня сразу.")) {
+                ForEach(model.index.levels, id: \.self) { level in
+                    NavigationLink {
+                        LevelTopicsView(level: level)
+                    } label: {
+                        HStack {
+                            Text(Levels.title(level))
+                            Spacer()
+                            Text("\(model.index.words(inLevel: level).count)")
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                }
+            }
+        }
+        .navigationTitle("По уровням")
+    }
+}
+
+struct LevelTopicsView: View {
+    @EnvironmentObject var model: AppModel
+    let level: String
+
+    var body: some View {
+        let groups = model.index.topics(inLevel: level)
+        let all = model.index.words(inLevel: level)
+        List {
+            Section {
+                NavigationLink {
+                    WordSetView(title: "Уровень \(level)", collectionName: "Уровень \(level)", words: all)
+                } label: {
+                    HStack {
+                        Text("Все слова уровня")
+                        Spacer()
+                        Text("\(all.count)")
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
+            Section(header: Text("По темам")) {
+                ForEach(groups, id: \.topic.id) { g in
+                    NavigationLink {
+                        WordSetView(title: "\(level) · \(g.topic.name)",
+                                    collectionName: "\(level) · \(g.topic.name)",
+                                    words: g.words)
+                    } label: {
+                        HStack {
+                            Text(g.topic.name)
+                            Spacer()
+                            Text("\(g.words.count)")
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                }
+            }
+        }
+        .navigationTitle(Levels.title(level))
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+/// Набор слов с кнопкой «Создать коллекцию».
+struct WordSetView: View {
+    @EnvironmentObject var model: AppModel
+    let title: String
+    let collectionName: String
+    let words: [Word]
+    @State private var createdMessage: String?
+
+    var body: some View {
+        List {
+            Section {
+                Button {
+                    let created = model.createCollection(name: collectionName, wordIDs: words.map { $0.id })
+                    createdMessage = "Коллекция «\(created.name)» создана: \(created.wordIDs.count) \(Plural.words(created.wordIDs.count)). Найдите её на вкладке «Коллекции»."
+                } label: {
+                    Label("Создать коллекцию из набора", systemImage: "rectangle.stack.badge.plus")
+                }
+            }
+            Section(header: Text("Слова (\(words.count))")) {
+                ForEach(words) { w in
+                    NavigationLink {
+                        WordCardView(word: w)
+                    } label: {
+                        WordRow(word: w)
+                    }
+                }
+            }
+        }
+        .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
+        .alert("Готово", isPresented: Binding(
+            get: { createdMessage != nil },
+            set: { if !$0 { createdMessage = nil } }
+        )) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(createdMessage ?? "")
         }
     }
 }

@@ -6,6 +6,7 @@ struct CollectionsView: View {
     @EnvironmentObject var model: AppModel
     @State private var showNew = false
     @State private var newName = ""
+    @State private var showScan = false
 
     var body: some View {
         List {
@@ -40,15 +41,35 @@ struct CollectionsView: View {
                 }
             }
 
+            Section {
+                Button {
+                    showScan = true
+                } label: {
+                    Label("Слова из фото или текста", systemImage: "text.viewfinder")
+                }
+                .accessibilityIdentifier("open-scan")
+            }
+
             Section(header: Text("Готовые наборы")) {
                 NavigationLink {
                     TopicsView()
                 } label: {
                     Label("Наборы слов по темам", systemImage: "square.grid.2x2")
                 }
+                if !model.index.levels.isEmpty {
+                    NavigationLink {
+                        LevelsView()
+                    } label: {
+                        Label("Наборы по уровням (A1, A2…)", systemImage: "chart.bar")
+                    }
+                }
             }
         }
         .navigationTitle("Коллекции")
+        .sheet(isPresented: $showScan) {
+            PhotoWordsView(collectionID: nil)
+                .environmentObject(model)
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
@@ -99,6 +120,7 @@ struct CollectionDetailView: View {
     let collectionID: UUID
 
     @State private var showAdd = false
+    @State private var showScan = false
     @State private var showRename = false
     @State private var renameText = ""
     @State private var confirmDelete = false
@@ -179,6 +201,11 @@ struct CollectionDetailView: View {
                 } label: {
                     Label("Добавить слова", systemImage: "plus.circle")
                 }
+                Button {
+                    showScan = true
+                } label: {
+                    Label("Слова из фото или текста", systemImage: "text.viewfinder")
+                }
             }
         }
         .navigationTitle(c.name)
@@ -190,6 +217,11 @@ struct CollectionDetailView: View {
                         showAdd = true
                     } label: {
                         Label("Добавить слова", systemImage: "plus")
+                    }
+                    Button {
+                        showScan = true
+                    } label: {
+                        Label("Слова из фото или текста", systemImage: "text.viewfinder")
                     }
                     Button {
                         renameText = c.name
@@ -209,6 +241,10 @@ struct CollectionDetailView: View {
         }
         .sheet(isPresented: $showAdd) {
             AddWordsView(collectionID: c.id)
+        }
+        .sheet(isPresented: $showScan) {
+            PhotoWordsView(collectionID: c.id)
+                .environmentObject(model)
         }
         .alert("Переименовать", isPresented: $showRename) {
             TextField("Название", text: $renameText)

@@ -68,6 +68,8 @@ def parse_lexicon():
                         e["f"] = t[2:]
                     elif t.startswith("pl="):
                         e["pl"] = t[3:]
+                    elif t in ("A1", "A2", "B1", "B2"):
+                        e["lv"] = t
                     else:
                         raise SystemExit("Неизвестный признак '%s' в %s" % (t, where))
                 if pos == "adj" and "f" not in e and pt.endswith("o"):
