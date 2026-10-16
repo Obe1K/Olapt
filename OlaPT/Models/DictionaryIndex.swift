@@ -165,8 +165,8 @@ final class DictionaryIndex {
         // (у них берём саму форму без местоимения: «sento-me» → «sento», «me sente» → «sente»),
         // чтобы при совпадении первой находилась невозвратная форма.
         var forms: [String: [VerbFormHit]] = [:]
-        let ordered = verbs.verbs.filter { !$0.reflexive } + verbs.verbs.filter { $0.reflexive }
-        for v in ordered {
+        let verbOrder = verbs.verbs.filter { !$0.reflexive } + verbs.verbs.filter { $0.reflexive }
+        for v in verbOrder {
             func add(_ rawForm: String, tenseName: String, label: String) {
                 var form = rawForm
                 if v.reflexive {
