@@ -8,8 +8,34 @@ enum Inflection {
     /// Местоимения, которые пишутся через дефис после глагола.
     static let clitics: Set<String> = [
         "me", "te", "se", "nos", "vos", "lhe", "lhes",
-        "o", "a", "os", "as", "lo", "la", "los", "las", "no", "na", "nos", "nas"
+        "o", "a", "os", "as", "lo", "la", "los", "las", "no", "na", "nas",
+        // слитные: me + o = mo, lhe + a = lha…
+        "mo", "ma", "mos", "mas", "to", "ta", "tos", "tas", "lho", "lha", "lhos", "lhas"
     ]
+
+    /// Распространённые варианты форм, которых нет в таблицах спряжения.
+    static let verbAliases: [String: String] = [
+        "oiço": "ouvir", "oiça": "ouvir", "oiças": "ouvir", "oiçamos": "ouvir", "oiçam": "ouvir",
+        "doi": "doer"
+    ]
+
+    private static let irregularSuperlatives: [String: String] = [
+        "facílimo": "fácil", "dificílimo": "difícil", "paupérrimo": "pobre", "boníssimo": "bom",
+        "amabilíssimo": "amável", "agradabilíssimo": "agradável", "utilíssimo": "útil"
+    ]
+
+    /// Возможные исходные формы для превосходной степени: «lindíssimas» → lindo, linde, lind…
+    static func superlativeBases(_ word: String) -> [String] {
+        var w = word.lowercased()
+        if w.hasSuffix("s") { w.removeLast() }
+        if w.hasSuffix("a") { w = String(w.dropLast()) + "o" }   // lindíssima → lindíssimo
+        if let irr = irregularSuperlatives[w] { return [irr] }
+        guard w.hasSuffix("íssimo"), w.count > 7 else { return [] }
+        var stem = String(w.dropLast(6))
+        if stem.hasSuffix("qu") { stem = String(stem.dropLast(2)) + "c" }   // riquíssimo → rico
+        if stem.hasSuffix("gu") { stem = String(stem.dropLast(2)) + "g" }   // larguíssimo → largo
+        return [stem + "o", stem + "e", stem, stem + "a"]
+    }
 
     /// Все формы слова, кроме исходной: множественное число, женский род, женский род во мн. числе.
     static func forms(of w: Word) -> [String] {

@@ -161,14 +161,30 @@ final class DictionaryIndex {
             fTr.append(folded)
         }
 
-        // Индекс форм глаголов: «falou» → falar
+        // Индекс форм глаголов: «falou» → falar. Сначала обычные глаголы, потом возвратные
+        // (у них берём саму форму без местоимения: «sento-me» → «sento», «me sente» → «sente»),
+        // чтобы при совпадении первой находилась невозвратная форма.
         var forms: [String: [VerbFormHit]] = [:]
-        for v in verbs.verbs where !v.reflexive {
-            func add(_ form: String, tenseName: String, label: String) {
+        let ordered = verbs.verbs.filter { !$0.reflexive } + verbs.verbs.filter { $0.reflexive }
+        for v in ordered {
+            func add(_ rawForm: String, tenseName: String, label: String) {
+                var form = rawForm
+                if v.reflexive {
+                    if form.contains(" ") {
+                        // проклиза: «me sente» → «sente»
+                        form = String(form.split(separator: " ").last ?? "")
+                    }
+                    if let dash = form.firstIndex(of: "-") {
+                        // энклиза и мезоклиза: «sento-me» → «sento», «sentar-se-á» → «sentar»
+                        form = String(form[..<dash])
+                    }
+                }
                 let key = TextUtil.fold(form)
                 if key.isEmpty || key.contains(" ") { return }
                 var list = forms[key] ?? []
-                if list.contains(where: { $0.verbWordID == v.wordID }) { return }
+                // Одна и та же форма глагола — один раз; разные формы с одинаковым написанием без
+                // ударений (falamos / falámos) храним обе, чтобы различать их по диакритике.
+                if list.contains(where: { $0.verbWordID == v.wordID && $0.form == form }) { return }
                 list.append(VerbFormHit(verbWordID: v.wordID, infinitive: v.inf,
                                         tenseName: tenseName, personLabel: label, form: form))
                 forms[key] = list
@@ -250,11 +266,30 @@ final class DictionaryIndex {
             return (w, "форма глагола «\(w.pt)»")
         }
         if let i = inflectedExact[t]?.first { return (words[i], "форма слова «\(words[i].pt)»") }
-        if let i = foldedPTMap[f]?.first { return (words[i], "") }
-        if let hit = formIndex[f]?.first, let w = byID[hit.verbWordID] {
-            return (w, "форма глагола «\(w.pt)»")
+
+        // Без учёта диакритики сравниваем только слова, в которых её нет совсем (её потеряли
+        // при наборе или распознавании: «voce», «telemovel»). Слово с «ç», «ã», «é» и т. п.
+        // так не сравниваем, иначе «tranças» (косы) превращается в «trancas» (от trancar).
+        let hasMarks = t.folding(options: [.diacriticInsensitive], locale: nil) != t
+        if !hasMarks {
+            if let i = foldedPTMap[f]?.first { return (words[i], "") }
+            if let hit = formIndex[f]?.first, let w = byID[hit.verbWordID] {
+                return (w, "форма глагола «\(w.pt)»")
+            }
+            if let i = inflectedFolded[f]?.first { return (words[i], "форма слова «\(words[i].pt)»") }
         }
-        if let i = inflectedFolded[f]?.first { return (words[i], "форма слова «\(words[i].pt)»") }
+
+        // Другие написания форм: «oiço» = «ouço» (ouvir).
+        if let inf = Inflection.verbAliases[t], let i = exactPT[inf]?.first {
+            return (words[i], "форма глагола «\(words[i].pt)»")
+        }
+
+        // Превосходная степень: «lindíssimo» → lindo, «tardíssimo» → tarde, «facílimo» → fácil.
+        for base in Inflection.superlativeBases(t) {
+            if let i = exactPT[base]?.first, words[i].pos == "adj" || words[i].pos == "adv" {
+                return (words[i], "превосходная степень от «\(words[i].pt)»")
+            }
+        }
 
         // Старая орфография: «acção», «óptimo», «director».
         let modern = TextUtil.modernSpelling(t)
@@ -336,10 +371,14 @@ final class DictionaryIndex {
         }
 
         if let hits = formIndex[q] {
+            let typed = query.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
             for h in hits {
                 if let i = indexByID[h.verbWordID] {
                     let label = h.personLabel.isEmpty ? "" : ", " + h.personLabel
-                    hints[i] = "форма «\(h.form)» — \(h.tenseName)\(label)"
+                    // Если введено с ударением («falámos»), показываем именно эту форму.
+                    if hints[i] == nil || h.form.lowercased() == typed {
+                        hints[i] = "форма «\(h.form)» — \(h.tenseName)\(label)"
+                    }
                     let current = scores[i] ?? 0
                     if current < 95 { scores[i] = 95 }
                 }

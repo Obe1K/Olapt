@@ -381,4 +381,39 @@ final class ScreenshotTests: XCTestCase {
         tap(a1, "open A1")
         shot("63_level_A1_topics")
     }
+
+    /// Текст с трудными случаями: ç, превосходная степень, возвратный глагол, «oiço», старая орфография.
+    func testG_ScanTextLemmas() {
+        app.terminate()
+        app.launchArguments += ["-uitest-scan-sample"]
+        app.launch()
+        Thread.sleep(forTimeInterval: 1.5)
+        tapTab("Коллекции")
+        let open = app.buttons["open-scan"]
+        scrollUntilVisible(open)
+        tap(open, "open scan")
+        tap(app.buttons["scan-sample-text"], "sample text")
+        _ = app.staticTexts["scan-summary"].waitForExistence(timeout: 10)
+        shot("58_scan_text_lemmas")
+        let expectations: [(String, String)] = [
+            ("tranças", "trança"), ("franja", ""), ("penteado", ""), ("oval", ""),
+            ("lindíssima", "lindo"), ("Sentei-me", "sentar-se"), ("oiço", "ouvir"),
+            ("acção", "ação"), ("Falámos", "falar")
+        ]
+        for (text, lemma) in expectations {
+            let chip = app.buttons["scan-chip-" + text]
+            if chip.waitForExistence(timeout: 3) {
+                let label = chip.label
+                if label.contains("нет в словаре") {
+                    note("CHECK FAILED: " + text + " not in dictionary")
+                } else if !lemma.isEmpty && !label.contains("словарная форма " + lemma) {
+                    note("CHECK FAILED: " + text + " -> " + label)
+                } else {
+                    note("CHECK ok: " + text + " -> " + label)
+                }
+            } else {
+                note("CHECK FAILED: chip " + text + " missing")
+            }
+        }
+    }
 }

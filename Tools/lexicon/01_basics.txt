@@ -184,11 +184,11 @@ nunca | adv A1 | never | никогда
 às vezes | adv A1 | sometimes | иногда
 já | adv A1 | already | уже
 ainda | adv A1 | still, yet | ещё, всё ещё
-segunda-feira | n f A1 | Monday | понедельник
-terça-feira | n f A1 | Tuesday | вторник
-quarta-feira | n f A1 | Wednesday | среда
-quinta-feira | n f A1 | Thursday | четверг
-sexta-feira | n f A1 | Friday | пятница
+segunda-feira | n f pl=segundas-feiras A1 | Monday | понедельник
+terça-feira | n f pl=terças-feiras A1 | Tuesday | вторник
+quarta-feira | n f pl=quartas-feiras A1 | Wednesday | среда
+quinta-feira | n f pl=quintas-feiras A1 | Thursday | четверг
+sexta-feira | n f pl=sextas-feiras A1 | Friday | пятница
 sábado | n m A1 | Saturday | суббота
 domingo | n m A1 | Sunday | воскресенье
 janeiro | n m A1 | January | январь

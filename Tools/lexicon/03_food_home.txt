@@ -1,7 +1,7 @@
 ## food | Еда и напитки
 comida | n f A1 | food | еда
 refeição | n f pl=refeições A2 | meal | приём пищи
-pequeno-almoço | n m A1 | breakfast | завтрак | café da manhã
+pequeno-almoço | n m pl=pequenos-almoços A1 | breakfast | завтрак | café da manhã
 almoço | n m A1 | lunch | обед
 lanche | n m A2 | snack, afternoon snack | перекус, полдник
 jantar | n m A1 | dinner | ужин

@@ -207,6 +207,12 @@ struct PhotoWordsView: View {
                         Label("Тестовое изображение", systemImage: "photo")
                     }
                     .accessibilityIdentifier("scan-sample")
+                    Button {
+                        process(text: "Ela tem tranças e franja. O penteado é oval.\nA casa é lindíssima. Sentei-me e oiço música.\nA acção decorre em Lisboa. Falámos ontem.")
+                    } label: {
+                        Label("Тестовый текст", systemImage: "text.alignleft")
+                    }
+                    .accessibilityIdentifier("scan-sample-text")
                 }
             }
         }

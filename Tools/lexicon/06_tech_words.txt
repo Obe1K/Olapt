@@ -7,7 +7,7 @@ ecrã | n m A2 | screen | экран | tela
 teclado | n m A2 | keyboard | клавиатура
 ficheiro | n m A2 | file | файл | arquivo
 internet | n f A1 | internet | интернет
-email | n m A1 | email | электронная почта
+email | n m pl=emails A1 | email | электронная почта
 mensagem | n f pl=mensagens A1 | message | сообщение
 palavra-passe | n f A2 | password | пароль | senha
 aplicação | n f pl=aplicações A2 | app, application | приложение | aplicativo

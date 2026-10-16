@@ -188,7 +188,7 @@ dela | pron A1 | her, of her | её (чей?) | | de + ela.
 deles | pron A2 | their (masculine) | их | | de + eles.
 delas | pron A2 | their (feminine) | их | | de + elas.
 vosso | det f=vossa A2 | your (plural) | ваш
-cujo | pron f=cuja B1 | whose | чей, который
+cujo | pron f=cuja pl=cujos B1 | whose | чей, который
 o senhor | phrase A1 | you (formal, to a man) | Вы (вежливо, к мужчине) | | Вежливое обращение: «O senhor quer café?»
 a senhora | phrase A1 | you (formal, to a woman) | Вы (вежливо, к женщине)
 algum | det f=alguma pl=alguns A1 | some, any | какой-то, некоторый
@@ -248,7 +248,7 @@ disso | prep A2 | of that (de + isso) | (de + isso) об этом, о том
 daquilo | prep B1 | of that (de + aquilo) | (de + aquilo)
 nisto | prep B1 | in this (em + isto) | (em + isto)
 nisso | prep B1 | in that (em + isso) | (em + isso)
-àquele | prep B1 | to that (a + aquele) | (a + aquele)
+àquele | prep f=àquela B1 | to that (a + aquele) | (a + aquele)
 nele | prep B1 | in him, in it (em + ele) | (em + ele) в нём
 nela | prep B1 | in her, in it (em + ela) | (em + ela) в ней
 daqui | adv A2 | from here | отсюда
@@ -476,7 +476,7 @@ necessidade | n f B1 | need | необходимость
 obrigação | n f pl=obrigações B1 | obligation | обязанность
 responsabilidade | n f B1 | responsibility | ответственность
 segurança | n f A2 | safety, security | безопасность | | «O segurança» — охранник.
-risco | n m B1 | risk | риск
+risco | n m B1 | risk, line, scratch | риск, черта, царапина
 azar | n m B1 | bad luck | невезение | | «Que azar!» — какое невезение!
 acaso | n m B1 | chance | случай, случайность
 recordação | n f pl=recordações B1 | memory, souvenir | воспоминание, сувенир

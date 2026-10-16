@@ -1,0 +1,304 @@
+# Слова из учебников «Passo a Passo» и «Gramática Ativa 1», которых не хватало (полная сверка, добавлено в 1.1).
+
+## character | Внешность и характер
+penteado | n m A2 | hairstyle | причёска
+franja | n f A2 | fringe (hair), edge | чёлка, бахрома
+trança | n f A2 | plait, braid | коса (причёска)
+risca | n f A2 | stripe, parting (hair) | полоска, пробор | | «Risca ao meio» — прямой пробор, «risca ao lado» — косой пробор.
+meia-idade | n f A2 | middle age | средний возраст | | «De meia-idade» — средних лет.
+oval | adj pl=ovais A2 | oval | овальный
+amendoado | adj B1 | almond-shaped | миндалевидный
+sarda | n f B1 | freckle | веснушка
+bronzeado | adj B1 | tanned | загорелый
+descalço | adj B1 | barefoot | босой
+coitado | adj A2 | poor (pitiful) | бедный, бедняга | | «Coitado!» — бедняга!
+animado | adj A2 | lively, cheerful | оживлённый, весёлый
+agitado | adj B1 | rough, restless | бурный, беспокойный
+atento | adj B1 | attentive | внимательный
+desejoso | adj B1 | eager | жаждущий, желающий
+competente | adj B1 | competent | компетентный
+castanho-claro | adj f=castanha-clara pl=castanhos-claros A2 | light brown | светло-каштановый, светло-коричневый
+castanho-escuro | adj f=castanha-escura pl=castanhos-escuros A2 | dark brown | тёмно-каштановый, тёмно-коричневый
+azul-claro | adj pl=azuis-claros A2 | light blue | голубой, светло-синий
+azul-escuro | adj pl=azuis-escuros A2 | dark blue | тёмно-синий
+verde-claro | adj pl=verdes-claros A2 | light green | светло-зелёный
+
+## colors | Цвета
+tinto | adj A2 | red (wine) | красное (о вине) | | Только о вине: «vinho tinto».
+
+## home | Дом
+desarrumado | adj A2 | untidy | неубранный, в беспорядке
+arejado | adj B1 | airy | проветриваемый, просторный
+cesto | n m A2 | basket | корзина
+jarra | n f B1 | jug, vase | кувшин, ваза
+funil | n m pl=funis B1 | funnel | воронка
+escadote | n m B1 | stepladder | стремянка
+corrimão | n m pl=corrimãos B1 | handrail | перила
+gaiola | n f B1 | cage | клетка
+nódoa | n f B1 | stain | пятно | mancha
+palhinha | n f B1 | drinking straw | соломинка (для напитков) | canudo
+vestuário | n m B1 | clothing | одежда
+acessório | n m B1 | accessory | аксессуар
+automóvel | n m pl=automóveis A2 | car | автомобиль
+moto | n f A2 | motorbike | мотоцикл | | В Португалии говорят и «mota», и «moto».
+
+## verbs_home | Глаголы: дом и быт
+desarrumar | v A2 | to mess up | устраивать беспорядок
+sujar | v A2 | to make dirty | пачкать
+esfregar | v B1 | to scrub, to rub | тереть, оттирать
+entornar | v B1 | to spill | проливать
+coser | v B1 | to sew | шить | costurar
+lanchar | v A2 | to have a snack | перекусывать, полдничать
+rebocar | v B1 | to tow | буксировать
+
+## school | Учёба и язык
+completar | v A1 | to complete, to fill in | дополнять, заполнять | | В заданиях: «Complete as frases» — дополните предложения.
+assinalar | v B1 | to mark, to tick | отмечать
+relacionar | v B1 | to relate, to match | соотносить, связывать
+ordenar | v B1 | to put in order, to order | упорядочивать, приказывать
+conjugar | v B1 | to conjugate | спрягать
+unir | v B1 | to join | соединять
+reescrever | v B1 | to rewrite | переписывать
+consultar | v A2 | to consult, to look up | консультироваться, смотреть (в справочнике)
+ditar | v B1 | to dictate | диктовать
+narrar | v B1 | to narrate | рассказывать, повествовать
+distinguir | v B1 | to distinguish | различать
+bloco | n m A2 | block, notepad, unit | блок, блокнот, раздел
+ditado | n m B1 | dictation, saying | диктант, поговорка
+pronome | n m B1 | pronoun | местоимение
+preposição | n f pl=preposições B1 | preposition | предлог
+advérbio | n m B1 | adverb | наречие
+infinitivo | n m B1 | infinitive | инфинитив
+particípio | n m B1 | participle | причастие
+gerúndio | n m B1 | gerund | деепричастие, герундий
+imperativo | n m B1 | imperative | повелительное наклонение
+pretérito | n m B1 | past tense | прошедшее время
+conjugação | n f pl=conjugações B1 | conjugation | спряжение
+sujeito | n m B1 | subject, guy | подлежащее, тип (о человеке)
+contração | n f pl=contrações B1 | contraction | слияние, сокращение
+sílaba | n f B1 | syllable | слог
+vogal | n f pl=vogais B1 | vowel | гласная
+consoante | n f B1 | consonant | согласная
+cedilha | n f B1 | cedilla | седиль (знак под ç)
+til | n m pl=tis B1 | tilde | тильда (знак над ã, õ)
+aspas | n f B1 | quotation marks | кавычки
+travessão | n m pl=travessões B1 | dash | тире
+exclamação | n f pl=exclamações B1 | exclamation | восклицание | | «Ponto de exclamação» — восклицательный знак.
+pontuação | n f pl=pontuações B1 | punctuation | пунктуация
+antónimo | n m B1 | antonym | антоним | antônimo
+contexto | n m B1 | context | контекст
+conteúdo | n m B1 | content | содержание
+índice | n m B1 | index, table of contents | указатель, оглавление
+formal | adj B1 | formal | официальный
+informal | adj B1 | informal | неофициальный
+regular | adj B1 | regular | правильный, регулярный
+irregular | adj B1 | irregular | неправильный
+afirmativo | adj B1 | affirmative | утвердительный
+definido | adj B1 | definite, defined | определённый
+letivo | adj B1 | school (year) | учебный | | «Ano letivo» — учебный год.
+bilingue | adj B1 | bilingual | двуязычный | bilíngue
+intensivo | adj B1 | intensive | интенсивный
+oral | adj B1 | oral | устный
+elementar | adj B1 | elementary | элементарный
+falante | n mf B1 | speaker | носитель языка, говорящий | | «Falante nativo» — носитель языка.
+palestra | n f B1 | talk, lecture | лекция, доклад
+refeitório | n m B1 | canteen, refectory | столовая
+desenho | n m A2 | drawing, design | рисунок, чертёж
+gravura | n f B1 | picture, engraving | иллюстрация, гравюра
+afirmação | n f pl=afirmações B1 | statement | утверждение
+reflexo | n m B1 | reflection, reflex | отражение, рефлекс
+
+## people | Люди и семья
+atleta | n mf A2 | athlete | спортсмен
+futebolista | n mf B1 | footballer | футболист
+adversário | n m f=adversária B1 | opponent | соперник
+ajudante | n mf B1 | helper, assistant | помощник
+realizador | n m f=realizadora B1 | film director | режиссёр | diretor
+maestro | n m f=maestrina B1 | conductor | дирижёр
+inspetor | n m f=inspetora B1 | inspector | инспектор
+palhaço | n m B1 | clown | клоун
+moço | n m f=moça B1 | young man, lad | парень, юноша | | В Португалии звучит немного книжно; в Бразилии — обычное слово.
+coreano | adj A2 | Korean | корейский
+filipino | adj B1 | Filipino | филиппинский
+mediterrâneo | adj B1 | Mediterranean | средиземноморский
+ocidental | adj B1 | western | западный
+Tejo | n m A2 | Tagus | Тежу (река в Лиссабоне)
+
+## feelings | Чувства и абстрактные понятия
+acontecimento | n m B1 | event | событие
+anedota | n f B1 | joke, anecdote | анекдот
+convívio | n m B1 | get-together, socialising | общение, дружеская встреча
+encontro | n m A2 | meeting, date | встреча, свидание
+estadia | n f B1 | stay | пребывание | estada
+permanência | n f B1 | stay, permanence | пребывание, постоянство
+cortesia | n f B1 | courtesy | вежливость
+saudação | n f pl=saudações B1 | greeting | приветствие
+igualdade | n f B1 | equality | равенство
+incerteza | n f B1 | uncertainty | неуверенность
+ilusão | n f pl=ilusões B1 | illusion | иллюзия
+miséria | n f B1 | poverty, misery | нищета
+probabilidade | n f B1 | probability | вероятность
+proibição | n f pl=proibições B1 | ban | запрет
+rapidez | n f B1 | speed | быстрота
+reação | n f pl=reações B1 | reaction | реакция
+realização | n f pl=realizações B1 | achievement, direction (film) | осуществление, режиссура
+referência | n f B1 | reference | ссылка, отсылка
+frequência | n f B1 | frequency, attendance | частота, посещаемость
+circunstância | n f B1 | circumstance | обстоятельство
+duração | n f pl=durações B1 | duration | продолжительность
+edição | n f pl=edições B1 | edition | издание
+indicação | n f pl=indicações B1 | indication, directions | указание
+instalações | n f B1 | facilities | помещения, оборудование
+instituição | n f pl=instituições B1 | institution | учреждение
+instituto | n m B1 | institute | институт
+introdução | n f pl=introduções B1 | introduction | введение
+inauguração | n f pl=inaugurações B1 | opening, inauguration | открытие (торжественное)
+correspondência | n f B1 | correspondence, mail | переписка, корреспонденция
+composição | n f pl=composições B1 | composition | сочинение, состав
+debate | n m B1 | debate | дебаты, обсуждение
+discurso | n m B1 | speech | речь
+gestão | n f B1 | management | управление, менеджмент
+gesto | n m B1 | gesture | жест
+grito | n m B1 | shout, scream | крик
+símbolo | n m B1 | symbol | символ
+sorteio | n m B1 | draw, raffle | розыгрыш, лотерея
+união | n f pl=uniões B1 | union | союз
+atualidade | n f B1 | current affairs | актуальность, текущие события
+reportagem | n f B1 | report, feature | репортаж
+folheto | n m B1 | leaflet | буклет, листовка
+capa | n f B1 | cover, cape | обложка, плащ
+balão | n m pl=balões B1 | balloon | воздушный шар
+gama | n f B1 | range | ассортимент, диапазон
+filtro | n m B1 | filter | фильтр
+posse | n f B1 | possession | владение
+poço | n m B1 | well | колодец
+ciclo | n m B1 | cycle | цикл
+continente | n m A2 | continent, mainland | континент, материк | | «O Continente» — материковая Португалия (без островов).
+península | n f B1 | peninsula | полуостров
+cravo | n m B1 | carnation | гвоздика | | «Revolução dos Cravos» — «революция гвоздик» 1974 года.
+treino | n m A2 | training session | тренировка
+tostão | n m pl=tostões B1 | penny (old coin) | грош | | «Não ter um tostão» — не иметь ни гроша.
+comichão | n f pl=comichões B1 | itch | зуд
+antibiótico | n m B1 | antibiotic | антибиотик
+badminton | n m B1 | badminton | бадминтон
+pastel | n m pl=pastéis A2 | pastry, cake | пирожное, пирожок
+pizzaria | n f A2 | pizzeria | пиццерия
+padroeiro | n m f=padroeira B1 | patron saint | покровитель | | «Santo António» — покровитель Лиссабона.
+véspera | n f B1 | eve, day before | канун | | «Véspera de Natal» — сочельник.
+
+## adjectives | Прилагательные
+fixo | adj B1 | fixed | постоянный, фиксированный | | «Telefone fixo» — стационарный телефон.
+turístico | adj A2 | tourist | туристический
+fotográfico | adj B1 | photographic | фотографический
+máquina fotográfica | n f A2 | camera | фотоаппарат
+científico | adj B1 | scientific | научный
+doméstico | adj B1 | domestic, household | домашний
+extenso | adj B1 | extensive, long | обширный, длинный
+equivalente | adj B1 | equivalent | равноценный
+festivo | adj B1 | festive | праздничный
+incompleto | adj B1 | incomplete | неполный
+determinado | adj B1 | determined, certain | решительный, определённый
+apto | adj B1 | fit, able | пригодный, способный
+agudo | adj B1 | sharp, acute | острый
+marítimo | adj B1 | maritime, sea | морской
+meteorológico | adj B1 | weather | метеорологический | | «Boletim meteorológico» — сводка погоды.
+posterior | adj B1 | later, rear | последующий, задний
+prejudicial | adj B1 | harmful | вредный
+psicológico | adj B1 | psychological | психологический
+relevante | adj B1 | relevant | значимый
+respetivo | adj B1 | respective | соответствующий | respectivo
+restrito | adj B1 | restricted | ограниченный
+roto | adj B1 | torn | рваный
+triplo | adj B1 | triple | тройной
+ímpar | adj B1 | odd (number) | нечётный
+centésimo | adj B1 | hundredth | сотый
+
+## adverbs | Наречия, предлоги и союзы
+regularmente | adv B1 | regularly | регулярно
+relativamente | adv B1 | relatively | относительно
+donde | adv B1 | from where | откуда
+
+## verbs_more | Глаголы: дополнительные
+admirar | v B1 | to admire, to surprise | восхищаться, удивлять
+abranger | v B1 | to include, to cover | охватывать
+acrescentar | v B1 | to add | добавлять
+alargar | v B1 | to widen, to extend | расширять
+apaixonar-se | v B1 | to fall in love | влюбиться
+arquivar | v B1 | to file | помещать в архив
+atribuir | v B1 | to attribute, to award | приписывать, присуждать
+concorrer | v B1 | to compete, to apply | соревноваться, участвовать в конкурсе
+entrevistar | v B1 | to interview | брать интервью
+expressar | v B1 | to express | выражать
+formular | v B1 | to formulate | формулировать
+inaugurar | v B1 | to open, to inaugurate | торжественно открывать
+introduzir | v B1 | to introduce, to insert | вводить, вставлять
+julgar | v B1 | to judge, to think | судить, считать
+promover | v B1 | to promote | продвигать, повышать
+relatar | v B1 | to report | сообщать, докладывать
+residir | v B1 | to reside | проживать
+retribuir | v B1 | to return (a favour) | отвечать взаимностью, отплачивать
+romper | v B1 | to break, to tear | разрывать, рвать
+saudar | v B1 | to greet | приветствовать
+transmitir | v B1 | to broadcast, to transmit | передавать, транслировать
+variar | v B1 | to vary | меняться, разнообразить
+
+## grammar | Предлоги и слияния
+nalgum | prep f=nalguma B1 | in some (em + algum) | (em + algum) в каком-то
+
+## adjectives | Прилагательные
+aceso | adj B1 | lit, switched on | горящий, включённый
+acostumado | adj B1 | used to | привыкший
+correspondente | adj B1 | corresponding | соответствующий
+eleito | adj B1 | elected | избранный
+executivo | adj B1 | executive | исполнительный
+idêntico | adj B1 | identical | одинаковый
+olímpico | adj B1 | Olympic | олимпийский
+temporário | adj B1 | temporary | временный
+torrencial | adj pl=torrenciais B1 | torrential | проливной
+relativo | adj B1 | relative | относительный
+criminal | adj pl=criminais B1 | criminal | уголовный
+geográfico | adj B1 | geographical | географический
+gramatical | adj pl=gramaticais B1 | grammatical | грамматический
+irrelevante | adj B1 | irrelevant | неважный
+laboral | adj pl=laborais B1 | labour, work | трудовой
+simultâneo | adj B1 | simultaneous | одновременный
+vigésimo | adj B1 | twentieth | двадцатый
+trigésimo | adj B1 | thirtieth | тридцатый
+
+## adverbs | Наречия, предлоги и союзы
+corretamente | adv B1 | correctly | правильно
+respetivamente | adv B1 | respectively | соответственно
+
+## feelings | Чувства и абстрактные понятия
+autógrafo | n m B1 | autograph | автограф
+caixote | n m B1 | box, crate | ящик
+caça | n f B1 | hunting, game | охота, дичь
+congresso | n m B1 | congress, conference | съезд, конгресс
+convicção | n f pl=convicções B1 | conviction | убеждённость
+dirigente | n mf B1 | leader | руководитель
+excelência | n f B1 | excellence | превосходство | | «Vossa Excelência» — Ваше превосходительство (официальное обращение).
+karaoke | n m B1 | karaoke | караоке
+lente | n f B1 | lens | линза
+oração | n f pl=orações B1 | prayer, clause | молитва, предложение (в грамматике)
+ouvinte | n mf B1 | listener | слушатель
+part-time | n m B1 | part-time job | подработка, неполная занятость
+secretaria | n f B1 | (school or office) administration | канцелярия, секретариат | | Не путать с «secretária» — письменный стол, секретарша.
+assembleia | n f B1 | assembly | собрание, ассамблея | | «Assembleia da República» — парламент Португалии.
+assistência | n f B1 | assistance, audience | помощь, зрители
+autorização | n f pl=autorizações B1 | authorisation, permission | разрешение
+entidade | n f B1 | entity, body | организация, учреждение
+reticências | n f B1 | ellipsis (…) | многоточие
+temporal | n m pl=temporais B1 | storm | буря, непогода
+
+## verbs_more | Глаголы: дополнительные
+constituir | v B1 | to constitute, to set up | составлять, учреждать
+contribuir | v B1 | to contribute | вносить вклад
+possuir | v B1 | to own | обладать, владеть
+selecionar | v B1 | to select | выбирать, отбирать
+isolar | v B1 | to isolate | изолировать
+caracterizar | v B1 | to characterise | характеризовать
+constatar | v B1 | to note, to find | констатировать
+destacar | v B1 | to highlight, to stand out | выделять
+prolongar | v B1 | to extend | продлевать
+reforçar | v B1 | to reinforce | укреплять
+situar | v B1 | to place, to locate | располагать
