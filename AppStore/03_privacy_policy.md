@@ -24,8 +24,10 @@
 **4. Озвучка.**
 Произношение слов выполняется системным синтезатором речи iOS прямо на устройстве. Приложение не записывает звук и не использует микрофон.
 
-**5. Разрешения.**
-Приложение не запрашивает доступ к геолокации, контактам, фотографиям, камере, микрофону, уведомлениям или отслеживанию.
+**5. Камера, фото и разрешения.**
+Функция «Слова из фото» распознаёт текст на фотографии, скриншоте или снимке с камеры. Фото из галереи вы выбираете в системном окне iOS, и Приложение получает только выбранное изображение. Доступ к камере запрашивается, только когда вы сами нажимаете «Сфотографировать текст». Текст распознаётся прямо на устройстве встроенными средствами iOS; изображения не сохраняются и никуда не отправляются.
+
+Других разрешений Приложение не запрашивает: геолокация, контакты, микрофон, уведомления и отслеживание не используются.
 
 **6. Дети.**
 Приложение не собирает данные ни у кого, в том числе у детей младше 13 лет.
@@ -61,8 +63,10 @@ The App reads only the dictionary files you choose. Their contents are processed
 **4. Speech.**
 Word pronunciation uses the iOS built-in speech synthesizer on your device. The App does not record audio and does not use the microphone.
 
-**5. Permissions.**
-The App does not request access to location, contacts, photos, camera, microphone, notifications or tracking.
+**5. Camera, photos and permissions.**
+The "Words from a photo" feature recognises text in a photo, a screenshot or a camera shot. You pick a photo in the standard iOS picker, and the App receives only the image you chose. Camera access is requested only when you tap "Take a photo of text". Text is recognised on your device by built-in iOS technology; images are not stored and are not sent anywhere.
+
+The App requests no other permissions: location, contacts, microphone, notifications and tracking are not used.
 
 **6. Children.**
 The App does not collect data from anyone, including children under 13.
