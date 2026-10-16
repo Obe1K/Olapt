@@ -1,0 +1,196 @@
+# Дополнения после сверки с учебниками A1–A2 (добавлено в 1.1).
+
+## greetings | Приветствия и фразы
+até já | phrase A1 | see you in a moment | до скорого (увидимся через минуту)
+até breve | phrase A2 | see you soon | до скорого
+faz favor | phrase A1 | excuse me, please | будьте добры (чтобы привлечь внимание) | | Так подзывают официанта в Португалии.
+e tu | phrase A1 | and you? | а ты?
+bom trabalho | phrase A2 | have a good day at work | хорошей работы
+boas férias | phrase A2 | have a good holiday | хорошего отпуска
+as melhoras | phrase A2 | get well soon | выздоравливай(те) | | Пожелание больному.
+não há problema | phrase A2 | no problem | без проблем
+está combinado | phrase A2 | it's a deal | договорились
+estou | phrase A1 | hello (on the phone) | алло | alô | В Португалии так отвечают на звонок: «Estou? / Estou sim?»
+quem fala | phrase A2 | who's speaking? | кто говорит?
+queria | phrase A1 | I would like | я бы хотел(а) | | Вежливый заказ: «Queria um café, por favor».
+quanto é | phrase A1 | how much is it? | сколько это стоит?
+só estou a ver | phrase A2 | I'm just looking | я просто смотрю
+posso pagar com cartão | phrase A2 | can I pay by card? | можно оплатить картой?
+número de telefone | phrase A1 | phone number | номер телефона
+está calor | phrase A1 | it's hot | жарко
+está frio | phrase A1 | it's cold | холодно
+está sol | phrase A1 | it's sunny | солнечно
+está a chover | phrase A1 | it's raining | идёт дождь
+virar à direita | phrase A1 | to turn right | повернуть направо
+virar à esquerda | phrase A1 | to turn left | повернуть налево
+sempre em frente | phrase A1 | straight ahead | всё время прямо
+igualmente | adv B1 | likewise, equally | взаимно, также | | Ответ на пожелание: «Igualmente!» — и вам того же!
+cumprimentos | n m A2 | regards | привет, наилучшие пожелания | | В конце письма: «Com os melhores cumprimentos».
+
+## expressions | Устойчивые выражения
+estar a | phrase A1 | to be doing | делать (сейчас) | estar + gerúndio | «Estou a trabalhar» — я (сейчас) работаю.
+acabar de | phrase A2 | to have just done | только что (сделать) | | «Acabei de chegar» — я только что пришёл.
+deixar de | phrase A2 | to stop doing | перестать | | «Deixei de fumar» — я бросил курить.
+voltar a | phrase B1 | to do again | снова (сделать) | | «Voltei a ler» — я снова прочитал.
+cerca de | phrase B1 | about, approximately | около, примерно
+pelo contrário | phrase B1 | on the contrary | наоборот
+
+## verbs_more | Глаголы: дополнительные
+atender | v A2 | to answer (the phone), to serve (a customer) | отвечать (на звонок), обслуживать
+regressar | v A2 | to return | возвращаться
+tornar | v B1 | to make, to turn into | делать (каким-то), превращать
+tornar-se | v B1 | to become | становиться
+realizar | v B1 | to carry out, to achieve | осуществлять, проводить
+representar | v B1 | to represent | представлять, изображать
+utilizar | v B1 | to use | использовать
+garantir | v B1 | to guarantee, to ensure | гарантировать, обеспечивать
+defender | v B1 | to defend | защищать
+atingir | v B1 | to reach, to hit | достигать, задевать
+assumir | v B1 | to assume, to take on | брать на себя, принимать
+estabelecer | v B1 | to establish | устанавливать
+surgir | v B1 | to appear, to arise | появляться, возникать
+permanecer | v B1 | to remain | оставаться
+reduzir | v B1 | to reduce | сокращать, уменьшать
+alcançar | v B1 | to reach | достигать
+pretender | v B1 | to intend | намереваться
+decorrer | v B1 | to take place, to elapse | проходить, протекать
+distribuir | v B1 | to distribute | распределять, раздавать
+substituir | v B1 | to replace | заменять
+referir | v B1 | to mention, to refer | упоминать, ссылаться
+adiar | v B1 | to postpone | откладывать
+concentrar-se | v B1 | to concentrate | сосредоточиться
+afirmar | v B1 | to state | утверждать
+encostar | v B1 | to lean | прислонять
+simpatizar | v B1 | to like, to sympathise | симпатизировать
+suspeitar | v B1 | to suspect | подозревать
+esforçar-se | v B1 | to make an effort | стараться
+optar | v B1 | to opt | выбирать
+
+## feelings | Чувства и абстрактные понятия
+quotidiano | n m A2 | daily life | повседневная жизнь | cotidiano
+atividade | n f A2 | activity | деятельность, занятие
+ação | n f pl=ações B1 | action | действие
+movimento | n m B1 | movement | движение
+característica | n f B1 | characteristic | характеристика, особенность
+período | n m B1 | period | период
+lista | n f A2 | list | список
+origem | n f B1 | origin | происхождение
+início | n m A2 | beginning | начало
+expressão | n f pl=expressões B1 | expression | выражение
+localização | n f pl=localizações B1 | location | местоположение
+final | n m pl=finais A2 | end, final | конец, финал
+tabela | n f B1 | table, chart | таблица
+área | n f B1 | area | область, площадь
+matéria | n f B1 | subject matter, matter | материал (учебный), вещество
+instrução | n f pl=instruções B1 | instruction | инструкция
+prémio | n m A2 | prize, award | приз, премия | prêmio
+exceção | n f pl=exceções B1 | exception | исключение
+alteração | n f pl=alterações B1 | change | изменение
+modo | n m B1 | way, mode | способ, образ
+função | n f pl=funções B1 | function, role | функция, роль
+acento | n m B1 | accent (written) | ударение, знак ударения
+ponto | n m A2 | point, dot, full stop | точка, пункт
+amizade | n f A2 | friendship | дружба
+grupo | n m A2 | group | группа
+república | n f B1 | republic | республика
+sugestão | n f pl=sugestões B1 | suggestion | совет, предложение
+recado | n m A2 | message, errand | сообщение (через кого-то), поручение
+membro | n m B1 | member | член (группы)
+direção | n f pl=direções B1 | direction, management | направление, руководство
+título | n m B1 | title | заголовок, название, титул
+divisão | n f pl=divisões B1 | division, room | деление, комната
+facilidade | n f B1 | ease | лёгкость
+contrário | n m B1 | opposite | противоположность
+intenção | n f pl=intenções B1 | intention | намерение
+violência | n f B1 | violence | насилие
+organização | n f pl=organizações B1 | organisation | организация
+opção | n f pl=opções B1 | option | вариант, выбор
+comunicação | n f pl=comunicações B1 | communication | общение, связь
+posição | n f pl=posições B1 | position | позиция, положение
+termo | n m B1 | term, end | термин, окончание
+sistema | n m B1 | system | система
+processo | n m B1 | process | процесс
+produto | n m A2 | product | продукт, товар
+produção | n f pl=produções B1 | production | производство
+desenvolvimento | n m B1 | development | развитие
+presença | n f B1 | presence | присутствие
+ausência | n f B1 | absence | отсутствие
+base | n f B1 | base, basis | основа, база
+estreia | n f B1 | premiere | премьера
+revisão | n f pl=revisões B1 | review, revision, service | повторение, проверка, техосмотр
+inscrição | n f pl=inscrições B1 | registration | регистрация, запись
+licença | n f B1 | licence, permission, leave | разрешение, лицензия, отпуск
+ficha | n f B1 | form, record card, plug | анкета, карточка, вилка (электрическая)
+
+## people | Люди и семья
+dono | n m f=dona A2 | owner | владелец, хозяин
+dona | n f A2 | Mrs (title), owner | сеньора (обращение), хозяйка | | «Dona Maria» — уважительное обращение к женщине по имени.
+doutor | n m f=doutora A2 | doctor (title) | доктор (обращение) | | В Португалии так обращаются к людям с высшим образованием.
+agente | n mf B1 | agent, police officer | агент, полицейский
+primeiro-ministro | n m f=primeira-ministra B1 | prime minister | премьер-министр
+
+## adjectives | Прилагательные
+maior | adj A2 | bigger, larger, older | больший, старший | | Сравнительная степень от «grande».
+menor | adj B1 | smaller, younger | меньший, младший
+longo | adj A2 | long | длинный, долгий
+político | adj B1 | political | политический
+cultural | adj B1 | cultural | культурный
+histórico | adj B1 | historical, historic | исторический
+dependente | adj B1 | dependent | зависимый
+imenso | adj B1 | immense, a lot | огромный, очень много | | Разговорное: «Gosto imenso» — мне очень нравится.
+chocado | adj B1 | shocked | шокированный
+cuidadoso | adj B1 | careful | осторожный, заботливый
+afastado | adj B1 | remote, distant | отдалённый
+encarnado | adj B1 | red | красный | vermelho
+leal | adj B1 | loyal | верный, преданный
+impressionado | adj B1 | impressed | впечатлённый
+diário | adj B1 | daily | ежедневный
+específico | adj B1 | specific | конкретный, особый
+selvagem | adj B1 | wild | дикий
+azedo | adj B1 | sour | кислый
+cansativo | adj A2 | tiring | утомительный
+acessível | adj B1 | accessible, affordable | доступный
+habituado | adj B1 | used to | привыкший | acostumado
+fiel | adj B1 | faithful | верный
+admirado | adj B1 | surprised, amazed | удивлённый
+municipal | adj B1 | municipal | муниципальный
+breve | adj B1 | brief | краткий
+grisalho | adj B1 | grey (hair) | седой
+cor-de-laranja | adj A2 | orange | оранжевый
+
+## adverbs | Наречия, предлоги и союзы
+novamente | adv A2 | again | снова
+debaixo | adv A2 | underneath | внизу, под
+aonde | adv B1 | where (to) | куда
+
+## transport | Транспорт и путешествия
+transporte | n m A2 | transport | транспорт | | «Transportes públicos» — общественный транспорт.
+camioneta | n f B1 | coach | междугородний автобус | ônibus
+agência de viagens | n f A2 | travel agency | турагентство
+agência | n f B1 | agency, branch | агентство, отделение
+
+## nature | Природа и погода
+tufão | n m pl=tufões B1 | typhoon | тайфун
+
+## leisure | Досуг, спорт и культура
+clube | n m A2 | club | клуб
+ginástica | n f A2 | gymnastics, exercise | гимнастика, зарядка
+lotaria | n f B1 | lottery | лотерея | loteria
+telejornal | n m pl=telejornais B1 | TV news | теленовости
+consoada | n f B1 | Christmas Eve dinner | рождественский ужин (24 декабря)
+
+## school | Учёба и язык
+medicina | n f B1 | medicine | медицина
+cantina | n f B1 | canteen | столовая
+creche | n f B1 | crèche | ясли
+vírgula | n f B1 | comma | запятая
+
+## home | Дом
+horta | n f B1 | vegetable garden | огород
+
+## restaurant | В ресторане и кафе
+expresso | n m B1 | espresso | эспрессо | | В Португалии обычно просят «uma bica» (Лиссабон) или «um cimbalino» (Порту).
+
+## services | Банк, почта и услуги
+cheque | n m B1 | cheque | чек (банковский)
+cabo | n m B1 | cable, cape | кабель, мыс

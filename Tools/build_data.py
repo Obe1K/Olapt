@@ -47,7 +47,9 @@ def parse_lexicon():
                 if line.startswith("## "):
                     tid, tname = [x.strip() for x in line[3:].split("|", 1)]
                     topic = tid
-                    topics.append({"id": tid, "name": tname})
+                    # Тема может продолжаться в другом файле: добавляем её один раз.
+                    if not any(t["id"] == tid for t in topics):
+                        topics.append({"id": tid, "name": tname})
                     continue
                 if line.startswith("#"):
                     continue

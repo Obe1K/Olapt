@@ -1,152 +1,152 @@
 ## nature | Природа и погода
-natureza | n f | nature | природа
-sol | n m | sun | солнце
-chuva | n f | rain | дождь
-vento | n m | wind | ветер
-nuvem | n f pl=nuvens | cloud | облако
-neve | n f | snow | снег
-nevoeiro | n m | fog | туман
-trovoada | n f | thunderstorm | гроза
-temperatura | n f | temperature | температура
-céu | n m | sky | небо
-lua | n f | moon | луна
-estrela | n f | star | звезда
-terra | n f | earth, land | земля
-mundo | n m | world | мир
-mar | n m | sea | море
-rio | n m | river | река
-lago | n m | lake | озеро
-montanha | n f | mountain | гора
-serra | n f | mountain range | горный хребет
-floresta | n f | forest | лес
-árvore | n f | tree | дерево
-flor | n f pl=flores | flower | цветок
-erva | n f | grass, herb | трава
-areia | n f | sand | песок
-ilha | n f | island | остров
-campo | n m | countryside, field | деревня (сельская местность), поле
-pedra | n f | stone | камень
-fogo | n m | fire | огонь
-ar | n m | air | воздух
-onda | n f | wave | волна
-costa | n f | coast | побережье
-calor | n m | heat | жара
-frio | n m | cold | холод
-ambiente | n m | environment | окружающая среда
-bom tempo | n m | good weather | хорошая погода
-mau tempo | n m | bad weather | плохая погода
+natureza | n f A2 | nature | природа
+sol | n m A1 | sun | солнце
+chuva | n f A1 | rain | дождь
+vento | n m A1 | wind | ветер
+nuvem | n f pl=nuvens A1 | cloud | облако
+neve | n f A2 | snow | снег
+nevoeiro | n m A2 | fog | туман
+trovoada | n f A2 | thunderstorm | гроза
+temperatura | n f A2 | temperature | температура
+céu | n m A1 | sky | небо
+lua | n f A1 | moon | луна
+estrela | n f A1 | star | звезда
+terra | n f A2 | earth, land | земля
+mundo | n m A2 | world | мир
+mar | n m A1 | sea | море
+rio | n m A1 | river | река
+lago | n m A2 | lake | озеро
+montanha | n f A1 | mountain | гора
+serra | n f A2 | mountain range | горный хребет
+floresta | n f A2 | forest | лес
+árvore | n f A1 | tree | дерево
+flor | n f pl=flores A1 | flower | цветок
+erva | n f A2 | grass, herb | трава
+areia | n f A2 | sand | песок
+ilha | n f A2 | island | остров
+campo | n m A2 | countryside, field | деревня (сельская местность), поле
+pedra | n f A2 | stone | камень
+fogo | n m A2 | fire | огонь
+ar | n m A2 | air | воздух
+onda | n f A2 | wave | волна
+costa | n f A2 | coast | побережье
+calor | n m A1 | heat | жара
+frio | n m A1 | cold | холод
+ambiente | n m B1 | environment | окружающая среда
+bom tempo | n m A1 | good weather | хорошая погода
+mau tempo | n m A1 | bad weather | плохая погода
 
 ## animals | Животные
-animal | n m pl=animais | animal | животное
-cão | n m pl=cães | dog | собака | cachorro
-gato | n m | cat | кот, кошка
-cavalo | n m | horse | лошадь
-ovelha | n f | sheep | овца
-galinha | n f | hen, chicken | курица (птица)
-pássaro | n m | bird | птица
-coelho | n m | rabbit | кролик
-rato | n m | mouse, rat | мышь, крыса, компьютерная мышь | | Компьютерная мышь по-португальски тоже «rato» (в Бразилии говорят «mouse»).
-lobo | n m | wolf | волк
-urso | n m | bear | медведь
-leão | n m pl=leões | lion | лев
-macaco | n m | monkey | обезьяна
-abelha | n f | bee | пчела
-borboleta | n f | butterfly | бабочка
-mosquito | n m | mosquito | комар
-formiga | n f | ant | муравей
-cobra | n f | snake | змея
-tartaruga | n f | turtle | черепаха
-golfinho | n m | dolphin | дельфин
-baleia | n f | whale | кит
-lagosta | n f | lobster | омар
-caracol | n m pl=caracóis | snail | улитка
-pato | n m | duck | утка
-pombo | n m | pigeon | голубь
-gaivota | n f | seagull | чайка
-raposa | n f | fox | лиса
-veado | n m | deer | олень
-porco-espinho | n m | hedgehog | ёж
+animal | n m pl=animais A1 | animal | животное
+cão | n m pl=cães A1 | dog | собака | cachorro
+gato | n m A1 | cat | кот, кошка
+cavalo | n m A1 | horse | лошадь
+ovelha | n f A2 | sheep | овца
+galinha | n f A2 | hen, chicken | курица (птица)
+pássaro | n m A1 | bird | птица
+coelho | n m A2 | rabbit | кролик
+rato | n m A2 | mouse, rat | мышь, крыса, компьютерная мышь | | Компьютерная мышь по-португальски тоже «rato» (в Бразилии говорят «mouse»).
+lobo | n m A2 | wolf | волк
+urso | n m A2 | bear | медведь
+leão | n m pl=leões A2 | lion | лев
+macaco | n m A2 | monkey | обезьяна
+abelha | n f A2 | bee | пчела
+borboleta | n f A2 | butterfly | бабочка
+mosquito | n m A2 | mosquito | комар
+formiga | n f A2 | ant | муравей
+cobra | n f A2 | snake | змея
+tartaruga | n f A2 | turtle | черепаха
+golfinho | n m A2 | dolphin | дельфин
+baleia | n f A2 | whale | кит
+lagosta | n f A2 | lobster | омар
+caracol | n m pl=caracóis A2 | snail | улитка
+pato | n m A2 | duck | утка
+pombo | n m A2 | pigeon | голубь
+gaivota | n f A2 | seagull | чайка
+raposa | n f A2 | fox | лиса
+veado | n m A2 | deer | олень
+porco-espinho | n m B1 | hedgehog | ёж
 
 ## countries | Страны и национальности
-Portugal | n m | Portugal | Португалия
-Brasil | n m | Brazil | Бразилия
-Espanha | n f | Spain | Испания
-França | n f | France | Франция
-Alemanha | n f | Germany | Германия
-Itália | n f | Italy | Италия
-Inglaterra | n f | England | Англия
-Reino Unido | n m | United Kingdom | Великобритания
-Estados Unidos | n m | United States | Соединённые Штаты
-Rússia | n f | Russia | Россия
-Ucrânia | n f | Ukraine | Украина
-Polónia | n f | Poland | Польша | Polônia
-Europa | n f | Europe | Европа
-Lisboa | n f | Lisbon | Лиссабон
-Porto | n m | Porto | Порту
-Açores | n m | Azores | Азорские острова
-Madeira | n f | Madeira | Мадейра
-Algarve | n m | Algarve | Алгарве
-português | adj f=portuguesa | Portuguese | португальский, португалец
-brasileiro | adj f=brasileira | Brazilian | бразильский, бразилец
-inglês | adj f=inglesa | English | английский, англичанин
-russo | adj f=russa | Russian | русский, россиянин
-ucraniano | adj f=ucraniana | Ukrainian | украинский, украинец
-espanhol | adj f=espanhola | Spanish | испанский, испанец
-francês | adj f=francesa | French | французский, француз
-alemão | adj f=alemã | German | немецкий, немец
-italiano | adj f=italiana | Italian | итальянский, итальянец
-europeu | adj f=europeia | European | европейский, европеец
-americano | adj f=americana | American | американский, американец
-estrangeiro | adj f=estrangeira | foreign | иностранный
-idioma | n m | language | язык (как система)
-nacionalidade | n f | nationality | национальность, гражданство
+Portugal | n m A1 | Portugal | Португалия
+Brasil | n m A1 | Brazil | Бразилия
+Espanha | n f A1 | Spain | Испания
+França | n f A1 | France | Франция
+Alemanha | n f A1 | Germany | Германия
+Itália | n f A1 | Italy | Италия
+Inglaterra | n f A1 | England | Англия
+Reino Unido | n m A2 | United Kingdom | Великобритания
+Estados Unidos | n m A1 | United States | Соединённые Штаты
+Rússia | n f A1 | Russia | Россия
+Ucrânia | n f A1 | Ukraine | Украина
+Polónia | n f A2 | Poland | Польша | Polônia
+Europa | n f A2 | Europe | Европа
+Lisboa | n f A1 | Lisbon | Лиссабон
+Porto | n m A1 | Porto | Порту
+Açores | n m A2 | Azores | Азорские острова
+ilha da Madeira | n f A2 | Madeira (island) | остров Мадейра | | Сам остров обычно называют просто «a Madeira»; «madeira» со строчной — «древесина».
+Algarve | n m A2 | Algarve | Алгарве
+português | adj f=portuguesa A1 | Portuguese | португальский, португалец
+brasileiro | adj f=brasileira A1 | Brazilian | бразильский, бразилец
+inglês | adj f=inglesa A1 | English | английский, англичанин
+russo | adj f=russa A1 | Russian | русский, россиянин
+ucraniano | adj f=ucraniana A1 | Ukrainian | украинский, украинец
+espanhol | adj f=espanhola A1 | Spanish | испанский, испанец
+francês | adj f=francesa A1 | French | французский, француз
+alemão | adj f=alemã A1 | German | немецкий, немец
+italiano | adj f=italiana A1 | Italian | итальянский, итальянец
+europeu | adj f=europeia A2 | European | европейский, европеец
+americano | adj f=americana A1 | American | американский, американец
+estrangeiro | adj f=estrangeira A2 | foreign | иностранный
+idioma | n m A2 | language | язык (как система)
+nacionalidade | n f A2 | nationality | национальность, гражданство
 
 ## work | Работа и учёба
-trabalho | n m | work, job | работа
-emprego | n m | job | рабочее место, должность
-empresa | n f | company | компания
-escritório | n m | office | офис
-reunião | n f pl=reuniões | meeting | встреча, собрание
-chefe | n mf | boss | начальник
-patrão | n m pl=patrões | boss, employer | босс, работодатель
-empregado | n m f=empregada | employee | работник, служащий
-salário | n m | salary | зарплата
-contrato | n m | contract | контракт, договор
-reforma | n f | retirement | пенсия, выход на пенсию | aposentadoria
-desempregado | adj f=desempregada | unemployed | безработный
-profissão | n f pl=profissões | profession | профессия
-engenheiro | n m f=engenheira | engineer | инженер
-professor | n m f=professora | teacher | учитель, преподаватель
-aluno | n m f=aluna | pupil, student | ученик, учащийся
-estudante | n mf | student | студент
-aula | n f | class, lesson | урок, занятие
-exame | n m | exam | экзамен
-teste | n m | test | тест, контрольная
-livro | n m | book | книга
-caderno | n m | notebook | тетрадь
-caneta | n f | pen | ручка
-lápis | n m | pencil | карандаш
-papel | n m pl=papéis | paper | бумага
-folha | n f | sheet, leaf | лист
-dicionário | n m | dictionary | словарь
-gramática | n f | grammar | грамматика
-vocabulário | n m | vocabulary | словарный запас, лексика
-pergunta | n f | question | вопрос
-resposta | n f | answer | ответ
-exercício | n m | exercise | упражнение
-erro | n m | mistake | ошибка
-exemplo | n m | example | пример
-curso | n m | course | курс
-lição | n f pl=lições | lesson | урок (в учебнике)
-advogado | n m f=advogada | lawyer | юрист, адвокат
-motorista de táxi | n m | taxi driver | таксист
-programador | n m f=programadora | programmer | программист
-artista | n mf | artist | художник, артист
-escritor | n m f=escritora | writer | писатель
-cantor | n m f=cantora | singer | певец
-jornalista | n mf | journalist | журналист
-objetivo | n m | goal, objective | цель
-projeto | n m | project | проект
-problema | n m | problem | проблема
-solução | n f pl=soluções | solution | решение
-informação | n f pl=informações | information | информация
+trabalho | n m A1 | work, job | работа
+emprego | n m A2 | job | рабочее место, должность
+empresa | n f A2 | company | компания
+escritório | n m A1 | office | офис
+reunião | n f pl=reuniões A2 | meeting | встреча, собрание
+chefe | n mf A1 | boss | начальник
+patrão | n m pl=patrões A2 | boss, employer | босс, работодатель
+empregado | n m f=empregada A2 | employee | работник, служащий
+salário | n m A2 | salary | зарплата
+contrato | n m A2 | contract | контракт, договор
+reforma | n f B1 | retirement | пенсия, выход на пенсию | aposentadoria
+desempregado | adj f=desempregada A2 | unemployed | безработный
+profissão | n f pl=profissões A2 | profession | профессия
+engenheiro | n m f=engenheira A2 | engineer | инженер
+professor | n m f=professora A1 | teacher | учитель, преподаватель
+aluno | n m f=aluna A1 | pupil, student | ученик, учащийся
+estudante | n mf A1 | student | студент
+aula | n f A1 | class, lesson | урок, занятие
+exame | n m A1 | exam | экзамен
+teste | n m A1 | test | тест, контрольная
+livro | n m A1 | book | книга
+caderno | n m A1 | notebook | тетрадь
+caneta | n f A1 | pen | ручка
+lápis | n m A1 | pencil | карандаш
+papel | n m pl=papéis A1 | paper | бумага
+folha | n f A1 | sheet, leaf | лист
+dicionário | n m A1 | dictionary | словарь
+gramática | n f A2 | grammar | грамматика
+vocabulário | n m A2 | vocabulary | словарный запас, лексика
+pergunta | n f A1 | question | вопрос
+resposta | n f A1 | answer | ответ
+exercício | n m A1 | exercise | упражнение
+erro | n m A1 | mistake | ошибка
+exemplo | n m A1 | example | пример
+curso | n m A2 | course | курс
+lição | n f pl=lições A1 | lesson | урок (в учебнике)
+advogado | n m f=advogada A2 | lawyer | юрист, адвокат
+motorista de táxi | n m A2 | taxi driver | таксист
+programador | n m f=programadora A2 | programmer | программист
+artista | n mf A2 | artist | художник, артист
+escritor | n m f=escritora A2 | writer | писатель
+cantor | n m f=cantora A2 | singer | певец
+jornalista | n mf A2 | journalist | журналист
+objetivo | n m B1 | goal, objective | цель
+projeto | n m A2 | project | проект
+problema | n m A1 | problem | проблема
+solução | n f pl=soluções A2 | solution | решение
+informação | n f pl=informações A2 | information | информация

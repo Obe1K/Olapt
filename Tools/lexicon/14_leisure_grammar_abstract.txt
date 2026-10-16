@@ -1,0 +1,499 @@
+# Досуг, техника, время, числа, служебные слова, прилагательные, абстрактные понятия (добавлено в 1.1).
+
+## leisure | Досуг, спорт и культура
+tempo livre | n m A2 | free time | свободное время
+hobby | n m A2 | hobby | хобби
+basquetebol | n m A2 | basketball | баскетбол | basquete
+voleibol | n m A2 | volleyball | волейбол | vôlei
+natação | n f A2 | swimming | плавание
+ciclismo | n m A2 | cycling | велоспорт
+atletismo | n m B1 | athletics | лёгкая атлетика
+surf | n m A2 | surfing | сёрфинг
+golfe | n m B1 | golf | гольф
+ioga | n m A2 | yoga | йога
+corrida | n f A2 | running, race | бег, забег
+caminhada | n f A2 | walk, hike | прогулка, пеший поход
+jogador | n m f=jogadora A2 | player | игрок
+treinador | n m f=treinadora B1 | coach | тренер
+árbitro | n m B1 | referee | судья (спортивный)
+golo | n m A2 | goal | гол | gol
+campeonato | n m B1 | championship | чемпионат
+vitória | n f B1 | victory | победа
+derrota | n f B1 | defeat | поражение
+empate | n m B1 | draw | ничья
+adepto | n m f=adepta B1 | fan, supporter | болельщик | torcedor
+espetáculo | n m A2 | show, performance | спектакль, шоу
+peça de teatro | n f A2 | play | пьеса
+ópera | n f B1 | opera | опера
+bailado | n m B1 | ballet | балет | balé
+fado | n m A2 | fado | фаду (португальская песня) | | Традиционная музыка Португалии, внесена в список ЮНЕСКО.
+guitarra | n f A2 | guitar | гитара | violão | Есть и «guitarra portuguesa» — инструмент фаду.
+piano | n m A2 | piano | фортепиано
+violino | n m B1 | violin | скрипка
+banda | n f A2 | band | группа (музыкальная)
+orquestra | n f B1 | orchestra | оркестр
+arte | n f A2 | art | искусство
+pintura | n f A2 | painting | живопись, картина
+escultura | n f B1 | sculpture | скульптура
+azulejo | n m A2 | glazed tile | азулежу (расписная плитка) | | Один из символов Португалии.
+artesanato | n m B1 | handicrafts | ремёсла, изделия ручной работы
+romance | n m B1 | novel | роман
+conto | n m B1 | short story | рассказ
+poema | n m B1 | poem | стихотворение
+poesia | n f B1 | poetry | поэзия
+banda desenhada | n f B1 | comic | комикс | história em quadrinhos
+autor | n m f=autora B1 | author | автор
+personagem | n f B1 | character | персонаж
+série | n f A2 | series | сериал, серия
+canal | n m pl=canais A2 | channel, canal | канал
+rádio | n f A2 | radio | радио
+desenhos animados | n m A2 | cartoons | мультфильмы
+documentário | n m B1 | documentary | документальный фильм
+legenda | n f B1 | subtitle, caption | субтитр, подпись
+piquenique | n m A2 | picnic | пикник
+churrasco | n m A2 | barbecue | барбекю, шашлык
+xadrez | n m B1 | chess | шахматы
+puzzle | n m A2 | jigsaw puzzle | пазл | quebra-cabeça
+brinquedo | n m A2 | toy | игрушка
+boneca | n f A2 | doll | кукла
+parque de diversões | n m B1 | amusement park | парк аттракционов
+circo | n m B1 | circus | цирк
+festival | n m pl=festivais A2 | festival | фестиваль
+arraial | n m pl=arraiais B1 | street party | народное гулянье | | Летние праздники святых в Лиссабоне и Порту.
+santos populares | phrase B1 | popular saints festivities | праздники народных святых (июнь)
+Carnaval | n m A2 | carnival | карнавал
+Páscoa | n f A2 | Easter | Пасха
+Natal | n m A1 | Christmas | Рождество
+Ano Novo | n m A1 | New Year | Новый год
+passagem de ano | n f A2 | New Year's Eve | встреча Нового года | réveillon
+prenda | n f A2 | present, gift | подарок | presente
+convite | n m A2 | invitation | приглашение
+tradição | n f pl=tradições A2 | tradition | традиция
+cultura | n f A2 | culture | культура
+religião | n f pl=religiões B1 | religion | религия
+missa | n f B1 | mass | месса, церковная служба
+
+## tech | Технологии, связь и досуг
+tablet | n m A2 | tablet | планшет
+auscultadores | n m A2 | headphones | наушники | fones de ouvido
+pen | n f B1 | USB stick | флешка | pen drive
+wi-fi | n m A2 | Wi-Fi | вай-фай
+redes sociais | n f A2 | social media | соцсети
+link | n m A2 | link | ссылка
+utilizador | n m f=utilizadora B1 | user | пользователь | usuário
+iniciar sessão | phrase B1 | to log in | войти (в аккаунт) | fazer login
+pasta | n f A2 | folder, briefcase, paste | папка, портфель, паста
+anexo | n m B1 | attachment | вложение
+videochamada | n f B1 | video call | видеозвонок
+notificação | n f pl=notificações B1 | notification | уведомление
+atualização | n f pl=atualizações B1 | update | обновление
+inteligência artificial | n f B1 | artificial intelligence | искусственный интеллект
+robô | n m B1 | robot | робот
+tecnologia | n f A2 | technology | технология
+digital | adj B1 | digital | цифровой
+online | adj A2 | online | онлайн
+publicidade | n f B1 | advertising | реклама
+imprensa | n f B1 | press | пресса
+
+## time | Время, дни и месяцы
+século | n m B1 | century | век
+década | n f B1 | decade | десятилетие
+época | n f B1 | season, era, period | эпоха, сезон, время
+momento | n m A2 | moment | момент, миг
+madrugada | n f A2 | small hours, early morning | раннее утро, глубокая ночь
+fim de tarde | n m A2 | late afternoon | конец дня, ранний вечер
+anteontem | adv A2 | the day before yesterday | позавчера
+depois de amanhã | phrase A2 | the day after tomorrow | послезавтра
+ontem à noite | phrase A1 | last night | вчера вечером
+na semana passada | phrase A2 | last week | на прошлой неделе
+na próxima semana | phrase A2 | next week | на следующей неделе
+passado | adj A2 | past, last | прошлый
+passado | n m A2 | past | прошлое
+futuro | n m A2 | future | будущее
+dia útil | n m B1 | working day | рабочий день
+quinzena | n f B1 | fortnight | две недели
+trimestre | n m B1 | quarter (three months) | квартал (три месяца)
+diariamente | adv B1 | daily | ежедневно
+de vez em quando | phrase A2 | from time to time | время от времени
+raramente | adv A2 | rarely | редко
+frequentemente | adv B1 | frequently | часто
+normalmente | adv A2 | usually, normally | обычно
+geralmente | adv A2 | generally | как правило
+habitualmente | adv B1 | habitually | обычно, как правило
+ultimamente | adv A2 | lately | в последнее время
+recentemente | adv B1 | recently | недавно
+antigamente | adv A2 | in the old days | раньше, в старину
+atualmente | adv A2 | currently, nowadays | в настоящее время
+imediatamente | adv B1 | immediately | немедленно
+entretanto | adv B1 | meanwhile | тем временем
+enfim | adv B1 | anyway, at last | в общем, наконец
+em seguida | phrase A2 | next, then | затем, далее
+a seguir | phrase A2 | next, afterwards | потом, следующий
+por fim | phrase A2 | finally | в конце концов, наконец
+logo que | conj B1 | as soon as | как только
+assim que | conj B1 | as soon as | как только
+até que | conj B1 | until | пока не
+desde que | conj B1 | since, provided that | с тех пор как, при условии что
+já não | phrase A2 | no longer | уже не
+ainda não | phrase A1 | not yet | ещё не
+pontual | adj B1 | punctual | пунктуальный
+em ponto | phrase A2 | sharp (time) | ровно (о времени) | | «Às três em ponto» — ровно в три.
+e meia | phrase A1 | half past | половина (о времени) | | «São duas e meia» — половина третьего.
+e um quarto | phrase A2 | quarter past | четверть (после часа)
+menos um quarto | phrase A2 | quarter to | без четверти
+
+## numbers | Числа
+cento | n m A2 | hundred (in 101–199) | сто (в числах 101–199) | | «Cento e um» — сто один.
+trezentos | num A2 | three hundred | триста
+quatrocentos | num A2 | four hundred | четыреста
+seiscentos | num A2 | six hundred | шестьсот
+setecentos | num A2 | seven hundred | семьсот
+oitocentos | num A2 | eight hundred | восемьсот
+novecentos | num A2 | nine hundred | девятьсот
+mil milhões | phrase B1 | billion | миллиард | bilhão
+quarto | adj A2 | fourth | четвёртый
+quinto | adj A2 | fifth | пятый
+sexto | adj A2 | sixth | шестой
+sétimo | adj A2 | seventh | седьмой
+oitavo | adj A2 | eighth | восьмой
+nono | adj A2 | ninth | девятый
+décimo | adj A2 | tenth | десятый
+terço | n m B1 | third | треть
+dobro | n m B1 | double | двойное количество, вдвое больше
+par | n m A2 | pair, couple | пара
+quantidade | n f B1 | quantity | количество
+percentagem | n f B1 | percentage | процент | porcentagem
+por cento | phrase B1 | per cent | процентов
+centímetro | n m A2 | centimetre | сантиметр
+metro quadrado | n m B1 | square metre | квадратный метр
+meio | adj A2 | half | половина, пол- | | «Meio quilo» — полкило, «meia hora» — полчаса.
+
+## pronouns | Местоимения и вопросительные слова
+me | pron A1 | me | меня, мне
+te | pron A1 | you (object) | тебя, тебе
+se | pron A2 | oneself, himself, herself | себя, -ся
+nos | pron A1 | us | нас, нам
+lhe | pron A2 | to him, to her, to you | ему, ей, Вам
+lhes | pron A2 | to them, to you (plural) | им, Вам (мн. ч.)
+mim | pron A1 | me (after prepositions) | мне, меня (после предлогов) | | «Para mim» — для меня.
+ti | pron A1 | you (after prepositions) | тебе, тебя (после предлогов)
+si | pron B1 | you, oneself (after prepositions) | Вас, себя (после предлогов)
+comigo | pron A1 | with me | со мной
+contigo | pron A1 | with you | с тобой
+connosco | pron A2 | with us | с нами | conosco
+consigo | pron B1 | with you (formal), with oneself | с Вами, с собой
+convosco | pron B1 | with you (plural) | с вами
+dele | pron A1 | his, of him | его (чей?) | | de + ele: «o carro dele» — его машина.
+dela | pron A1 | her, of her | её (чей?) | | de + ela.
+deles | pron A2 | their (masculine) | их | | de + eles.
+delas | pron A2 | their (feminine) | их | | de + elas.
+vosso | det f=vossa A2 | your (plural) | ваш
+cujo | pron f=cuja B1 | whose | чей, который
+o senhor | phrase A1 | you (formal, to a man) | Вы (вежливо, к мужчине) | | Вежливое обращение: «O senhor quer café?»
+a senhora | phrase A1 | you (formal, to a woman) | Вы (вежливо, к женщине)
+algum | det f=alguma pl=alguns A1 | some, any | какой-то, некоторый
+nenhum | det f=nenhuma pl=nenhuns A2 | no, none | никакой, ни один
+todo | det f=toda A1 | all, whole | весь, целый
+tanto | det f=tanta A2 | so much, so many | столько, так много
+muito | det f=muita A1 | much, many, a lot of | много (+ сущ.)
+pouco | det f=pouca A1 | little, few | мало (+ сущ.)
+vários | det f=várias A2 | several | несколько
+qualquer | det pl=quaisquer A2 | any | любой
+ambos | det f=ambas B1 | both | оба
+tal | det B1 | such | такой
+qualquer coisa | phrase A2 | anything | что-нибудь, что угодно
+toda a gente | phrase A1 | everybody | все | todo mundo
+
+## grammar | Предлоги и слияния
+do | prep A1 | of the (de + o) | (de + o) из, от, о (+ м. р.)
+da | prep A1 | of the (de + a) | (de + a) из, от, о (+ ж. р.)
+dos | prep A1 | of the (de + os) | (de + os)
+das | prep A1 | of the (de + as) | (de + as)
+no | prep A1 | in the, on the (em + o) | (em + o) в, на
+na | prep A1 | in the, on the (em + a) | (em + a) в, на
+nos | prep A1 | in the, on the (em + os) | (em + os) в, на
+nas | prep A1 | in the, on the (em + as) | (em + as) в, на
+ao | prep A1 | to the (a + o) | (a + o) к, в
+aos | prep A1 | to the (a + os) | (a + os) к, в
+à | prep A1 | to the, at the (a + a) | (a + a) к, в | | «Vou à praia» — я иду на пляж.
+às | prep A1 | to the, at (a + as) | (a + as) к, в | | «Às duas horas» — в два часа.
+pelo | prep A2 | by the, through the (por + o) | (por + o) через, по, за
+pela | prep A2 | by the, through the (por + a) | (por + a) через, по, за
+pelos | prep A2 | by the (por + os) | (por + os)
+pelas | prep A2 | by the (por + as) | (por + as)
+num | prep A2 | in a (em + um) | (em + um) в (одном)
+numa | prep A2 | in a (em + uma) | (em + uma) в (одной)
+dum | prep B1 | of a (de + um) | (de + um)
+duma | prep B1 | of a (de + uma) | (de + uma)
+neste | prep A2 | in this (em + este) | (em + este) в этом
+nesta | prep A2 | in this (em + esta) | (em + esta) в этой
+nesse | prep A2 | in that (em + esse) | (em + esse) в этом, в том
+nessa | prep A2 | in that (em + essa) | (em + essa)
+naquele | prep A2 | in that (em + aquele) | (em + aquele) в том
+naquela | prep A2 | in that (em + aquela) | (em + aquela) в той
+deste | prep A2 | of this (de + este) | (de + este)
+desta | prep A2 | of this (de + esta) | (de + esta)
+desse | prep A2 | of that (de + esse) | (de + esse)
+dessa | prep A2 | of that (de + essa) | (de + essa)
+daquele | prep A2 | of that (de + aquele) | (de + aquele)
+daquela | prep A2 | of that (de + aquela) | (de + aquela)
+disto | prep A2 | of this (de + isto) | (de + isto) об этом
+disso | prep A2 | of that (de + isso) | (de + isso) об этом, о том
+daquilo | prep B1 | of that (de + aquilo) | (de + aquilo)
+nisto | prep B1 | in this (em + isto) | (em + isto)
+nisso | prep B1 | in that (em + isso) | (em + isso)
+àquele | prep B1 | to that (a + aquele) | (a + aquele)
+nele | prep B1 | in him, in it (em + ele) | (em + ele) в нём
+nela | prep B1 | in her, in it (em + ela) | (em + ela) в ней
+daqui | adv A2 | from here | отсюда
+dali | adv B1 | from there | оттуда
+
+## adverbs | Наречия, предлоги и союзы
+após | prep B1 | after | после
+através de | prep B1 | through | через, посредством
+acerca de | prep B1 | about | о, относительно
+em vez de | prep A2 | instead of | вместо
+apesar de | prep A2 | despite | несмотря на
+à frente de | prep A2 | in front of | впереди, перед
+por baixo de | prep B1 | under | под
+por cima de | prep B1 | over, above | над, поверх
+ao pé de | prep A2 | next to | рядом с
+à volta de | prep B1 | around | вокруг, около
+conforme | conj B1 | according to, as | согласно, по мере того как
+caso | conj B1 | in case, if | в случае если
+para que | conj B1 | so that | чтобы
+ainda que | conj B1 | even though | хотя, даже если
+no entanto | conj B1 | however | однако
+contudo | conj B1 | however | однако, тем не менее
+todavia | conj B1 | yet, however | однако
+além disso | phrase A2 | besides, moreover | кроме того
+aliás | adv B1 | in fact, by the way | более того, кстати
+por exemplo | phrase A1 | for example | например
+isto é | phrase B1 | that is | то есть
+afinal | adv B1 | after all | в конце концов, всё-таки
+de facto | phrase B1 | in fact | действительно, фактически | de fato
+na verdade | phrase A2 | actually, in fact | на самом деле
+por acaso | phrase B1 | by chance | случайно
+de qualquer forma | phrase B1 | anyway | в любом случае
+se calhar | phrase A2 | maybe, perhaps | может быть, наверное | talvez | Разговорное (Португалия).
+pelo menos | phrase A2 | at least | по крайней мере
+mais ou menos | phrase A1 | more or less | более-менее, так себе
+cada vez mais | phrase B1 | more and more | всё больше
+quer dizer | phrase A2 | I mean, that is | то есть, я имею в виду
+tão | adv A2 | so | так, настолько
+tal como | phrase B1 | just like | так же как
+também não | phrase A1 | neither, not either | тоже не
+já agora | phrase B1 | by the way | кстати | | Разговорное (Португалия).
+pronto | interj A2 | okay, well, that's it | ладно, ну вот, всё | | Очень частое разговорное слово в Португалии.
+pois é | phrase A2 | exactly, that's right | вот именно, да уж
+olhe | interj A2 | listen, look (formal) | послушайте | | Так начинают обращение: «Olhe, desculpe…»
+olha | interj A2 | listen, look | слушай, смотри
+realmente | adv A2 | really | действительно
+certamente | adv B1 | certainly | конечно, несомненно
+provavelmente | adv A2 | probably | вероятно
+felizmente | adv A2 | fortunately | к счастью
+infelizmente | adv A2 | unfortunately | к сожалению
+exatamente | adv A2 | exactly | точно, именно
+especialmente | adv B1 | especially | особенно
+principalmente | adv B1 | mainly | главным образом
+completamente | adv B1 | completely | полностью
+totalmente | adv B1 | totally | совершенно
+facilmente | adv B1 | easily | легко
+rapidamente | adv A2 | quickly | быстро
+lentamente | adv B1 | slowly | медленно
+sinceramente | adv B1 | honestly | честно говоря
+simplesmente | adv B1 | simply | просто
+diretamente | adv B1 | directly | прямо, непосредственно
+em cima | adv A2 | above, upstairs | наверху
+em baixo | adv A2 | below, downstairs | внизу
+atrás | adv A2 | behind | сзади, позади
+à frente | adv A2 | ahead, in front | впереди
+algures | adv B1 | somewhere | где-то
+em todo o lado | phrase A2 | everywhere | везде | em todo lugar
+em lado nenhum | phrase B1 | nowhere | нигде
+lado | n m A2 | side | сторона
+meio | n m A2 | middle, means | середина, средство
+fundo | n m B1 | bottom, back, fund | дно, глубина, фонд
+ponta | n f B1 | tip, end | кончик, конец
+interior | n m B1 | inside, inland | внутренняя часть, глубинка
+exterior | n m B1 | outside, abroad | внешняя сторона, заграница
+
+## adjectives | Прилагательные
+interessante | adj A1 | interesting | интересный
+agradável | adj A2 | pleasant | приятный
+desagradável | adj B1 | unpleasant | неприятный
+útil | adj A2 | useful | полезный
+inútil | adj B1 | useless | бесполезный
+prático | adj A2 | practical | практичный
+complicado | adj A2 | complicated | сложный
+óbvio | adj B1 | obvious | очевидный
+principal | adj A2 | main | главный
+essencial | adj B1 | essential | существенный
+básico | adj B1 | basic | базовый
+geral | adj B1 | general | общий
+especial | adj A2 | special | особый, особенный
+particular | adj B1 | private, particular | частный, особый
+público | adj A2 | public | общественный, государственный
+privado | adj B1 | private | частный
+pessoal | adj A2 | personal | личный
+social | adj B1 | social | социальный
+nacional | adj B1 | national | национальный
+internacional | adj B1 | international | международный
+natural | adj A2 | natural | естественный, натуральный
+real | adj B1 | real, royal | реальный, королевский
+correto | adj A2 | correct | правильный
+exato | adj B1 | exact | точный
+raro | adj B1 | rare | редкий
+comum | adj B1 | common | общий, обычный
+habitual | adj B1 | usual | привычный
+típico | adj A2 | typical | типичный
+popular | adj B1 | popular, folk | популярный, народный
+desconhecido | adj B1 | unknown | неизвестный
+atual | adj B1 | current | нынешний, актуальный
+recente | adj B1 | recent | недавний
+enorme | adj A2 | huge | огромный
+médio | adj B1 | medium, average | средний
+máximo | adj B1 | maximum | максимальный
+mínimo | adj B1 | minimum | минимальный
+total | adj B1 | total | общий, полный
+completo | adj A2 | complete, full | полный, законченный
+disponível | adj B1 | available | доступный, свободный
+gelado | adj A2 | ice-cold | ледяной, охлаждённый
+duro | adj A2 | hard | твёрдый, жёсткий
+mole | adj B1 | soft | мягкий, вялый
+macio | adj B1 | soft, smooth | мягкий (на ощупь)
+suave | adj B1 | gentle, mild | мягкий, нежный
+redondo | adj A2 | round | круглый
+quadrado | adj A2 | square | квадратный
+direito | adj A2 | straight, right | прямой, правый
+esquerdo | adj A2 | left | левый
+grosso | adj B1 | thick | толстый
+fino | adj B1 | thin, fine | тонкий, изысканный
+tranquilo | adj A2 | quiet, calm | спокойный, тихий
+vivo | adj A2 | alive, lively | живой
+morto | adj A2 | dead | мёртвый
+acordado | adj A2 | awake | бодрствующий, не спящий
+satisfeito | adj A2 | satisfied, full | довольный, сытый
+surpreendido | adj B1 | surprised | удивлённый | surpreso
+desiludido | adj B1 | disappointed | разочарованный | decepcionado
+envergonhado | adj B1 | embarrassed, ashamed | смущённый, пристыженный
+apaixonado | adj A2 | in love | влюблённый
+assustado | adj B1 | scared | испуганный
+entusiasmado | adj B1 | excited, enthusiastic | воодушевлённый
+ansioso | adj B1 | anxious, eager | тревожный, полный нетерпения
+aliviado | adj B1 | relieved | испытывающий облегчение
+irritado | adj B1 | irritated | раздражённый
+farto | adj B1 | fed up | сытый по горло | | «Estou farto!» — с меня хватит!
+grato | adj B1 | grateful | благодарный
+capaz | adj B1 | able, capable | способный
+obrigatório | adj B1 | compulsory | обязательный
+proibido | adj A2 | forbidden | запрещённый
+permitido | adj B1 | allowed | разрешённый
+gratuito | adj B1 | free of charge | бесплатный
+económico | adj B1 | economical, economic | экономичный, экономический | econômico
+pago | adj B1 | paid | платный, оплаченный
+injusto | adj B1 | unfair | несправедливый
+legal | adj B1 | legal | законный | | В Бразилии «legal» ещё и «классный».
+ilegal | adj B1 | illegal | незаконный
+oficial | adj B1 | official | официальный
+urgente | adj A2 | urgent | срочный
+positivo | adj B1 | positive | положительный
+negativo | adj B1 | negative | отрицательный
+ideal | adj B1 | ideal | идеальный
+perfeito | adj A2 | perfect | идеальный, совершенный
+horrível | adj A2 | horrible | ужасный
+terrível | adj A2 | terrible | ужасный
+fantástico | adj A2 | fantastic | фантастический
+incrível | adj A2 | incredible | невероятный
+espetacular | adj B1 | spectacular | потрясающий
+infeliz | adj B1 | unhappy | несчастный
+esquisito | adj B1 | weird, odd | странный | | В Португалии «esquisito» — «странный», а не «изысканный».
+parecido | adj A2 | similar | похожий
+semelhante | adj B1 | similar | подобный
+junto | adj A2 | together | совместный, вместе
+
+## feelings | Чувства и абстрактные понятия
+felicidade | n f A2 | happiness | счастье
+emoção | n f pl=emoções B1 | emotion | эмоция
+sentimento | n m B1 | feeling | чувство
+paixão | n f pl=paixões B1 | passion | страсть
+ciúmes | n m B1 | jealousy | ревность | ciúme
+inveja | n f B1 | envy | зависть
+vergonha | n f B1 | shame, embarrassment | стыд | | «Que vergonha!» — какой стыд!
+orgulho | n m B1 | pride | гордость
+confiança | n f B1 | trust, confidence | доверие, уверенность
+respeito | n m B1 | respect | уважение
+preocupação | n f pl=preocupações A2 | worry | беспокойство
+surpresa | n f A2 | surprise | сюрприз, удивление
+prazer | n m A2 | pleasure | удовольствие | | «Muito prazer» — очень приятно.
+solidão | n f B1 | loneliness | одиночество
+tédio | n m B1 | boredom | скука
+calma | n f A2 | calm | спокойствие | | «Calma!» — спокойно!
+pressa | n f A2 | hurry | спешка
+interesse | n m A2 | interest | интерес
+gosto | n m A2 | taste, liking | вкус, симпатия | | «Com todo o gosto» — с удовольствием.
+desejo | n m B1 | wish, desire | желание
+plano | n m A2 | plan | план
+decisão | n f pl=decisões A2 | decision | решение
+escolha | n f A2 | choice | выбор
+possibilidade | n f B1 | possibility | возможность
+oportunidade | n f B1 | opportunity | возможность, шанс
+situação | n f pl=situações A2 | situation | ситуация
+condição | n f pl=condições B1 | condition | условие, состояние
+causa | n f B1 | cause | причина
+consequência | n f B1 | consequence | последствие
+efeito | n m B1 | effect | эффект, действие
+regra | n f A2 | rule | правило
+ordem | n f B1 | order | порядок, приказ
+assunto | n m A2 | subject, matter | тема, дело
+tema | n m A2 | topic, theme | тема
+questão | n f pl=questões B1 | question, issue | вопрос, проблема
+ponto de vista | n m B1 | point of view | точка зрения
+acordo | n m B1 | agreement | соглашение, согласие
+de acordo | phrase A2 | agreed, in agreement | согласен | | «Estou de acordo» — я согласен.
+discussão | n f pl=discussões B1 | discussion, argument | обсуждение, спор
+sucesso | n m B1 | success | успех
+fracasso | n m B1 | failure | неудача, провал
+esforço | n m B1 | effort | усилие
+paciência | n f A2 | patience | терпение | | «Paciência!» — ничего не поделаешь!
+coragem | n f B1 | courage | смелость
+força | n f A2 | strength, force | сила
+poder | n m B1 | power | власть, сила
+valor | n m B1 | value | ценность, стоимость
+tipo | n m A2 | type, kind | тип, вид | | В разговоре «tipo» — «типа, вроде».
+espécie | n f B1 | species, kind | вид, разновидность
+pormenor | n m B1 | detail | подробность | detalhe
+detalhe | n m B1 | detail | деталь
+resto | n m A2 | rest, remainder | остаток, остальное
+falta | n f B1 | lack, absence | нехватка, отсутствие | | «Faz-me falta» — мне этого не хватает.
+necessidade | n f B1 | need | необходимость
+obrigação | n f pl=obrigações B1 | obligation | обязанность
+responsabilidade | n f B1 | responsibility | ответственность
+segurança | n f A2 | safety, security | безопасность | | «O segurança» — охранник.
+risco | n m B1 | risk | риск
+azar | n m B1 | bad luck | невезение | | «Que azar!» — какое невезение!
+acaso | n m B1 | chance | случай, случайность
+recordação | n f pl=recordações B1 | memory, souvenir | воспоминание, сувенир
+crise | n f B1 | crisis | кризис
+economia | n f B1 | economy | экономика
+ser humano | n m B1 | human being | человек
+população | n f pl=populações B1 | population | население
+silêncio | n m A2 | silence | тишина
+barulho | n m A2 | noise | шум
+som | n m pl=sons A2 | sound | звук
+cheiro | n m A2 | smell | запах
+material | n m pl=materiais B1 | material | материал
+madeira | n f A2 | wood | дерево (материал)
+metal | n m pl=metais B1 | metal | металл
+ferro | n m B1 | iron | железо
+ouro | n m A2 | gold | золото
+prata | n f A2 | silver | серебро
+vidro | n m A2 | glass | стекло
+plástico | n m A2 | plastic | пластик
+objeto | n m A2 | object | предмет, объект
+máquina | n f A2 | machine | машина, механизм
+aparelho | n m B1 | device, appliance | прибор, устройство
+ferramenta | n f B1 | tool | инструмент
+pilha | n f B1 | battery (AA), pile | батарейка, стопка
+corda | n f B1 | rope | верёвка
+fio | n m B1 | wire, thread | провод, нить

@@ -1,0 +1,285 @@
+# Люди, характер, профессии, работа, учёба (добавлено в 1.1).
+
+## people | Люди и семья
+namorada | n f A1 | girlfriend | девушка (подруга), возлюбленная
+amiga | n f A1 | friend (female) | подруга
+vizinha | n f A1 | neighbour (female) | соседка
+neta | n f A1 | granddaughter | внучка
+prima | n f A1 | cousin (female) | двоюродная сестра
+sobrinha | n f A1 | niece | племянница
+sogra | n f A2 | mother-in-law | свекровь, тёща
+cunhada | n f A2 | sister-in-law | невестка, золовка, свояченица
+padrinho | n m A2 | godfather, best man | крёстный, шафер
+madrinha | n f A2 | godmother | крёстная
+padrasto | n m B1 | stepfather | отчим
+madrasta | n f B1 | stepmother | мачеха
+enteado | n m f=enteada B1 | stepson, stepdaughter | пасынок, падчерица
+gémeo | n m f=gémea B1 | twin | близнец | gêmeo
+noivo | n m f=noiva A2 | fiancé, groom; fiancée, bride | жених, невеста
+viúvo | n m f=viúva B1 | widower, widow | вдовец, вдова
+parente | n mf A2 | relative | родственник
+adolescente | n mf A2 | teenager | подросток
+reformado | n m f=reformada B1 | pensioner, retiree | пенсионер | aposentado
+habitante | n mf B1 | inhabitant | житель
+imigrante | n mf A2 | immigrant | иммигрант
+emigrante | n mf B1 | emigrant | эмигрант
+conhecido | n m f=conhecida B1 | acquaintance | знакомый
+desconhecido | n m f=desconhecida B1 | stranger | незнакомец
+melhor amigo | phrase A1 | best friend | лучший друг
+solteiro | adj A1 | single | холостой, незамужняя
+casado | adj A1 | married | женатый, замужняя
+divorciado | adj A2 | divorced | разведённый
+separado | adj A2 | separated | разъехавшийся (о супругах), отдельный
+grávida | adj A2 | pregnant | беременная
+infância | n f A2 | childhood | детство
+juventude | n f B1 | youth | юность, молодёжь
+velhice | n f B1 | old age | старость
+nascimento | n m A2 | birth | рождение
+casamento | n m A2 | wedding, marriage | свадьба, брак
+divórcio | n m B1 | divorce | развод
+funeral | n m B1 | funeral | похороны
+gravidez | n f B1 | pregnancy | беременность
+relação | n f pl=relações A2 | relationship, relation | отношения, связь
+estado civil | n m A2 | marital status | семейное положение
+data de nascimento | n f A1 | date of birth | дата рождения
+local de nascimento | n m A2 | place of birth | место рождения
+naturalidade | n f B1 | place of origin | место рождения (в документах)
+sexo | n m A2 | sex | пол
+género | n m B1 | gender, genre, kind | род, пол, жанр | gênero
+assinatura | n f A2 | signature, subscription | подпись, подписка
+
+## character | Внешность и характер
+louro | adj A1 | blond | светловолосый | loiro
+moreno | adj A1 | dark-haired, dark-skinned | темноволосый, смуглый
+ruivo | adj A2 | red-haired | рыжий
+careca | adj A2 | bald | лысый
+liso | adj A2 | straight (hair), smooth | прямой (о волосах), гладкий
+encaracolado | adj A2 | curly | кудрявый | cacheado
+ondulado | adj A2 | wavy | волнистый
+barba | n f A2 | beard | борода
+bigode | n m A2 | moustache | усы
+elegante | adj A2 | elegant | элегантный
+giro | adj A1 | cute, nice | симпатичный, милый | bonito | Разговорное (Португалия).
+lindo | adj A1 | beautiful, lovely | прекрасный, красивый
+atraente | adj B1 | attractive | привлекательный
+musculado | adj B1 | muscular | мускулистый | musculoso
+estatura | n f B1 | height, stature | рост
+altura | n f A2 | height | высота, рост
+peso | n m A2 | weight | вес
+aspeto | n m B1 | appearance, aspect | внешний вид, аспект | aspecto
+aparência | n f B1 | appearance | внешность
+personalidade | n f A2 | personality | личность, характер
+carácter | n m B1 | character | характер | caráter
+feitio | n m B1 | temper, nature | нрав, характер | | Разговорное (Португалия).
+humor | n m B1 | mood, humour | настроение, юмор
+alegre | adj A1 | cheerful | весёлый
+tímido | adj A2 | shy | застенчивый
+extrovertido | adj B1 | outgoing | общительный
+falador | adj f=faladora A2 | talkative | болтливый
+calado | adj A2 | quiet | молчаливый
+bem-disposto | adj A2 | in a good mood | в хорошем настроении
+mal-disposto | adj B1 | in a bad mood, unwell | не в духе, неважно себя чувствующий
+educado | adj A2 | polite, well-mannered | вежливый, воспитанный
+mal-educado | adj A2 | rude | невоспитанный, грубый
+honesto | adj A2 | honest | честный
+desonesto | adj B1 | dishonest | нечестный
+sincero | adj B1 | sincere | искренний
+generoso | adj A2 | generous | щедрый
+egoísta | adj A2 | selfish | эгоистичный
+trabalhador | adj f=trabalhadora A2 | hard-working | трудолюбивый
+preguiçoso | adj A2 | lazy | ленивый
+responsável | adj A2 | responsible | ответственный
+organizado | adj A2 | organised | организованный
+desorganizado | adj B1 | disorganised | неорганизованный
+paciente | adj A2 | patient | терпеливый
+impaciente | adj B1 | impatient | нетерпеливый
+curioso | adj A2 | curious | любопытный
+criativo | adj A2 | creative | творческий
+ambicioso | adj B1 | ambitious | амбициозный
+corajoso | adj B1 | brave | смелый
+medroso | adj B1 | fearful | трусливый, пугливый
+teimoso | adj B1 | stubborn | упрямый
+vaidoso | adj B1 | vain | тщеславный
+otimista | adj B1 | optimistic | оптимистичный
+pessimista | adj B1 | pessimistic | пессимистичный
+sensível | adj B1 | sensitive | чувствительный
+carinhoso | adj A2 | affectionate | ласковый
+meigo | adj B1 | gentle, sweet | нежный, ласковый
+maluco | adj A2 | crazy | сумасшедший, чокнутый
+esperto | adj A2 | clever, smart | сообразительный, хитрый
+chato | adj A2 | boring, annoying | скучный, занудный | | Разговорное.
+fixe | adj A1 | cool, great | классный, крутой | legal | Разговорное (Португалия).
+porreiro | adj B1 | great, cool | отличный, классный | legal | Разговорное (Португалия).
+querido | adj A2 | dear, sweet | дорогой, милый
+conhecido | adj A2 | well-known | известный
+
+## professions | Профессии
+arquiteto | n m f=arquiteta A2 | architect | архитектор
+ator | n m f=atriz A2 | actor, actress | актёр, актриса
+bombeiro | n m f=bombeira A2 | firefighter | пожарный
+cabeleireiro | n m f=cabeleireira A2 | hairdresser | парикмахер
+carteiro | n m f=carteira A2 | postman, postwoman | почтальон
+canalizador | n m f=canalizadora A2 | plumber | сантехник | encanador
+eletricista | n mf A2 | electrician | электрик
+mecânico | n m f=mecânica A2 | mechanic | механик
+pedreiro | n m B1 | bricklayer, builder | каменщик, строитель
+carpinteiro | n m B1 | carpenter | плотник
+pintor | n m f=pintora A2 | painter | художник, маляр
+agricultor | n m f=agricultora A2 | farmer | фермер
+pescador | n m f=pescadora A2 | fisherman | рыбак
+padeiro | n m f=padeira A2 | baker | пекарь
+talhante | n mf B1 | butcher | мясник | açougueiro
+empregado de limpeza | n m B1 | cleaner | уборщик
+empregada doméstica | n f B1 | housekeeper, maid | домработница
+ama | n f B1 | nanny | няня | babá
+secretário | n m f=secretária A2 | secretary | секретарь
+rececionista | n mf A2 | receptionist | администратор (на ресепшене) | recepcionista
+contabilista | n mf B1 | accountant | бухгалтер | contador
+economista | n mf B1 | economist | экономист
+gestor | n m f=gestora B1 | manager | менеджер, управляющий
+diretor | n m f=diretora A2 | director, head | директор, руководитель
+empresário | n m f=empresária B1 | businessman, entrepreneur | предприниматель
+funcionário | n m f=funcionária A2 | employee, civil servant | служащий, сотрудник
+trabalhador | n m f=trabalhadora A2 | worker | работник, рабочий
+operário | n m f=operária B1 | factory worker | рабочий (на заводе)
+informático | n m f=informática A2 | IT specialist | айтишник, специалист по ИТ
+cientista | n mf B1 | scientist | учёный
+investigador | n m f=investigadora B1 | researcher | исследователь | pesquisador
+médico de família | n m A2 | GP, family doctor | семейный врач
+farmacêutico | n m f=farmacêutica A2 | pharmacist | фармацевт
+veterinário | n m f=veterinária A2 | vet | ветеринар
+psicólogo | n m f=psicóloga B1 | psychologist | психолог
+juiz | n m f=juíza B1 | judge | судья
+soldado | n m B1 | soldier | солдат
+piloto | n mf A2 | pilot | пилот
+hospedeira de bordo | n f B1 | flight attendant | стюардесса | comissária de bordo
+músico | n m f=música A2 | musician | музыкант
+fotógrafo | n m f=fotógrafa A2 | photographer | фотограф
+designer | n mf B1 | designer | дизайнер
+tradutor | n m f=tradutora A2 | translator | переводчик
+intérprete | n mf B1 | interpreter | устный переводчик
+político | n m f=política B1 | politician | политик
+dona de casa | n f A2 | housewife | домохозяйка
+estagiário | n m f=estagiária B1 | intern, trainee | стажёр
+porteiro | n m f=porteira B1 | doorman, concierge | швейцар, консьерж
+estafeta | n mf B1 | courier, delivery rider | курьер | entregador
+
+## work | Работа и учёба
+currículo | n m A2 | CV, résumé | резюме
+entrevista | n f A2 | interview | собеседование, интервью
+candidatura | n f B1 | application | заявка, кандидатура
+vaga | n f B1 | vacancy, opening | вакансия, свободное место
+anúncio | n m A2 | advert, announcement | объявление, реклама
+experiência | n f A2 | experience, experiment | опыт, эксперимент
+horário de trabalho | n m A2 | working hours | рабочее время
+turno | n m B1 | shift | смена
+a tempo inteiro | phrase B1 | full-time | на полный рабочий день | em tempo integral
+a tempo parcial | phrase B1 | part-time | на неполный рабочий день | meio período
+folga | n f B1 | day off | выходной (на работе)
+baixa | n f B1 | sick leave | больничный | licença médica | «Estar de baixa» — быть на больничном.
+ordenado | n m B1 | wages, salary | зарплата
+recibo de vencimento | n m B1 | payslip | расчётный лист | holerite
+imposto | n m A2 | tax | налог
+subsídio | n m B1 | allowance, benefit | пособие, надбавка
+subsídio de desemprego | n m B1 | unemployment benefit | пособие по безработице
+segurança social | n f B1 | social security | социальное страхование
+sindicato | n m B1 | trade union | профсоюз
+greve | n f B1 | strike | забастовка
+colega de trabalho | n mf A2 | co-worker | коллега
+tarefa | n f A2 | task | задача, задание
+prazo | n m B1 | deadline, term | срок
+fornecedor | n m B1 | supplier | поставщик
+negócio | n m A2 | business, deal | бизнес, сделка
+fábrica | n f A2 | factory | фабрика, завод
+departamento | n m B1 | department | отдел
+cargo | n m B1 | position, post | должность
+carreira | n f B1 | career | карьера
+formação | n f pl=formações B1 | training, education | обучение, подготовка
+estágio | n m B1 | internship | стажировка
+apresentação | n f pl=apresentações A2 | presentation, introduction | презентация, знакомство
+relatório | n m B1 | report | отчёт
+documento | n m A2 | document | документ
+impressora | n f A2 | printer | принтер
+fotocópia | n f A2 | photocopy | ксерокопия
+agenda | n f A2 | diary, schedule | ежедневник, расписание
+secretária | n f A2 | desk | письменный стол | | Также «секретарша».
+telefonema | n m A2 | phone call | телефонный звонок
+chamada | n f A2 | call | звонок, вызов
+pausa | n f A2 | break, pause | перерыв, пауза
+lucro | n m B1 | profit | прибыль
+custo | n m B1 | cost | стоимость, затраты
+orçamento | n m B1 | budget, quote | бюджет, смета
+
+## school | Учёба и язык
+infantário | n m A2 | nursery school | детский сад | creche
+jardim de infância | n m B1 | kindergarten | детский сад
+escola primária | n f A2 | primary school | начальная школа
+escola secundária | n f A2 | secondary school | средняя школа
+faculdade | n f A2 | faculty, college | факультет, институт
+ensino | n m B1 | education, teaching | обучение, образование
+educação | n f pl=educações A2 | education, upbringing | образование, воспитание
+turma | n f A2 | class (group of students) | класс, группа (учеников)
+sala de aula | n f A2 | classroom | класс (помещение)
+disciplina | n f A2 | subject, discipline | предмет, дисциплина
+matemática | n f A1 | mathematics | математика
+geografia | n f A2 | geography | география
+ciência | n f A2 | science | наука
+física | n f A2 | physics | физика
+química | n f A2 | chemistry | химия
+biologia | n f A2 | biology | биология
+educação física | n f A2 | PE, physical education | физкультура
+trabalho de casa | n m A1 | homework | домашнее задание | dever de casa
+nota | n f A2 | grade, note, banknote | оценка, заметка, купюра
+média | n f B1 | average | средний балл, среднее
+matrícula | n f B1 | enrolment, registration, number plate | зачисление, регистрация, номерной знак
+propina | n f B1 | tuition fee | плата за обучение | mensalidade
+bolsa | n f A2 | bag, scholarship, stock exchange | сумка, стипендия, биржа
+diploma | n m B1 | diploma, certificate | диплом
+licenciatura | n f B1 | bachelor's degree | высшее образование (бакалавриат)
+mestrado | n m B1 | master's degree | магистратура
+doutoramento | n m B1 | PhD | докторантура | doutorado
+semestre | n m B1 | semester | семестр
+intervalo | n m A2 | break, interval | перемена, перерыв, антракт
+recreio | n m B1 | playtime, playground | перемена (в школе), игровая площадка
+mochila | n f A2 | backpack | рюкзак
+estojo | n m A2 | pencil case | пенал
+borracha | n f A2 | eraser, rubber | ластик, резина
+régua | n f A2 | ruler | линейка
+tesoura | n f A2 | scissors | ножницы
+cola | n f A2 | glue | клей
+agrafador | n m B1 | stapler | степлер | grampeador
+marcador | n m A2 | marker | маркер
+lápis de cor | n m A2 | coloured pencil | цветной карандаш
+calculadora | n f A2 | calculator | калькулятор
+giz | n m B1 | chalk | мел
+página | n f A1 | page | страница
+frase | n f A1 | sentence, phrase | предложение, фраза
+palavra | n f A1 | word | слово
+texto | n m A2 | text | текст
+letra | n f A1 | letter, handwriting, lyrics | буква, почерк, слова песни
+alfabeto | n m A2 | alphabet | алфавит
+verbo | n m A2 | verb | глагол
+substantivo | n m B1 | noun | существительное
+adjetivo | n m B1 | adjective | прилагательное
+singular | n m B1 | singular | единственное число
+plural | n m B1 | plural | множественное число
+masculino | adj B1 | masculine, male | мужской
+feminino | adj B1 | feminine, female | женский
+significado | n m A2 | meaning | значение
+tradução | n f pl=traduções A2 | translation | перевод
+pronúncia | n f A2 | pronunciation | произношение
+sotaque | n m B1 | accent | акцент
+ortografia | n f B1 | spelling | орфография
+conversa | n f A2 | conversation | разговор
+diálogo | n m A2 | dialogue | диалог
+escrita | n f B1 | writing | письмо (навык)
+compreensão | n f pl=compreensões B1 | comprehension, understanding | понимание
+nível | n m pl=níveis A2 | level | уровень
+principiante | n mf A2 | beginner | новичок, начинающий
+aprendizagem | n f B1 | learning | обучение, изучение
+conhecimento | n m B1 | knowledge | знание
+memória | n f B1 | memory | память
+dúvida | n f A2 | doubt, question | сомнение, неясность
+explicação | n f pl=explicações A2 | explanation, private lesson | объяснение, частный урок
+resultado | n m A2 | result | результат
+prova | n f B1 | test, proof | контрольная, доказательство

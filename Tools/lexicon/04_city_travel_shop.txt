@@ -1,172 +1,172 @@
 ## city | Город и ориентирование
-cidade | n f | city, town | город
-vila | n f | town | городок, посёлок
-aldeia | n f | village | деревня
-rua | n f | street | улица
-avenida | n f | avenue | проспект
-praça | n f | square | площадь
-ponte | n f | bridge | мост
-bairro | n m | neighbourhood | район, квартал
-centro | n m | centre | центр
-igreja | n f | church | церковь
-castelo | n m | castle | замок
-museu | n m | museum | музей
-banco | n m | bank, bench | банк, скамейка
-correios | n m | post office | почта | | | Обычно во множественном числе: «os correios».
-câmara municipal | n f | town hall | мэрия
-esquadra | n f | police station | полицейский участок | delegacia
-polícia | n f | police | полиция
-bombeiros | n m | firefighters | пожарные
-escola | n f | school | школа
-universidade | n f | university | университет
-biblioteca | n f | library | библиотека
-cinema | n m | cinema | кино, кинотеатр
-teatro | n m | theatre | театр
-parque | n m | park | парк
-praia | n f | beach | пляж
-mapa | n m | map | карта
-norte | n m | north | север
-sul | n m | south | юг
-este | n m | east | восток
-oeste | n m | west | запад
-direita | n f | right | право, правая сторона
-esquerda | n f | left | лево, левая сторона
-em frente | adv | straight ahead | прямо, напротив
-perto | adv | near | близко
-longe | adv | far | далеко
-ao lado de | prep | next to | рядом с
-atrás de | prep | behind | позади
-em cima de | prep | on top of | на, над
-debaixo de | prep | under | под
-dentro | adv | inside | внутри
-fora | adv | outside | снаружи
-esquina | n f | corner | угол (улицы)
-cruzamento | n m | crossing, junction | перекрёсток
-semáforo | n m | traffic light | светофор | sinal
-passadeira | n f | pedestrian crossing | пешеходный переход | faixa de pedestres
-passeio | n m | pavement, walk | тротуар, прогулка | calçada
-peão | n m pl=peões | pedestrian | пешеход | pedestre
-monumento | n m | monument | памятник
-bairro histórico | n m | historic quarter | исторический квартал
+cidade | n f A1 | city, town | город
+vila | n f A2 | town | городок, посёлок
+aldeia | n f A2 | village | деревня
+rua | n f A1 | street | улица
+avenida | n f A1 | avenue | проспект
+praça | n f A1 | square | площадь
+ponte | n f A2 | bridge | мост
+bairro | n m A2 | neighbourhood | район, квартал
+centro | n m A1 | centre | центр
+igreja | n f A1 | church | церковь
+castelo | n m A2 | castle | замок
+museu | n m A1 | museum | музей
+banco | n m A1 | bank, bench | банк, скамейка
+correios | n m A1 | post office | почта | | | Обычно во множественном числе: «os correios».
+câmara municipal | n f A2 | town hall | мэрия
+esquadra | n f A2 | police station | полицейский участок | delegacia
+polícia | n f A1 | police | полиция
+bombeiros | n m A2 | firefighters | пожарные
+escola | n f A1 | school | школа
+universidade | n f A1 | university | университет
+biblioteca | n f A2 | library | библиотека
+cinema | n m A1 | cinema | кино, кинотеатр
+teatro | n m A1 | theatre | театр
+parque | n m A1 | park | парк
+praia | n f A1 | beach | пляж
+mapa | n m A1 | map | карта
+norte | n m A2 | north | север
+sul | n m A2 | south | юг
+este | n m A2 | east | восток
+oeste | n m A2 | west | запад
+direita | n f A1 | right | право, правая сторона
+esquerda | n f A1 | left | лево, левая сторона
+em frente | adv A1 | straight ahead | прямо, напротив
+perto | adv A1 | near | близко
+longe | adv A1 | far | далеко
+ao lado de | prep A2 | next to | рядом с
+atrás de | prep A2 | behind | позади
+em cima de | prep A2 | on top of | на, над
+debaixo de | prep A2 | under | под
+dentro | adv A2 | inside | внутри
+fora | adv A2 | outside | снаружи
+esquina | n f A2 | corner | угол (улицы)
+cruzamento | n m A2 | crossing, junction | перекрёсток
+semáforo | n m A2 | traffic light | светофор | sinal
+passadeira | n f A2 | pedestrian crossing | пешеходный переход | faixa de pedestres
+passeio | n m A2 | pavement, walk | тротуар, прогулка | calçada
+peão | n m pl=peões A2 | pedestrian | пешеход | pedestre
+monumento | n m A2 | monument | памятник
+bairro histórico | n m A2 | historic quarter | исторический квартал
 
 ## transport | Транспорт и путешествия
-autocarro | n m | bus | автобус | ônibus
-comboio | n m | train | поезд | trem
-metro | n m | metro, underground | метро | metrô
-elétrico | n m | tram | трамвай | bonde
-carro | n m | car | автомобиль, машина
-táxi | n m | taxi | такси
-bicicleta | n f | bicycle | велосипед
-mota | n f | motorcycle | мотоцикл | moto
-camião | n m pl=camiões | lorry, truck | грузовик | caminhão
-barco | n m | boat | лодка, судно
-avião | n m pl=aviões | aeroplane | самолёт
-aeroporto | n m | airport | аэропорт
-estação | n f pl=estações | station | станция, вокзал
-paragem | n f pl=paragens | stop | остановка | ponto de ônibus
-bilhete | n m | ticket | билет | passagem
-bilhete de ida e volta | n m | return ticket | билет туда и обратно
-bagagem | n f pl=bagagens | luggage | багаж
-mala | n f | suitcase, bag | чемодан, сумка
-passaporte | n m | passport | паспорт (загранпаспорт)
-visto | n m | visa | виза
-viagem | n f pl=viagens | trip, journey | поездка, путешествие
-partida | n f | departure | отправление
-chegada | n f | arrival | прибытие
-voo | n m | flight | авиарейс
-atraso | n m | delay | задержка
-cais | n m | platform, quay | платформа, причал
-portagem | n f pl=portagens | toll | плата за проезд | pedágio
-autoestrada | n f | motorway | автомагистраль | rodovia
-gasolina | n f | petrol | бензин
-gasóleo | n m | diesel | дизельное топливо | diesel
-estacionamento | n m | parking | парковка
-carta de condução | n f | driving licence | водительские права | carteira de motorista
-condutor | n m f=condutora | driver | водитель | motorista
-motorista | n mf | driver (of a bus, taxi) | водитель (автобуса, такси)
-trânsito | n m | traffic | дорожное движение
-hotel | n m pl=hotéis | hotel | гостиница, отель
-alojamento | n m | accommodation | жильё, проживание
-albergue | n m | hostel | хостел
-quarto de hotel | n m | hotel room | гостиничный номер
-turista | n mf | tourist | турист
-destino | n m | destination, destiny | пункт назначения, судьба
-fronteira | n f | border | граница
-alfândega | n f | customs | таможня
-cartão de embarque | n m | boarding pass | посадочный талон
-cinto de segurança | n m | seat belt | ремень безопасности
-excursão | n f pl=excursões | excursion | экскурсия
-guia | n mf | guide | гид
+autocarro | n m A1 | bus | автобус | ônibus
+comboio | n m A1 | train | поезд | trem
+metro | n m A1 | metro, underground | метро | metrô
+elétrico | n m A2 | tram | трамвай | bonde
+carro | n m A1 | car | автомобиль, машина
+táxi | n m A1 | taxi | такси
+bicicleta | n f A1 | bicycle | велосипед
+mota | n f A2 | motorcycle | мотоцикл | moto
+camião | n m pl=camiões A2 | lorry, truck | грузовик | caminhão
+barco | n m A2 | boat | лодка, судно
+avião | n m pl=aviões A1 | aeroplane | самолёт
+aeroporto | n m A1 | airport | аэропорт
+estação | n f pl=estações A1 | station | станция, вокзал
+paragem | n f pl=paragens A2 | stop | остановка | ponto de ônibus
+bilhete | n m A1 | ticket | билет | passagem
+bilhete de ida e volta | n m A2 | return ticket | билет туда и обратно
+bagagem | n f pl=bagagens A2 | luggage | багаж
+mala | n f A1 | suitcase, bag | чемодан, сумка
+passaporte | n m A1 | passport | паспорт (загранпаспорт)
+visto | n m A2 | visa | виза
+viagem | n f pl=viagens A1 | trip, journey | поездка, путешествие
+partida | n f A2 | departure | отправление
+chegada | n f A2 | arrival | прибытие
+voo | n m A2 | flight | авиарейс
+atraso | n m A2 | delay | задержка
+cais | n m A2 | platform, quay | платформа, причал
+portagem | n f pl=portagens A2 | toll | плата за проезд | pedágio
+autoestrada | n f A2 | motorway | автомагистраль | rodovia
+gasolina | n f A2 | petrol | бензин
+gasóleo | n m A2 | diesel | дизельное топливо | diesel
+estacionamento | n m A2 | parking | парковка
+carta de condução | n f A2 | driving licence | водительские права | carteira de motorista
+condutor | n m f=condutora A2 | driver | водитель | motorista
+motorista | n mf A2 | driver (of a bus, taxi) | водитель (автобуса, такси)
+trânsito | n m A2 | traffic | дорожное движение
+hotel | n m pl=hotéis A1 | hotel | гостиница, отель
+alojamento | n m A2 | accommodation | жильё, проживание
+albergue | n m A2 | hostel | хостел
+quarto de hotel | n m A2 | hotel room | гостиничный номер
+turista | n mf A1 | tourist | турист
+destino | n m A2 | destination, destiny | пункт назначения, судьба
+fronteira | n f A2 | border | граница
+alfândega | n f A2 | customs | таможня
+cartão de embarque | n m A2 | boarding pass | посадочный талон
+cinto de segurança | n m A2 | seat belt | ремень безопасности
+excursão | n f pl=excursões A2 | excursion | экскурсия
+guia | n mf A2 | guide | гид
 
 ## shopping | Покупки, деньги и одежда
-loja | n f | shop | магазин
-preço | n m | price | цена
-dinheiro | n m | money | деньги
-moeda | n f | coin, currency | монета, валюта
-euro | n m | euro | евро
-cêntimo | n m | cent | цент | centavo
-cartão | n m pl=cartões | card | карта
-multibanco | n m | cash machine, ATM | банкомат | caixa eletrônico
-numerário | n m | cash | наличные | dinheiro em espécie
-caixa | n f | cash desk, box | касса, коробка
-troco | n m | change | сдача
-desconto | n m | discount | скидка
-promoção | n f pl=promoções | sale, promotion | акция, распродажа
-fatura | n f | invoice | счёт-фактура
-recibo | n m | receipt | квитанция
-talão | n m pl=talões | receipt, stub | чек
-saco | n m | bag | пакет, мешок
-carrinho | n m | trolley | тележка
-tamanho | n m | size | размер
-roupa | n f | clothes | одежда
-camisa | n f | shirt | рубашка
-camisola | n f | jumper, sweater | свитер, футболка | suéter, camiseta
-calças | n f | trousers | брюки
-saia | n f | skirt | юбка
-vestido | n m | dress | платье
-casaco | n m | coat, jacket | пальто, куртка
-fato | n m | suit | костюм | terno
-fato de banho | n m | swimsuit | купальник, плавки | maiô
-sapato | n m | shoe | туфля, ботинок
-ténis | n m | trainers, sneakers | кроссовки | tênis
-bota | n f | boot | сапог, ботинок
-meias | n f | socks | носки, чулки
-cuecas | n f | underpants | трусы
-pijama | n m | pyjamas | пижама
-chapéu | n m | hat | шляпа
-óculos | n m | glasses | очки
-carteira | n f | wallet | кошелёк
-cinto | n m | belt | ремень
-gravata | n f | tie | галстук
-guarda-chuva | n m | umbrella | зонт
-anel | n m pl=anéis | ring | кольцо
-relógio de pulso | n m | wristwatch | наручные часы
-algodão | n m | cotton | хлопок
-lã | n f | wool | шерсть
-presente | n m | gift | подарок
-lembrança | n f | souvenir, memory | сувенир, воспоминание
-cliente | n mf | customer | покупатель, клиент
-vendedor | n m f=vendedora | seller | продавец
-barato | adj f=barata | cheap | дешёвый
-caro | adj f=cara | expensive | дорогой
-grátis | adj | free | бесплатный
-aberto | adj f=aberta | open | открытый
-fechado | adj f=fechada | closed | закрытый
+loja | n f A1 | shop | магазин
+preço | n m A1 | price | цена
+dinheiro | n m A1 | money | деньги
+moeda | n f A2 | coin, currency | монета, валюта
+euro | n m A1 | euro | евро
+cêntimo | n m A2 | cent | цент | centavo
+cartão | n m pl=cartões A1 | card | карта
+multibanco | n m A2 | cash machine, ATM | банкомат | caixa eletrônico
+numerário | n m B1 | cash | наличные | dinheiro em espécie
+caixa | n f A1 | cash desk, box | касса, коробка
+troco | n m A2 | change | сдача
+desconto | n m A2 | discount | скидка
+promoção | n f pl=promoções A2 | sale, promotion | акция, распродажа
+fatura | n f A2 | invoice | счёт-фактура
+recibo | n m A2 | receipt | квитанция
+talão | n m pl=talões A2 | receipt, stub | чек
+saco | n m A1 | bag | пакет, мешок
+carrinho | n m A2 | trolley | тележка
+tamanho | n m A1 | size | размер
+roupa | n f A1 | clothes | одежда
+camisa | n f A1 | shirt | рубашка
+camisola | n f A1 | jumper, sweater | свитер, футболка | suéter, camiseta
+calças | n f A1 | trousers | брюки
+saia | n f A1 | skirt | юбка
+vestido | n m A1 | dress | платье
+casaco | n m A1 | coat, jacket | пальто, куртка
+fato | n m A2 | suit | костюм | terno
+fato de banho | n m A2 | swimsuit | купальник, плавки | maiô
+sapato | n m A1 | shoe | туфля, ботинок
+ténis | n m A2 | trainers, sneakers | кроссовки | tênis
+bota | n f A2 | boot | сапог, ботинок
+meias | n f A1 | socks | носки, чулки
+cuecas | n f A2 | underpants | трусы
+pijama | n m A2 | pyjamas | пижама
+chapéu | n m A1 | hat | шляпа
+óculos | n m A1 | glasses | очки
+carteira | n f A2 | wallet | кошелёк
+cinto | n m A2 | belt | ремень
+gravata | n f A2 | tie | галстук
+guarda-chuva | n m A2 | umbrella | зонт
+anel | n m pl=anéis A2 | ring | кольцо
+relógio de pulso | n m A2 | wristwatch | наручные часы
+algodão | n m A2 | cotton | хлопок
+lã | n f A2 | wool | шерсть
+presente | n m A1 | gift | подарок
+lembrança | n f A2 | souvenir, memory | сувенир, воспоминание
+cliente | n mf A2 | customer | покупатель, клиент
+vendedor | n m f=vendedora A2 | seller | продавец
+barato | adj f=barata A1 | cheap | дешёвый
+caro | adj f=cara A1 | expensive | дорогой
+grátis | adj A2 | free | бесплатный
+aberto | adj f=aberta A1 | open | открытый
+fechado | adj f=fechada A1 | closed | закрытый
 
 ## colors | Цвета
-cor | n f pl=cores | colour | цвет
-vermelho | adj f=vermelha | red | красный
-azul | adj | blue | синий, голубой
-verde | adj | green | зелёный
-amarelo | adj f=amarela | yellow | жёлтый
-laranja | adj | orange | оранжевый
-roxo | adj f=roxa | purple | фиолетовый
-cor-de-rosa | adj | pink | розовый
-castanho | adj f=castanha | brown | коричневый | marrom
-cinzento | adj f=cinzenta | grey | серый | cinza
-preto | adj f=preta | black | чёрный
-branco | adj f=branca | white | белый
-dourado | adj f=dourada | golden | золотой
-prateado | adj f=prateada | silver | серебристый
-claro | adj f=clara | light, clear | светлый, ясный
-escuro | adj f=escura | dark | тёмный
+cor | n f pl=cores A1 | colour | цвет
+vermelho | adj f=vermelha A1 | red | красный
+azul | adj A1 | blue | синий, голубой
+verde | adj A1 | green | зелёный
+amarelo | adj f=amarela A1 | yellow | жёлтый
+laranja | adj A1 | orange | оранжевый
+roxo | adj f=roxa A1 | purple | фиолетовый
+cor-de-rosa | adj A1 | pink | розовый
+castanho | adj f=castanha A1 | brown | коричневый | marrom
+cinzento | adj f=cinzenta A1 | grey | серый | cinza
+preto | adj f=preta A1 | black | чёрный
+branco | adj f=branca A1 | white | белый
+dourado | adj f=dourada A2 | golden | золотой
+prateado | adj f=prateada A2 | silver | серебристый
+claro | adj f=clara A1 | light, clear | светлый, ясный
+escuro | adj f=escura A1 | dark | тёмный

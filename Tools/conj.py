@@ -122,6 +122,63 @@ IRREG = {
                     conj=["passeie", "passeies", "passeie", "passeemos", "passeiem"]),
 }
 
+IRREG.update({
+    "crer": dict(pres=["creio", "crês", "crê", "cremos", "creem"],
+                 pret=["cri", "creste", "creu", "cremos", "creram"],
+                 conj=["creia", "creias", "creia", "creiamos", "creiam"]),
+    "caber": dict(pres=["caibo", "cabes", "cabe", "cabemos", "cabem"],
+                  pret=["coube", "coubeste", "coube", "coubemos", "couberam"],
+                  conj=["caiba", "caibas", "caiba", "caibamos", "caibam"],
+                  strong=True),
+    "doer": dict(pres=["doo", "dóis", "dói", "doemos", "doem"],
+                 pret=["doí", "doeste", "doeu", "doemos", "doeram"],
+                 conj=["doa", "doas", "doa", "doamos", "doam"]),
+})
+
+
+def _prefixed(prefix, root):
+    """Глагол-приставка по образцу корня: manter ← ter, propor ← pôr, prever ← ver."""
+    out = {}
+    for k, v in IRREG[root].items():
+        if isinstance(v, list):
+            out[k] = [prefix + x if x else x for x in v]
+        elif isinstance(v, str):
+            out[k] = prefix + v
+        else:
+            out[k] = v
+    return out
+
+
+def _compound(base, root, prefix):
+    d = _prefixed(prefix, root)
+    if root in ("ter", "vir"):
+        # manténs, mantém; intervéns, intervém (ударение на приставочном глаголе)
+        d["pres"][1] = prefix + ("téns" if root == "ter" else "véns")
+        d["pres"][2] = prefix + ("tém" if root == "ter" else "vém")
+    if root == "pôr":
+        d["inf_pessoal"] = [base, base + "es", base, base + "mos", base + "em"]
+    IRREG[base] = d
+
+
+for _p in ["man", "ob", "con", "de", "re", "entre", "sus", "abs"]:
+    _compound(_p + "ter", "ter", _p)
+for _p in ["con", "inter", "pro", "sobre"]:
+    _compound(_p + "vir", "vir", _p)
+for _p in ["pro", "com", "su", "dis", "ex", "im", "o", "re", "de", "pressu", "decom", "trans", "sobre"]:
+    _compound(_p + "por", "pôr", _p)
+for _p in ["pre", "re", "ante"]:
+    _compound(_p + "ver", "ver", _p)
+for _p in ["des", "re", "satis"]:
+    _compound(_p + "fazer", "fazer", _p)
+for _p in ["contra", "des"]:
+    _compound(_p + "dizer", "dizer", _p)
+_compound("reler", "ler", "re")
+
+# medeio, anseio… (глаголы на -iar с чередованием: mediar, ansiar, remediar, incendiar, odiar)
+MARIO = {"mediar", "ansiar", "remediar", "incendiar", "intermediar"}
+# constróis, constrói, constroem
+CONSTRUIR = {"construir", "destruir", "reconstruir"}
+
 # Правильные по окончаниям, но с чередованием в корне:
 #   eu  — основа 1-го лица ед. числа (без -o), alt — основа для tu/ele/eles
 SPEC = {
@@ -147,6 +204,44 @@ SPEC = {
     "gastar": dict(part="gasto"),
     "pagar": dict(part="pago"),
     "aceitar": dict(part="aceite"),
+    "entregar": dict(part="entregue"),
+    "descrever": dict(part="descrito"),
+    "inscrever": dict(part="inscrito"),
+    "gerir": dict(eu="gir", alt="ger"),
+    "mentir": dict(eu="mint", alt="ment"),
+    "desmentir": dict(eu="desmint", alt="desment"),
+    "consentir": dict(eu="consint", alt="consent"),
+    "pressentir": dict(eu="pressint", alt="pressent"),
+    "sugerir": dict(eu="sugir", alt="suger"),
+    "referir": dict(eu="refir", alt="refer"),
+    "conferir": dict(eu="confir", alt="confer"),
+    "transferir": dict(eu="transfir", alt="transfer"),
+    "interferir": dict(eu="interfir", alt="interfer"),
+    "digerir": dict(eu="digir", alt="diger"),
+    "ferir": dict(eu="fir", alt="fer"),
+    "aderir": dict(eu="adir", alt="ader"),
+    "competir": dict(eu="compit", alt="compet"),
+    "despir": dict(eu="disp", alt="desp"),
+    "investir": dict(eu="invist", alt="invest"),
+    "advertir": dict(eu="advirt", alt="advert"),
+    "perseguir": dict(eu="persig", alt="persegu"),
+    "prosseguir": dict(eu="prossig", alt="prossegu"),
+    "descobrir": dict(eu="descubr", alt="descobr", part="descoberto"),
+    "tossir": dict(eu="tuss", alt="toss"),
+    "engolir": dict(eu="engul", alt="engol"),
+    "sacudir": dict(eu="sacud", alt="sacod"),
+    "acudir": dict(eu="acud", alt="acod"),
+    "cuspir": dict(eu="cusp", alt="cosp"),
+    "consumir": dict(eu="consum", alt="consom"),
+    "sumir": dict(eu="sum", alt="som"),
+    "agredir": dict(eu="agrid", alt="agrid"),
+    "progredir": dict(eu="progrid", alt="progrid"),
+    "transgredir": dict(eu="transgrid", alt="transgrid"),
+    "prevenir": dict(eu="previn", alt="previn"),
+    "medir": dict(eu="meç", alt="med"),
+    "impedir": dict(eu="impeç", alt="imped"),
+    "despedir": dict(eu="despeç", alt="desped"),
+    "expedir": dict(eu="expeç", alt="exped"),
 }
 
 PRET_REG = {
@@ -199,6 +294,21 @@ def _accent_nos(stem, strong, theme):
     raise ValueError("не могу поставить ударение в основе: " + stem)
 
 
+def _pattern(base):
+    """Типовые группы, которые спрягаются по общему образцу."""
+    if base in MARIO:
+        return "mario"
+    if base in CONSTRUIR:
+        return "construir"
+    if base.endswith("ear"):
+        return "ear"
+    if base.endswith("air"):
+        return "air"
+    if base.endswith("uir") and not base.endswith(("guir", "quir")):
+        return "uir"
+    return ""
+
+
 def base_forms(base):
     """Возвращает словарь с основными формами глагола (без возвратного местоимения)."""
     irr = IRREG.get(base)
@@ -208,8 +318,20 @@ def base_forms(base):
     out = {}
 
     # ---- presente
+    pattern = _pattern(base) if not irr else ""
     if irr and "pres" in irr:
         pres = list(irr["pres"])
+    elif pattern == "ear":
+        pres = [stem + "io", stem + "ias", stem + "ia", stem + "amos", stem + "iam"]
+    elif pattern == "mario":
+        s3 = base[:-3]
+        pres = [s3 + "eio", s3 + "eias", s3 + "eia", stem + "amos", s3 + "eiam"]
+    elif pattern in ("air", "uir", "construir"):
+        pres = [stem + ("io" if pattern == "air" else "o"), stem + "is", stem + "i", stem + "ímos", stem + "em"]
+        if pattern == "construir":
+            pres[1] = stem[:-1] + "óis"
+            pres[2] = stem[:-1] + "ói"
+            pres[4] = stem[:-1] + "oem"
     else:
         e = PRES_REG[theme]
         eu_stem = spec.get("eu")
@@ -223,11 +345,15 @@ def base_forms(base):
                 eu_stem = stem[:-1]                # distinguir -> distingo
         alt = spec.get("alt", stem)
         pres = [eu_stem + e[0], alt + e[1], alt + e[2], stem + e[3], alt + e[4]]
+        if theme == "ir" and base.endswith("zir"):
+            pres[2] = alt                      # produzir -> produz
     out["pres"] = pres
 
     # ---- pretérito perfeito
     if irr and "pret" in irr:
         pret = list(irr["pret"])
+    elif pattern in ("air", "uir", "construir"):
+        pret = [stem + "í", stem + "íste", stem + "iu", stem + "ímos", stem + "íram"]
     else:
         e = PRET_REG[theme]
         pret = [stem + x for x in e]
@@ -255,6 +381,15 @@ def base_forms(base):
     # ---- conjuntivo presente
     if irr and "conj" in irr:
         conj = list(irr["conj"])
+    elif pattern == "ear":
+        conj = [stem + "ie", stem + "ies", stem + "ie", stem + "emos", stem + "iem"]
+    elif pattern == "mario":
+        s3 = base[:-3]
+        conj = [s3 + "eie", s3 + "eies", s3 + "eie", stem + "emos", s3 + "eiem"]
+    elif pattern == "air":
+        conj = [stem + x for x in ["ia", "ias", "ia", "iamos", "iam"]]
+    elif pattern in ("uir", "construir"):
+        conj = [stem + x for x in ["a", "as", "a", "amos", "am"]]
     else:
         cs = pres[0][:-1]
         if theme == "ar":
@@ -329,7 +464,7 @@ def simple_tenses(base, b):
 
     if b["inf_pessoal"]:
         t["infinitivo_pessoal"] = list(b["inf_pessoal"])
-    elif base.endswith("air"):
+    elif base.endswith("air") or _pattern(base) in ("uir", "construir"):
         t["infinitivo_pessoal"] = [base, base[:-2] + "íres", base, base + "mos", base[:-2] + "írem"]
     else:
         t["infinitivo_pessoal"] = [base, base + "es", base, base + "mos", base + "em"]
@@ -409,7 +544,9 @@ def conjugate(inf):
         assert len(forms[tid]) == 5, (inf, tid, forms[tid])
         ordered[tid] = forms[tid]
 
-    irregular = base in IRREG or (base in SPEC and ("eu" in SPEC[base] or base in ("abrir", "escrever", "cobrir")))
+    irregular = (base in IRREG
+                 or (base in SPEC and ("eu" in SPEC[base] or base in ("abrir", "escrever", "cobrir", "descobrir")))
+                 or _pattern(base) in ("ear", "mario", "air", "construir"))
     group = {"ar": "-ar", "er": "-er", "ir": "-ir", "or": "-or"}[_theme(base)]
     return {
         "inf": inf,

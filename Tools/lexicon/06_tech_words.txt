@@ -1,244 +1,244 @@
 ## tech | Технологии, связь и досуг
-computador | n m | computer | компьютер
-portátil | n m | laptop | ноутбук | notebook
-telemóvel | n m | mobile phone | мобильный телефон | celular
-telefone | n m | telephone | телефон
-ecrã | n m | screen | экран | tela
-teclado | n m | keyboard | клавиатура
-ficheiro | n m | file | файл | arquivo
-internet | n f | internet | интернет
-email | n m | email | электронная почта
-mensagem | n f pl=mensagens | message | сообщение
-palavra-passe | n f | password | пароль | senha
-aplicação | n f pl=aplicações | app, application | приложение | aplicativo
-programa | n m | program | программа
-rede | n f | network, net | сеть
-carregador | n m | charger | зарядное устройство
-bateria | n f | battery | аккумулятор, батарея
-câmara | n f | camera | камера | câmera
-fotografia | n f | photograph | фотография
-vídeo | n m | video | видео
-música | n f | music | музыка
-canção | n f pl=canções | song | песня
-filme | n m | film | фильм
-jogo | n m | game | игра
-desporto | n m | sport | спорт | esporte
-futebol | n m | football | футбол
-equipa | n f | team | команда | time
-bola | n f | ball | мяч
-passatempo | n m | hobby | хобби
-leitura | n f | reading | чтение
-concerto | n m | concert | концерт
-festa | n f | party | вечеринка, праздник
-exposição | n f pl=exposições | exhibition | выставка
-notícia | n f | news item | новость
-jornal | n m pl=jornais | newspaper | газета
-revista | n f | magazine | журнал
-carta | n f | letter | письмо
-encomenda | n f | parcel, order | посылка, заказ
-selo | n m | stamp | марка
-sítio | n m | place, website | место, сайт
-site | n m | website | сайт
+computador | n m A1 | computer | компьютер
+portátil | n m A2 | laptop | ноутбук | notebook
+telemóvel | n m A1 | mobile phone | мобильный телефон | celular
+telefone | n m A1 | telephone | телефон
+ecrã | n m A2 | screen | экран | tela
+teclado | n m A2 | keyboard | клавиатура
+ficheiro | n m A2 | file | файл | arquivo
+internet | n f A1 | internet | интернет
+email | n m A1 | email | электронная почта
+mensagem | n f pl=mensagens A1 | message | сообщение
+palavra-passe | n f A2 | password | пароль | senha
+aplicação | n f pl=aplicações A2 | app, application | приложение | aplicativo
+programa | n m A2 | program | программа
+rede | n f A2 | network, net | сеть
+carregador | n m A2 | charger | зарядное устройство
+bateria | n f A2 | battery | аккумулятор, батарея
+câmara | n f A2 | camera | камера | câmera
+fotografia | n f A1 | photograph | фотография
+vídeo | n m A2 | video | видео
+música | n f A1 | music | музыка
+canção | n f pl=canções A2 | song | песня
+filme | n m A1 | film | фильм
+jogo | n m A1 | game | игра
+desporto | n m A1 | sport | спорт | esporte
+futebol | n m A1 | football | футбол
+equipa | n f A2 | team | команда | time
+bola | n f A1 | ball | мяч
+passatempo | n m A2 | hobby | хобби
+leitura | n f A2 | reading | чтение
+concerto | n m A2 | concert | концерт
+festa | n f A1 | party | вечеринка, праздник
+exposição | n f pl=exposições A2 | exhibition | выставка
+notícia | n f A2 | news item | новость
+jornal | n m pl=jornais A1 | newspaper | газета
+revista | n f A2 | magazine | журнал
+carta | n f A1 | letter | письмо
+encomenda | n f A2 | parcel, order | посылка, заказ
+selo | n m A2 | stamp | марка
+sítio | n m A2 | place, website | место, сайт
+site | n m A2 | website | сайт
 
 ## adjectives | Прилагательные
-bom | adj f=boa | good | хороший
-mau | adj f=má | bad | плохой
-ótimo | adj f=ótima | great, excellent | отличный
-péssimo | adj f=péssima | terrible, awful | ужасный
-excelente | adj | excellent | превосходный
-maravilhoso | adj f=maravilhosa | wonderful | чудесный
-grande | adj | big, large, great | большой
-pequeno | adj f=pequena | small | маленький
-novo | adj f=nova | new, young | новый, молодой
-velho | adj f=velha | old | старый
-jovem | adj | young | молодой
-bonito | adj f=bonita | pretty, beautiful | красивый
-feio | adj f=feia | ugly | некрасивый
-alto | adj f=alta | tall, high | высокий
-baixo | adj f=baixa | short, low | низкий
-gordo | adj f=gorda | fat | толстый
-magro | adj f=magra | thin | худой
-forte | adj | strong | сильный
-fraco | adj f=fraca | weak | слабый
-rápido | adj f=rápida | fast | быстрый
-lento | adj f=lenta | slow | медленный
-fácil | adj | easy | лёгкий (простой)
-difícil | adj | difficult | трудный
-frio | adj f=fria | cold | холодный
-morno | adj f=morna | lukewarm | тёплый (чуть тёплый)
-limpo | adj f=limpa | clean | чистый
-sujo | adj f=suja | dirty | грязный
-cheio | adj f=cheia | full | полный
-vazio | adj f=vazia | empty | пустой
-certo | adj f=certa | right, correct | правильный, верный
-errado | adj f=errada | wrong | неправильный
-verdadeiro | adj f=verdadeira | true | настоящий, правдивый
-falso | adj f=falsa | false | ложный
-igual | adj | equal, the same | одинаковый, равный
-diferente | adj | different | разный, другой
-importante | adj | important | важный
-simpático | adj f=simpática | nice, friendly | приятный, симпатичный
-antipático | adj f=antipática | unfriendly | неприятный (о человеке)
-inteligente | adj | intelligent | умный
-divertido | adj f=divertida | fun, amusing | весёлый, забавный
-aborrecido | adj f=aborrecida | boring, annoyed | скучный, раздосадованный
-cansado | adj f=cansada | tired | усталый
-feliz | adj pl=felizes | happy | счастливый
-triste | adj | sad | грустный
-zangado | adj f=zangada | angry | сердитый
-contente | adj | glad, pleased | довольный, рад
-rico | adj f=rica | rich | богатый
-pobre | adj | poor | бедный
-livre | adj | free | свободный
-ocupado | adj f=ocupada | busy | занятый
-pronto | adj f=pronta | ready | готовый
-seguro | adj f=segura | safe, sure | безопасный, уверенный
-perigoso | adj f=perigosa | dangerous | опасный
-silencioso | adj f=silenciosa | quiet | тихий
-barulhento | adj f=barulhenta | noisy | шумный
-leve | adj | light | лёгкий (по весу)
-pesado | adj f=pesada | heavy | тяжёлый
-largo | adj f=larga | wide | широкий
-estreito | adj f=estreita | narrow | узкий
-comprido | adj f=comprida | long | длинный
-curto | adj f=curta | short | короткий
-profundo | adj f=profunda | deep | глубокий
-próximo | adj f=próxima | next, near | следующий, близкий
-distante | adj | distant | далёкий
-seguinte | adj | following, next | следующий
-anterior | adj | previous | предыдущий
-normal | adj pl=normais | normal | нормальный
-estranho | adj f=estranha | strange | странный
-famoso | adj f=famosa | famous | известный
-sério | adj f=séria | serious | серьёзный
-engraçado | adj f=engraçada | funny | смешной
-simples | adj | simple | простой
-possível | adj pl=possíveis | possible | возможный
-impossível | adj pl=impossíveis | impossible | невозможный
-necessário | adj f=necessária | necessary | необходимый
-preciso | adj f=precisa | precise | точный
-único | adj f=única | only, unique | единственный, уникальный
-inteiro | adj f=inteira | whole | целый
-diverso | adj f=diversa | various | разный, разнообразный
-local | adj pl=locais | local | местный
-tradicional | adj pl=tradicionais | traditional | традиционный
-moderno | adj f=moderna | modern | современный
-antigo | adj f=antiga | ancient, old | старинный, древний
-nervoso | adj f=nervosa | nervous | нервный
-preocupado | adj f=preocupada | worried | обеспокоенный
-orgulhoso | adj f=orgulhosa | proud | гордый
-sozinho | adj f=sozinha | alone | один, в одиночестве
-calmo | adj f=calma | calm | спокойный
-bravo | adj f=brava | angry, fierce | злой, свирепый
-gentil | adj | kind, gentle | любезный, учтивый
-amável | adj | amiable | любезный, милый
+bom | adj f=boa A1 | good | хороший
+mau | adj f=má A1 | bad | плохой
+ótimo | adj f=ótima A1 | great, excellent | отличный
+péssimo | adj f=péssima A2 | terrible, awful | ужасный
+excelente | adj A2 | excellent | превосходный
+maravilhoso | adj f=maravilhosa A2 | wonderful | чудесный
+grande | adj A1 | big, large, great | большой
+pequeno | adj f=pequena A1 | small | маленький
+novo | adj f=nova A1 | new, young | новый, молодой
+velho | adj f=velha A1 | old | старый
+jovem | adj A1 | young | молодой
+bonito | adj f=bonita A1 | pretty, beautiful | красивый
+feio | adj f=feia A1 | ugly | некрасивый
+alto | adj f=alta A1 | tall, high | высокий
+baixo | adj f=baixa A1 | short, low | низкий
+gordo | adj f=gorda A1 | fat | толстый
+magro | adj f=magra A1 | thin | худой
+forte | adj A2 | strong | сильный
+fraco | adj f=fraca A2 | weak | слабый
+rápido | adj f=rápida A1 | fast | быстрый
+lento | adj f=lenta A1 | slow | медленный
+fácil | adj A1 | easy | лёгкий (простой)
+difícil | adj A1 | difficult | трудный
+frio | adj f=fria A1 | cold | холодный
+morno | adj f=morna A2 | lukewarm | тёплый (чуть тёплый)
+limpo | adj f=limpa A1 | clean | чистый
+sujo | adj f=suja A1 | dirty | грязный
+cheio | adj f=cheia A1 | full | полный
+vazio | adj f=vazia A1 | empty | пустой
+certo | adj f=certa A1 | right, correct | правильный, верный
+errado | adj f=errada A1 | wrong | неправильный
+verdadeiro | adj f=verdadeira A2 | true | настоящий, правдивый
+falso | adj f=falsa A2 | false | ложный
+igual | adj A1 | equal, the same | одинаковый, равный
+diferente | adj A1 | different | разный, другой
+importante | adj A1 | important | важный
+simpático | adj f=simpática A1 | nice, friendly | приятный, симпатичный
+antipático | adj f=antipática A2 | unfriendly | неприятный (о человеке)
+inteligente | adj A1 | intelligent | умный
+divertido | adj f=divertida A1 | fun, amusing | весёлый, забавный
+aborrecido | adj f=aborrecida A2 | boring, annoyed | скучный, раздосадованный
+cansado | adj f=cansada A1 | tired | усталый
+feliz | adj pl=felizes A1 | happy | счастливый
+triste | adj A1 | sad | грустный
+zangado | adj f=zangada A2 | angry | сердитый
+contente | adj A1 | glad, pleased | довольный, рад
+rico | adj f=rica A1 | rich | богатый
+pobre | adj A1 | poor | бедный
+livre | adj A1 | free | свободный
+ocupado | adj f=ocupada A1 | busy | занятый
+pronto | adj f=pronta A1 | ready | готовый
+seguro | adj f=segura A2 | safe, sure | безопасный, уверенный
+perigoso | adj f=perigosa A2 | dangerous | опасный
+silencioso | adj f=silenciosa A2 | quiet | тихий
+barulhento | adj f=barulhenta A2 | noisy | шумный
+leve | adj A2 | light | лёгкий (по весу)
+pesado | adj f=pesada A2 | heavy | тяжёлый
+largo | adj f=larga A2 | wide | широкий
+estreito | adj f=estreita A2 | narrow | узкий
+comprido | adj f=comprida A1 | long | длинный
+curto | adj f=curta A1 | short | короткий
+profundo | adj f=profunda B1 | deep | глубокий
+próximo | adj f=próxima A1 | next, near | следующий, близкий
+distante | adj A2 | distant | далёкий
+seguinte | adj A2 | following, next | следующий
+anterior | adj A2 | previous | предыдущий
+normal | adj pl=normais A1 | normal | нормальный
+estranho | adj f=estranha A2 | strange | странный
+famoso | adj f=famosa A2 | famous | известный
+sério | adj f=séria A2 | serious | серьёзный
+engraçado | adj f=engraçada A2 | funny | смешной
+simples | adj A1 | simple | простой
+possível | adj pl=possíveis A1 | possible | возможный
+impossível | adj pl=impossíveis A2 | impossible | невозможный
+necessário | adj f=necessária A1 | necessary | необходимый
+preciso | adj f=precisa A2 | precise | точный
+único | adj f=única A2 | only, unique | единственный, уникальный
+inteiro | adj f=inteira B1 | whole | целый
+diverso | adj f=diversa B1 | various | разный, разнообразный
+local | adj pl=locais B1 | local | местный
+tradicional | adj pl=tradicionais A2 | traditional | традиционный
+moderno | adj f=moderna A1 | modern | современный
+antigo | adj f=antiga A1 | ancient, old | старинный, древний
+nervoso | adj f=nervosa A2 | nervous | нервный
+preocupado | adj f=preocupada A2 | worried | обеспокоенный
+orgulhoso | adj f=orgulhosa B1 | proud | гордый
+sozinho | adj f=sozinha A2 | alone | один, в одиночестве
+calmo | adj f=calma A1 | calm | спокойный
+bravo | adj f=brava B1 | angry, fierce | злой, свирепый
+gentil | adj A2 | kind, gentle | любезный, учтивый
+amável | adj A2 | amiable | любезный, милый
 
 ## adverbs | Наречия, предлоги и союзы
-muito | adv | very, a lot | очень, много
-pouco | adv | little, few | мало
-mais | adv | more | больше, более
-menos | adv | less | меньше, менее
-bastante | adv | quite, enough | довольно, достаточно
-demasiado | adv | too much | слишком | demais
-assim | adv | like this, so | так, таким образом
-bem | adv | well | хорошо
-mal | adv | badly | плохо
-melhor | adj | better, best | лучше, лучший
-pior | adj | worse, worst | хуже, худший
-também | adv | also, too | тоже, также
-só | adv | only, just | только
-apenas | adv | only, merely | лишь, всего лишь
-quase | adv | almost | почти
-muitas vezes | adv | often | часто
-de repente | adv | suddenly | вдруг
-depressa | adv | quickly | быстро
-devagar | adv | slowly | медленно
-juntos | adv | together | вместе
-em breve | adv | soon | скоро
-logo | adv | soon, right away | вскоре, сразу
-então | adv | then, so | тогда, итак
-finalmente | adv | finally | наконец
-sobretudo | adv | above all, especially | прежде всего, особенно
-mesmo | adv | even, really | даже, действительно
-de novo | adv | again | снова
-outra vez | adv | once again | ещё раз
-ao mesmo tempo | adv | at the same time | одновременно
-e | conj | and | и
-ou | conj | or | или
-mas | conj | but | но
-se | conj | if | если
-enquanto | conj | while | пока, в то время как
-embora | conj | although | хотя
-portanto | conj | therefore | поэтому, следовательно
-por isso | conj | that's why | вот почему, поэтому
-pois | conj | because, well | ведь, так как
-nem | conj | nor, not even | ни, даже не
-ou seja | conj | that is | то есть
-de | prep | of, from | из, от, о
-em | prep | in, on, at | в, на
-a | prep | to, at | к, в
-para | prep | for, to, in order to | для, чтобы, в
-por | prep | by, for, through | по, через, за
-com | prep | with | с
-sem | prep | without | без
-sobre | prep | about, on | о, про, над
-entre | prep | between, among | между
-até | prep | until, up to | до, вплоть до
-desde | prep | since | с (какого-то момента)
-contra | prep | against | против
-durante | prep | during | во время
-perante | prep | before, in front of | перед (лицом)
-segundo | prep | according to | согласно, по мнению
-junto de | prep | near, next to | рядом с, возле
-perto de | prep | close to | близко от
-longe de | prep | far from | далеко от
-antes de | prep | before | перед, до
-depois de | prep | after | после
-dentro de | prep | inside, within | внутри, в течение
-fora de | prep | outside of | вне, за пределами
-em frente de | prep | in front of | напротив, перед
+muito | adv A1 | very, a lot | очень, много
+pouco | adv A1 | little, few | мало
+mais | adv A1 | more | больше, более
+menos | adv A1 | less | меньше, менее
+bastante | adv A2 | quite, enough | довольно, достаточно
+demasiado | adv A2 | too much | слишком | demais
+assim | adv A2 | like this, so | так, таким образом
+bem | adv A1 | well | хорошо
+mal | adv A1 | badly | плохо
+melhor | adj A1 | better, best | лучше, лучший
+pior | adj A1 | worse, worst | хуже, худший
+também | adv A1 | also, too | тоже, также
+só | adv A1 | only, just | только
+apenas | adv A2 | only, merely | лишь, всего лишь
+quase | adv A2 | almost | почти
+muitas vezes | adv A2 | often | часто
+de repente | adv A2 | suddenly | вдруг
+depressa | adv A1 | quickly | быстро
+devagar | adv A1 | slowly | медленно
+juntos | adv A1 | together | вместе
+em breve | adv A2 | soon | скоро
+logo | adv A2 | soon, right away | вскоре, сразу
+então | adv A1 | then, so | тогда, итак
+finalmente | adv A2 | finally | наконец
+sobretudo | adv A2 | above all, especially | прежде всего, особенно
+mesmo | adv A2 | even, really | даже, действительно
+de novo | adv A2 | again | снова
+outra vez | adv A1 | once again | ещё раз
+ao mesmo tempo | adv A2 | at the same time | одновременно
+e | conj A1 | and | и
+ou | conj A1 | or | или
+mas | conj A1 | but | но
+se | conj A1 | if | если
+enquanto | conj A2 | while | пока, в то время как
+embora | conj B1 | although | хотя
+portanto | conj A2 | therefore | поэтому, следовательно
+por isso | conj A2 | that's why | вот почему, поэтому
+pois | conj A2 | because, well | ведь, так как
+nem | conj A2 | nor, not even | ни, даже не
+ou seja | conj B1 | that is | то есть
+de | prep A1 | of, from | из, от, о
+em | prep A1 | in, on, at | в, на
+a | prep A1 | to, at | к, в
+para | prep A1 | for, to, in order to | для, чтобы, в
+por | prep A1 | by, for, through | по, через, за
+com | prep A1 | with | с
+sem | prep A1 | without | без
+sobre | prep A2 | about, on | о, про, над
+entre | prep A2 | between, among | между
+até | prep A1 | until, up to | до, вплоть до
+desde | prep A2 | since | с (какого-то момента)
+contra | prep A2 | against | против
+durante | prep A2 | during | во время
+perante | prep B1 | before, in front of | перед (лицом)
+segundo | prep B1 | according to | согласно, по мнению
+junto de | prep A2 | near, next to | рядом с, возле
+perto de | prep A2 | close to | близко от
+longe de | prep A2 | far from | далеко от
+antes de | prep A1 | before | перед, до
+depois de | prep A1 | after | после
+dentro de | prep A2 | inside, within | внутри, в течение
+fora de | prep A2 | outside of | вне, за пределами
+em frente de | prep A2 | in front of | напротив, перед
 
 ## feelings | Чувства и абстрактные понятия
-amor | n m pl=amores | love | любовь
-alegria | n f | joy | радость
-tristeza | n f | sadness | грусть
-medo | n m | fear | страх
-raiva | n f | anger | злость
-esperança | n f | hope | надежда
-saudade | n f | longing, missing someone | тоска, ностальгия | | | Знаменитое португальское слово: нежная тоска по кому-то или чему-то далёкому.
-sorte | n f | luck | удача
-vida | n f | life | жизнь
-morte | n f | death | смерть
-verdade | n f | truth | правда
-mentira | n f | lie | ложь
-paz | n f pl=pazes | peace | мир (покой)
-guerra | n f | war | война
-liberdade | n f | freedom | свобода
-justiça | n f | justice | справедливость
-ideia | n f | idea | идея
-opinião | n f pl=opiniões | opinion | мнение
-razão | n f pl=razões | reason | причина, разум
-motivo | n m | reason | повод, мотив
-vez | n f pl=vezes | time (occasion) | раз
-coisa | n f | thing | вещь, дело
-lugar | n m | place | место
-parte | n f | part | часть
-forma | n f | form, way | форма, способ
-maneira | n f | manner, way | манера, способ
-caso | n m | case | случай
-facto | n m | fact | факт
-história | n f | story, history | история, рассказ
-língua materna | n f | mother tongue | родной язык
-segredo | n m | secret | секрет
-sonho | n m | dream | мечта, сон
-ajuda | n f | help | помощь
-conselho | n m | advice | совет
-cuidado | n m | care, caution | осторожность, забота
-atenção | n f | attention | внимание
-vontade | n f | will, desire | желание, воля
-imagem | n f pl=imagens | image | изображение
-fim | n m pl=fins | end | конец
-princípio | n m | beginning, principle | начало, принцип
-começo | n m | start | начало
-sentido | n m | meaning, sense | смысл, значение
-diferença | n f | difference | разница
+amor | n m pl=amores A1 | love | любовь
+alegria | n f A2 | joy | радость
+tristeza | n f A2 | sadness | грусть
+medo | n m A2 | fear | страх
+raiva | n f B1 | anger | злость
+esperança | n f B1 | hope | надежда
+saudade | n f A2 | longing, missing someone | тоска, ностальгия | | | Знаменитое португальское слово: нежная тоска по кому-то или чему-то далёкому.
+sorte | n f A2 | luck | удача
+vida | n f A1 | life | жизнь
+morte | n f A2 | death | смерть
+verdade | n f A2 | truth | правда
+mentira | n f A2 | lie | ложь
+paz | n f pl=pazes A2 | peace | мир (покой)
+guerra | n f A2 | war | война
+liberdade | n f B1 | freedom | свобода
+justiça | n f B1 | justice | справедливость
+ideia | n f A1 | idea | идея
+opinião | n f pl=opiniões A2 | opinion | мнение
+razão | n f pl=razões A2 | reason | причина, разум
+motivo | n m A2 | reason | повод, мотив
+vez | n f pl=vezes A1 | time (occasion) | раз
+coisa | n f A1 | thing | вещь, дело
+lugar | n m A1 | place | место
+parte | n f A2 | part | часть
+forma | n f A2 | form, way | форма, способ
+maneira | n f A2 | manner, way | манера, способ
+caso | n m A2 | case | случай
+facto | n m B1 | fact | факт
+história | n f A2 | story, history | история, рассказ
+língua materna | n f A2 | mother tongue | родной язык
+segredo | n m A2 | secret | секрет
+sonho | n m A2 | dream | мечта, сон
+ajuda | n f A1 | help | помощь
+conselho | n m A2 | advice | совет
+cuidado | n m A2 | care, caution | осторожность, забота
+atenção | n f A2 | attention | внимание
+vontade | n f A2 | will, desire | желание, воля
+imagem | n f pl=imagens A2 | image | изображение
+fim | n m pl=fins A2 | end | конец
+princípio | n m A2 | beginning, principle | начало, принцип
+começo | n m A2 | start | начало
+sentido | n m A2 | meaning, sense | смысл, значение
+diferença | n f A2 | difference | разница

@@ -1,167 +1,167 @@
 ## verbs_core | Глаголы: самые важные
-ser | v | to be (permanent) | быть (постоянное свойство, суть)
-estar | v | to be (temporary, location) | быть, находиться (состояние, место)
-ter | v | to have | иметь
-haver | v | to exist, there to be | существовать, иметься (há = есть, имеется)
-ir | v | to go | идти, ехать
-vir | v | to come | приходить, приезжать
-fazer | v | to do, to make | делать
-dizer | v | to say, to tell | говорить, сказать
-poder | v | to be able to, can | мочь
-querer | v | to want | хотеть
-saber | v | to know (a fact), to know how to | знать, уметь
-ver | v | to see | видеть
-dar | v | to give | давать
-pôr | v | to put | класть, ставить
-ler | v | to read | читать
-trazer | v | to bring | приносить
-ouvir | v | to hear | слышать
-falar | v | to speak, to talk | говорить, разговаривать
-comer | v | to eat | есть, кушать
-beber | v | to drink | пить
-viver | v | to live | жить
-gostar | v | to like | нравиться, любить
-precisar | v | to need | нуждаться, требоваться
-ficar | v | to stay, to remain, to be located | оставаться, находиться
-deixar | v | to leave, to let | оставлять, позволять
-chegar | v | to arrive | прибывать, приходить
-sair | v | to go out, to leave | выходить, уходить
-pedir | v | to ask for, to order | просить, заказывать
-levar | v | to take, to carry | брать с собой, нести, везти
-passar | v | to pass, to spend (time) | проходить, проводить (время)
-achar | v | to think, to find | считать, находить
-pensar | v | to think | думать
-começar | v | to begin, to start | начинать
-trabalhar | v | to work | работать
-morar | v | to live (reside) | проживать
-conhecer | v | to know (a person or place), to meet | знать (человека, место), знакомиться
-parecer | v | to seem | казаться
-dever | v | to must, to owe | быть должным
-entender | v | to understand | понимать
-esperar | v | to wait, to hope | ждать, надеяться
-comprar | v | to buy | покупать
-abrir | v | to open | открывать
-escrever | v | to write | писать
+ser | v A1 | to be (permanent) | быть (постоянное свойство, суть)
+estar | v A1 | to be (temporary, location) | быть, находиться (состояние, место)
+ter | v A1 | to have | иметь
+haver | v A2 | to exist, there to be | существовать, иметься (há = есть, имеется)
+ir | v A1 | to go | идти, ехать
+vir | v A1 | to come | приходить, приезжать
+fazer | v A1 | to do, to make | делать
+dizer | v A1 | to say, to tell | говорить, сказать
+poder | v A1 | to be able to, can | мочь
+querer | v A1 | to want | хотеть
+saber | v A1 | to know (a fact), to know how to | знать, уметь
+ver | v A1 | to see | видеть
+dar | v A1 | to give | давать
+pôr | v A1 | to put | класть, ставить
+ler | v A1 | to read | читать
+trazer | v A1 | to bring | приносить
+ouvir | v A1 | to hear | слышать
+falar | v A1 | to speak, to talk | говорить, разговаривать
+comer | v A1 | to eat | есть, кушать
+beber | v A1 | to drink | пить
+viver | v A1 | to live | жить
+gostar | v A1 | to like | нравиться, любить
+precisar | v A1 | to need | нуждаться, требоваться
+ficar | v A1 | to stay, to remain, to be located | оставаться, находиться
+deixar | v A2 | to leave, to let | оставлять, позволять
+chegar | v A1 | to arrive | прибывать, приходить
+sair | v A1 | to go out, to leave | выходить, уходить
+pedir | v A1 | to ask for, to order | просить, заказывать
+levar | v A1 | to take, to carry | брать с собой, нести, везти
+passar | v A1 | to pass, to spend (time) | проходить, проводить (время)
+achar | v A1 | to think, to find | считать, находить
+pensar | v A1 | to think | думать
+começar | v A1 | to begin, to start | начинать
+trabalhar | v A1 | to work | работать
+morar | v A1 | to live (reside) | проживать
+conhecer | v A1 | to know (a person or place), to meet | знать (человека, место), знакомиться
+parecer | v A2 | to seem | казаться
+dever | v A2 | to must, to owe | быть должным
+entender | v A1 | to understand | понимать
+esperar | v A1 | to wait, to hope | ждать, надеяться
+comprar | v A1 | to buy | покупать
+abrir | v A1 | to open | открывать
+escrever | v A1 | to write | писать
 
 ## verbs_daily | Глаголы: повседневные
-acordar | v | to wake up | просыпаться, будить
-levantar-se | v | to get up | вставать
-deitar-se | v | to lie down, to go to bed | ложиться
-sentar-se | v | to sit down | садиться
-chamar-se | v | to be called | называться, зваться
-lembrar-se | v | to remember | помнить, вспоминать
-lavar-se | v | to wash oneself | умываться, мыться
-vestir-se | v | to get dressed | одеваться
-sentir-se | v | to feel | чувствовать себя
-divertir-se | v | to have fun | развлекаться, веселиться
-preocupar-se | v | to worry | беспокоиться
-casar-se | v | to get married | жениться, выходить замуж
-esquecer | v | to forget | забывать
-pagar | v | to pay | платить
-vender | v | to sell | продавать
-custar | v | to cost | стоить
-fechar | v | to close | закрывать
-entrar | v | to enter | входить
-subir | v | to go up, to climb | подниматься
-descer | v | to go down | спускаться
-andar | v | to walk | ходить, идти пешком
-correr | v | to run | бегать
-parar | v | to stop | останавливаться
-procurar | v | to look for, to search | искать
-encontrar | v | to find, to meet | находить, встречать
-perder | v | to lose, to miss | терять, упускать
-ganhar | v | to win, to earn | выигрывать, зарабатывать
-usar | v | to use | использовать, носить
-ligar | v | to call, to switch on | звонить, включать
-telefonar | v | to phone | звонить по телефону
-estudar | v | to study | учиться, изучать
-aprender | v | to learn | учить, учиться
-ensinar | v | to teach | преподавать, учить
-perguntar | v | to ask (a question) | спрашивать
-responder | v | to answer | отвечать
-explicar | v | to explain | объяснять
-repetir | v | to repeat | повторять
-escutar | v | to listen | слушать
-olhar | v | to look | смотреть
-mostrar | v | to show | показывать
-tomar | v | to take, to have (a drink) | брать, принимать, пить
-cozinhar | v | to cook | готовить (еду)
-preparar | v | to prepare | готовить, подготавливать
-jantar | v | to have dinner | ужинать
-almoçar | v | to have lunch | обедать
-limpar | v | to clean | убирать, чистить
-ajudar | v | to help | помогать
-apanhar | v | to catch, to take (transport) | ловить, садиться (на транспорт) | pegar
-arranjar | v | to fix, to arrange, to get | чинить, устраивать, находить | consertar, arrumar
-demorar | v | to take time, to delay | занимать время, задерживаться
-estacionar | v | to park | парковаться
-descarregar | v | to download, to unload | скачивать, разгружать | baixar
-partilhar | v | to share | делиться | compartilhar
-carregar | v | to carry, to charge, to press | нести, заряжать, нажимать
-guardar | v | to keep, to save | хранить, беречь
-aceitar | v | to accept | принимать, соглашаться
-gastar | v | to spend, to waste | тратить
-mudar | v | to change, to move | менять, переезжать
+acordar | v A1 | to wake up | просыпаться, будить
+levantar-se | v A1 | to get up | вставать
+deitar-se | v A1 | to lie down, to go to bed | ложиться
+sentar-se | v A1 | to sit down | садиться
+chamar-se | v A1 | to be called | называться, зваться
+lembrar-se | v A2 | to remember | помнить, вспоминать
+lavar-se | v A1 | to wash oneself | умываться, мыться
+vestir-se | v A1 | to get dressed | одеваться
+sentir-se | v A2 | to feel | чувствовать себя
+divertir-se | v A2 | to have fun | развлекаться, веселиться
+preocupar-se | v A2 | to worry | беспокоиться
+casar-se | v A2 | to get married | жениться, выходить замуж
+esquecer | v A2 | to forget | забывать
+pagar | v A1 | to pay | платить
+vender | v A1 | to sell | продавать
+custar | v A1 | to cost | стоить
+fechar | v A1 | to close | закрывать
+entrar | v A1 | to enter | входить
+subir | v A1 | to go up, to climb | подниматься
+descer | v A1 | to go down | спускаться
+andar | v A2 | to walk | ходить, идти пешком
+correr | v A1 | to run | бегать
+parar | v A1 | to stop | останавливаться
+procurar | v A1 | to look for, to search | искать
+encontrar | v A1 | to find, to meet | находить, встречать
+perder | v A1 | to lose, to miss | терять, упускать
+ganhar | v A1 | to win, to earn | выигрывать, зарабатывать
+usar | v A1 | to use | использовать, носить
+ligar | v A1 | to call, to switch on | звонить, включать
+telefonar | v A1 | to phone | звонить по телефону
+estudar | v A1 | to study | учиться, изучать
+aprender | v A1 | to learn | учить, учиться
+ensinar | v A1 | to teach | преподавать, учить
+perguntar | v A1 | to ask (a question) | спрашивать
+responder | v A1 | to answer | отвечать
+explicar | v A1 | to explain | объяснять
+repetir | v A1 | to repeat | повторять
+escutar | v A1 | to listen | слушать
+olhar | v A1 | to look | смотреть
+mostrar | v A1 | to show | показывать
+tomar | v A1 | to take, to have (a drink) | брать, принимать, пить
+cozinhar | v A1 | to cook | готовить (еду)
+preparar | v A1 | to prepare | готовить, подготавливать
+jantar | v A1 | to have dinner | ужинать
+almoçar | v A1 | to have lunch | обедать
+limpar | v A1 | to clean | убирать, чистить
+ajudar | v A1 | to help | помогать
+apanhar | v A2 | to catch, to take (transport) | ловить, садиться (на транспорт) | pegar
+arranjar | v A2 | to fix, to arrange, to get | чинить, устраивать, находить | consertar, arrumar
+demorar | v A2 | to take time, to delay | занимать время, задерживаться
+estacionar | v A2 | to park | парковаться
+descarregar | v B1 | to download, to unload | скачивать, разгружать | baixar
+partilhar | v A2 | to share | делиться | compartilhar
+carregar | v A2 | to carry, to charge, to press | нести, заряжать, нажимать
+guardar | v A2 | to keep, to save | хранить, беречь
+aceitar | v A2 | to accept | принимать, соглашаться
+gastar | v A2 | to spend, to waste | тратить
+mudar | v A2 | to change, to move | менять, переезжать
 
 ## verbs_more | Глаголы: дополнительные
-conseguir | v | to manage to, to succeed | удаваться, суметь
-seguir | v | to follow | следовать, продолжать
-sentir | v | to feel | чувствовать
-preferir | v | to prefer | предпочитать
-servir | v | to serve | служить, подавать
-dormir | v | to sleep | спать
-partir | v | to leave, to break | уезжать, ломать
-decidir | v | to decide | решать
-escolher | v | to choose | выбирать
-receber | v | to receive | получать, принимать
-oferecer | v | to offer | предлагать, дарить
-aparecer | v | to appear | появляться
-acontecer | v | to happen | происходить, случаться
-crescer | v | to grow | расти
-nadar | v | to swim | плавать
-viajar | v | to travel | путешествовать
-visitar | v | to visit | посещать
-dançar | v | to dance | танцевать
-cantar | v | to sing | петь
-jogar | v | to play (a game) | играть (в игру)
-tocar | v | to touch, to play (an instrument) | трогать, играть (на инструменте)
-tentar | v | to try | пытаться
-tirar | v | to take out, to remove | вынимать, снимать
-trocar | v | to exchange, to swap | менять, обменивать
-imaginar | v | to imagine | воображать
-importar | v | to matter, to import | иметь значение, импортировать
-sonhar | v | to dream | мечтать, видеть сны
-odiar | v | to hate | ненавидеть
-sorrir | v | to smile | улыбаться
-rir | v | to laugh | смеяться
-cair | v | to fall | падать
-passear | v | to stroll, to go for a walk | гулять
-convidar | v | to invite | приглашать
-conversar | v | to chat | беседовать
-participar | v | to take part | участвовать
-praticar | v | to practise | практиковать, тренироваться
-reservar | v | to book | бронировать
-organizar | v | to organise | организовывать
-terminar | v | to finish | заканчивать
-acabar | v | to end, to finish | заканчивать, кончаться
-desejar | v | to wish, to desire | желать
-cuidar | v | to take care | заботиться
-cobrir | v | to cover | покрывать
-fugir | v | to flee, to run away | убегать, бежать
-valer | v | to be worth | стоить, иметь ценность
-vencer | v | to win, to overcome | побеждать
-morrer | v | to die | умирать
-nascer | v | to be born | рождаться
-prometer | v | to promise | обещать
-mexer | v | to move, to stir | двигать, шевелить, мешать
-sofrer | v | to suffer | страдать
-existir | v | to exist | существовать
-permitir | v | to allow | разрешать
-discutir | v | to discuss, to argue | обсуждать, спорить
-cumprir | v | to fulfil, to comply | выполнять, исполнять
-insistir | v | to insist | настаивать
-dividir | v | to divide | делить
-recordar | v | to recall, to remind | вспоминать, напоминать
-notar | v | to notice | замечать
-tratar | v | to treat, to deal with | обращаться, лечить, заниматься
-voar | v | to fly | летать
+conseguir | v A2 | to manage to, to succeed | удаваться, суметь
+seguir | v A2 | to follow | следовать, продолжать
+sentir | v A2 | to feel | чувствовать
+preferir | v A2 | to prefer | предпочитать
+servir | v A2 | to serve | служить, подавать
+dormir | v A1 | to sleep | спать
+partir | v A2 | to leave, to break | уезжать, ломать
+decidir | v A2 | to decide | решать
+escolher | v A2 | to choose | выбирать
+receber | v A2 | to receive | получать, принимать
+oferecer | v A2 | to offer | предлагать, дарить
+aparecer | v A2 | to appear | появляться
+acontecer | v A2 | to happen | происходить, случаться
+crescer | v A2 | to grow | расти
+nadar | v A1 | to swim | плавать
+viajar | v A1 | to travel | путешествовать
+visitar | v A1 | to visit | посещать
+dançar | v A1 | to dance | танцевать
+cantar | v A1 | to sing | петь
+jogar | v A1 | to play (a game) | играть (в игру)
+tocar | v A1 | to touch, to play (an instrument) | трогать, играть (на инструменте)
+tentar | v A2 | to try | пытаться
+tirar | v A2 | to take out, to remove | вынимать, снимать
+trocar | v A2 | to exchange, to swap | менять, обменивать
+imaginar | v A2 | to imagine | воображать
+importar | v A2 | to matter, to import | иметь значение, импортировать
+sonhar | v A2 | to dream | мечтать, видеть сны
+odiar | v A2 | to hate | ненавидеть
+sorrir | v A2 | to smile | улыбаться
+rir | v A2 | to laugh | смеяться
+cair | v A2 | to fall | падать
+passear | v A2 | to stroll, to go for a walk | гулять
+convidar | v A2 | to invite | приглашать
+conversar | v A2 | to chat | беседовать
+participar | v A2 | to take part | участвовать
+praticar | v A2 | to practise | практиковать, тренироваться
+reservar | v A2 | to book | бронировать
+organizar | v A2 | to organise | организовывать
+terminar | v A2 | to finish | заканчивать
+acabar | v A2 | to end, to finish | заканчивать, кончаться
+desejar | v A2 | to wish, to desire | желать
+cuidar | v A2 | to take care | заботиться
+cobrir | v B1 | to cover | покрывать
+fugir | v B1 | to flee, to run away | убегать, бежать
+valer | v B1 | to be worth | стоить, иметь ценность
+vencer | v B1 | to win, to overcome | побеждать
+morrer | v A2 | to die | умирать
+nascer | v A2 | to be born | рождаться
+prometer | v A2 | to promise | обещать
+mexer | v A2 | to move, to stir | двигать, шевелить, мешать
+sofrer | v B1 | to suffer | страдать
+existir | v B1 | to exist | существовать
+permitir | v B1 | to allow | разрешать
+discutir | v A2 | to discuss, to argue | обсуждать, спорить
+cumprir | v B1 | to fulfil, to comply | выполнять, исполнять
+insistir | v B1 | to insist | настаивать
+dividir | v A2 | to divide | делить
+recordar | v B1 | to recall, to remind | вспоминать, напоминать
+notar | v B1 | to notice | замечать
+tratar | v A2 | to treat, to deal with | обращаться, лечить, заниматься
+voar | v A2 | to fly | летать

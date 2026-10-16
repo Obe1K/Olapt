@@ -1,0 +1,372 @@
+# Глаголы, добавленные в версии 1.1 (по смысловым группам). Формат — см. 01_basics.txt.
+
+## verbs_core | Глаголы: самые важные
+voltar | v A1 | to return, to come back | возвращаться
+perceber | v A1 | to understand, to realise | понимать | entender | В Португалии в разговоре чаще говорят «perceber»: «Não percebo» — не понимаю.
+compreender | v A1 | to understand, to comprehend | понимать, постигать
+chamar | v A1 | to call | звать, называть
+lavar | v A1 | to wash | мыть, стирать
+contar | v A1 | to count, to tell | считать, рассказывать
+mandar | v A1 | to send, to order | посылать, приказывать
+adorar | v A1 | to love, to adore | обожать
+fumar | v A1 | to smoke | курить
+chover | v A1 | to rain | идти (о дожде)
+desligar | v A1 | to switch off, to hang up | выключать, класть трубку
+arrumar | v A1 | to tidy up, to put away | убирать, наводить порядок
+brincar | v A1 | to play (children), to joke | играть (о детях), шутить
+
+## verbs_home | Глаголы: дом и быт
+acender | v A2 | to switch on, to light | включать (свет), зажигать
+apagar | v A2 | to switch off, to erase | выключать (свет), стирать (надпись)
+encher | v A2 | to fill | наполнять
+esvaziar | v B1 | to empty | опустошать
+secar | v A2 | to dry | сушить, сохнуть
+varrer | v A2 | to sweep | подметать
+aspirar | v B1 | to vacuum | пылесосить
+estender | v B1 | to hang out (laundry), to stretch | развешивать (бельё), протягивать
+dobrar | v B1 | to fold, to bend, to turn (a corner) | складывать, сгибать, поворачивать
+pendurar | v B1 | to hang | вешать
+reparar | v A2 | to repair, to notice | чинить, замечать
+consertar | v A2 | to fix, to mend | чинить, ремонтировать
+avariar | v B1 | to break down | ломаться (о технике) | quebrar
+estragar | v A2 | to spoil, to break | портить
+funcionar | v A2 | to work, to function | работать (о механизме)
+trancar | v B1 | to lock | запирать
+bater | v A2 | to knock, to hit | стучать, ударять
+regar | v B1 | to water | поливать
+plantar | v B1 | to plant | сажать (растения)
+mobilar | v B1 | to furnish | обставлять мебелью | mobiliar
+mudar-se | v A2 | to move (house) | переезжать
+alugar | v A2 | to rent | снимать, брать напрокат
+arrendar | v B1 | to rent out, to lease | сдавать или снимать в аренду
+reciclar | v B1 | to recycle | сортировать мусор, перерабатывать
+vestir | v A2 | to dress, to put on | надевать, одевать
+calçar | v A2 | to put on (shoes) | обувать, надевать (обувь)
+despir-se | v A2 | to undress | раздеваться
+pentear-se | v A2 | to comb one's hair | причёсываться
+barbear-se | v B1 | to shave | бриться
+maquilhar-se | v B1 | to put on make-up | краситься | maquiar-se
+adormecer | v A2 | to fall asleep | засыпать
+descansar | v A2 | to rest | отдыхать
+relaxar | v A2 | to relax | расслабляться
+deitar | v A2 | to lay down, to pour, to throw | класть, наливать, бросать
+
+## verbs_kitchen | Глаголы: на кухне
+cortar | v A2 | to cut | резать
+picar | v B1 | to chop, to sting | мелко рубить, колоть
+misturar | v A2 | to mix | смешивать
+ferver | v A2 | to boil | кипеть, кипятить
+fritar | v A2 | to fry | жарить
+assar | v A2 | to roast, to bake | запекать, печь
+grelhar | v B1 | to grill | жарить на гриле
+aquecer | v A2 | to heat up, to warm | разогревать, греть
+arrefecer | v B1 | to cool down | остывать, охлаждать | esfriar
+descascar | v B1 | to peel | чистить (от кожуры)
+temperar | v B1 | to season | приправлять
+provar | v A2 | to taste, to prove | пробовать (на вкус), доказывать
+encomendar | v A2 | to order | заказывать
+experimentar | v A2 | to try (on), to try out | пробовать, примерять
+apetecer | v A2 | to feel like | хотеться | | «Apetece-me um café» — мне хочется кофе.
+
+## verbs_talk | Глаголы: общение
+cumprimentar | v A2 | to greet | приветствовать, здороваться
+apresentar | v A2 | to present, to introduce | представлять, знакомить
+agradecer | v A2 | to thank | благодарить
+desculpar | v A2 | to excuse, to forgive | извинять
+perdoar | v B1 | to forgive | прощать
+gritar | v A2 | to shout | кричать
+chorar | v A2 | to cry | плакать
+rir-se | v A2 | to laugh (at) | смеяться (над)
+beijar | v A2 | to kiss | целовать
+abraçar | v A2 | to hug | обнимать
+amar | v A2 | to love | любить
+detestar | v A2 | to hate, to detest | терпеть не мочь
+mentir | v A2 | to lie | лгать, врать
+avisar | v A2 | to warn, to let know | предупреждать, сообщать
+informar | v B1 | to inform | информировать
+anunciar | v B1 | to announce | объявлять
+comunicar | v B1 | to communicate | сообщать, общаться
+contactar | v A2 | to contact | связываться | contatar
+combinar | v A2 | to arrange, to agree on, to match | договариваться, сочетаться
+concordar | v A2 | to agree | соглашаться
+discordar | v B1 | to disagree | не соглашаться
+traduzir | v A2 | to translate | переводить (текст)
+soletrar | v A2 | to spell | произносить по буквам
+pronunciar | v A2 | to pronounce | произносить
+significar | v A2 | to mean | означать
+descrever | v A2 | to describe | описывать
+indicar | v A2 | to indicate, to point out | указывать
+exprimir | v B1 | to express | выражать
+sugerir | v B1 | to suggest | предлагать, советовать
+propor | v B1 | to propose | предлагать
+aconselhar | v B1 | to advise | советовать
+recomendar | v A2 | to recommend | рекомендовать
+convencer | v B1 | to convince | убеждать
+negar | v B1 | to deny | отрицать
+admitir | v B1 | to admit | признавать, допускать
+confessar | v B1 | to confess | признаваться
+queixar-se | v A2 | to complain | жаловаться
+reclamar | v B1 | to complain, to claim | предъявлять претензию, жаловаться
+comentar | v B1 | to comment | комментировать
+recusar | v B1 | to refuse | отказываться, отклонять
+despedir-se | v A2 | to say goodbye | прощаться
+encontrar-se | v A2 | to meet (up) | встречаться
+acompanhar | v A2 | to accompany, to follow | сопровождать, следить
+
+## verbs_mind | Глаголы: мысли и чувства
+acreditar | v A2 | to believe | верить
+crer | v B1 | to believe | верить, полагать
+duvidar | v B1 | to doubt | сомневаться
+considerar | v B1 | to consider | считать, рассматривать
+supor | v B1 | to suppose | предполагать
+prever | v B1 | to foresee, to forecast | предвидеть, прогнозировать
+tencionar | v B1 | to intend | намереваться
+lembrar | v A2 | to remind, to remember | напоминать, помнить
+esquecer-se | v A2 | to forget | забывать
+reconhecer | v B1 | to recognise | узнавать, признавать
+enganar-se | v A2 | to make a mistake, to be wrong | ошибаться
+adivinhar | v B1 | to guess | угадывать
+interessar | v A2 | to interest | интересовать
+interessar-se | v B1 | to be interested in | интересоваться
+zangar-se | v A2 | to get angry | сердиться
+chatear | v B1 | to annoy, to bother | раздражать, надоедать | | Разговорное.
+aborrecer-se | v A2 | to get bored | скучать | entediar-se
+cansar-se | v A2 | to get tired | уставать
+assustar | v B1 | to frighten | пугать
+surpreender | v B1 | to surprise | удивлять
+confiar | v B1 | to trust | доверять
+fingir | v B1 | to pretend | притворяться
+aproveitar | v A2 | to make the most of, to enjoy | пользоваться (случаем), наслаждаться
+gozar | v B1 | to enjoy, to make fun of | наслаждаться, подшучивать
+habituar-se | v B1 | to get used to | привыкать | acostumar-se
+adaptar-se | v B1 | to adapt | приспосабливаться
+integrar-se | v B1 | to integrate | интегрироваться
+comportar-se | v B1 | to behave | вести себя
+agir | v B1 | to act | действовать
+reagir | v B1 | to react | реагировать
+
+## verbs_move | Глаголы: движение и действия
+caminhar | v A2 | to walk | ходить пешком
+saltar | v A2 | to jump | прыгать | pular
+empurrar | v A2 | to push | толкать
+puxar | v A2 | to pull | тянуть
+segurar | v A2 | to hold | держать
+agarrar | v B1 | to grab | хватать
+atirar | v B1 | to throw | бросать
+colocar | v A2 | to put, to place | класть, ставить
+virar | v A2 | to turn | поворачивать
+atravessar | v A2 | to cross | переходить, пересекать
+mover | v B1 | to move | двигать
+esconder | v A2 | to hide | прятать
+aproximar-se | v B1 | to approach | приближаться
+cheirar | v A2 | to smell | пахнуть, нюхать
+observar | v B1 | to observe | наблюдать
+buscar | v A2 | to fetch, to look for | забирать, искать
+aguardar | v B1 | to wait for, to await | ожидать
+atrasar-se | v A2 | to be late | опаздывать
+despachar-se | v B1 | to hurry up | поторапливаться | apressar-se | Разговорное.
+perder-se | v A2 | to get lost | заблудиться, потеряться
+conduzir | v A2 | to drive | водить (машину) | dirigir
+travar | v B1 | to brake | тормозить | frear
+acelerar | v B1 | to accelerate | ускоряться
+abastecer | v B1 | to fill up (with fuel) | заправлять(ся)
+hospedar-se | v B1 | to stay (at a hotel) | останавливаться (в гостинице)
+desfazer | v B1 | to undo, to unpack | распаковывать, разбирать
+partir-se | v B1 | to break | разбиваться, ломаться
+quebrar | v B1 | to break | ломать, разбивать
+rasgar | v B1 | to tear | рвать
+colar | v B1 | to glue, to paste | клеить, вставлять
+embrulhar | v B1 | to wrap | заворачивать
+queimar | v B1 | to burn | жечь, обжигать
+arder | v B1 | to burn | гореть
+explodir | v B1 | to explode | взрываться
+desaparecer | v B1 | to disappear | исчезать
+acertar | v B1 | to get it right, to hit | угадывать, попадать
+errar | v B1 | to make a mistake, to miss | ошибаться, промахиваться
+falhar | v B1 | to fail, to miss | не удаваться, проваливаться
+
+## verbs_work | Глаголы: работа, учёба и техника
+preencher | v A2 | to fill in (a form) | заполнять (бланк)
+assinar | v A2 | to sign | подписывать
+marcar | v A2 | to book (an appointment), to mark, to score | записываться (на приём), отмечать, забивать (гол)
+desmarcar | v B1 | to cancel (an appointment) | отменять (встречу, запись)
+cancelar | v A2 | to cancel | отменять
+confirmar | v A2 | to confirm | подтверждать
+verificar | v B1 | to check | проверять
+entregar | v A2 | to deliver, to hand in | доставлять, сдавать
+corrigir | v A2 | to correct | исправлять
+resolver | v A2 | to solve, to resolve | решать
+continuar | v A2 | to continue | продолжать
+desistir | v B1 | to give up | сдаваться, отказываться
+planear | v A2 | to plan | планировать | planejar
+contratar | v B1 | to hire | нанимать
+despedir | v B1 | to fire, to dismiss | увольнять
+candidatar-se | v B1 | to apply | подавать заявку
+reformar-se | v B1 | to retire | выходить на пенсию | aposentar-se
+gerir | v B1 | to manage | управлять
+dirigir | v B1 | to direct, to manage | руководить, направлять
+colaborar | v B1 | to collaborate | сотрудничать
+apoiar | v B1 | to support | поддерживать
+inscrever-se | v A2 | to enrol, to sign up | записываться, регистрироваться
+registar | v B1 | to register | регистрировать | registrar
+renovar | v B1 | to renew | продлевать, обновлять
+solicitar | v B1 | to request | запрашивать
+autorizar | v B1 | to authorise | разрешать
+carimbar | v B1 | to stamp | ставить печать
+assistir | v A2 | to watch, to attend | смотреть (матч, фильм), присутствовать
+frequentar | v B1 | to attend (regularly) | посещать
+chumbar | v B1 | to fail (an exam) | провалить (экзамен) | reprovar | Разговорное (Португалия).
+rever | v B1 | to review, to see again | повторять (материал), снова видеть
+resumir | v B1 | to summarise | кратко излагать
+sublinhar | v B1 | to underline | подчёркивать
+desenhar | v A2 | to draw | рисовать (карандашом)
+pintar | v A2 | to paint | рисовать красками, красить
+copiar | v A2 | to copy | копировать, списывать
+imprimir | v A2 | to print | печатать (на принтере)
+digitalizar | v B1 | to scan | сканировать | escanear
+instalar | v B1 | to install | устанавливать
+atualizar | v B1 | to update | обновлять
+pesquisar | v A2 | to search, to research | искать (информацию), исследовать
+clicar | v A2 | to click | нажимать, кликать
+navegar | v B1 | to browse, to sail | сидеть в интернете, плавать (на судне)
+publicar | v B1 | to publish, to post | публиковать
+fotografar | v A2 | to photograph | фотографировать
+filmar | v B1 | to film | снимать (видео)
+gravar | v B1 | to record | записывать (звук, видео)
+calcular | v B1 | to calculate | вычислять
+medir | v B1 | to measure | измерять
+pesar | v B1 | to weigh | весить, взвешивать
+somar | v B1 | to add (up) | складывать (числа)
+multiplicar | v B1 | to multiply | умножать
+comparar | v A2 | to compare | сравнивать
+separar | v B1 | to separate | разделять
+juntar | v A2 | to join, to put together, to save up | соединять, собирать, копить
+produzir | v B1 | to produce | производить
+fabricar | v B1 | to manufacture | изготавливать
+construir | v A2 | to build | строить
+destruir | v B1 | to destroy | разрушать
+desenvolver | v B1 | to develop | развивать
+criar | v B1 | to create, to raise | создавать, растить
+investir | v B1 | to invest | инвестировать, вкладывать
+compor | v B1 | to compose | сочинять, составлять
+expor | v B1 | to exhibit, to expose | выставлять, излагать
+refazer | v B1 | to redo | переделывать
+
+## verbs_city | Глаголы: город, покупки и услуги
+emprestar | v A2 | to lend | одалживать, давать взаймы
+devolver | v A2 | to give back, to return | возвращать (вещь)
+poupar | v A2 | to save (money) | экономить, копить
+levantar | v A2 | to lift, to withdraw (money) | поднимать, снимать (деньги)
+depositar | v B1 | to deposit | вносить (на счёт)
+transferir | v B1 | to transfer | переводить (деньги)
+cobrar | v B1 | to charge | взимать плату
+enviar | v A2 | to send | отправлять
+faltar | v A2 | to be missing, to be absent | не хватать, отсутствовать
+sobrar | v B1 | to be left over | оставаться (лишним)
+bastar | v B1 | to be enough | хватать, быть достаточным
+caber | v B1 | to fit | помещаться
+roubar | v A2 | to steal, to rob | красть
+assaltar | v B1 | to rob, to mug | грабить
+prender | v B1 | to arrest, to fasten | арестовывать, прикреплять
+multar | v B1 | to fine | штрафовать
+proibir | v B1 | to forbid | запрещать
+obrigar | v B1 | to oblige, to force | обязывать, заставлять
+exigir | v B1 | to demand | требовать
+necessitar | v B1 | to need | нуждаться
+pertencer | v B1 | to belong | принадлежать
+depender | v B1 | to depend | зависеть
+conter | v B1 | to contain | содержать
+incluir | v B1 | to include | включать
+manter | v B1 | to keep, to maintain | поддерживать, сохранять
+obter | v B1 | to obtain | получать
+evitar | v A2 | to avoid | избегать
+impedir | v B1 | to prevent | мешать, препятствовать
+prevenir | v B1 | to prevent, to warn | предотвращать, предупреждать
+salvar | v B1 | to save, to rescue | спасать
+proteger | v B1 | to protect | защищать
+lutar | v B1 | to fight, to struggle | бороться
+votar | v B1 | to vote | голосовать
+eleger | v B1 | to elect | избирать
+doar | v B1 | to donate | жертвовать, дарить
+consumir | v B1 | to consume | потреблять
+poluir | v B1 | to pollute | загрязнять
+desperdiçar | v B1 | to waste | тратить впустую
+aumentar | v A2 | to increase | увеличивать(ся)
+diminuir | v B1 | to decrease | уменьшать(ся)
+melhorar | v A2 | to improve | улучшать(ся)
+piorar | v B1 | to get worse | ухудшать(ся)
+controlar | v B1 | to control | контролировать
+atrair | v B1 | to attract | привлекать
+
+## verbs_health | Глаголы: тело и здоровье
+doer | v A2 | to hurt, to ache | болеть | | «Dói-me a cabeça» — у меня болит голова.
+magoar | v A2 | to hurt | ранить, причинять боль | machucar
+magoar-se | v A2 | to get hurt | ушибиться, пораниться | machucar-se
+tossir | v A2 | to cough | кашлять
+espirrar | v B1 | to sneeze | чихать
+sangrar | v B1 | to bleed | кровоточить
+curar | v B1 | to cure, to heal | лечить, вылечивать
+operar | v B1 | to operate | оперировать
+respirar | v A2 | to breathe | дышать
+engolir | v B1 | to swallow | глотать
+morder | v B1 | to bite | кусать
+envelhecer | v B1 | to grow old | стареть
+sobreviver | v B1 | to survive | выживать
+alimentar | v B1 | to feed | кормить
+
+## verbs_leisure | Глаголы: досуг и спорт
+treinar | v A2 | to train, to practise | тренироваться
+escalar | v B1 | to climb | лазить, взбираться
+mergulhar | v B1 | to dive | нырять
+patinar | v B1 | to skate | кататься на коньках или роликах
+pescar | v A2 | to fish | ловить рыбу
+acampar | v B1 | to camp | жить в палатке, ходить в поход
+esquiar | v B1 | to ski | кататься на лыжах
+apostar | v B1 | to bet | делать ставку, спорить
+celebrar | v A2 | to celebrate | праздновать
+festejar | v B1 | to celebrate | праздновать, отмечать
+comemorar | v B1 | to commemorate, to celebrate | отмечать (событие)
+descobrir | v A2 | to discover, to find out | открывать, узнавать
+divorciar-se | v B1 | to get divorced | разводиться
+nevar | v A2 | to snow | идти (о снеге)
+brilhar | v B1 | to shine | светить, сиять
+soprar | v B1 | to blow | дуть
+ladrar | v B1 | to bark | лаять | latir
+ocorrer | v B1 | to occur | происходить
+bloquear | v B1 | to block | блокировать
+
+## expressions | Устойчивые выражения
+ter de | phrase A1 | to have to | быть должным, нужно | ter que | «Tenho de ir» — мне нужно идти.
+tomar banho | phrase A1 | to have a shower, to bathe | принимать душ, купаться
+tomar o pequeno-almoço | phrase A1 | to have breakfast | завтракать | tomar café da manhã
+fazer anos | phrase A1 | to have a birthday | праздновать день рождения | fazer aniversário | «Faço anos em maio» — у меня день рождения в мае.
+fazer compras | phrase A1 | to go shopping | делать покупки
+ter sono | phrase A1 | to be sleepy | хотеть спать
+ter frio | phrase A1 | to be cold | мёрзнуть
+ter calor | phrase A1 | to be hot | жарко (кому-то)
+ter medo | phrase A2 | to be afraid | бояться
+ter pressa | phrase A2 | to be in a hurry | спешить
+ter razão | phrase A2 | to be right | быть правым
+ter sorte | phrase A2 | to be lucky | везти
+ter saudades | phrase A2 | to miss | скучать (по кому-то, чему-то) | sentir saudade
+costumar | v A2 | to usually do | обычно делать, иметь обыкновение | | «Costumo ir a pé» — обычно я хожу пешком.
+ir buscar | phrase A2 | to fetch, to pick up | заехать за, сходить за
+pedir emprestado | phrase A2 | to borrow | брать взаймы
+pedir desculpa | phrase A2 | to apologise | извиняться
+querer dizer | phrase A2 | to mean | значить, иметь в виду
+deitar fora | phrase A2 | to throw away | выбрасывать | jogar fora
+dar um passeio | phrase A2 | to go for a walk | прогуляться
+dar uma volta | phrase A2 | to go for a walk, to go for a ride | прогуляться, прокатиться
+pôr a mesa | phrase A2 | to set the table | накрывать на стол
+levantar a mesa | phrase A2 | to clear the table | убирать со стола
+lavar a loiça | phrase A2 | to wash the dishes | мыть посуду | lavar a louça
+fazer a cama | phrase A2 | to make the bed | заправлять кровать
+passar a ferro | phrase A2 | to iron | гладить (утюгом)
+tirar fotografias | phrase A2 | to take photos | фотографировать
+apanhar sol | phrase A2 | to sunbathe | загорать | tomar sol
+estar de férias | phrase A2 | to be on holiday | быть в отпуске
+ir às compras | phrase A2 | to go shopping | идти за покупками
+mudar de casa | phrase A2 | to move house | переезжать
+fazer as malas | phrase A2 | to pack | собирать чемоданы
+haver de | phrase B1 | will, to be going to | обязательно (сделать), собираться | | «Hei de ir a Paris» — я обязательно поеду в Париж.
+dar jeito | phrase B1 | to be handy, to be convenient | быть кстати, пригодиться | | Разговорное (Португалия).

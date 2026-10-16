@@ -1,0 +1,431 @@
+# Дом, кухня, еда, одежда, покупки, услуги, документы (добавлено в 1.1).
+
+## food | Еда и напитки
+cereja | n f A1 | cherry | черешня, вишня
+ameixa | n f A2 | plum | слива
+figo | n m A2 | fig | инжир
+kiwi | n m A2 | kiwi | киви
+manga | n f A2 | mango, sleeve | манго, рукав
+melão | n m pl=melões A2 | melon | дыня
+framboesa | n f B1 | raspberry | малина
+amora | n f B1 | blackberry | ежевика
+abacate | n m A2 | avocado | авокадо
+tangerina | n f A2 | tangerine | мандарин
+coco | n m A2 | coconut | кокос
+damasco | n m B1 | apricot | абрикос
+romã | n f B1 | pomegranate | гранат
+maracujá | n m B1 | passion fruit | маракуйя
+toranja | n f B1 | grapefruit | грейпфрут
+noz | n f A2 | walnut | грецкий орех
+amendoim | n m pl=amendoins A2 | peanut | арахис
+amêndoa | n f B1 | almond | миндаль
+castanha | n f A2 | chestnut | каштан
+pimento | n m A2 | pepper (vegetable) | сладкий перец | pimentão
+beringela | n f A2 | aubergine | баклажан | berinjela
+curgete | n f A2 | courgette | кабачок | abobrinha
+abóbora | n f A2 | pumpkin | тыква
+brócolos | n m A2 | broccoli | брокколи | brócolis
+espinafres | n m A2 | spinach | шпинат | espinafre
+cogumelo | n m A2 | mushroom | гриб
+milho | n m A2 | corn | кукуруза
+ervilha | n f A2 | pea | горошек
+beterraba | n f B1 | beetroot | свёкла
+rabanete | n m B1 | radish | редис
+grão-de-bico | n m B1 | chickpeas | нут
+lentilha | n f B1 | lentil | чечевица
+azeitona | n f A2 | olive | оливка, маслина
+salsa | n f B1 | parsley | петрушка
+coentros | n m B1 | coriander | кинза | coentro
+manjericão | n m B1 | basil | базилик
+louro | n m B1 | bay leaf | лавровый лист
+hortelã | n f B1 | mint | мята
+gengibre | n m B1 | ginger | имбирь
+canela | n f A2 | cinnamon | корица
+caril | n m B1 | curry | карри | curry
+carne picada | n f A2 | minced meat | фарш | carne moída
+bife | n m A2 | steak | стейк, бифштекс
+costeleta | n f B1 | chop | отбивная на косточке
+borrego | n m A2 | lamb | ягнятина, ягнёнок | cordeiro
+peru | n m A2 | turkey | индейка
+salsicha | n f A2 | sausage | сосиска
+fiambre | n m A2 | ham (cooked) | ветчина | presunto
+atum | n m pl=atuns A2 | tuna | тунец
+salmão | n m pl=salmões A2 | salmon | лосось
+pescada | n f B1 | hake | хек
+dourada | n f B1 | sea bream | дорада
+robalo | n m B1 | sea bass | сибас
+lula | n f A2 | squid | кальмар
+choco | n m B1 | cuttlefish | каракатица
+amêijoa | n f B1 | clam | съедобный моллюск (венерка)
+mexilhão | n m pl=mexilhões B1 | mussel | мидия
+caranguejo | n m B1 | crab | краб
+natas | n f A2 | cream | сливки | creme de leite
+requeijão | n m B1 | curd cheese | творожный сыр
+farinha | n f A2 | flour | мука
+fermento | n m B1 | yeast, baking powder | дрожжи, разрыхлитель
+óleo | n m A2 | oil | растительное масло, масло (техническое)
+vinagre | n m A2 | vinegar | уксус
+mostarda | n f A2 | mustard | горчица
+maionese | n f A2 | mayonnaise | майонез
+compota | n f A2 | jam | варенье, джем | geleia
+doce | n m A2 | sweet, dessert, jam | сладость, десерт, варенье
+bolacha | n f A2 | biscuit | печенье | biscoito
+cereais | n m A2 | cereal | хлопья, злаки
+tosta | n f A2 | toasted sandwich, toast | горячий бутерброд, тост
+torrada | n f A2 | toast | тост, гренка
+omelete | n f A2 | omelette | омлет
+puré | n m A2 | mashed potatoes, purée | пюре | purê
+batata-doce | n f A2 | sweet potato | батат
+arroz-doce | n m B1 | rice pudding | сладкий рисовый пудинг
+francesinha | n f B1 | francesinha (Porto sandwich) | франсезинья (бутерброд из Порту)
+caldo verde | n m B1 | caldo verde (kale soup) | калду верде (суп с капустой)
+bifana | n f B1 | pork sandwich | бифана (сэндвич со свининой)
+prego | n m B1 | steak sandwich, nail | сэндвич со стейком, гвоздь
+petisco | n m B1 | snack, tapas | закуска
+aperitivo | n m B1 | appetiser, aperitif | закуска, аперитив
+água com gás | phrase A1 | sparkling water | газированная вода
+água sem gás | phrase A1 | still water | вода без газа
+refrigerante | n m A2 | soft drink | газировка, прохладительный напиток
+imperial | n f pl=imperiais A2 | small draught beer | маленькое разливное пиво | chope | В Лиссабоне «imperial», в Порту «fino».
+fino | n m B1 | small draught beer (Porto) | маленькое разливное пиво (в Порту)
+vinho verde | n m A2 | vinho verde | винью верде («зелёное», молодое вино)
+vinho do Porto | n m A2 | port wine | портвейн
+licor | n m B1 | liqueur | ликёр
+aguardente | n f B1 | brandy, spirit | крепкий спиртной напиток
+meia de leite | n f A2 | large white coffee | кофе с молоком (в чашке)
+descafeinado | n m A2 | decaf | кофе без кофеина
+maduro | adj A2 | ripe | спелый, зрелый
+podre | adj B1 | rotten | гнилой
+congelado | adj A2 | frozen | замороженный
+caseiro | adj A2 | homemade | домашний
+delicioso | adj A1 | delicious | вкусный, восхитительный
+saboroso | adj A2 | tasty | вкусный
+ácido | adj B1 | sour, acid | кислый
+insosso | adj B1 | bland, unsalted | пресный, недосоленный
+integral | adj B1 | wholemeal | цельнозерновой
+biológico | adj B1 | organic | органический, био | orgânico
+vegano | adj A2 | vegan | веганский
+sabor | n m A2 | flavour, taste | вкус
+ingrediente | n m A2 | ingredient | ингредиент
+fatia | n f A2 | slice | ломтик, кусок
+pedaço | n m A2 | piece | кусок
+lata | n f A2 | can, tin | жестяная банка
+frasco | n m B1 | jar, bottle | стеклянная банка, флакон
+pacote | n m A2 | packet | пачка, упаковка
+quilo | n m A1 | kilo | килограмм
+grama | n m A2 | gram | грамм
+litro | n m A1 | litre | литр
+dieta | n f A2 | diet | диета
+caloria | n f B1 | calorie | калория
+vitamina | n f B1 | vitamin | витамин
+alimento | n m B1 | food, foodstuff | продукт питания, пища
+alimentação | n f B1 | nutrition, food | питание
+
+## restaurant | В ресторане и кафе
+menu | n m A2 | menu, set menu | меню, комплексный обед
+couvert | n m B1 | cover charge, starters on the table | платные закуски на столе | | Хлеб, оливки и масло на столе в Португалии обычно платные.
+esplanada | n f A2 | terrace (café) | летняя площадка кафе
+balcão | n m pl=balcões A2 | counter | стойка, прилавок
+tasca | n f B1 | tavern, small restaurant | таверна, закусочная
+marisqueira | n f B1 | seafood restaurant | ресторан морепродуктов
+churrasqueira | n f B1 | grill restaurant | гриль-ресторан
+cervejaria | n f B1 | beer hall | пивной ресторан
+pedido | n m A2 | order, request | заказ, просьба
+reclamação | n f pl=reclamações B1 | complaint | жалоба
+livro de reclamações | n m B1 | complaints book | книга жалоб | | Обязателен в каждом заведении Португалии.
+para levar | phrase A2 | to take away | с собой | para viagem
+mal passado | phrase A2 | rare | с кровью (о мясе)
+bem passado | phrase A2 | well done | хорошо прожаренный
+ao ponto | phrase B1 | medium | средней прожарки
+meia dose | n f B1 | half portion | полпорции
+dose | n f B1 | portion, dose | порция, доза
+palito | n m B1 | toothpick | зубочистка
+tabuleiro | n m B1 | tray, board | поднос, доска (игровая) | bandeja
+
+## kitchen | Кухня и посуда
+frigideira | n f A2 | frying pan | сковорода
+tacho | n m B1 | pot, saucepan | кастрюля | panela
+tampa | n f A2 | lid | крышка
+tábua | n f B1 | board, chopping board | доска, разделочная доска
+colher de chá | n f A2 | teaspoon | чайная ложка
+concha | n f B1 | ladle, shell | половник, ракушка
+abre-latas | n m B1 | can opener | консервный нож
+saca-rolhas | n m B1 | corkscrew | штопор
+jarro | n m A2 | jug | кувшин
+taça | n f A2 | wine glass, cup, bowl | бокал, кубок, чаша
+caneca | n f A2 | mug | кружка
+pires | n m B1 | saucer | блюдце
+travessa | n f B1 | serving dish, side street | блюдо (посуда), переулок
+loiça | n f A2 | dishes, crockery | посуда | louça
+talheres | n m A2 | cutlery | столовые приборы
+micro-ondas | n m A2 | microwave | микроволновка
+torradeira | n f A2 | toaster | тостер
+chaleira | n f A2 | kettle | чайник
+cafeteira | n f B1 | coffee pot | кофейник
+máquina de café | n f A2 | coffee machine | кофемашина
+batedeira | n f B1 | mixer | миксер
+liquidificadora | n f B1 | blender | блендер | liquidificador
+congelador | n m A2 | freezer | морозилка | freezer
+máquina de lavar loiça | n f A2 | dishwasher | посудомоечная машина | lava-louças
+lava-loiça | n m B1 | kitchen sink | кухонная мойка | pia
+bancada | n f B1 | worktop | столешница
+avental | n m pl=aventais B1 | apron | фартук
+pano | n m A2 | cloth | тряпка, ткань
+esponja | n f B1 | sponge | губка
+detergente | n m A2 | detergent | моющее средство
+balde | n m B1 | bucket | ведро
+caixote do lixo | n m A2 | bin | мусорное ведро | lixeira
+
+## home | Дом
+moradia | n f B1 | detached house | частный дом
+vivenda | n f B1 | villa, house | вилла, дом
+estúdio | n m B1 | studio | студия (квартира, мастерская)
+assoalhada | n f B1 | room (in a flat) | комната (в объявлениях) | | В объявлениях: T2 — квартира с двумя спальнями.
+corredor | n m A2 | corridor | коридор
+sótão | n m pl=sótãos B1 | attic | чердак
+cave | n f B1 | basement, cellar | подвал
+terraço | n m B1 | terrace | терраса
+quintal | n m pl=quintais B1 | backyard | двор при доме
+piscina | n f A2 | swimming pool | бассейн
+campainha | n f A2 | doorbell | дверной звонок
+fechadura | n f B1 | lock | замок (дверной)
+caixa do correio | n f A2 | mailbox | почтовый ящик
+interruptor | n m B1 | switch | выключатель
+tomada | n f A2 | socket | розетка
+lâmpada | n f A2 | light bulb | лампочка
+aquecimento | n m A2 | heating | отопление
+ar condicionado | n m A2 | air conditioning | кондиционер
+aquecedor | n m A2 | heater | обогреватель
+esquentador | n m B1 | gas water heater | газовая колонка | aquecedor
+torneira | n f A2 | tap | кран
+lavatório | n m B1 | washbasin | раковина | pia
+banheira | n f A2 | bathtub | ванна
+sanita | n f A2 | toilet (bowl) | унитаз | vaso sanitário
+papel higiénico | n m A2 | toilet paper | туалетная бумага | papel higiênico
+champô | n m A2 | shampoo | шампунь | xampu
+gel de banho | n m A2 | shower gel | гель для душа
+desodorizante | n m B1 | deodorant | дезодорант | desodorante
+creme | n m A2 | cream | крем
+escova | n f A2 | brush | щётка
+pente | n m A2 | comb | расчёска
+secador | n m A2 | hairdryer | фен
+perfume | n m A2 | perfume | духи
+maquilhagem | n f B1 | make-up | макияж, косметика | maquiagem
+móvel | n m pl=móveis A2 | piece of furniture | предмет мебели
+mobília | n f B1 | furniture | мебель
+mesa de cabeceira | n f B1 | bedside table | прикроватная тумбочка
+cómoda | n f B1 | chest of drawers | комод | cômoda
+estante | n f A2 | bookcase | книжный шкаф, стеллаж
+guarda-roupa | n m A2 | wardrobe | платяной шкаф
+poltrona | n f A2 | armchair | кресло
+colchão | n m pl=colchões B1 | mattress | матрас
+fronha | n f B1 | pillowcase | наволочка
+edredão | n m pl=edredões B1 | duvet | одеяло | edredom
+cabide | n m B1 | hanger | плечики, вешалка
+vaso | n m A2 | vase, flowerpot | ваза, цветочный горшок
+planta | n f A2 | plant, floor plan | растение, план (помещения)
+máquina de secar | n f B1 | tumble dryer | сушильная машина
+ferro de engomar | n m B1 | iron | утюг | ferro de passar
+estendal | n m pl=estendais B1 | clothes horse, washing line | сушилка для белья | varal
+mola | n f B1 | peg, spring | прищепка, пружина
+condomínio | n m B1 | service charge, condominium | плата за обслуживание дома, жилой комплекс
+senhorio | n m f=senhoria B1 | landlord | арендодатель, хозяин жилья
+inquilino | n m f=inquilina B1 | tenant | арендатор, жилец
+arrendamento | n m B1 | renting, lease | аренда
+contrato de arrendamento | n m B1 | lease agreement | договор аренды
+caução | n f pl=cauções B1 | deposit | залог
+fiador | n m f=fiadora B1 | guarantor | поручитель
+mobilado | adj B1 | furnished | меблированный | mobiliado
+obra | n f B1 | building work, work (of art) | ремонт, стройка, произведение | | «Estar em obras» — быть на ремонте.
+vizinhança | n f B1 | neighbourhood | соседи, окрестности
+gás | n m A2 | gas | газ
+eletricidade | n f A2 | electricity | электричество
+conta da luz | n f A2 | electricity bill | счёт за электричество
+avaria | n f B1 | breakdown, fault | поломка, неисправность
+fuga | n f B1 | leak, escape | утечка, побег
+humidade | n f B1 | damp, humidity | сырость, влажность | umidade
+bolor | n m B1 | mould | плесень | mofo
+limpeza | n f A2 | cleaning | уборка
+arrumação | n f pl=arrumações B1 | tidying, storage room | уборка, кладовка
+lavandaria | n f B1 | laundry | прачечная | lavanderia
+
+## clothes | Одежда и обувь
+t-shirt | n f A1 | T-shirt | футболка | camiseta
+blusa | n f A2 | blouse | блузка
+sweatshirt | n f B1 | sweatshirt | толстовка | moletom
+blusão | n m pl=blusões B1 | jacket | куртка | jaqueta
+colete | n m B1 | waistcoat, vest | жилет
+sobretudo | n m B1 | overcoat | пальто
+gabardina | n f B1 | raincoat, trench coat | плащ | capa de chuva
+impermeável | n m pl=impermeáveis B1 | raincoat | непромокаемый плащ
+calções | n m A2 | shorts | шорты | bermuda
+calças de ganga | n f A2 | jeans | джинсы | calça jeans
+fato de treino | n m A2 | tracksuit | спортивный костюм | agasalho
+roupão | n m pl=roupões B1 | bathrobe | халат
+roupa interior | n f A2 | underwear | нижнее бельё | roupa íntima
+soutien | n m B1 | bra | бюстгальтер | sutiã
+collants | n m B1 | tights | колготки | meia-calça
+luva | n f A2 | glove | перчатка
+cachecol | n m pl=cachecóis A2 | scarf | шарф
+lenço | n m A2 | scarf, handkerchief | платок, носовой платок
+gorro | n m A2 | woolly hat | вязаная шапка
+boné | n m A2 | cap | кепка
+sandália | n f A2 | sandal | сандалия
+chinelo | n m A2 | slipper, flip-flop | тапок, шлёпанец
+sapatilha | n f B1 | trainer, sneaker | кроссовка | tênis
+botão | n m pl=botões A2 | button | пуговица, кнопка
+fecho | n m B1 | zip, fastener | молния, застёжка | zíper
+bolso | n m A2 | pocket | карман
+tecido | n m B1 | fabric | ткань
+seda | n f B1 | silk | шёлк
+linho | n m B1 | linen | лён
+couro | n m B1 | leather | кожа (материал)
+ganga | n f B1 | denim | джинсовая ткань | jeans
+malha | n f B1 | knitwear | трикотаж
+moda | n f A2 | fashion | мода
+estilo | n m A2 | style | стиль
+provador | n m B1 | fitting room | примерочная
+apertado | adj A2 | tight | тесный, узкий
+justo | adj B1 | tight-fitting, fair | облегающий, справедливый
+confortável | adj A2 | comfortable | удобный
+desconfortável | adj B1 | uncomfortable | неудобный
+usado | adj A2 | used, second-hand | поношенный, подержанный
+às riscas | phrase B1 | striped | в полоску
+aos quadrados | phrase B1 | checked | в клетку
+joia | n f A2 | jewel, piece of jewellery | украшение, драгоценность
+colar | n m A2 | necklace | ожерелье, бусы
+brinco | n m A2 | earring | серьга
+pulseira | n f A2 | bracelet | браслет
+óculos de sol | n m A2 | sunglasses | солнцезащитные очки
+
+## shopping | Покупки, деньги и одежда
+centro comercial | n m A2 | shopping centre | торговый центр | shopping
+hipermercado | n m B1 | hypermarket | гипермаркет
+mercearia | n f B1 | grocer's | бакалея, продуктовый магазин
+frutaria | n f B1 | greengrocer's | фруктовая лавка
+drogaria | n f B1 | household goods shop | хозяйственный магазин
+livraria | n f A2 | bookshop | книжный магазин
+papelaria | n f A2 | stationer's | канцелярский магазин
+quiosque | n m B1 | kiosk | киоск
+florista | n mf B1 | florist | флорист, цветочный магазин
+sapataria | n f B1 | shoe shop | обувной магазин
+ourivesaria | n f B1 | jeweller's | ювелирный магазин
+ótica | n f B1 | optician's | оптика
+tabacaria | n f B1 | tobacconist's, newsagent | табачная лавка (там же газеты и лотерея)
+feira | n f A2 | fair, open-air market | ярмарка, рынок
+montra | n f B1 | shop window | витрина | vitrine
+fila | n f A2 | queue | очередь
+senha | n f B1 | queue ticket, password | талон (в очереди), пароль | | В аптеке, на почте и в налоговой берут «senha».
+etiqueta | n f B1 | label, tag | ярлык, этикетка
+marca | n f A2 | brand, mark | марка, бренд
+qualidade | n f A2 | quality | качество
+garantia | n f B1 | warranty, guarantee | гарантия
+devolução | n f pl=devoluções B1 | return | возврат (товара)
+reembolso | n m B1 | refund | возврат денег
+saldos | n m A2 | sales | распродажа | liquidação
+oferta | n f A2 | offer, gift | предложение, подарок
+compra | n f A1 | purchase | покупка
+lista de compras | n f A1 | shopping list | список покупок
+entrega | n f A2 | delivery | доставка
+pagamento | n m A2 | payment | оплата
+prestação | n f pl=prestações B1 | instalment | взнос, платёж в рассрочку
+cartão de crédito | n m A2 | credit card | кредитная карта
+em dinheiro | phrase A2 | in cash | наличными
+código | n m A2 | code | код
+contribuinte | n mf B1 | taxpayer | налогоплательщик | | «Quer contribuinte na fatura?» — нужен ли ваш NIF в чеке.
+NIF | n m B1 | tax number | налоговый номер (NIF) | CPF
+
+## services | Банк, почта и услуги
+conta bancária | n f A2 | bank account | банковский счёт
+IBAN | n m B1 | IBAN | номер счёта IBAN
+transferência | n f B1 | transfer | перевод (денег)
+levantamento | n m B1 | withdrawal | снятие (наличных)
+depósito | n m B1 | deposit, tank | вклад, внесение денег, бак
+juros | n m B1 | interest | проценты (по вкладу, кредиту)
+empréstimo | n m B1 | loan | заём, кредит
+crédito | n m B1 | credit | кредит
+dívida | n f B1 | debt | долг
+poupança | n f B1 | savings | сбережения
+envelope | n m A2 | envelope | конверт
+postal | n m pl=postais A2 | postcard | открытка
+remetente | n mf B1 | sender | отправитель
+destinatário | n m f=destinatária B1 | recipient | получатель
+carta registada | n f B1 | registered letter | заказное письмо | carta registrada
+aviso | n m B1 | notice, warning | уведомление, предупреждение
+atendimento | n m B1 | customer service | обслуживание (клиентов)
+marcação | n f pl=marcações B1 | appointment, booking | запись (на приём) | agendamento
+horário de funcionamento | n m B1 | opening hours | часы работы
+oficina | n f B1 | workshop, car repair shop | мастерская, автосервис
+seguro | n m A2 | insurance | страховка
+serviço | n m A2 | service | услуга, обслуживание
+tarifário | n m B1 | phone plan, tariff | тарифный план
+carregamento | n m B1 | top-up | пополнение счёта
+
+## documents | Документы и учреждения
+cartão de cidadão | n m B1 | citizen card | удостоверение личности (Португалия)
+bilhete de identidade | n m B1 | identity card | удостоверение личности | carteira de identidade
+autorização de residência | n f B1 | residence permit | вид на жительство
+título de residência | n m B1 | residence card | карта резидента
+número de utente | n m B1 | health service number | номер пациента в системе здравоохранения (SNS)
+centro de saúde | n m A2 | health centre | поликлиника
+Finanças | n f B1 | tax office | налоговая (разговорное название) | Receita Federal
+junta de freguesia | n f B1 | parish council | местная администрация | | Здесь, например, выдают справку о месте жительства.
+freguesia | n f B1 | parish | приход (административная единица)
+concelho | n m B1 | municipality | муниципалитет
+distrito | n m B1 | district | округ
+conservatória | n f B1 | registry office | регистрационное бюро, ЗАГС | cartório
+consulado | n m B1 | consulate | консульство
+embaixada | n f B1 | embassy | посольство
+tribunal | n m pl=tribunais B1 | court | суд
+lei | n f B1 | law | закон
+direito | n m B1 | right, law | право
+dever | n m B1 | duty | долг, обязанность
+requerimento | n m B1 | application, request | заявление
+formulário | n m A2 | form | бланк, анкета
+impresso | n m B1 | form | бланк | formulário
+certidão | n f pl=certidões B1 | certificate | свидетельство, выписка
+atestado | n m B1 | certificate (medical, of residence) | справка
+comprovativo | n m B1 | proof, receipt | подтверждение, квитанция | comprovante
+comprovativo de morada | n m B1 | proof of address | подтверждение адреса | comprovante de residência
+original | n m B1 | original | оригинал
+cópia | n f A2 | copy | копия
+multa | n f B1 | fine | штраф
+taxa | n f B1 | fee, rate | сбор, пошлина, ставка
+registo | n m B1 | registration, record | регистрация, запись | registro
+residência | n f B1 | residence | место жительства
+cidadania | n f B1 | citizenship | гражданство
+refugiado | n m f=refugiada B1 | refugee | беженец
+asilo | n m B1 | asylum | убежище
+autoridade | n f B1 | authority | власть, ведомство
+governo | n m B1 | government | правительство
+estado | n m B1 | state, condition | государство, состояние
+presidente | n mf B1 | president | президент
+ministro | n m f=ministra B1 | minister | министр
+eleição | n f pl=eleições B1 | election | выборы
+voto | n m B1 | vote | голос (на выборах)
+partido | n m B1 | party (political) | партия
+política | n f B1 | politics, policy | политика
+sociedade | n f B1 | society | общество
+
+## emergency | Экстренные ситуации
+emergência | n f A2 | emergency | чрезвычайная ситуация
+número de emergência | n m A2 | emergency number | номер экстренной помощи | | В Португалии и всей Европе — 112.
+acidente | n m A2 | accident | авария, несчастный случай
+incêndio | n m B1 | fire | пожар
+roubo | n m A2 | theft | кража
+assalto | n m B1 | robbery, mugging | ограбление
+ladrão | n m f=ladra pl=ladrões A2 | thief | вор
+crime | n m B1 | crime | преступление
+vítima | n f B1 | victim | жертва
+testemunha | n f B1 | witness | свидетель
+queixa | n f B1 | complaint, police report | жалоба, заявление в полицию | | «Apresentar queixa» — подать заявление в полицию.
+perigo | n m A2 | danger | опасность
+ferida | n f B1 | wound | рана
+queimadura | n f B1 | burn | ожог
+primeiros socorros | phrase B1 | first aid | первая помощь
+extintor | n m B1 | fire extinguisher | огнетушитель
+saída de emergência | n f A2 | emergency exit | запасной выход
+sismo | n m B1 | earthquake | землетрясение | terremoto
+inundação | n f pl=inundações B1 | flood | наводнение
+tempestade | n f A2 | storm | буря, шторм
+seca | n f B1 | drought | засуха

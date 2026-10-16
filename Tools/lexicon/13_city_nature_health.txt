@@ -1,0 +1,337 @@
+# Город, транспорт, путешествия, природа, животные, тело и здоровье, страны (добавлено в 1.1).
+
+## city | Город и ориентирование
+edifício | n m A2 | building | здание
+rotunda | n f A2 | roundabout | круговая развязка
+largo | n m B1 | small square | площадь (небольшая)
+calçada | n f B1 | cobbled pavement | мостовая, брусчатка | | Знаменитая португальская мостовая — calçada portuguesa.
+miradouro | n m A2 | viewpoint | смотровая площадка | mirante
+parque infantil | n m A2 | playground | детская площадка
+estádio | n m A2 | stadium | стадион
+pavilhão | n m pl=pavilhões B1 | pavilion, sports hall | павильон, спортзал
+ginásio | n m A2 | gym | спортзал | academia
+clínica | n f A2 | clinic | клиника
+prisão | n f pl=prisões B1 | prison | тюрьма
+cemitério | n m B1 | cemetery | кладбище
+catedral | n f pl=catedrais A2 | cathedral | собор
+sé | n f B1 | cathedral | кафедральный собор | | Sé de Lisboa, Sé do Porto.
+capela | n f B1 | chapel | часовня
+mosteiro | n m B1 | monastery | монастырь
+palácio | n m A2 | palace | дворец
+torre | n f A2 | tower | башня
+muralha | n f B1 | city wall | крепостная стена
+fonte | n f A2 | fountain, source | фонтан, источник
+estátua | n f A2 | statue | статуя
+galeria | n f B1 | gallery | галерея
+jardim zoológico | n m A2 | zoo | зоопарк | zoológico
+aquário | n m B1 | aquarium | аквариум, океанариум
+discoteca | n f A2 | nightclub | ночной клуб | boate
+bar | n m pl=bares A2 | bar | бар
+subúrbio | n m B1 | suburb | пригород
+arredores | n m B1 | outskirts | окрестности
+zona | n f A2 | area, zone | район, зона
+região | n f pl=regiões A2 | region | регион
+capital | n f pl=capitais A2 | capital (city) | столица
+sinal | n m pl=sinais A2 | sign, signal | знак, сигнал
+placa | n f B1 | sign, plate | табличка, вывеска
+endereço | n m A2 | address | адрес | | Адрес проживания в Португалии обычно называют «morada».
+quarteirão | n m pl=quarteirões B1 | block | квартал
+
+## transport | Транспорт и путешествия
+linha | n f A2 | line | линия
+carruagem | n f B1 | carriage | вагон | vagão
+assento | n m B1 | seat | сиденье, место
+passe | n m A2 | travel pass | проездной | | В Лиссабоне — «passe Navegante».
+validar | v B1 | to validate | валидировать (билет)
+revisor | n m f=revisora B1 | ticket inspector | контролёр
+passageiro | n m f=passageira A2 | passenger | пассажир
+ferry | n m B1 | ferry | паром | balsa
+navio | n m B1 | ship | корабль
+cruzeiro | n m B1 | cruise | круиз
+terminal | n m pl=terminais B1 | terminal | терминал
+porta de embarque | n f B1 | boarding gate | выход на посадку
+embarque | n m B1 | boarding | посадка
+check-in | n m A2 | check-in | регистрация
+bagagem de mão | n f A2 | hand luggage | ручная кладь
+passagem | n f B1 | passage, crossing, fare | проход, переход, билет
+ida | n f A2 | outward journey | поездка туда
+volta | n f A2 | return, turn, lap | возвращение, поворот, круг
+ida e volta | phrase A2 | return (ticket) | туда и обратно
+atrasado | adj A2 | late, delayed | опоздавший, задержанный
+cancelado | adj B1 | cancelled | отменённый
+direto | adj A2 | direct | прямой
+escala | n f B1 | stopover, scale | пересадка (в аэропорту), масштаб
+ligação | n f pl=ligações B1 | connection | соединение, стыковка
+transbordo | n m B1 | change (of train or bus) | пересадка
+percurso | n m B1 | route | маршрут
+caminho | n m A2 | way, path | путь, дорога
+estrada | n f A2 | road | дорога, шоссе
+túnel | n m pl=túneis B1 | tunnel | туннель
+velocidade | n f B1 | speed | скорость
+quilómetro | n m A2 | kilometre | километр | quilômetro
+distância | n f A2 | distance | расстояние
+volante | n m B1 | steering wheel | руль
+travão | n m pl=travões B1 | brake | тормоз | freio
+pneu | n m A2 | tyre | шина
+motor | n m B1 | engine | двигатель
+bomba de gasolina | n f A2 | petrol station | заправка | posto de gasolina
+parque de estacionamento | n m A2 | car park | парковка | estacionamento
+aluguer de carros | n m B1 | car hire | прокат автомобилей | aluguel de carros
+boleia | n f B1 | lift, ride | подвоз (на машине) | carona | «Dar boleia» — подвезти.
+trotinete | n f B1 | scooter | самокат | patinete
+a pé | phrase A1 | on foot | пешком
+de carro | phrase A1 | by car | на машине
+turismo | n m A2 | tourism | туризм
+posto de turismo | n m A2 | tourist office | туристический информационный центр
+receção | n f pl=receções A2 | reception | ресепшен, приём | recepção
+quarto individual | n m A2 | single room | одноместный номер
+quarto duplo | n m A2 | double room | двухместный номер
+pensão | n f pl=pensões B1 | guesthouse, pension | пансион, пенсия
+pousada | n f B1 | historic hotel, inn | гостиница (часто в историческом здании)
+parque de campismo | n m B1 | campsite | кемпинг | camping
+campismo | n m B1 | camping | отдых в кемпинге | camping
+tenda | n f B1 | tent | палатка | barraca
+câmbio | n m B1 | currency exchange | обмен валюты
+protetor solar | n m A2 | sunscreen | солнцезащитный крем
+guarda-sol | n m A2 | beach umbrella | пляжный зонт
+nadador-salvador | n m B1 | lifeguard | спасатель | salva-vidas
+bandeira | n f B1 | flag | флаг | | На пляже: зелёный — купаться можно, жёлтый — осторожно, красный — нельзя.
+paisagem | n f A2 | landscape | пейзаж
+vista | n f A2 | view | вид
+visita guiada | n f A2 | guided tour | экскурсия с гидом
+bilheteira | n f B1 | ticket office | касса | bilheteria
+
+## body | Тело и здоровье
+testa | n f A2 | forehead | лоб
+sobrancelha | n f B1 | eyebrow | бровь
+pestana | n f B1 | eyelash | ресница | cílio
+bochecha | n f B1 | cheek | щека
+lábio | n m A2 | lip | губа
+queixo | n m B1 | chin | подбородок
+garganta | n f A2 | throat | горло
+cotovelo | n m B1 | elbow | локоть
+pulso | n m B1 | wrist, pulse | запястье, пульс
+unha | n f A2 | nail | ноготь
+polegar | n m B1 | thumb | большой палец
+estômago | n m A2 | stomach | желудок
+cintura | n f B1 | waist | талия
+anca | n f B1 | hip | бедро (таз) | quadril
+coxa | n f B1 | thigh | бедро
+tornozelo | n m B1 | ankle | лодыжка
+calcanhar | n m B1 | heel | пятка
+dedo do pé | n m B1 | toe | палец ноги
+músculo | n m B1 | muscle | мышца
+pulmão | n m pl=pulmões B1 | lung | лёгкое
+fígado | n m B1 | liver | печень
+rim | n m pl=rins B1 | kidney | почка
+cérebro | n m B1 | brain | мозг
+ouvido | n m A2 | ear, hearing | ухо (внутреннее), слух
+visão | n f pl=visões B1 | vision, eyesight | зрение
+dor de garganta | n f A2 | sore throat | боль в горле
+dor de costas | n f A2 | backache | боль в спине
+dor de ouvidos | n f A2 | earache | боль в ушах
+enjoo | n m B1 | nausea | тошнота
+vómito | n m B1 | vomit | рвота | vômito
+diarreia | n f B1 | diarrhoea | диарея
+tontura | n f B1 | dizziness | головокружение
+infeção | n f pl=infeções B1 | infection | инфекция | infecção
+vírus | n m B1 | virus | вирус
+vacina | n f B1 | vaccine | вакцина
+injeção | n f pl=injeções B1 | injection | укол
+análise | n f B1 | test, analysis | анализ
+raio-X | n m B1 | X-ray | рентген
+tensão | n f pl=tensões B1 | blood pressure, tension | давление, напряжение | pressão
+diabetes | n f B1 | diabetes | диабет
+cancro | n m B1 | cancer | рак (болезнь) | câncer
+ataque cardíaco | n m B1 | heart attack | инфаркт
+sintoma | n m B1 | symptom | симптом
+tratamento | n m B1 | treatment | лечение
+cirurgia | n f B1 | surgery | хирургия, операция
+operação | n f pl=operações B1 | operation | операция
+paciente | n mf A2 | patient | пациент
+utente | n mf B1 | user, patient | пациент, пользователь (государственных услуг)
+xarope | n m B1 | syrup | сироп
+pomada | n f B1 | ointment | мазь
+gota | n f B1 | drop | капля
+penso | n m B1 | plaster, dressing | пластырь, повязка | curativo
+ligadura | n f B1 | bandage | бинт | atadura
+termómetro | n m B1 | thermometer | градусник | termômetro
+lentes de contacto | n f B1 | contact lenses | контактные линзы | lentes de contato
+cadeira de rodas | n f B1 | wheelchair | инвалидная коляска
+pediatra | n mf B1 | paediatrician | педиатр
+stress | n m B1 | stress | стресс | estresse
+ansiedade | n f B1 | anxiety | тревога
+depressão | n f pl=depressões B1 | depression | депрессия
+insónia | n f B1 | insomnia | бессонница | insônia
+grave | adj B1 | serious | серьёзный, тяжёлый
+ligeiro | adj B1 | light, slight | лёгкий, незначительный
+inchado | adj B1 | swollen | опухший
+partido | adj B1 | broken | сломанный, разбитый
+alérgico | adj A2 | allergic | страдающий аллергией
+
+## verbs_health | Глаголы: тело и здоровье
+vomitar | v B1 | to vomit | рвать (о тошноте)
+
+## nature | Природа и погода
+clima | n m A2 | climate | климат
+previsão do tempo | n f A2 | weather forecast | прогноз погоды
+grau | n m A2 | degree | градус, степень
+chuvoso | adj A2 | rainy | дождливый
+solarengo | adj B1 | sunny | солнечный | ensolarado
+nublado | adj A2 | cloudy | облачный
+ventoso | adj B1 | windy | ветреный
+húmido | adj B1 | humid, damp | влажный | úmido
+seco | adj A2 | dry | сухой
+molhado | adj A2 | wet | мокрый
+abafado | adj B1 | muggy, stuffy | душный
+aguaceiro | n m B1 | shower (rain) | ливень (кратковременный)
+trovão | n m pl=trovões B1 | thunder | гром
+relâmpago | n m B1 | lightning | молния
+granizo | n m B1 | hail | град
+geada | n f B1 | frost | иней, заморозок
+gelo | n m A2 | ice | лёд
+arco-íris | n m B1 | rainbow | радуга
+nascer do sol | n m A2 | sunrise | восход
+pôr do sol | n m A2 | sunset | закат
+sombra | n f A2 | shade, shadow | тень
+planeta | n m B1 | planet | планета
+espaço | n m B1 | space | пространство, космос
+oceano | n m A2 | ocean | океан
+baía | n f B1 | bay | залив, бухта
+falésia | n f B1 | cliff | утёс, обрыв (над морем)
+rocha | n f B1 | rock | скала
+gruta | n f B1 | cave, grotto | грот, пещера
+vale | n m B1 | valley | долина
+colina | n f B1 | hill | холм
+monte | n m B1 | hill, mount | гора, холм
+planície | n f B1 | plain | равнина
+deserto | n m B1 | desert | пустыня
+cascata | n f B1 | waterfall | водопад
+ribeira | n f B1 | stream | ручей, речка
+margem | n f B1 | bank, margin | берег (реки), поле (страницы)
+ramo | n m B1 | branch, bouquet | ветка, букет
+raiz | n f B1 | root | корень
+semente | n f B1 | seed | семя
+relva | n f A2 | grass, lawn | газон, трава | grama
+pinheiro | n m B1 | pine tree | сосна
+oliveira | n f B1 | olive tree | оливковое дерево
+sobreiro | n m B1 | cork oak | пробковый дуб | | Португалия — крупнейший в мире производитель пробки.
+cortiça | n f B1 | cork | пробка (материал)
+rosa | n f A2 | rose | роза
+girassol | n m pl=girassóis B1 | sunflower | подсолнух
+poluição | n f pl=poluições B1 | pollution | загрязнение
+reciclagem | n f B1 | recycling | переработка, сортировка мусора
+ecoponto | n m B1 | recycling bins | контейнеры для раздельного сбора | | Жёлтый — пластик и металл, синий — бумага, зелёный — стекло.
+energia | n f B1 | energy | энергия
+aquecimento global | n m B1 | global warming | глобальное потепление
+alterações climáticas | n f B1 | climate change | изменение климата | mudanças climáticas
+
+## animals | Животные
+cachorro | n m A2 | puppy | щенок | | В Бразилии «cachorro» — любая собака.
+burro | n m A2 | donkey | осёл
+cabra | n f A2 | goat | коза
+galo | n m A2 | rooster | петух
+tubarão | n m pl=tubarões B1 | shark | акула
+águia | n f B1 | eagle | орёл
+coruja | n f B1 | owl | сова
+andorinha | n f B1 | swallow | ласточка
+papagaio | n m B1 | parrot | попугай
+pardal | n m pl=pardais B1 | sparrow | воробей
+rã | n f B1 | frog | лягушка
+sapo | n m B1 | toad | жаба
+lagarto | n m B1 | lizard | ящерица
+aranha | n f A2 | spider | паук
+mosca | n f A2 | fly | муха
+elefante | n m A2 | elephant | слон
+girafa | n f A2 | giraffe | жираф
+tigre | n m A2 | tiger | тигр
+esquilo | n m B1 | squirrel | белка
+javali | n m B1 | wild boar | кабан
+animal de estimação | n m A2 | pet | домашний питомец
+trela | n f B1 | lead, leash | поводок | guia
+asa | n f B1 | wing | крыло
+pena | n f B1 | feather, pity | перо, жалость | | «Que pena!» — как жаль!
+cauda | n f B1 | tail | хвост | rabo
+pata | n f B1 | paw | лапа
+
+## countries | Страны и национальности
+país | n m pl=países A1 | country | страна
+Países Baixos | n m B1 | the Netherlands | Нидерланды
+Bélgica | n f A2 | Belgium | Бельгия
+Suíça | n f A2 | Switzerland | Швейцария
+Áustria | n f B1 | Austria | Австрия
+Grécia | n f A2 | Greece | Греция
+Irlanda | n f A2 | Ireland | Ирландия
+Suécia | n f B1 | Sweden | Швеция
+Noruega | n f B1 | Norway | Норвегия
+Dinamarca | n f B1 | Denmark | Дания
+Finlândia | n f B1 | Finland | Финляндия
+Roménia | n f B1 | Romania | Румыния | Romênia
+Bulgária | n f B1 | Bulgaria | Болгария
+Hungria | n f B1 | Hungary | Венгрия
+Chéquia | n f B1 | Czechia | Чехия | Tchéquia
+Turquia | n f B1 | Turkey | Турция
+Bielorrússia | n f B1 | Belarus | Беларусь
+Moldávia | n f B1 | Moldova | Молдова
+Geórgia | n f B1 | Georgia | Грузия
+Cazaquistão | n m B1 | Kazakhstan | Казахстан
+Israel | n m B1 | Israel | Израиль
+Marrocos | n m B1 | Morocco | Марокко
+Egito | n m B1 | Egypt | Египет
+China | n f A2 | China | Китай
+Japão | n m A2 | Japan | Япония
+Índia | n f A2 | India | Индия
+Canadá | n m A2 | Canada | Канада
+México | n m A2 | Mexico | Мексика
+Argentina | n f A2 | Argentina | Аргентина
+Austrália | n f B1 | Australia | Австралия
+Angola | n f A2 | Angola | Ангола
+Moçambique | n m A2 | Mozambique | Мозамбик
+Cabo Verde | n m A2 | Cape Verde | Кабо-Верде
+Guiné-Bissau | n f B1 | Guinea-Bissau | Гвинея-Бисау
+São Tomé e Príncipe | n m B1 | São Tomé and Príncipe | Сан-Томе и Принсипи
+Timor-Leste | n m B1 | East Timor | Восточный Тимор
+Macau | n m B1 | Macau | Макао
+África | n f A2 | Africa | Африка
+Ásia | n f A2 | Asia | Азия
+América | n f A2 | America | Америка
+América do Sul | n f A2 | South America | Южная Америка
+Oceânia | n f B1 | Oceania | Океания
+Coimbra | n f A2 | Coimbra | Коимбра
+Braga | n f A2 | Braga | Брага
+Faro | n m A2 | Faro | Фару
+Sintra | n f A2 | Sintra | Синтра
+Évora | n f B1 | Évora | Эвора
+Londres | n f A2 | London | Лондон
+Paris | n f A2 | Paris | Париж
+Madrid | n f A2 | Madrid | Мадрид
+Moscovo | n f B1 | Moscow | Москва | Moscou
+Kiev | n f B1 | Kyiv | Киев | | Также пишут «Kyiv».
+chinês | adj f=chinesa A2 | Chinese | китайский
+japonês | adj f=japonesa A2 | Japanese | японский
+holandês | adj f=holandesa B1 | Dutch | голландский, нидерландский
+suíço | adj A2 | Swiss | швейцарский
+belga | adj B1 | Belgian | бельгийский
+grego | adj A2 | Greek | греческий
+irlandês | adj f=irlandesa B1 | Irish | ирландский
+sueco | adj B1 | Swedish | шведский
+polaco | adj A2 | Polish | польский | polonês
+romeno | adj B1 | Romanian | румынский
+búlgaro | adj B1 | Bulgarian | болгарский
+húngaro | adj B1 | Hungarian | венгерский
+checo | adj B1 | Czech | чешский | tcheco
+turco | adj B1 | Turkish | турецкий
+bielorrusso | adj B1 | Belarusian | белорусский
+moldavo | adj B1 | Moldovan | молдавский
+georgiano | adj B1 | Georgian | грузинский
+indiano | adj A2 | Indian | индийский
+canadiano | adj B1 | Canadian | канадский | canadense
+mexicano | adj A2 | Mexican | мексиканский
+argentino | adj B1 | Argentinian | аргентинский
+angolano | adj A2 | Angolan | ангольский
+moçambicano | adj B1 | Mozambican | мозамбикский
+cabo-verdiano | adj B1 | Cape Verdean | кабовердианский
+marroquino | adj B1 | Moroccan | марокканский
+australiano | adj B1 | Australian | австралийский
+africano | adj A2 | African | африканский
+asiático | adj B1 | Asian | азиатский
