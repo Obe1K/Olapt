@@ -4,10 +4,10 @@
 o quê | phrase A1 | what? | что? | | В конце фразы или переспросе: «O quê?»
 aí | adv A1 | there (near you) | там (рядом с собеседником)
 oh | interj A1 | oh | о!, ах!
-caramba | interj A2 | wow, gosh | ничего себе!, чёрт возьми!
+caramba | interj A2 | wow, gosh | ничего себе!, чёрт возьми! | | Разговорное.
 perdão | interj A2 | sorry, pardon | простите, извините
 lamento | phrase A2 | I'm sorry | мне жаль | | От «lamentar».
-graças a deus | phrase A2 | thank God | слава богу
+graças a Deus | phrase A2 | thank God | слава богу
 de graça | phrase A2 | for free | бесплатно
 ora bem | phrase B1 | well, right then | итак, ну что ж
 
@@ -43,7 +43,7 @@ incomodar | v B1 | to bother | беспокоить, мешать
 rezar | v B1 | to pray | молиться
 culpar | v B1 | to blame | обвинять
 resistir | v B1 | to resist | сопротивляться
-ignorar | v B1 | to ignore | игнорировать
+ignorar | v B1 | to ignore, to be unaware of | игнорировать, не знать | | «Ignoro o motivo» — я не знаю причины.
 agradar | v B1 | to please | нравиться, угождать
 esclarecer | v B1 | to clarify | прояснять, уточнять
 inventar | v B1 | to invent, to make up | изобретать, выдумывать
@@ -78,7 +78,7 @@ durar | v B1 | to last | длиться
 reunir | v B1 | to gather, to meet | собирать, собираться
 arrancar | v B1 | to pull out, to start (a car) | вырывать, трогаться (с места)
 enterrar | v B1 | to bury | хоронить, закапывать
-explorar | v B1 | to explore | исследовать, осваивать
+explorar | v B1 | to explore, to exploit | исследовать, осваивать, эксплуатировать
 aterrar | v B1 | to land | приземляться | aterrissar
 apertar | v B1 | to tighten, to press, to squeeze | затягивать, нажимать, сжимать
 espalhar | v B1 | to spread | распространять, разбрасывать
@@ -94,11 +94,11 @@ localizar | v B1 | to locate | находить, определять место
 negociar | v B1 | to negotiate | вести переговоры
 analisar | v B1 | to analyse | анализировать
 aceder | v B1 | to access | получать доступ | acessar
-guiar | v B1 | to guide, to drive | направлять, вести
+guiar | v B1 | to guide, to drive | направлять, вести, водить (машину) | | Машину «guiar» — разговорное, нейтрально «conduzir».
 formar | v B1 | to form, to train | образовывать, обучать
 derrotar | v B1 | to defeat | побеждать
 iniciar | v B1 | to start | начинать
-suportar | v B1 | to bear, to support | выносить, поддерживать
+suportar | v B1 | to bear, to stand, to withstand | выносить, терпеть, выдерживать | | Ложный друг: «поддерживать (кого-то)» — apoiar.
 calhar | v B1 | to happen, to suit | случаться, подходить | | «Se calhar» — может быть.
 restar | v B1 | to remain | оставаться
 
@@ -199,7 +199,7 @@ alternativa | n f B1 | alternative | альтернатива
 nação | n f pl=nações B1 | nation | нация
 sofrimento | n m B1 | suffering | страдание
 fortuna | n f B1 | fortune | состояние, удача
-escuridão | n f B1 | darkness | темнота
+escuridão | n f pl=escuridões B1 | darkness | темнота
 inteligência | n f B1 | intelligence | интеллект, ум
 desafio | n m B1 | challenge | вызов, трудная задача
 recurso | n m B1 | resource, appeal | ресурс, средство, апелляция
@@ -222,7 +222,7 @@ desastre | n m B1 | disaster | катастрофа
 paraíso | n m B1 | paradise | рай
 ato | n m B1 | act | акт, поступок
 conjunto | n m B1 | set, group | набор, совокупность
-cobertura | n f B1 | cover, coverage, topping | покрытие, верхний этаж, глазурь
+cobertura | n f B1 | cover, coverage, topping | покрытие, освещение (в СМИ), глазурь
 gravação | n f pl=gravações B1 | recording | запись
 terapia | n f B1 | therapy | терапия
 vencedor | n m f=vencedora B1 | winner | победитель
@@ -235,7 +235,7 @@ tinta | n f B1 | paint, ink | краска, чернила
 compromisso | n m B1 | commitment, appointment | обязательство, договорённость
 competição | n f pl=competições B1 | competition | соревнование
 temporada | n f B1 | season | сезон
-arquivo | n m B1 | archive, file | архив, файл
+arquivo | n m B1 | archive, filing cabinet | архив, картотека | | Компьютерный файл в Португалии — «ficheiro» (arquivo — бразильское).
 fantasia | n f B1 | fantasy, costume | фантазия, маскарадный костюм
 brinde | n m B1 | toast, free gift | тост, подарок (к покупке)
 impacto | n m B1 | impact | воздействие
@@ -257,12 +257,12 @@ noção | n f pl=noções B1 | notion, idea | понятие
 técnica | n f B1 | technique | техника, метод
 tragédia | n f B1 | tragedy | трагедия
 respiração | n f pl=respirações B1 | breathing | дыхание
-asneira | n f B1 | nonsense, blunder | глупость, ошибка | | «Fazer asneiras» — делать глупости.
+asneira | n f B1 | nonsense, blunder, swear word | глупость, ошибка, ругательство | | Разговорное. «Fazer asneiras» — делать глупости, «dizer asneiras» — ругаться.
 influência | n f B1 | influence | влияние
 luxo | n m B1 | luxury | роскошь
 nojo | n m B1 | disgust | отвращение | | «Que nojo!» — какая гадость!
 estratégia | n f B1 | strategy | стратегия
-argumento | n m B1 | argument, plot | довод, сюжет
+argumento | n m B1 | argument (reasoning), screenplay | довод, аргумент, сценарий | | Не «ссора» — это discussão.
 indústria | n f B1 | industry | промышленность
 tatuagem | n f B1 | tattoo | татуировка
 rumo | n m B1 | course, direction | курс, направление
@@ -324,7 +324,7 @@ mamã | n f A1 | mum | мама | mamãe
 rei | n m A2 | king | король
 rainha | n f A2 | queen | королева
 padre | n m A2 | priest | священник
-gajo | n m f=gaja B1 | guy, bloke | парень, тип | cara | Разговорное (Португалия).
+gajo | n m f=gaja B1 | guy, bloke | парень, тип | cara | Разговорное (Португалия), «gaja» часто грубовато.
 malta | n f A2 | people, the guys | ребята, народ | galera | Разговорное (Португалия): «Olá, malta!» — привет, ребята!
 companheiro | n m f=companheira B1 | companion, partner | товарищ, спутник, партнёр
 líder | n mf B1 | leader | лидер
@@ -352,7 +352,7 @@ estúpido | adj B1 | stupid | глупый
 idiota | adj B1 | idiotic | идиотский
 humano | adj B1 | human | человеческий
 belo | adj B1 | beautiful | прекрасный, красивый
-negro | adj B1 | black, dark | чёрный, тёмный
+negro | adj B1 | black, dark | чёрный, тёмный | | Обычный цвет — «preto»; «negro» — в выражениях (humor negro, mercado negro).
 preso | adj B1 | arrested, stuck | арестованный, застрявший
 inocente | adj B1 | innocent | невиновный
 culpado | adj B1 | guilty | виновный
@@ -397,7 +397,7 @@ espantoso | adj B1 | amazing | поразительный
 genial | adj B1 | brilliant, great | гениальный, отличный
 furioso | adj B1 | furious | разъярённый
 baseado | adj B1 | based | основанный
-nu | adj B1 | naked | голый
+nu | adj f=nua B1 | naked | голый
 fascinante | adj B1 | fascinating | захватывающий
 absoluto | adj B1 | absolute | абсолютный
 solar | adj B1 | solar | солнечный
@@ -425,7 +425,7 @@ arriscado | adj B1 | risky | рискованный
 desesperado | adj B1 | desperate | отчаянный
 independente | adj B1 | independent | независимый
 envolvido | adj B1 | involved | вовлечённый
-bêbado | adj B1 | drunk | пьяный
+bêbedo | adj B1 | drunk | пьяный | bêbado
 abandonado | adj B1 | abandoned | заброшенный
 
 ## adverbs | Наречия, предлоги и союзы
@@ -447,7 +447,7 @@ absolutamente | adv B1 | absolutely | абсолютно
 aparentemente | adv B1 | apparently | по-видимому
 pessoalmente | adv B1 | personally | лично
 perfeitamente | adv B1 | perfectly | прекрасно, совершенно
-definitivamente | adv B1 | definitely, for good | окончательно, определённо
+definitivamente | adv B1 | for good, permanently | окончательно, навсегда | | Ложный друг: в значении «определённо» лучше «sem dúvida».
 basicamente | adv B1 | basically | в основном
 praticamente | adv B1 | practically | практически
 extremamente | adv B1 | extremely | чрезвычайно
@@ -473,7 +473,7 @@ armazém | n m pl=armazéns B1 | warehouse | склад
 gabinete | n m B1 | office, cabinet | кабинет, офис
 academia | n f B1 | academy | академия
 casino | n m B1 | casino | казино | cassino
-colégio | n m B1 | private school | частная школа, колледж
+colégio | n m B1 | school (usually private) | школа (обычно частная) | | Не «колледж».
 liceu | n m B1 | secondary school | лицей | | Старое название средней школы; сейчас «escola secundária».
 ministério | n m B1 | ministry | министерство
 templo | n m B1 | temple | храм

@@ -7,6 +7,8 @@ on:
 jobs:
   ui:
     runs-on: macos-26
+    permissions:
+      contents: write
     timeout-minutes: 60
     steps:
       - name: Получить код
@@ -97,6 +99,24 @@ jobs:
           xcrun xcresulttool export attachments --path result.xcresult --output-path shots || true
           python3 UITests/rename_shots.py shots shots_named || true
           ls shots_named | head -80 || true
+
+      - name: Скриншоты в ветку ui-shots (для просмотра без скачивания архива)
+        if: always()
+        run: |
+          set +e
+          [ -d shots_named ] || exit 0
+          TMP=$(mktemp -d)
+          cp shots_named/*.png "$TMP"/ 2>/dev/null
+          ls "$TMP"/*.png >/dev/null 2>&1 || exit 0
+          sips -Z 900 "$TMP"/*.png >/dev/null 2>&1
+          git config user.name "ui-tests"
+          git config user.email "ui-tests@users.noreply.github.com"
+          git checkout -q --orphan ui-shots-tmp
+          git rm -rq --cached . >/dev/null 2>&1
+          mkdir -p shots_out && cp "$TMP"/*.png shots_out/
+          git add shots_out
+          git commit -qm "UI screenshots, run $GITHUB_RUN_NUMBER ($GITHUB_REF_NAME)"
+          git push -qf origin HEAD:refs/heads/ui-shots && echo "::notice title=Screenshots::pushed to branch ui-shots"
 
       - name: Сводка
         if: always()

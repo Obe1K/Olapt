@@ -345,7 +345,9 @@ final class ScreenshotTests: XCTestCase {
             tap(created, "open created collection")
             shot("56_scan_collection")
             let custom = app.staticTexts["ornitorrinco"]
-            note(custom.waitForExistence(timeout: 3) ? "CHECK ok: custom word in collection" : "CHECK FAILED: custom word missing in collection")
+            scrollUntilVisible(custom, maxSwipes: 10)
+            shot("57_scan_collection_bottom")
+            note(custom.exists ? "CHECK ok: custom word in collection" : "CHECK FAILED: custom word missing in collection")
         } else {
             note("CHECK FAILED: collection not found")
         }
