@@ -248,7 +248,7 @@ disso | prep A2 | of that (de + isso) | (de + isso) об этом, о том
 daquilo | prep B1 | of that (de + aquilo) | (de + aquilo)
 nisto | prep B1 | in this (em + isto) | (em + isto)
 nisso | prep B1 | in that (em + isso) | (em + isso)
-àquele | prep f=àquela B1 | to that (a + aquele) | (a + aquele)
+àquele | prep f=àquela B1 | to that (a + aquele) | (a + aquele) к тому, тому
 nele | prep B1 | in him, in it (em + ele) | (em + ele) в нём
 nela | prep B1 | in her, in it (em + ela) | (em + ela) в ней
 daqui | adv A2 | from here | отсюда

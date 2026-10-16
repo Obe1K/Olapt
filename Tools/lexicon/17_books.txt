@@ -17,11 +17,11 @@ agitado | adj B1 | rough, restless | бурный, беспокойный
 atento | adj B1 | attentive | внимательный
 desejoso | adj B1 | eager | жаждущий, желающий
 competente | adj B1 | competent | компетентный
-castanho-claro | adj f=castanha-clara pl=castanhos-claros A2 | light brown | светло-каштановый, светло-коричневый
-castanho-escuro | adj f=castanha-escura pl=castanhos-escuros A2 | dark brown | тёмно-каштановый, тёмно-коричневый
-azul-claro | adj pl=azuis-claros A2 | light blue | голубой, светло-синий
-azul-escuro | adj pl=azuis-escuros A2 | dark blue | тёмно-синий
-verde-claro | adj pl=verdes-claros A2 | light green | светло-зелёный
+castanho-claro | adj f=castanho-clara pl=castanho-claros A2 | light brown | светло-каштановый, светло-коричневый
+castanho-escuro | adj f=castanho-escura pl=castanho-escuros A2 | dark brown | тёмно-каштановый, тёмно-коричневый
+azul-claro | adj pl=azul-claros A2 | light blue | голубой, светло-синий
+azul-escuro | adj pl=azul-escuros A2 | dark blue | тёмно-синий
+verde-claro | adj pl=verde-claros A2 | light green | светло-зелёный
 
 ## colors | Цвета
 tinto | adj A2 | red (wine) | красное (о вине) | | Только о вине: «vinho tinto».
@@ -49,7 +49,7 @@ esfregar | v B1 | to scrub, to rub | тереть, оттирать
 entornar | v B1 | to spill | проливать
 coser | v B1 | to sew | шить | costurar
 lanchar | v A2 | to have a snack | перекусывать, полдничать
-rebocar | v B1 | to tow | буксировать
+rebocar | v B1 | to tow, to plaster (a wall) | буксировать, штукатурить
 
 ## school | Учёба и язык
 completar | v A1 | to complete, to fill in | дополнять, заполнять | | В заданиях: «Complete as frases» — дополните предложения.
@@ -117,12 +117,12 @@ realizador | n m f=realizadora B1 | film director | режиссёр | diretor
 maestro | n m f=maestrina B1 | conductor | дирижёр
 inspetor | n m f=inspetora B1 | inspector | инспектор
 palhaço | n m B1 | clown | клоун
-moço | n m f=moça B1 | young man, lad | парень, юноша | | В Португалии звучит немного книжно; в Бразилии — обычное слово.
+moço | n m f=moça B1 | young man, lad | парень, юноша | | В Португалии звучит по-деревенски или устаревше; нейтральное слово — «rapaz». В Бразилии — обычное слово.
 coreano | adj A2 | Korean | корейский
 filipino | adj B1 | Filipino | филиппинский
 mediterrâneo | adj B1 | Mediterranean | средиземноморский
 ocidental | adj B1 | western | западный
-Tejo | n m A2 | Tagus | Тежу (река в Лиссабоне)
+Tejo | n m A2 | Tagus | Тежу, Тахо (река, впадающая в океан у Лиссабона)
 
 ## feelings | Чувства и абстрактные понятия
 acontecimento | n m B1 | event | событие
@@ -157,7 +157,7 @@ correspondência | n f B1 | correspondence, mail | переписка, корр�
 composição | n f pl=composições B1 | composition | сочинение, состав
 debate | n m B1 | debate | дебаты, обсуждение
 discurso | n m B1 | speech | речь
-gestão | n f B1 | management | управление, менеджмент
+gestão | n f pl=gestões B1 | management | управление, менеджмент
 gesto | n m B1 | gesture | жест
 grito | n m B1 | shout, scream | крик
 símbolo | n m B1 | symbol | символ
@@ -178,12 +178,12 @@ península | n f B1 | peninsula | полуостров
 cravo | n m B1 | carnation | гвоздика | | «Revolução dos Cravos» — «революция гвоздик» 1974 года.
 treino | n m A2 | training session | тренировка
 tostão | n m pl=tostões B1 | penny (old coin) | грош | | «Não ter um tostão» — не иметь ни гроша.
-comichão | n f pl=comichões B1 | itch | зуд
+comichão | n f pl=comichões B1 | itch | зуд | coceira
 antibiótico | n m B1 | antibiotic | антибиотик
 badminton | n m B1 | badminton | бадминтон
 pastel | n m pl=pastéis A2 | pastry, cake | пирожное, пирожок
 pizzaria | n f A2 | pizzeria | пиццерия
-padroeiro | n m f=padroeira B1 | patron saint | покровитель | | «Santo António» — покровитель Лиссабона.
+padroeiro | n m f=padroeira B1 | patron saint | покровитель | | Официальный покровитель Лиссабона — São Vicente, но самый любимый в народе — Santo António (праздник 13 июня).
 véspera | n f B1 | eve, day before | канун | | «Véspera de Natal» — сочельник.
 
 ## adjectives | Прилагательные
@@ -231,7 +231,7 @@ entrevistar | v B1 | to interview | брать интервью
 expressar | v B1 | to express | выражать
 formular | v B1 | to formulate | формулировать
 inaugurar | v B1 | to open, to inaugurate | торжественно открывать
-introduzir | v B1 | to introduce, to insert | вводить, вставлять
+introduzir | v B1 | to introduce (something new), to insert, to enter (data) | вводить, вставлять | | Представить человека — «apresentar», не «introduzir».
 julgar | v B1 | to judge, to think | судить, считать
 promover | v B1 | to promote | продвигать, повышать
 relatar | v B1 | to report | сообщать, докладывать
@@ -298,7 +298,35 @@ selecionar | v B1 | to select | выбирать, отбирать
 isolar | v B1 | to isolate | изолировать
 caracterizar | v B1 | to characterise | характеризовать
 constatar | v B1 | to note, to find | констатировать
-destacar | v B1 | to highlight, to stand out | выделять
+destacar | v B1 | to highlight, to single out | выделять | | «Destacar-se» — выделяться.
 prolongar | v B1 | to extend | продлевать
 reforçar | v B1 | to reinforce | укреплять
 situar | v B1 | to place, to locate | располагать
+
+## greetings | Приветствия и фразы
+chau | interj A1 | bye | пока | | Разговорное; другой вариант написания — «tchau».
+
+## time | Время, дни и месяцы
+segunda | n f A1 | Monday | понедельник | | Сокращение от «segunda-feira».
+terça | n f A1 | Tuesday | вторник | | Сокращение от «terça-feira».
+quarta | n f A1 | Wednesday | среда | | Сокращение от «quarta-feira».
+quinta | n f A1 | Thursday, farm | четверг, усадьба, ферма | | «Quinta» — и сокращение от «quinta-feira», и загородная усадьба.
+sexta | n f A1 | Friday | пятница | | Сокращение от «sexta-feira».
+
+## numbers | Числа
+quilograma | n m B1 | kilogram | килограмм
+
+## countries | Страны и национальности
+Coreia do Sul | n f A2 | South Korea | Южная Корея
+Tailândia | n f B1 | Thailand | Таиланд
+Vietname | n m B1 | Vietnam | Вьетнам | Vietnã
+Indonésia | n f B1 | Indonesia | Индонезия
+Malásia | n f B1 | Malaysia | Малайзия
+Filipinas | n f B1 | the Philippines | Филиппины
+tailandês | adj f=tailandesa B1 | Thai | тайский
+vietnamita | adj B1 | Vietnamese | вьетнамский
+indonésio | adj B1 | Indonesian | индонезийский
+malaio | adj B1 | Malay | малайский
+timorense | adj B1 | East Timorese | восточнотиморский
+mandarim | n m pl=mandarins B1 | Mandarin (Chinese) | китайский (мандаринский) язык, путунхуа
+cantonês | n m B1 | Cantonese | кантонский язык
