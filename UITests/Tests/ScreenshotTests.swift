@@ -299,7 +299,11 @@ final class ScreenshotTests: XCTestCase {
         for (prefix, what) in expectations {
             let chip = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "scan-chip-" + prefix)).firstMatch
             if chip.waitForExistence(timeout: 3) {
-                note("CHECK ok: " + what + " -> " + chip.label)
+                if what == "plural casas" && !chip.label.contains("словарная форма casa,") {
+                    note("CHECK FAILED: " + what + " -> " + chip.label)
+                } else {
+                    note("CHECK ok: " + what + " -> " + chip.label)
+                }
             } else {
                 note("CHECK FAILED: " + what + " not found")
             }

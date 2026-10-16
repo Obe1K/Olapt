@@ -261,11 +261,12 @@ final class DictionaryIndex {
         if f.isEmpty { return nil }
 
         if let i = exactPT[t]?.first { return (words[i], "") }
+        // Множественное число и женский род раньше форм глаголов: «casas» — это casa, а не «tu casas».
+        if let i = inflectedExact[t]?.first { return (words[i], "форма слова «\(words[i].pt)»") }
         if let hit = formIndex[f]?.first(where: { $0.form.lowercased() == t }),
            let w = byID[hit.verbWordID] {
             return (w, "форма глагола «\(w.pt)»")
         }
-        if let i = inflectedExact[t]?.first { return (words[i], "форма слова «\(words[i].pt)»") }
 
         // Без учёта диакритики сравниваем только слова, в которых её нет совсем (её потеряли
         // при наборе или распознавании: «voce», «telemovel»). Слово с «ç», «ã», «é» и т. п.
