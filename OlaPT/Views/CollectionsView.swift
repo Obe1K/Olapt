@@ -103,7 +103,7 @@ struct CollectionRow: View {
         VStack(alignment: .leading, spacing: 6) {
             Text(collection.name)
                 .font(.headline)
-            Text("\(words.count) слов · выучено \(counts.learned)")
+            Text("\(words.count) \(Plural.words(words.count)) · выучено \(counts.learned)")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
             MasteryBar(fraction: model.learnedFraction(of: collection.wordIDs))
