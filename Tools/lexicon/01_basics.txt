@@ -96,7 +96,7 @@ cá | adv A1 | here (toward the speaker) | сюда
 isto | pron A1 | this (thing) | это (рядом со мной)
 isso | pron A1 | that (thing) | это, то (рядом с собеседником)
 aquilo | pron A1 | that (thing over there) | то (вдали)
-este | det f=esta A2 | this | этот
+este | det f=esta A1 | this | этот
 esse | det f=essa A1 | that | тот (рядом с собеседником)
 aquele | det f=aquela A1 | that (over there) | тот (вдали)
 meu | det f=minha A1 | my | мой

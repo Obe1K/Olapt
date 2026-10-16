@@ -21,7 +21,7 @@ enum Inflection {
         var out: [String] = []
         if !w.plural.isEmpty {
             out.append(w.plural)
-        } else if w.pos == "n" || w.pos == "adj" {
+        } else if w.pos == "n" || w.pos == "adj" || w.pos == "det" {
             out.append(contentsOf: plurals(of: w.pt))
         }
         if !w.feminine.isEmpty && w.feminine != w.pt {

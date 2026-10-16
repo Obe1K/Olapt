@@ -63,6 +63,34 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             2>&1 | tee uitests.log
 
+      - name: Проверки (аннотации)
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import re
+          try:
+              log = open("uitests.log", encoding="utf-8", errors="replace").read()
+          except OSError:
+              log = ""
+          def enc(lines):
+              return "%0A".join(l.replace("%", "%25") for l in lines)
+          checks = []
+          for m in re.finditer(r"STEP (CHECK[^\n]*)", log):
+              if m.group(1) not in checks:
+                  checks.append(m.group(1))
+          checks = checks[:60]
+          if checks:
+              print("::notice title=UI checks::" + enc(checks))
+              fails = [c for c in checks if "FAILED" in c]
+              if fails:
+                  print("::error title=UI checks failed::" + enc(fails))
+          else:
+              print("::warning title=UI checks::no CHECK lines in log")
+          tests = re.findall(r"Test Case '-\[\S+ (\w+)\]' (passed|failed)", log)
+          if tests:
+              print("::notice title=UI tests::" + enc(sorted(set(n + " " + r for n, r in tests))))
+          PY
+
       - name: Достать скриншоты
         if: always()
         run: |

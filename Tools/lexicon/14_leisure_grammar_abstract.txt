@@ -205,6 +205,12 @@ qualquer coisa | phrase A2 | anything | что-нибудь, что угодно
 toda a gente | phrase A1 | everybody | все | todo mundo
 
 ## grammar | Предлоги и слияния
+o | det A1 | the (masculine) | определённый артикль (м. р.)
+a | det A1 | the (feminine) | определённый артикль (ж. р.)
+os | det A1 | the (masculine plural) | определённый артикль (м. р., мн. ч.)
+as | det A1 | the (feminine plural) | определённый артикль (ж. р., мн. ч.)
+uns | det A2 | some (masculine) | несколько, какие-то (м. р.)
+umas | det A2 | some (feminine) | несколько, какие-то (ж. р.)
 do | prep A1 | of the (de + o) | (de + o) из, от, о (+ м. р.)
 da | prep A1 | of the (de + a) | (de + a) из, от, о (+ ж. р.)
 dos | prep A1 | of the (de + os) | (de + os)

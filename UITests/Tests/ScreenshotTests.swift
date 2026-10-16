@@ -269,4 +269,114 @@ final class ScreenshotTests: XCTestCase {
         tap(privacy, "privacy link")
         shot("43_privacy")
     }
+
+    /// «Слова из фото»: тестовая картинка → распознавание → выбор слов → коллекция.
+    func testE_ScanWords() {
+        app.terminate()
+        app.launchArguments += ["-uitest-scan-sample"]
+        app.launch()
+        Thread.sleep(forTimeInterval: 1.5)
+
+        tapTab("Коллекции")
+        let open = app.buttons["open-scan"]
+        scrollUntilVisible(open)
+        tap(open, "open scan")
+        shot("50_scan_pick")
+        tap(app.buttons["scan-sample"], "sample image")
+
+        let summary = app.staticTexts["scan-summary"]
+        if summary.waitForExistence(timeout: 40) {
+            note("CHECK ok: summary = " + summary.label)
+        } else {
+            note("CHECK FAILED: no result screen")
+        }
+        shot("51_scan_result")
+
+        let expectations: [(String, String)] = [
+            ("fal", "verb form falámos"), ("casas", "plural casas"), ("Bom dia", "phrase bom dia"),
+            ("autocarro", "word autocarro"), ("minha", "possessive minha"), ("ornitorrinco", "unknown word")
+        ]
+        for (prefix, what) in expectations {
+            let chip = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "scan-chip-" + prefix)).firstMatch
+            if chip.waitForExistence(timeout: 3) {
+                note("CHECK ok: " + what + " -> " + chip.label)
+            } else {
+                note("CHECK FAILED: " + what + " not found")
+            }
+        }
+        let chips = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'scan-chip-'"))
+        var ids: [String] = []
+        for i in 0..<min(chips.count, 60) {
+            ids.append(chips.element(boundBy: i).identifier.replacingOccurrences(of: "scan-chip-", with: ""))
+        }
+        note("CHECK info: chips = " + ids.joined(separator: " | "))
+
+        tap(app.buttons["Выбрать новые"], "select new")
+        shot("52_scan_selected")
+        let unknown = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'scan-chip-ornitorrinco'")).firstMatch
+        scrollUntilVisible(unknown)
+        tap(unknown, "select unknown word")
+        tap(app.buttons["scan-add"], "add selected")
+
+        let field = app.textFields.matching(NSPredicate(format: "placeholderValue BEGINSWITH 'Перевод'")).firstMatch
+        if field.waitForExistence(timeout: 6) {
+            typeInto(field, "утконос", "translation field")
+            shot("53_unknown_sheet")
+            tap(app.navigationBars.buttons["Добавить"], "add unknown words")
+        } else {
+            note("CHECK FAILED: unknown-word sheet not shown")
+        }
+
+        let alert = app.alerts.firstMatch
+        if alert.waitForExistence(timeout: 8) {
+            let texts = alert.staticTexts.allElementsBoundByIndex.map { $0.label }.joined(separator: " / ")
+            note("CHECK ok: alert = " + texts)
+            shot("54_scan_done")
+            tap(alert.buttons["Остаться"], "alert stay")
+        } else {
+            note("CHECK FAILED: no completion alert")
+        }
+
+        tap(app.buttons["Закрыть"], "close scan")
+        shot("55_collections_after_scan")
+        let created = app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH 'Из фото'")).firstMatch
+        if created.waitForExistence(timeout: 5) {
+            note("CHECK ok: collection created: " + created.label)
+            tap(created, "open created collection")
+            shot("56_scan_collection")
+            let custom = app.staticTexts["ornitorrinco"]
+            note(custom.waitForExistence(timeout: 3) ? "CHECK ok: custom word in collection" : "CHECK FAILED: custom word missing in collection")
+        } else {
+            note("CHECK FAILED: collection not found")
+        }
+    }
+
+    /// Новые экраны 1.1: наборы по уровням и словарь iOS для ненайденного слова.
+    func testF_LevelsAndSystemDictionary() {
+        let field = app.searchFields.firstMatch
+        typeInto(field, "zzzqqq", "search field")
+        dismissKeyboard()
+        let ios = button(containing: "словаре iOS")
+        note(ios.waitForExistence(timeout: 4) ? "CHECK ok: iOS dictionary button shown" : "CHECK FAILED: iOS dictionary button missing")
+        shot("60_not_found")
+        clear(field, count: 6)
+        typeInto(field, "falámos", "search field")
+        dismissKeyboard()
+        note(app.staticTexts["falar"].firstMatch.waitForExistence(timeout: 4) ? "CHECK ok: verb form search" : "CHECK FAILED: verb form search")
+        clear(field, count: 7)
+        typeInto(field, "senhorio", "search field")
+        dismissKeyboard()
+        note(app.staticTexts["o senhorio"].firstMatch.waitForExistence(timeout: 4) ? "CHECK ok: new word senhorio found" : "CHECK FAILED: new word senhorio")
+        shot("61_new_word")
+
+        tapTab("Коллекции")
+        let levels = app.staticTexts["Наборы по уровням (A1, A2…)"]
+        scrollUntilVisible(levels)
+        tap(levels, "levels link")
+        shot("62_levels")
+        let a1 = app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH 'A1'")).firstMatch
+        note(a1.waitForExistence(timeout: 4) ? "CHECK ok: level A1 row" : "CHECK FAILED: no A1 row")
+        tap(a1, "open A1")
+        shot("63_level_A1_topics")
+    }
 }

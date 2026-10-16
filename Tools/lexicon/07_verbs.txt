@@ -64,7 +64,7 @@ fechar | v A1 | to close | закрывать
 entrar | v A1 | to enter | входить
 subir | v A1 | to go up, to climb | подниматься
 descer | v A1 | to go down | спускаться
-andar | v A2 | to walk | ходить, идти пешком
+andar | v A1 | to walk | ходить, идти пешком
 correr | v A1 | to run | бегать
 parar | v A1 | to stop | останавливаться
 procurar | v A1 | to look for, to search | искать

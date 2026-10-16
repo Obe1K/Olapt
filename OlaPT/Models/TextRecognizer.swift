@@ -53,8 +53,8 @@ enum TextRecognizer {
 
     /// Картинка с текстом для автотеста распознавания (запуск с аргументом -uitest-scan-sample).
     static func sampleImage() -> UIImage {
-        let text = "Ontem falámos com a minha avó.\nAs casas da aldeia são bonitas.\nBom dia! O autocarro chegou tarde\nporque havia muito trânsito."
-        let size = CGSize(width: 1100, height: 520)
+        let text = "Ontem falámos com a minha avó.\nAs casas da aldeia são bonitas.\nBom dia! O autocarro chegou tarde\nporque havia muito trânsito.\nVi um ornitorrinco no jardim."
+        let size = CGSize(width: 1100, height: 640)
         let format = UIGraphicsImageRendererFormat()
         format.scale = 1
         let renderer = UIGraphicsImageRenderer(size: size, format: format)
