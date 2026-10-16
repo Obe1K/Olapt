@@ -13,7 +13,7 @@ enum Inflection {
 
     /// Все формы слова, кроме исходной: множественное число, женский род, женский род во мн. числе.
     static func forms(of w: Word) -> [String] {
-        guard w.pos == "n" || w.pos == "adj" || w.pos == "num" || w.pos == "det" || w.pos == "pron" else {
+        guard w.pos == "n" || w.pos == "adj" || w.pos == "num" || w.pos == "det" || w.pos == "pron" || w.pos == "prep" else {
             return []
         }
         // Выражения из нескольких слов не склоняем.
@@ -21,7 +21,7 @@ enum Inflection {
         var out: [String] = []
         if !w.plural.isEmpty {
             out.append(w.plural)
-        } else if w.pos == "n" || w.pos == "adj" || w.pos == "det" {
+        } else if w.pos == "n" || w.pos == "adj" || w.pos == "det" || w.pos == "prep" {
             out.append(contentsOf: plurals(of: w.pt))
         }
         if !w.feminine.isEmpty && w.feminine != w.pt {

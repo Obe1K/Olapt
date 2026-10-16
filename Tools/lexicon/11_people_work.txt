@@ -15,7 +15,7 @@ padrasto | n m B1 | stepfather | отчим
 madrasta | n f B1 | stepmother | мачеха
 enteado | n m f=enteada B1 | stepson, stepdaughter | пасынок, падчерица
 gémeo | n m f=gémea B1 | twin | близнец | gêmeo
-noivo | n m f=noiva A2 | fiancé, groom; fiancée, bride | жених, невеста
+noivo | n m f=noiva A2 | fiancé, groom, fiancée, bride | жених, невеста
 viúvo | n m f=viúva B1 | widower, widow | вдовец, вдова
 parente | n mf A2 | relative | родственник
 adolescente | n mf A2 | teenager | подросток
@@ -69,7 +69,7 @@ peso | n m A2 | weight | вес
 aspeto | n m B1 | appearance, aspect | внешний вид, аспект | aspecto
 aparência | n f B1 | appearance | внешность
 personalidade | n f A2 | personality | личность, характер
-carácter | n m B1 | character | характер | caráter
+carácter | n m pl=caracteres B1 | character | характер | caráter
 feitio | n m B1 | temper, nature | нрав, характер | | Разговорное (Португалия).
 humor | n m B1 | mood, humour | настроение, юмор
 alegre | adj A1 | cheerful | весёлый
@@ -237,7 +237,7 @@ bolsa | n f A2 | bag, scholarship, stock exchange | сумка, стипенди
 diploma | n m B1 | diploma, certificate | диплом
 licenciatura | n f B1 | bachelor's degree | высшее образование (бакалавриат)
 mestrado | n m B1 | master's degree | магистратура
-doutoramento | n m B1 | PhD | докторантура | doutorado
+doutoramento | n m B1 | PhD, doctorate | аспирантура, докторская степень (PhD) | doutorado
 semestre | n m B1 | semester | семестр
 intervalo | n m A2 | break, interval | перемена, перерыв, антракт
 recreio | n m B1 | playtime, playground | перемена (в школе), игровая площадка

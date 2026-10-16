@@ -81,7 +81,7 @@ o que | pron A1 | what | что
 que | conj A1 | that, than | что, чем
 qual | pron A1 | which, what | какой, который
 quais | pron A1 | which (plural) | какие, которые
-quanto | pron A1 | how much | сколько
+quanto | pron f=quanta A1 | how much | сколько
 quantos | pron A1 | how many | сколько (о счётных)
 onde | adv A1 | where | где, куда
 quando | adv A1 | when | когда

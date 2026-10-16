@@ -256,6 +256,12 @@ final class DictionaryIndex {
         }
         if let i = inflectedFolded[f]?.first { return (words[i], "форма слова «\(words[i].pt)»") }
 
+        // Старая орфография: «acção», «óptimo», «director».
+        let modern = TextUtil.modernSpelling(t)
+        if modern != t, let found = lookupToken(modern) {
+            return found
+        }
+
         // Глагол с местоимением через дефис: «chama-se», «levantei-me», «comprá-lo».
         let parts = t.split(separator: "-").map(String.init)
         if parts.count >= 2, let first = parts.first, !first.isEmpty, Inflection.clitics.contains(parts[1]) {
@@ -299,6 +305,18 @@ final class DictionaryIndex {
 
     /// Поиск по португальскому слову, любому переводу и по формам глаголов.
     func search(_ query: String, limit: Int = 80) -> [SearchResult] {
+        let found = searchExact(query, limit: limit)
+        if found.isEmpty {
+            // «acção» → «ação» и т. п.: старое написание
+            let modern = TextUtil.modernSpelling(query.lowercased())
+            if modern != query.lowercased() {
+                return searchExact(modern, limit: limit)
+            }
+        }
+        return found
+    }
+
+    private func searchExact(_ query: String, limit: Int) -> [SearchResult] {
         let q = TextUtil.fold(query)
         if q.isEmpty { return [] }
 

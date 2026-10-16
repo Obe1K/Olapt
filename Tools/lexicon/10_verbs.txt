@@ -37,7 +37,7 @@ regar | v B1 | to water | поливать
 plantar | v B1 | to plant | сажать (растения)
 mobilar | v B1 | to furnish | обставлять мебелью | mobiliar
 mudar-se | v A2 | to move (house) | переезжать
-alugar | v A2 | to rent | снимать, брать напрокат
+alugar | v A2 | to rent, to hire, to rent out | снимать, брать напрокат, сдавать | | «Aluga-se» — сдаётся.
 arrendar | v B1 | to rent out, to lease | сдавать или снимать в аренду
 reciclar | v B1 | to recycle | сортировать мусор, перерабатывать
 vestir | v A2 | to dress, to put on | надевать, одевать
@@ -121,7 +121,7 @@ considerar | v B1 | to consider | считать, рассматривать
 supor | v B1 | to suppose | предполагать
 prever | v B1 | to foresee, to forecast | предвидеть, прогнозировать
 tencionar | v B1 | to intend | намереваться
-lembrar | v A2 | to remind, to remember | напоминать, помнить
+lembrar | v A2 | to remind, to resemble | напоминать | | «Помнить» — lembrar-se (de): «Não me lembro».
 esquecer-se | v A2 | to forget | забывать
 reconhecer | v B1 | to recognise | узнавать, признавать
 enganar-se | v A2 | to make a mistake, to be wrong | ошибаться
@@ -339,7 +339,7 @@ bloquear | v B1 | to block | блокировать
 ter de | phrase A1 | to have to | быть должным, нужно | ter que | «Tenho de ir» — мне нужно идти.
 tomar banho | phrase A1 | to have a shower, to bathe | принимать душ, купаться
 tomar o pequeno-almoço | phrase A1 | to have breakfast | завтракать | tomar café da manhã
-fazer anos | phrase A1 | to have a birthday | праздновать день рождения | fazer aniversário | «Faço anos em maio» — у меня день рождения в мае.
+fazer anos | phrase A1 | to have a birthday | иметь день рождения (у кого-то день рождения) | fazer aniversário | «Faço anos em maio» — у меня день рождения в мае.
 fazer compras | phrase A1 | to go shopping | делать покупки
 ter sono | phrase A1 | to be sleepy | хотеть спать
 ter frio | phrase A1 | to be cold | мёрзнуть

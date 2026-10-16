@@ -36,7 +36,7 @@ lentilha | n f B1 | lentil | чечевица
 azeitona | n f A2 | olive | оливка, маслина
 salsa | n f B1 | parsley | петрушка
 coentros | n m B1 | coriander | кинза | coentro
-manjericão | n m B1 | basil | базилик
+manjericão | n m pl=manjericões B1 | basil | базилик
 louro | n m B1 | bay leaf | лавровый лист
 hortelã | n f B1 | mint | мята
 gengibre | n m B1 | ginger | имбирь
@@ -60,7 +60,7 @@ amêijoa | n f B1 | clam | съедобный моллюск (венерка)
 mexilhão | n m pl=mexilhões B1 | mussel | мидия
 caranguejo | n m B1 | crab | краб
 natas | n f A2 | cream | сливки | creme de leite
-requeijão | n m B1 | curd cheese | творожный сыр
+requeijão | n m pl=requeijões B1 | fresh whey cheese, ricotta | рикотта, мягкий сыр из сыворотки
 farinha | n f A2 | flour | мука
 fermento | n m B1 | yeast, baking powder | дрожжи, разрыхлитель
 óleo | n m A2 | oil | растительное масло, масло (техническое)
@@ -119,7 +119,7 @@ dieta | n f A2 | diet | диета
 caloria | n f B1 | calorie | калория
 vitamina | n f B1 | vitamin | витамин
 alimento | n m B1 | food, foodstuff | продукт питания, пища
-alimentação | n f B1 | nutrition, food | питание
+alimentação | n f pl=alimentações B1 | nutrition, food | питание
 
 ## restaurant | В ресторане и кафе
 menu | n m A2 | menu, set menu | меню, комплексный обед
@@ -180,7 +180,7 @@ caixote do lixo | n m A2 | bin | мусорное ведро | lixeira
 moradia | n f B1 | detached house | частный дом
 vivenda | n f B1 | villa, house | вилла, дом
 estúdio | n m B1 | studio | студия (квартира, мастерская)
-assoalhada | n f B1 | room (in a flat) | комната (в объявлениях) | | В объявлениях: T2 — квартира с двумя спальнями.
+assoalhada | n f B1 | room (in a flat) | комната (в объявлениях) | | Считаются спальни и гостиная: T2 (две спальни + гостиная) = 3 assoalhadas.
 corredor | n m A2 | corridor | коридор
 sótão | n m pl=sótãos B1 | attic | чердак
 cave | n f B1 | basement, cellar | подвал
@@ -363,7 +363,7 @@ carregamento | n m B1 | top-up | пополнение счёта
 
 ## documents | Документы и учреждения
 cartão de cidadão | n m B1 | citizen card | удостоверение личности (Португалия)
-bilhete de identidade | n m B1 | identity card | удостоверение личности | carteira de identidade
+bilhete de identidade | n m B1 | identity card (old) | удостоверение личности (старого образца) | carteira de identidade | Устаревший документ: его заменил «cartão de cidadão».
 autorização de residência | n f B1 | residence permit | вид на жительство
 título de residência | n m B1 | residence card | карта резидента
 número de utente | n m B1 | health service number | номер пациента в системе здравоохранения (SNS)

@@ -26,6 +26,23 @@ enum TextUtil {
         return out
     }
 
+    /// Написание до реформы 1990 года → современное: «acção» → «ação», «óptimo» → «ótimo»,
+    /// «director» → «diretor». Нужно для старых текстов; используется, только если слово не нашлось как есть.
+    static func modernSpelling(_ word: String) -> String {
+        let chars = Array(word)
+        var out: [Character] = []
+        out.reserveCapacity(chars.count)
+        for (i, ch) in chars.enumerated() {
+            let lower = Character(ch.lowercased())
+            if i > 0, lower == "c" || lower == "p", i + 1 < chars.count {
+                let next = Character(chars[i + 1].lowercased())
+                if next == "t" || next == "ç" { continue }
+            }
+            out.append(ch)
+        }
+        return String(out)
+    }
+
     static func collapse(_ text: String) -> String {
         return text.split(separator: " ", omittingEmptySubsequences: true).joined(separator: " ")
     }

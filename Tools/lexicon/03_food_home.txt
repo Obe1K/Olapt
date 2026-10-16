@@ -74,7 +74,7 @@ hambúrguer | n m pl=hambúrgueres A1 | hamburger | гамбургер
 pizza | n f A1 | pizza | пицца
 molho | n m A2 | sauce | соус
 bica | n f A2 | espresso (Lisbon) | эспрессо (в Лиссабоне) | cafezinho | В Порту эспрессо называют «cimbalino».
-galão | n m A2 | milky coffee in a glass | кофе с молоком в стакане
+galão | n m pl=galões A2 | milky coffee in a glass | кофе с молоком в стакане
 fresco | adj f=fresca A1 | fresh | свежий, прохладный
 vegetariano | adj f=vegetariana A2 | vegetarian | вегетарианский
 fome | n f A1 | hunger | голод
@@ -133,7 +133,7 @@ sofá | n m A1 | sofa | диван
 janela | n f A1 | window | окно
 porta | n f A1 | door | дверь
 parede | n f A2 | wall | стена
-chão | n m A2 | floor, ground | пол, земля
+chão | n m pl=chãos A2 | floor, ground | пол, земля
 teto | n m A2 | ceiling | потолок
 telhado | n m A2 | roof | крыша
 escada | n f A2 | stairs | лестница

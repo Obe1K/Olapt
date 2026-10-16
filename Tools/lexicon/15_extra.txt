@@ -5,7 +5,7 @@ até já | phrase A1 | see you in a moment | до скорого (увидимс
 até breve | phrase A2 | see you soon | до скорого
 faz favor | phrase A1 | excuse me, please | будьте добры (чтобы привлечь внимание) | | Так подзывают официанта в Португалии.
 e tu | phrase A1 | and you? | а ты?
-bom trabalho | phrase A2 | have a good day at work | хорошей работы
+bom trabalho | phrase A2 | good job, well done, have a good day at work | отличная работа, молодец, хорошей работы
 boas férias | phrase A2 | have a good holiday | хорошего отпуска
 as melhoras | phrase A2 | get well soon | выздоравливай(те) | | Пожелание больному.
 não há problema | phrase A2 | no problem | без проблем
@@ -24,14 +24,14 @@ está a chover | phrase A1 | it's raining | идёт дождь
 virar à direita | phrase A1 | to turn right | повернуть направо
 virar à esquerda | phrase A1 | to turn left | повернуть налево
 sempre em frente | phrase A1 | straight ahead | всё время прямо
-igualmente | adv B1 | likewise, equally | взаимно, также | | Ответ на пожелание: «Igualmente!» — и вам того же!
+igualmente | adv A1 | likewise, equally | взаимно, также | | Ответ на пожелание: «Igualmente!» — и вам того же!
 cumprimentos | n m A2 | regards | привет, наилучшие пожелания | | В конце письма: «Com os melhores cumprimentos».
 
 ## expressions | Устойчивые выражения
 estar a | phrase A1 | to be doing | делать (сейчас) | estar + gerúndio | «Estou a trabalhar» — я (сейчас) работаю.
 acabar de | phrase A2 | to have just done | только что (сделать) | | «Acabei de chegar» — я только что пришёл.
 deixar de | phrase A2 | to stop doing | перестать | | «Deixei de fumar» — я бросил курить.
-voltar a | phrase B1 | to do again | снова (сделать) | | «Voltei a ler» — я снова прочитал.
+voltar a | phrase B1 | to do again | снова (сделать) | | «Voltei a fumar» — я снова начал курить.
 cerca de | phrase B1 | about, approximately | около, примерно
 pelo contrário | phrase B1 | on the contrary | наоборот
 
@@ -78,7 +78,7 @@ origem | n f B1 | origin | происхождение
 início | n m A2 | beginning | начало
 expressão | n f pl=expressões B1 | expression | выражение
 localização | n f pl=localizações B1 | location | местоположение
-final | n m pl=finais A2 | end, final | конец, финал
+final | n m pl=finais A2 | end, ending | конец, окончание | | «A final» (ж. р.) — финал соревнования: «a final da Taça».
 tabela | n f B1 | table, chart | таблица
 área | n f B1 | area | область, площадь
 matéria | n f B1 | subject matter, matter | материал (учебный), вещество
@@ -189,7 +189,7 @@ vírgula | n f B1 | comma | запятая
 horta | n f B1 | vegetable garden | огород
 
 ## restaurant | В ресторане и кафе
-expresso | n m B1 | espresso | эспрессо | | В Португалии обычно просят «uma bica» (Лиссабон) или «um cimbalino» (Порту).
+expresso | n m B1 | espresso | эспрессо | | В Португалии эспрессо заказывают просто «um café»; в Лиссабоне говорят также «uma bica», в Порту — «um cimbalino».
 
 ## services | Банк, почта и услуги
 cheque | n m B1 | cheque | чек (банковский)

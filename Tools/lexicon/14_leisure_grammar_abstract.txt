@@ -5,7 +5,7 @@ tempo livre | n m A2 | free time | свободное время
 hobby | n m A2 | hobby | хобби
 basquetebol | n m A2 | basketball | баскетбол | basquete
 voleibol | n m A2 | volleyball | волейбол | vôlei
-natação | n f A2 | swimming | плавание
+natação | n f pl=natações A2 | swimming | плавание
 ciclismo | n m A2 | cycling | велоспорт
 atletismo | n m B1 | athletics | лёгкая атлетика
 surf | n m A2 | surfing | сёрфинг
@@ -46,7 +46,7 @@ autor | n m f=autora B1 | author | автор
 personagem | n f B1 | character | персонаж
 série | n f A2 | series | сериал, серия
 canal | n m pl=canais A2 | channel, canal | канал
-rádio | n f A2 | radio | радио
+rádio | n f A2 | radio | радио | | «A rádio» — радиовещание, радиостанция; сам приёмник — «o rádio».
 desenhos animados | n m A2 | cartoons | мультфильмы
 documentário | n m B1 | documentary | документальный фильм
 legenda | n f B1 | subtitle, caption | субтитр, подпись
@@ -143,7 +143,7 @@ e um quarto | phrase A2 | quarter past | четверть (после часа)
 menos um quarto | phrase A2 | quarter to | без четверти
 
 ## numbers | Числа
-cento | n m A2 | hundred (in 101–199) | сто (в числах 101–199) | | «Cento e um» — сто один.
+cento | num A2 | hundred (in 101–199) | сто (в числах 101–199) | | «Cento e um» — сто один.
 trezentos | num A2 | three hundred | триста
 quatrocentos | num A2 | four hundred | четыреста
 seiscentos | num A2 | six hundred | шестьсот
@@ -174,7 +174,7 @@ te | pron A1 | you (object) | тебя, тебе
 se | pron A2 | oneself, himself, herself | себя, -ся
 nos | pron A1 | us | нас, нам
 lhe | pron A2 | to him, to her, to you | ему, ей, Вам
-lhes | pron A2 | to them, to you (plural) | им, Вам (мн. ч.)
+lhes | pron A2 | to them, to you (plural) | им, вам (мн. ч.)
 mim | pron A1 | me (after prepositions) | мне, меня (после предлогов) | | «Para mim» — для меня.
 ti | pron A1 | you (after prepositions) | тебе, тебя (после предлогов)
 si | pron B1 | you, oneself (after prepositions) | Вас, себя (после предлогов)
@@ -413,7 +413,7 @@ fantástico | adj A2 | fantastic | фантастический
 incrível | adj A2 | incredible | невероятный
 espetacular | adj B1 | spectacular | потрясающий
 infeliz | adj B1 | unhappy | несчастный
-esquisito | adj B1 | weird, odd | странный | | В Португалии «esquisito» — «странный», а не «изысканный».
+esquisito | adj B1 | weird, odd, fussy | странный, привередливый | | Ложный друг: не «изысканный» (ср. англ. exquisite), а «странный». «Ser esquisito com a comida» — быть привередливым в еде.
 parecido | adj A2 | similar | похожий
 semelhante | adj B1 | similar | подобный
 junto | adj A2 | together | совместный, вместе
@@ -432,7 +432,7 @@ respeito | n m B1 | respect | уважение
 preocupação | n f pl=preocupações A2 | worry | беспокойство
 surpresa | n f A2 | surprise | сюрприз, удивление
 prazer | n m A2 | pleasure | удовольствие | | «Muito prazer» — очень приятно.
-solidão | n f B1 | loneliness | одиночество
+solidão | n f pl=solidões B1 | loneliness | одиночество
 tédio | n m B1 | boredom | скука
 calma | n f A2 | calm | спокойствие | | «Calma!» — спокойно!
 pressa | n f A2 | hurry | спешка

@@ -94,8 +94,8 @@ tenda | n f B1 | tent | палатка | barraca
 câmbio | n m B1 | currency exchange | обмен валюты
 protetor solar | n m A2 | sunscreen | солнцезащитный крем
 guarda-sol | n m A2 | beach umbrella | пляжный зонт
-nadador-salvador | n m B1 | lifeguard | спасатель | salva-vidas
-bandeira | n f B1 | flag | флаг | | На пляже: зелёный — купаться можно, жёлтый — осторожно, красный — нельзя.
+nadador-salvador | n m pl=nadadores-salvadores B1 | lifeguard | спасатель | salva-vidas
+bandeira | n f B1 | flag | флаг | | На пляже: зелёный — купаться можно, жёлтый — плавать нельзя (только заходить в воду у берега), красный — в воду заходить нельзя, клетчатый — пляж без спасателя.
 paisagem | n f A2 | landscape | пейзаж
 vista | n f A2 | view | вид
 visita guiada | n f A2 | guided tour | экскурсия с гидом
@@ -210,7 +210,7 @@ cascata | n f B1 | waterfall | водопад
 ribeira | n f B1 | stream | ручей, речка
 margem | n f B1 | bank, margin | берег (реки), поле (страницы)
 ramo | n m B1 | branch, bouquet | ветка, букет
-raiz | n f B1 | root | корень
+raiz | n f pl=raízes B1 | root | корень
 semente | n f B1 | seed | семя
 relva | n f A2 | grass, lawn | газон, трава | grama
 pinheiro | n m B1 | pine tree | сосна

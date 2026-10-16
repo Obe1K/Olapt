@@ -234,7 +234,7 @@ sonho | n m A2 | dream | мечта, сон
 ajuda | n f A1 | help | помощь
 conselho | n m A2 | advice | совет
 cuidado | n m A2 | care, caution | осторожность, забота
-atenção | n f A2 | attention | внимание
+atenção | n f pl=atenções A2 | attention | внимание
 vontade | n f A2 | will, desire | желание, воля
 imagem | n f pl=imagens A2 | image | изображение
 fim | n m pl=fins A2 | end | конец

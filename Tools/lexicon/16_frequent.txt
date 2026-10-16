@@ -1,0 +1,528 @@
+# Частотные слова, которых не хватало (сверка со списком частотности, добавлено в 1.1).
+
+## greetings | Приветствия и фразы
+o quê | phrase A1 | what? | что? | | В конце фразы или переспросе: «O quê?»
+aí | adv A1 | there (near you) | там (рядом с собеседником)
+oh | interj A1 | oh | о!, ах!
+caramba | interj A2 | wow, gosh | ничего себе!, чёрт возьми!
+perdão | interj A2 | sorry, pardon | простите, извините
+lamento | phrase A2 | I'm sorry | мне жаль | | От «lamentar».
+graças a deus | phrase A2 | thank God | слава богу
+de graça | phrase A2 | for free | бесплатно
+ora bem | phrase B1 | well, right then | итак, ну что ж
+
+## expressions | Устойчивые выражения
+ter a certeza | phrase A2 | to be sure | быть уверенным | ter certeza | «Tenho a certeza» — я уверен.
+um bocado | phrase A2 | a bit | немного, чуть-чуть | um pouco | Разговорное (Португалия): «Estou um bocado cansado».
+um bocadinho | phrase A2 | a little bit | чуточку
+para trás | phrase A2 | back, backwards | назад
+nem sequer | phrase B1 | not even | даже не
+a propósito | phrase B1 | by the way | кстати
+a bordo | phrase B1 | on board | на борту
+graças a | phrase B1 | thanks to | благодаря
+além de | phrase B1 | besides, as well as | кроме, помимо
+diante de | phrase B1 | in front of, faced with | перед, перед лицом
+prestes a | phrase B1 | about to | вот-вот, готовый (сделать)
+bom senso | phrase B1 | common sense | здравый смысл
+em apuros | phrase B1 | in trouble | в затруднительном положении
+dar uma olhadela | phrase B1 | to have a look | взглянуть | dar uma olhada
+prestar atenção | phrase B1 | to pay attention | обращать внимание
+à beira-mar | phrase B1 | by the sea | на берегу моря
+
+## verbs_mind | Глаголы: мысли и чувства
+lamentar | v B1 | to regret, to be sorry | сожалеть
+jurar | v B1 | to swear | клясться
+calar-se | v A2 | to be quiet, to shut up | замолчать
+acalmar-se | v A2 | to calm down | успокоиться
+lidar | v B1 | to deal with | справляться, иметь дело (с)
+merecer | v B1 | to deserve | заслуживать
+aguentar | v B1 | to stand, to bear | выдерживать, терпеть | | Разговорное: «Não aguento mais» — я больше не могу.
+arriscar | v B1 | to risk | рисковать
+enfrentar | v B1 | to face | сталкиваться, противостоять
+incomodar | v B1 | to bother | беспокоить, мешать
+rezar | v B1 | to pray | молиться
+culpar | v B1 | to blame | обвинять
+resistir | v B1 | to resist | сопротивляться
+ignorar | v B1 | to ignore | игнорировать
+agradar | v B1 | to please | нравиться, угождать
+esclarecer | v B1 | to clarify | прояснять, уточнять
+inventar | v B1 | to invent, to make up | изобретать, выдумывать
+superar | v B1 | to overcome | преодолевать
+trair | v B1 | to betray | предавать
+namorar | v A2 | to date, to go out with | встречаться (с парнем, девушкой)
+livrar-se | v B1 | to get rid of | избавиться
+
+## verbs_move | Глаголы: движение и действия
+meter | v A2 | to put, to insert | класть, засовывать | | Разговорное (Португалия): «Mete isso no saco».
+pegar | v B1 | to pick up, to take hold | брать, хватать | | В Португалии чаще «pegar em»: «Pega na mala».
+escapar | v B1 | to escape | сбегать, ускользать
+recuperar | v B1 | to recover | восстанавливать, выздоравливать
+afastar-se | v B1 | to move away | отходить, отдаляться
+avançar | v B1 | to advance, to move forward | продвигаться
+atacar | v B1 | to attack | нападать
+investigar | v B1 | to investigate | расследовать, исследовать
+causar | v B1 | to cause | вызывать, причинять
+retirar | v B1 | to remove, to withdraw | убирать, снимать
+cometer | v B1 | to commit | совершать
+abandonar | v B1 | to abandon | покидать, бросать
+interromper | v B1 | to interrupt | прерывать
+largar | v B1 | to let go, to drop | отпускать, бросать
+montar | v B1 | to assemble, to ride | собирать (конструкцию), ездить верхом
+lançar | v B1 | to throw, to launch | бросать, запускать
+recolher | v B1 | to collect, to gather | собирать
+transformar | v B1 | to transform | превращать
+apontar | v B1 | to point, to note down | указывать, записывать
+ultrapassar | v B1 | to overtake, to overcome | обгонять, преодолевать
+testar | v B1 | to test | тестировать
+durar | v B1 | to last | длиться
+reunir | v B1 | to gather, to meet | собирать, собираться
+arrancar | v B1 | to pull out, to start (a car) | вырывать, трогаться (с места)
+enterrar | v B1 | to bury | хоронить, закапывать
+explorar | v B1 | to explore | исследовать, осваивать
+aterrar | v B1 | to land | приземляться | aterrissar
+apertar | v B1 | to tighten, to press, to squeeze | затягивать, нажимать, сжимать
+espalhar | v B1 | to spread | распространять, разбрасывать
+examinar | v B1 | to examine | осматривать, обследовать
+derrubar | v B1 | to knock down | сносить, опрокидывать
+rebentar | v B1 | to burst | лопаться, взрываться | estourar
+recuar | v B1 | to back off | отступать
+eliminar | v B1 | to eliminate | устранять, удалять
+alterar | v B1 | to change, to alter | изменять
+revelar | v B1 | to reveal | раскрывать
+identificar | v B1 | to identify | опознавать, определять
+localizar | v B1 | to locate | находить, определять местоположение
+negociar | v B1 | to negotiate | вести переговоры
+analisar | v B1 | to analyse | анализировать
+aceder | v B1 | to access | получать доступ | acessar
+guiar | v B1 | to guide, to drive | направлять, вести
+formar | v B1 | to form, to train | образовывать, обучать
+derrotar | v B1 | to defeat | побеждать
+iniciar | v B1 | to start | начинать
+suportar | v B1 | to bear, to support | выносить, поддерживать
+calhar | v B1 | to happen, to suit | случаться, подходить | | «Se calhar» — может быть.
+restar | v B1 | to remain | оставаться
+
+## feelings | Чувства и абстрактные понятия
+certeza | n f A2 | certainty | уверенность
+favor | n m A2 | favour | одолжение, услуга | | «Fazer um favor» — сделать одолжение.
+culpa | n f A2 | blame, fault | вина
+cena | n f A2 | scene, thing | сцена, (разг.) штука | | Разговорное (Португалия): «Que cena!» — ну и дела!
+piada | n f A2 | joke | шутка, анекдот
+brincadeira | n f A2 | joke, game | шутка, игра
+realidade | n f A2 | reality | реальность
+sorriso | n m A2 | smile | улыбка
+passo | n m A2 | step | шаг
+rotina | n f A2 | routine | распорядок, рутина
+aventura | n f A2 | adventure | приключение
+dificuldade | n f A2 | difficulty | трудность
+novidade | n f A2 | news, novelty | новость, новинка
+contacto | n m A2 | contact | контакт, связь | contato
+companhia | n f A2 | company | общество, компания
+confusão | n f pl=confusões A2 | confusion, mess | путаница, неразбериха
+beleza | n f A2 | beauty | красота
+hipótese | n f B1 | hypothesis, chance | гипотеза, возможность
+missão | n f pl=missões B1 | mission | миссия
+povo | n m B1 | people, nation | народ
+alma | n f B1 | soul | душа
+maioria | n f B1 | majority | большинство
+honra | n f B1 | honour | честь
+alvo | n m B1 | target | цель, мишень
+investigação | n f pl=investigações B1 | investigation, research | расследование, исследование
+propósito | n m B1 | purpose | цель, намерение
+loucura | n f B1 | madness | безумие
+jeito | n m B1 | way, knack | способ, сноровка | | «Ter jeito para» — иметь способности к.
+defesa | n f B1 | defence | защита
+acesso | n m B1 | access | доступ
+graça | n f B1 | grace, humour | изящество, юмор | | «Que graça!» — как мило!
+pressão | n f pl=pressões B1 | pressure | давление
+inimigo | n m f=inimiga B1 | enemy | враг
+espírito | n m B1 | spirit | дух
+herói | n m f=heroína B1 | hero | герой
+parceiro | n m f=parceira B1 | partner | партнёр
+ameaça | n f B1 | threat | угроза
+unidade | n f B1 | unit, unity | единица, подразделение, единство
+receio | n m B1 | fear, concern | опасение
+classe | n f B1 | class | класс
+teoria | n f B1 | theory | теория
+perda | n f B1 | loss | потеря
+fantasma | n m B1 | ghost | призрак
+propriedade | n f B1 | property | собственность, свойство
+sensação | n f pl=sensações B1 | feeling, sensation | ощущение
+instante | n m B1 | instant | мгновение
+centena | n f B1 | hundred | сотня
+milhar | n m B1 | thousand | тысяча (как количество) | | «Milhares de pessoas» — тысячи людей.
+impressão | n f pl=impressões B1 | impression, printing | впечатление, печать
+tentativa | n f B1 | attempt | попытка
+equipamento | n m B1 | equipment | оборудование, снаряжение
+génio | n m B1 | genius, temper | гений, характер | gênio
+modelo | n m B1 | model | модель, образец
+topo | n m B1 | top | вершина, верх
+anjo | n m B1 | angel | ангел
+comunidade | n f B1 | community | сообщество
+pânico | n m B1 | panic | паника
+consciência | n f B1 | conscience, consciousness | совесть, сознание
+comportamento | n m B1 | behaviour | поведение
+sarilho | n m B1 | trouble, mess | неприятность, переделка | | Разговорное (Португалия): «meter-se em sarilhos».
+golpe | n m B1 | blow, coup, scam | удар, переворот, мошенничество
+armadilha | n f B1 | trap | ловушка
+truque | n m B1 | trick | трюк, уловка
+artigo | n m B1 | article, item | статья, товар
+palco | n m B1 | stage | сцена
+carga | n f B1 | load, charge | груз, заряд
+humanidade | n f B1 | humanity | человечество
+diversão | n f pl=diversões B1 | fun, amusement | развлечение
+choque | n m B1 | shock | шок, столкновение
+importância | n f B1 | importance | важность
+fase | n f B1 | phase | этап, фаза
+talento | n m B1 | talent | талант
+identidade | n f B1 | identity | личность, идентичность
+campanha | n f B1 | campaign | кампания
+tiro | n m B1 | shot | выстрел
+identificação | n f pl=identificações B1 | identification | удостоверение личности, идентификация
+dano | n m B1 | damage | ущерб
+terreno | n m B1 | land, plot | участок земли, местность
+permissão | n f pl=permissões B1 | permission | разрешение
+queda | n f B1 | fall | падение
+alarme | n m B1 | alarm | сигнализация, тревога
+pó | n m B1 | dust, powder | пыль, порошок
+milagre | n m B1 | miracle | чудо
+capacidade | n f B1 | capacity, ability | вместимость, способность
+promessa | n f B1 | promise | обещание
+versão | n f pl=versões B1 | version | версия
+limite | n m B1 | limit | предел, лимит
+padrão | n m pl=padrões B1 | standard, pattern | стандарт, узор
+vantagem | n f B1 | advantage | преимущество
+coincidência | n f B1 | coincidence | совпадение
+veneno | n m B1 | poison | яд
+atitude | n f B1 | attitude | отношение, поведение
+alternativa | n f B1 | alternative | альтернатива
+nação | n f pl=nações B1 | nation | нация
+sofrimento | n m B1 | suffering | страдание
+fortuna | n f B1 | fortune | состояние, удача
+escuridão | n f B1 | darkness | темнота
+inteligência | n f B1 | intelligence | интеллект, ум
+desafio | n m B1 | challenge | вызов, трудная задача
+recurso | n m B1 | resource, appeal | ресурс, средство, апелляция
+superfície | n f B1 | surface | поверхность
+sessão | n f pl=sessões B1 | session, showing | сеанс, заседание
+máscara | n f B1 | mask | маска
+mistério | n m B1 | mystery | тайна
+ritmo | n m B1 | rhythm, pace | ритм, темп
+maravilha | n f B1 | marvel, wonder | чудо | | «Que maravilha!» — чудесно!
+pensamento | n m B1 | thought | мысль
+ódio | n m B1 | hatred | ненависть
+evento | n m B1 | event | мероприятие, событие
+amostra | n f B1 | sample | образец, проба
+recompensa | n f B1 | reward | награда
+raça | n f B1 | breed, race | порода, раса
+declaração | n f pl=declarações B1 | statement, declaration | заявление, декларация
+resistência | n f B1 | resistance | сопротивление
+castigo | n m B1 | punishment | наказание
+desastre | n m B1 | disaster | катастрофа
+paraíso | n m B1 | paradise | рай
+ato | n m B1 | act | акт, поступок
+conjunto | n m B1 | set, group | набор, совокупность
+cobertura | n f B1 | cover, coverage, topping | покрытие, верхний этаж, глазурь
+gravação | n f pl=gravações B1 | recording | запись
+terapia | n f B1 | therapy | терапия
+vencedor | n m f=vencedora B1 | winner | победитель
+rota | n f B1 | route | маршрут
+concurso | n m B1 | competition, contest | конкурс
+lenda | n f B1 | legend | легенда
+sócio | n m f=sócia B1 | partner, member | компаньон, член (клуба)
+lágrima | n f B1 | tear | слеза
+tinta | n f B1 | paint, ink | краска, чернила
+compromisso | n m B1 | commitment, appointment | обязательство, договорённость
+competição | n f pl=competições B1 | competition | соревнование
+temporada | n f B1 | season | сезон
+arquivo | n m B1 | archive, file | архив, файл
+fantasia | n f B1 | fantasy, costume | фантазия, маскарадный костюм
+brinde | n m B1 | toast, free gift | тост, подарок (к покупке)
+impacto | n m B1 | impact | воздействие
+perfil | n m pl=perfis B1 | profile | профиль
+salão | n m pl=salões B1 | hall, salon | зал, салон
+multidão | n f pl=multidões B1 | crowd | толпа
+disparate | n m B1 | nonsense | чепуха, глупость
+geração | n f pl=gerações B1 | generation | поколение
+revolução | n f pl=revoluções B1 | revolution | революция | | «Revolução dos Cravos» — революция 25 апреля 1974 года.
+roda | n f B1 | wheel | колесо
+beco | n m B1 | alley | переулок, тупик
+cerimónia | n f B1 | ceremony | церемония | cerimônia
+construção | n f pl=construções B1 | construction, building | строительство, постройка
+figura | n f B1 | figure | фигура
+linguagem | n f B1 | language, speech | язык (манера речи)
+administração | n f pl=administrações B1 | administration | администрация, управление
+estudo | n m B1 | study | учёба, исследование
+noção | n f pl=noções B1 | notion, idea | понятие
+técnica | n f B1 | technique | техника, метод
+tragédia | n f B1 | tragedy | трагедия
+respiração | n f pl=respirações B1 | breathing | дыхание
+asneira | n f B1 | nonsense, blunder | глупость, ошибка | | «Fazer asneiras» — делать глупости.
+influência | n f B1 | influence | влияние
+luxo | n m B1 | luxury | роскошь
+nojo | n m B1 | disgust | отвращение | | «Que nojo!» — какая гадость!
+estratégia | n f B1 | strategy | стратегия
+argumento | n m B1 | argument, plot | довод, сюжет
+indústria | n f B1 | industry | промышленность
+tatuagem | n f B1 | tattoo | татуировка
+rumo | n m B1 | course, direction | курс, направление
+progresso | n m B1 | progress | прогресс
+privacidade | n f B1 | privacy | конфиденциальность, частная жизнь
+ensaio | n m B1 | rehearsal, essay | репетиция, эссе
+prioridade | n f B1 | priority | приоритет
+estrutura | n f B1 | structure | структура
+palpite | n m B1 | hunch, guess | догадка, предчувствие
+combinação | n f pl=combinações B1 | combination | сочетание
+relacionamento | n m B1 | relationship | отношения
+cinza | n f B1 | ash | пепел
+vela | n f B1 | candle, sail | свеча, парус
+descrição | n f pl=descrições B1 | description | описание
+curiosidade | n f B1 | curiosity | любопытство
+coluna | n f B1 | column, spine | колонна, столбец, позвоночник
+ocasião | n f pl=ocasiões B1 | occasion | случай, повод
+abertura | n f B1 | opening | открытие, отверстие
+cenário | n m B1 | setting, scenery | обстановка, декорации
+lógica | n f B1 | logic | логика
+papelada | n f B1 | paperwork | бумаги, бумажная волокита
+habilidade | n f B1 | skill | умение, навык
+meta | n f B1 | goal, finish line | цель, финиш
+êxito | n m B1 | success, hit | успех, хит
+capítulo | n m B1 | chapter | глава
+esquema | n m B1 | scheme, diagram | схема
+disposição | n f pl=disposições B1 | mood, disposition | настроение, расположение
+criação | n f pl=criações B1 | creation, upbringing | создание, воспитание
+coleção | n f pl=coleções B1 | collection | коллекция
+conclusão | n f pl=conclusões B1 | conclusion | вывод, завершение
+fraqueza | n f B1 | weakness | слабость
+piso | n m B1 | floor, storey | этаж, пол
+pontapé | n m B1 | kick | удар ногой
+hábito | n m B1 | habit | привычка
+conflito | n m B1 | conflict | конфликт
+muro | n m B1 | wall | стена (наружная), ограда
+bosque | n m B1 | wood, forest | роща, лес
+protesto | n m B1 | protest | протест
+indivíduo | n m B1 | individual | личность, человек
+setor | n m B1 | sector | сектор, отрасль
+avaliação | n f pl=avaliações B1 | assessment, evaluation | оценка
+método | n m B1 | method | метод
+medalha | n f B1 | medal | медаль
+elemento | n m B1 | element | элемент
+apetite | n m B1 | appetite | аппетит
+despesa | n f B1 | expense | расход, трата
+martelo | n m B1 | hammer | молоток
+ave | n f B1 | bird | птица
+inseto | n m B1 | insect | насекомое
+fama | n f B1 | fame | слава
+cigarro | n m A2 | cigarette | сигарета
+remédio | n m A2 | remedy, medicine | лекарство, средство
+tarte | n f A2 | tart, pie | пирог, тарт | torta | «Tarte de maçã» — яблочный пирог.
+foto | n f A2 | photo | фото
+
+## people | Люди и семья
+papá | n m A1 | dad | папа | papai
+mamã | n f A1 | mum | мама | mamãe
+rei | n m A2 | king | король
+rainha | n f A2 | queen | королева
+padre | n m A2 | priest | священник
+gajo | n m f=gaja B1 | guy, bloke | парень, тип | cara | Разговорное (Португалия).
+malta | n f A2 | people, the guys | ребята, народ | galera | Разговорное (Португалия): «Olá, malta!» — привет, ребята!
+companheiro | n m f=companheira B1 | companion, partner | товарищ, спутник, партнёр
+líder | n mf B1 | leader | лидер
+assistente | n mf B1 | assistant | ассистент, помощник
+cavalheiro | n m B1 | gentleman | джентльмен
+mentiroso | n m f=mentirosa B1 | liar | лжец, врун
+gerente | n mf B1 | manager | управляющий, менеджер
+especialista | n mf B1 | specialist, expert | специалист
+embaixador | n m f=embaixadora B1 | ambassador | посол
+velhote | n m f=velhota B1 | old man, old woman | старичок, старушка | | Разговорное.
+cobarde | n mf B1 | coward | трус | covarde
+caçador | n m f=caçadora B1 | hunter | охотник
+fã | n mf B1 | fan | фанат, поклонник
+capitão | n m pl=capitães B1 | captain | капитан
+exército | n m B1 | army | армия
+
+## adjectives | Прилагательные
+suficiente | adj A2 | enough, sufficient | достаточный
+louco | adj A2 | crazy, mad | сумасшедший
+doido | adj A2 | crazy | чокнутый, ненормальный | | Разговорное.
+quieto | adj A2 | still, quiet | неподвижный, тихий | | «Fica quieto!» — не двигайся!
+favorito | adj A2 | favourite | любимый
+britânico | adj A2 | British | британский
+estúpido | adj B1 | stupid | глупый
+idiota | adj B1 | idiotic | идиотский
+humano | adj B1 | human | человеческий
+belo | adj B1 | beautiful | прекрасный, красивый
+negro | adj B1 | black, dark | чёрный, тёмный
+preso | adj B1 | arrested, stuck | арестованный, застрявший
+inocente | adj B1 | innocent | невиновный
+culpado | adj B1 | guilty | виновный
+brilhante | adj B1 | brilliant, shiny | блестящий
+central | adj B1 | central | центральный
+ridículo | adj B1 | ridiculous | нелепый
+profissional | adj B1 | professional | профессиональный
+militar | adj B1 | military | военный
+santo | adj B1 | holy, saint | святой
+familiar | adj B1 | family, familiar | семейный, знакомый
+disposto | adj B1 | willing | готовый (сделать)
+assustador | adj f=assustadora B1 | frightening | пугающий
+mundial | adj B1 | world, worldwide | мировой
+extra | adj B1 | extra | дополнительный
+parvo | adj B1 | silly, stupid | глупый, дурацкий | bobo | Разговорное (Португалия).
+superior | adj B1 | superior, upper | высший, верхний
+impressionante | adj B1 | impressive | впечатляющий
+poderoso | adj B1 | powerful | могущественный
+secreto | adj B1 | secret | секретный
+nojento | adj B1 | disgusting | отвратительный
+provável | adj B1 | probable | вероятный
+adorável | adj B1 | adorable | очаровательный
+confuso | adj B1 | confused, confusing | запутанный, растерянный
+inacreditável | adj B1 | unbelievable | невероятный
+cego | adj B1 | blind | слепой
+cruel | adj B1 | cruel | жестокий
+civil | adj B1 | civil | гражданский
+firme | adj B1 | firm | твёрдый, устойчивый
+solto | adj B1 | loose, free | свободный, распущенный
+duplo | adj B1 | double | двойной
+mental | adj B1 | mental | психический, умственный
+nuclear | adj B1 | nuclear | ядерный
+romântico | adj B1 | romantic | романтичный
+puro | adj B1 | pure | чистый
+comercial | adj B1 | commercial | коммерческий, торговый
+moral | adj B1 | moral | моральный
+policial | adj B1 | police | полицейский
+decente | adj B1 | decent | порядочный
+nobre | adj B1 | noble | благородный
+imediato | adj B1 | immediate | немедленный
+espantoso | adj B1 | amazing | поразительный
+genial | adj B1 | brilliant, great | гениальный, отличный
+furioso | adj B1 | furious | разъярённый
+baseado | adj B1 | based | основанный
+nu | adj B1 | naked | голый
+fascinante | adj B1 | fascinating | захватывающий
+absoluto | adj B1 | absolute | абсолютный
+solar | adj B1 | solar | солнечный
+complexo | adj B1 | complex | сложный
+solitário | adj B1 | lonely, solitary | одинокий
+infantil | adj B1 | children's, childish | детский
+miserável | adj B1 | miserable, wretched | жалкий, несчастный
+razoável | adj B1 | reasonable | разумный
+absurdo | adj B1 | absurd | абсурдный
+extraordinário | adj B1 | extraordinary | необыкновенный
+estável | adj B1 | stable | стабильный
+interno | adj B1 | internal | внутренний
+físico | adj B1 | physical | физический
+violento | adj B1 | violent | жестокий, насильственный
+emocional | adj B1 | emotional | эмоциональный
+encantador | adj f=encantadora B1 | charming | очаровательный
+secundário | adj B1 | secondary | второстепенный
+clássico | adj B1 | classic, classical | классический
+emocionante | adj B1 | exciting | волнующий
+fabuloso | adj B1 | fabulous | сказочный
+magnífico | adj B1 | magnificent | великолепный
+manual | adj B1 | manual | ручной
+técnico | adj B1 | technical | технический
+arriscado | adj B1 | risky | рискованный
+desesperado | adj B1 | desperate | отчаянный
+independente | adj B1 | independent | независимый
+envolvido | adj B1 | involved | вовлечённый
+bêbado | adj B1 | drunk | пьяный
+abandonado | adj B1 | abandoned | заброшенный
+
+## adverbs | Наречия, предлоги и союзы
+além | adv B1 | beyond, besides | кроме того, дальше
+sequer | adv B1 | even | хотя бы, даже (в отрицании)
+demais | adv A2 | too much | слишком
+daí | adv B1 | from there, hence | оттуда, отсюда (следует)
+abaixo | adv B1 | below, down | ниже, вниз
+acima | adv B1 | above, up | выше, вверх
+senão | conj B1 | otherwise | иначе, а то
+exceto | prep B1 | except | кроме, за исключением
+porém | conj B1 | however | однако
+adiante | adv B1 | forward, ahead | вперёд, дальше
+jamais | adv B1 | never | никогда
+somente | adv B1 | only | только
+obviamente | adv B1 | obviously | очевидно
+claramente | adv B1 | clearly | ясно, явно
+absolutamente | adv B1 | absolutely | абсолютно
+aparentemente | adv B1 | apparently | по-видимому
+pessoalmente | adv B1 | personally | лично
+perfeitamente | adv B1 | perfectly | прекрасно, совершенно
+definitivamente | adv B1 | definitely, for good | окончательно, определённо
+basicamente | adv B1 | basically | в основном
+praticamente | adv B1 | practically | практически
+extremamente | adv B1 | extremely | чрезвычайно
+possivelmente | adv B1 | possibly | возможно
+literalmente | adv B1 | literally | буквально
+oficialmente | adv B1 | officially | официально
+honestamente | adv B1 | honestly | честно
+precisamente | adv B1 | precisely | именно, точно
+naturalmente | adv B1 | naturally | естественно
+francamente | adv B1 | frankly | откровенно говоря
+constantemente | adv B1 | constantly | постоянно
+eventualmente | adv B1 | possibly, if need be | возможно, при случае | | Ложный друг: не «в конце концов», а «возможно».
+
+## home | Дом
+carrinha | n f A2 | van | фургон, микроавтобус | van
+comando | n m A2 | remote control, command | пульт, команда | controle remoto
+correio | n m A2 | mail, post | почта (письма) | | «Correio eletrónico» — электронная почта.
+lar | n m pl=lares B1 | home | дом, очаг | | «Lar de idosos» — дом престарелых.
+portão | n m pl=portões B1 | gate | ворота, калитка
+armazém | n m pl=armazéns B1 | warehouse | склад
+
+## city | Город и ориентирование
+gabinete | n m B1 | office, cabinet | кабинет, офис
+academia | n f B1 | academy | академия
+casino | n m B1 | casino | казино | cassino
+colégio | n m B1 | private school | частная школа, колледж
+liceu | n m B1 | secondary school | лицей | | Старое название средней школы; сейчас «escola secundária».
+ministério | n m B1 | ministry | министерство
+templo | n m B1 | temple | храм
+
+## nature | Природа и погода
+raio | n m B1 | ray, lightning, radius | луч, молния, радиус
+universo | n m B1 | universe | вселенная
+lama | n f B1 | mud | грязь
+amanhecer | n m B1 | dawn | рассвет
+atmosfera | n f B1 | atmosphere | атмосфера
+
+## emergency | Экстренные ситуации
+arma | n f B1 | weapon | оружие
+ataque | n m B1 | attack | нападение, приступ
+droga | n f B1 | drug | наркотик
+bomba | n f B1 | bomb, pump | бомба, насос
+julgamento | n m B1 | trial | суд, судебный процесс
+criminoso | n m f=criminosa B1 | criminal | преступник
+pesadelo | n m B1 | nightmare | кошмар
+ferimento | n m B1 | injury | ранение
+
+## verbs_more | Глаголы: дополнительные
+matar | v B1 | to kill | убивать
+
+## adverbs | Наречия, предлоги и союзы
+frente | n f A2 | front | перёд, передняя часть | | «Em frente» — напротив, прямо; «à frente» — впереди.
+sob | prep B1 | under | под
+trás | adv B1 | behind | сзади | | «Para trás» — назад, «por trás de» — за.
+quão | adv B1 | how (so) | насколько
+
+## shopping | Покупки, деньги и одежда
+dólar | n m pl=dólares A2 | dollar | доллар
+bocado | n m A2 | bit, piece | кусок, немного | | Разговорное (Португалия): «um bocado» — немного.
+
+## leisure | Досуг, спорт и культура
+baile | n m B1 | dance, ball | танцы, бал
+príncipe | n m B1 | prince | принц
+princesa | n f B1 | princess | принцесса
+monstro | n m B1 | monster | чудовище
+magia | n f B1 | magic | магия
+pista | n f B1 | track, runway, clue | дорожка, взлётная полоса, зацепка
+
+## feelings | Чувства и абстрактные понятия
+fé | n f B1 | faith | вера
+vingança | n f B1 | revenge | месть
+diabo | n m B1 | devil | дьявол, чёрт
+inferno | n m B1 | hell | ад
+porcaria | n f B1 | rubbish, junk | дрянь, гадость | | Разговорное.
+buraco | n m B1 | hole | дыра, яма
+cadeia | n f B1 | chain, prison | цепь, тюрьма
+mestre | n m f=mestra B1 | master, teacher | мастер, учитель
+laboratório | n m B1 | laboratory | лаборатория

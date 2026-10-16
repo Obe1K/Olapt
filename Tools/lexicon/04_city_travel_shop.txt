@@ -141,7 +141,7 @@ gravata | n f A2 | tie | галстук
 guarda-chuva | n m A2 | umbrella | зонт
 anel | n m pl=anéis A2 | ring | кольцо
 relógio de pulso | n m A2 | wristwatch | наручные часы
-algodão | n m A2 | cotton | хлопок
+algodão | n m pl=algodões A2 | cotton | хлопок
 lã | n f A2 | wool | шерсть
 presente | n m A1 | gift | подарок
 lembrança | n f A2 | souvenir, memory | сувенир, воспоминание
