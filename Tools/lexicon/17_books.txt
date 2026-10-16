@@ -330,3 +330,49 @@ malaio | adj B1 | Malay | малайский
 timorense | adj B1 | East Timorese | восточнотиморский
 mandarim | n m pl=mandarins B1 | Mandarin (Chinese) | китайский (мандаринский) язык, путунхуа
 cantonês | n m B1 | Cantonese | кантонский язык
+
+## school | Учёба и язык
+possessivo | adj B1 | possessive | притяжательный
+demonstrativo | adj B1 | demonstrative | указательный
+interrogativo | adj B1 | interrogative | вопросительный
+indefinido | adj B1 | indefinite | неопределённый
+
+## character | Внешность и характер
+comunicativo | adj A2 | communicative, sociable | общительный
+estudioso | adj A2 | studious | прилежный (в учёбе)
+talentoso | adj A2 | talented | талантливый
+distraído | adj A2 | absent-minded, distracted | рассеянный
+risco ao meio | phrase A2 | centre parting | прямой пробор | | Так в учебнике; чаще говорят «risca ao meio».
+risco ao lado | phrase A2 | side parting | косой пробор
+de estatura média | phrase A2 | of medium height | среднего роста
+de meia-idade | phrase A2 | middle-aged | средних лет
+
+## greetings | Приветствия и фразы
+viva | interj A1 | hi | привет | oi | Неформальное приветствие в Португалии: «Viva! Como estás?»
+até à próxima | phrase A1 | see you next time | до следующего раза
+
+## professions | Профессии
+empregada de mesa | n f A1 | waitress | официантка | garçonete
+empregada de limpeza | n f B1 | cleaner (female) | уборщица
+quartel de bombeiros | n m B1 | fire station | пожарная часть
+quartel | n m pl=quartéis B1 | barracks, headquarters | казарма, штаб
+
+## home | Дом
+casca | n f B1 | peel, shell, bark | кожура, скорлупа, кора
+alça | n f B1 | strap, handle | бретелька, ручка (сумки)
+lupa | n f B1 | magnifying glass | лупа
+pau | n m B1 | stick, wood | палка, деревяшка
+
+## leisure | Досуг, спорт и культура
+coro | n m B1 | choir | хор
+audição | n f pl=audições B1 | hearing, audition | слух, прослушивание
+
+## people | Люди и семья
+mana | n f B1 | sis, sister | сестрёнка | | Разговорное: так зовут сестру («a minha mana»).
+
+## verbs_mind | Глаголы: мысли и чувства
+encarar | v B1 | to face | смотреть в лицо, воспринимать
+
+## countries | Страны и национальности
+malásio | adj B1 | Malaysian | малайзийский
+mongol | adj B1 | Mongolian | монгольский
