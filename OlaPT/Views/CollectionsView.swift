@@ -10,13 +10,16 @@ struct CollectionsView: View {
 
     var body: some View {
         List {
-            if !model.user.progress.isEmpty {
+            if !model.user.srs.isEmpty {
                 Section {
                     HStack {
                         Image(systemName: "checkmark.seal.fill")
                             .foregroundColor(.green)
                         Text("Выучено слов: \(model.totalLearnedWords)")
                             .font(.headline)
+                        Spacer()
+                        Text("учу: \(model.totalLearningWords)")
+                            .foregroundColor(.secondary)
                     }
                 }
             }
@@ -37,6 +40,21 @@ struct CollectionsView: View {
                     let ids = offsets.map { model.user.collections[$0].id }
                     for id in ids {
                         model.deleteCollection(id)
+                    }
+                }
+                let difficult = model.difficultWords.count
+                if difficult > 0 {
+                    NavigationLink {
+                        DifficultWordsView()
+                    } label: {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Label("Трудные слова", systemImage: "flame")
+                                .font(.headline)
+                            Text("\(difficult) \(Plural.words(difficult)) · собирается само из ваших ошибок")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                        }
+                        .padding(.vertical, 3)
                     }
                 }
             }
@@ -157,7 +175,7 @@ struct CollectionDetailView: View {
             }
 
             Section(header: Text("Учить"),
-                    footer: Text("Каждый верный ответ приближает слово к статусу «выучено» (сейчас нужно \(model.settings.masteryThreshold) верных ответов). Ошибка снимает один балл.")) {
+                    footer: Text("Слова из коллекций сами попадают в план на вкладке «Сегодня» — до \(model.settings.newWordsPerDay) новых в день, а потом в нужные дни на повторение. Уровни здесь — свободная тренировка, её можно проходить когда угодно.")) {
                 ForEach(ExerciseLevel.allCases) { level in
                     Button {
                         activeLevel = level

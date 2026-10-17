@@ -614,6 +614,36 @@ struct UnknownWordsSheet: View {
 // MARK: - Склонение «слово»
 
 enum Plural {
+    /// 1 неделя, 2 недели, 5 недель
+    static func weeks(_ n: Int) -> String {
+        let mod100 = n % 100
+        let mod10 = n % 10
+        if mod100 >= 11 && mod100 <= 14 { return "недель" }
+        if mod10 == 1 { return "неделя" }
+        if mod10 >= 2 && mod10 <= 4 { return "недели" }
+        return "недель"
+    }
+
+    /// 1 месяц, 2 месяца, 5 месяцев
+    static func months(_ n: Int) -> String {
+        let mod100 = n % 100
+        let mod10 = n % 10
+        if mod100 >= 11 && mod100 <= 14 { return "месяцев" }
+        if mod10 == 1 { return "месяц" }
+        if mod10 >= 2 && mod10 <= 4 { return "месяца" }
+        return "месяцев"
+    }
+
+    /// 1 день, 2 дня, 5 дней
+    static func days(_ n: Int) -> String {
+        let mod100 = n % 100
+        let mod10 = n % 10
+        if mod100 >= 11 && mod100 <= 14 { return "дней" }
+        if mod10 == 1 { return "день" }
+        if mod10 >= 2 && mod10 <= 4 { return "дня" }
+        return "дней"
+    }
+
     /// 1 слово, 2 слова, 5 слов
     static func words(_ n: Int) -> String {
         let mod100 = n % 100

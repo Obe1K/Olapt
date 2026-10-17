@@ -82,10 +82,12 @@ enum MasteryStatus {
 struct AppSettings: Codable, Hashable {
     /// "ru", "en" или "mixed"
     var exerciseLanguage: String
-    /// Сколько верных ответов нужно, чтобы слово считалось выученным
+    /// Глаголы: сколько верных ответов нужно, чтобы пара «глагол + время» считалась выученной
     var masteryThreshold: Int
-    /// За ошибку вычитать один балл
+    /// Глаголы: за ошибку вычитать один балл
     var wrongPenalty: Bool
+    /// Сколько новых слов в день брать в план «Сегодня»
+    var newWordsPerDay: Int
     /// Строго учитывать диакритику при вводе слов
     var strictAccents: Bool
     /// Произносить португальское слово при показе карточки
@@ -97,6 +99,7 @@ struct AppSettings: Codable, Hashable {
 
     enum CodingKeys: String, CodingKey {
         case exerciseLanguage, masteryThreshold, wrongPenalty, strictAccents, autoSpeak, sessionSize, disabledPacks
+        case newWordsPerDay
     }
 
     init() {
@@ -107,6 +110,7 @@ struct AppSettings: Codable, Hashable {
         autoSpeak = false
         sessionSize = 0
         disabledPacks = []
+        newWordsPerDay = 10
     }
 
     init(from decoder: Decoder) throws {
@@ -118,6 +122,7 @@ struct AppSettings: Codable, Hashable {
         autoSpeak = try c.decodeIfPresent(Bool.self, forKey: .autoSpeak) ?? false
         sessionSize = try c.decodeIfPresent(Int.self, forKey: .sessionSize) ?? 0
         disabledPacks = try c.decodeIfPresent([String].self, forKey: .disabledPacks) ?? []
+        newWordsPerDay = try c.decodeIfPresent(Int.self, forKey: .newWordsPerDay) ?? 10
     }
 }
 
@@ -167,9 +172,11 @@ struct UserData: Codable {
     var verbProgress: [String: WordProgress]
     var customWords: [CustomWord]
     var settings: AppSettings
+    /// Интервальные повторения: id слова → состояние
+    var srs: [String: SRSState]
 
     enum CodingKeys: String, CodingKey {
-        case collections, progress, verbProgress, customWords, settings
+        case collections, progress, verbProgress, customWords, settings, srs
     }
 
     init() {
@@ -178,6 +185,7 @@ struct UserData: Codable {
         verbProgress = [:]
         customWords = []
         settings = AppSettings()
+        srs = [:]
     }
 
     init(from decoder: Decoder) throws {
@@ -187,6 +195,7 @@ struct UserData: Codable {
         verbProgress = try c.decodeIfPresent([String: WordProgress].self, forKey: .verbProgress) ?? [:]
         customWords = try c.decodeIfPresent([CustomWord].self, forKey: .customWords) ?? []
         settings = try c.decodeIfPresent(AppSettings.self, forKey: .settings) ?? AppSettings()
+        srs = try c.decodeIfPresent([String: SRSState].self, forKey: .srs) ?? [:]
     }
 }
 

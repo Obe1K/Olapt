@@ -3,7 +3,6 @@ import SwiftUI
 // MARK: - Состояние тренировки
 
 final class WordStudySession: ObservableObject {
-    let level: ExerciseLevel
     private let generator: () -> [WordQuestion]
 
     @Published var queue: [WordQuestion] = []
@@ -17,8 +16,7 @@ final class WordStudySession: ObservableObject {
     @Published var mistakes: [Word] = []
     @Published var finished: Bool = false
 
-    init(level: ExerciseLevel, generator: @escaping () -> [WordQuestion]) {
-        self.level = level
+    init(generator: @escaping () -> [WordQuestion]) {
         self.generator = generator
         self.queue = generator()
         self.finished = queue.isEmpty
@@ -79,7 +77,8 @@ final class WordStudySession: ObservableObject {
             } else {
                 mistakes.append(q.word)
             }
-            model.record(wordID: q.word.id, correct: ok)
+            model.record(wordID: q.word.id, correct: ok,
+                         recognition: q.kind.isChoice, accentsOnly: verdict == .accentsOnly)
             if !ok {
                 var retry = q
                 retry.isRetry = true
@@ -107,8 +106,12 @@ struct StudySessionView: View {
     @EnvironmentObject var model: AppModel
     @Environment(\.dismiss) private var dismiss
     @StateObject private var session: WordStudySession
-    let level: ExerciseLevel
+    /// Уровень коллекции (для лучшего результата) или nil для тренировки «Сегодня» и «Трудных слов»
+    let level: ExerciseLevel?
+    let title: String
     let collectionID: UUID?
+    /// Тренировка «Сегодня»: в конце показываем план на ближайшие дни
+    let isDaily: Bool
 
     @State private var typed = ""
     @State private var fieldFocused = false
@@ -117,10 +120,17 @@ struct StudySessionView: View {
     /// Короткая пауза после смены слова: случайное второе касание не должно выбрать вариант в новом вопросе.
     @State private var inputLocked = false
 
-    init(level: ExerciseLevel, collectionID: UUID?, generator: @escaping () -> [WordQuestion]) {
+    init(level: ExerciseLevel?, title: String? = nil, collectionID: UUID?, isDaily: Bool = false,
+         generator: @escaping () -> [WordQuestion]) {
         self.level = level
+        self.title = title ?? level?.shortTitle ?? "Тренировка"
         self.collectionID = collectionID
-        _session = StateObject(wrappedValue: WordStudySession(level: level, generator: generator))
+        self.isDaily = isDaily
+        _session = StateObject(wrappedValue: WordStudySession(generator: generator))
+    }
+
+    private var currentIsChoice: Bool {
+        return session.current?.kind.isChoice ?? false
     }
 
     var body: some View {
@@ -135,7 +145,7 @@ struct StudySessionView: View {
                         .foregroundColor(.secondary)
                 }
             }
-            .navigationTitle(level.shortTitle)
+            .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -145,10 +155,12 @@ struct StudySessionView: View {
         }
         .onChange(of: session.position) { _ in
             typed = ""
-            if !level.isChoice && !session.finished {
+            if !currentIsChoice && !session.finished {
                 fieldFocused = true
+            } else {
+                fieldFocused = false
             }
-            if level.isChoice {
+            if currentIsChoice {
                 inputLocked = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
                     inputLocked = false
@@ -156,7 +168,7 @@ struct StudySessionView: View {
             }
         }
         .onChange(of: session.answered) { answered in
-            if answered && level.isChoice {
+            if answered && currentIsChoice {
                 scheduleAutoAdvance()
             }
         }
@@ -169,14 +181,14 @@ struct StudySessionView: View {
             }
         }
         .onAppear {
-            if !level.isChoice && !session.finished {
+            if !currentIsChoice && !session.finished {
                 fieldFocused = true
             }
         }
     }
 
     private func saveBestScore() {
-        if let id = collectionID, session.totalCount > 0 {
+        if let id = collectionID, let level = level, session.totalCount > 0 {
             model.setBestScore(collection: id, level: level, percent: session.percent)
         }
     }
@@ -184,7 +196,7 @@ struct StudySessionView: View {
     // MARK: Вопрос
 
     private func caption(_ q: WordQuestion) -> String {
-        switch level {
+        switch q.kind {
         case .chooseTranslation: return "Выберите перевод"
         case .chooseWord: return "Выберите слово по-португальски"
         case .typeWord: return "Напишите по-португальски · перевод: \(Languages.name(q.lang))"
@@ -213,13 +225,13 @@ struct StudySessionView: View {
                         .font(.system(size: 34, weight: .bold))
                         .multilineTextAlignment(.center)
                         .minimumScaleFactor(0.5)
-                    if level.promptIsPortuguese {
+                    if q.kind.promptIsPortuguese {
                         SpeakButton(text: q.word.pt)
                     }
                 }
                 .padding(.vertical, 8)
 
-                if level.isChoice {
+                if q.kind.isChoice {
                     choiceList(q)
                 } else {
                     typingArea(q)
@@ -233,7 +245,7 @@ struct StudySessionView: View {
             .padding(.bottom, 24)
         }
         .safeAreaInset(edge: .bottom) {
-            if session.answered && !level.isChoice {
+            if session.answered && !q.kind.isChoice {
                 nextButtonBar
             }
         }
@@ -358,7 +370,7 @@ struct StudySessionView: View {
                     .font(.headline)
                     .multilineTextAlignment(.center)
             }
-            if !level.promptIsPortuguese {
+            if !q.kind.promptIsPortuguese {
                 HStack(spacing: 8) {
                     Text(q.word.titleWithArticle)
                         .font(.subheadline)
@@ -402,8 +414,47 @@ struct StudySessionView: View {
 
     // MARK: Итоги
 
+    /// «Следующее повторение — завтра: 12 слов (≈ 3 мин)».
+    private var nextReviewText: String {
+        let days = model.forecast(days: 30)
+        guard let i = days.firstIndex(where: { $0 > 0 }) else {
+            return "Следующих повторений пока нет. Добавьте новые слова в коллекции — они появятся в плане «Сегодня»."
+        }
+        let n = days[i]
+        let when: String
+        switch i {
+        case 0: when = "завтра"
+        case 1: when = "послезавтра"
+        default: when = "через \(i + 1) \(Plural.days(i + 1))"
+        }
+        return "Следующее повторение — \(when): \(n) \(Plural.words(n)) (≈ \(model.estimatedMinutes(questions: n)) мин)."
+    }
+
     private var summaryView: some View {
         List {
+            if isDaily {
+                Section {
+                    let plan = model.dailyPlan()
+                    VStack(alignment: .leading, spacing: 8) {
+                        if plan.isEmpty {
+                            Label("На сегодня всё", systemImage: "checkmark.seal.fill")
+                                .font(.title3.weight(.semibold))
+                                .foregroundColor(.green)
+                            Text("Ещё раз сегодня проходить не нужно: повторение раньше срока почти не укрепляет память.")
+                                .font(.subheadline)
+                        } else {
+                            Label("Осталось ещё \(plan.total) \(Plural.words(plan.total))", systemImage: "clock")
+                                .font(.headline)
+                            Text("Продолжите на вкладке «Сегодня».")
+                                .font(.subheadline)
+                        }
+                        Text(nextReviewText)
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
+                    .padding(.vertical, 6)
+                }
+            }
             Section {
                 VStack(spacing: 8) {
                     Text("\(session.percent)%")
@@ -411,7 +462,9 @@ struct StudySessionView: View {
                         .foregroundColor(session.percent >= 80 ? Color.green : Color.orange)
                     Text("Верно с первого раза: \(session.correctCount) из \(session.totalCount)")
                         .foregroundColor(.secondary)
-                    if session.percent >= 80 {
+                    if isDaily {
+                        EmptyView()
+                    } else if session.percent >= 80 {
                         Text("Отличный результат! Можно переходить к следующему уровню.")
                             .font(.subheadline)
                             .multilineTextAlignment(.center)
@@ -434,15 +487,17 @@ struct StudySessionView: View {
             }
 
             Section {
+                if !isDaily {
                 Button {
                     advanceWork?.cancel()
                     session.restart()
                     typed = ""
-                    if !level.isChoice {
+                    if !currentIsChoice {
                         fieldFocused = true
                     }
                 } label: {
                     Label("Пройти ещё раз", systemImage: "arrow.clockwise")
+                }
                 }
                 Button {
                     dismiss()

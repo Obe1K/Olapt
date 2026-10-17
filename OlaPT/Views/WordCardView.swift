@@ -123,23 +123,61 @@ struct WordCardView: View {
 
     // MARK: Прогресс
 
+    private static let dateFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.locale = Locale(identifier: "ru_RU")
+        f.dateFormat = "d MMMM"
+        return f
+    }()
+
+    /// «сегодня», «завтра», «через 5 дней (23 октября)»
+    private func whenText(_ due: Date) -> String {
+        let d = FSRS.days(from: Date(), to: due)
+        if d <= 0 { return "сегодня" }
+        if d == 1 { return "завтра" }
+        if d == 2 { return "послезавтра" }
+        return "через \(d) \(Plural.days(d)) (\(WordCardView.dateFormatter.string(from: due)))"
+    }
+
+    /// «4 дня», «2 недели», «3 месяца»
+    private func spanText(_ stability: Double) -> String {
+        let days = FSRS.intervalDays(stability: stability)
+        if days < 14 { return "\(days) \(Plural.days(days))" }
+        if days < 60 {
+            let w = Int((Double(days) / 7).rounded())
+            return "\(w) \(Plural.weeks(w))"
+        }
+        let m = Int((Double(days) / 30).rounded())
+        return "\(m) \(Plural.months(m))"
+    }
+
     private var progressSection: some View {
         let p = model.progress(for: word.id)
         let status = model.status(for: word.id)
-        return Section(header: Text("Прогресс")) {
+        let state = model.srsState(for: word.id)
+        return Section(header: Text("Прогресс"),
+                       footer: Text("«Выучено» — когда слово держится в памяти 3 недели и дольше.")) {
             HStack {
                 StatusBadge(status: status)
                 Spacer()
-                Text("\(min(p.score, model.settings.masteryThreshold)) из \(model.settings.masteryThreshold)")
-                    .foregroundColor(.secondary)
+                if let s = state {
+                    Text("помню ≈ \(spanText(s.stability))")
+                        .foregroundColor(.secondary)
+                }
             }
             MasteryBar(fraction: model.fraction(for: word.id))
+            if let s = state {
+                Text("Следующее повторение: \(whenText(s.due))")
+                    .font(.subheadline)
+            }
             if p.attempts > 0 {
                 Text("Верных ответов: \(p.correct) · ошибок: \(p.wrong)")
                     .font(.footnote)
                     .foregroundColor(.secondary)
-            } else {
-                Text("Слово появится здесь после первых упражнений.")
+            } else if state == nil {
+                Text(model.user.collections.contains { $0.wordIDs.contains(word.id) }
+                     ? "Слово появится в плане «Сегодня», когда до него дойдёт очередь новых слов."
+                     : "Добавьте слово в коллекцию — оно появится в плане «Сегодня».")
                     .font(.footnote)
                     .foregroundColor(.secondary)
             }

@@ -2,31 +2,19 @@ import Foundation
 
 // MARK: - Уровни
 
-/// Три уровня упражнений.
-/// rawValue — ключ для сохранённых лучших результатов коллекции. У ввода слова он остаётся 4
-/// (как в версии 1.0, где был ещё уровень «написать перевод»), чтобы старые результаты не перепутались.
+/// Два уровня упражнений.
+/// rawValue — ключ сохранённых лучших результатов коллекции; номера на экране — 1 и 2.
 enum ExerciseLevel: Int, CaseIterable, Identifiable {
-    case chooseTranslation = 1   // слово на португальском → выбрать перевод из 4
-    case chooseWord = 2          // перевод → выбрать португальское слово из 4
-    case typeWord = 4            // перевод → написать португальское слово
+    case chooseMixed = 1   // выбор из 4 вариантов, направление вперемешку
+    case typeWord = 4      // перевод → написать португальское слово
 
     var id: Int { return rawValue }
 
-    /// Номер уровня на экране: 1, 2, 3.
     var number: Int {
         switch self {
-        case .chooseTranslation: return 1
-        case .chooseWord: return 2
-        case .typeWord: return 3
+        case .chooseMixed: return 1
+        case .typeWord: return 2
         }
-    }
-
-    var isChoice: Bool {
-        return self == .chooseTranslation || self == .chooseWord
-    }
-
-    var promptIsPortuguese: Bool {
-        return self == .chooseTranslation
     }
 
     var title: String {
@@ -35,26 +23,38 @@ enum ExerciseLevel: Int, CaseIterable, Identifiable {
 
     var shortTitle: String {
         switch self {
-        case .chooseTranslation: return "Выбери перевод"
-        case .chooseWord: return "Выбери слово"
+        case .chooseMixed: return "Выбери вариант"
         case .typeWord: return "Напиши слово"
         }
     }
 
     var subtitle: String {
         switch self {
-        case .chooseTranslation: return "Слово по-португальски, перевод — из 4 вариантов"
-        case .chooseWord: return "Перевод дан, слово по-португальски — из 4 вариантов"
+        case .chooseMixed: return "Перевод или слово по-португальски — из 4 вариантов, вперемешку"
         case .typeWord: return "Перевод дан, слово по-португальски пишете сами"
         }
     }
 
     var symbol: String {
         switch self {
-        case .chooseTranslation: return "list.bullet.rectangle"
-        case .chooseWord: return "arrow.left.arrow.right"
+        case .chooseMixed: return "list.bullet.rectangle"
         case .typeWord: return "square.and.pencil"
         }
+    }
+}
+
+/// Тип отдельного вопроса.
+enum QuestionKind {
+    case chooseTranslation   // слово по-португальски → выбрать перевод
+    case chooseWord          // перевод → выбрать слово по-португальски
+    case typeWord            // перевод → написать слово
+
+    var isChoice: Bool {
+        return self != .typeWord
+    }
+
+    var promptIsPortuguese: Bool {
+        return self == .chooseTranslation
     }
 }
 
@@ -63,7 +63,7 @@ enum ExerciseLevel: Int, CaseIterable, Identifiable {
 struct WordQuestion: Identifiable {
     let id = UUID()
     let word: Word
-    let level: ExerciseLevel
+    let kind: QuestionKind
     /// Язык перевода в этом вопросе
     let lang: String
     let prompt: String
@@ -114,11 +114,35 @@ struct ExerciseBuilder {
         }
         var result: [WordQuestion] = []
         for w in selected {
-            if let q = makeQuestion(word: w, level: level, pool: words) {
+            let kind: QuestionKind
+            switch level {
+            case .chooseMixed: kind = Bool.random() ? .chooseTranslation : .chooseWord
+            case .typeWord: kind = .typeWord
+            }
+            if let q = makeQuestion(word: w, kind: kind, pool: words) {
                 result.append(q)
             }
         }
         return result
+    }
+
+    /// Тренировка «Сегодня»: новые слова — выбор перевода (знакомство), молодые — выбор вперемешку,
+    /// устоявшиеся (память ≥ 4 дней) — ввод слова. Порядок перемешан.
+    func makeDailyQuestions(dueWords: [Word], newWords: [Word], states: [String: SRSState], pool: [Word]) -> [WordQuestion] {
+        var result: [WordQuestion] = []
+        for w in newWords {
+            if let q = makeQuestion(word: w, kind: .chooseTranslation, pool: pool) {
+                result.append(q)
+            }
+        }
+        for w in dueWords {
+            let stability = states[w.id]?.stability ?? 0
+            let kind: QuestionKind = stability >= 4 ? .typeWord : (Bool.random() ? .chooseTranslation : .chooseWord)
+            if let q = makeQuestion(word: w, kind: kind, pool: pool) {
+                result.append(q)
+            }
+        }
+        return result.shuffled()
     }
 
     /// Кандидаты на неверные варианты: сначала слова из той же коллекции, затем случайные из словаря.
@@ -136,12 +160,12 @@ struct ExerciseBuilder {
         return candidates
     }
 
-    func makeQuestion(word: Word, level: ExerciseLevel, pool: [Word]) -> WordQuestion? {
+    func makeQuestion(word: Word, kind: QuestionKind, pool: [Word]) -> WordQuestion? {
         guard let lang = pickLanguage(for: word) else { return nil }
         let translations = word.tr(lang)
         if translations.isEmpty { return nil }
 
-        switch level {
+        switch kind {
         case .chooseTranslation:
             let correct = word.translationText(lang: lang, limit: 2)
             var forbidden = Set<String>()
@@ -169,7 +193,7 @@ struct ExerciseBuilder {
             if options.count < 2 { return nil }
             options.shuffle()
             let correctIndex = options.firstIndex(of: correct) ?? 0
-            return WordQuestion(word: word, level: level, lang: lang,
+            return WordQuestion(word: word, kind: kind, lang: lang,
                                 prompt: word.titleWithArticle, options: options,
                                 correctIndex: correctIndex, accepted: [], acceptedLang: lang,
                                 answerText: correct)
@@ -192,7 +216,7 @@ struct ExerciseBuilder {
             if options.count < 2 { return nil }
             options.shuffle()
             let correctIndex = options.firstIndex(of: correct) ?? 0
-            return WordQuestion(word: word, level: level, lang: lang,
+            return WordQuestion(word: word, kind: kind, lang: lang,
                                 prompt: prompt, options: options,
                                 correctIndex: correctIndex, accepted: [], acceptedLang: "pt",
                                 answerText: correct)
@@ -205,7 +229,7 @@ struct ExerciseBuilder {
                     accepted.append(contentsOf: other.ptVariants)
                 }
             }
-            return WordQuestion(word: word, level: level, lang: lang,
+            return WordQuestion(word: word, kind: kind, lang: lang,
                                 prompt: prompt, options: [],
                                 correctIndex: -1, accepted: accepted, acceptedLang: "pt",
                                 answerText: word.answerDisplay)

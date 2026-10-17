@@ -19,8 +19,18 @@ struct OlaPTApp: App {
 }
 
 struct RootView: View {
+    @EnvironmentObject var model: AppModel
+
     var body: some View {
         TabView {
+            NavigationStack {
+                TodayView()
+            }
+            .tabItem {
+                Label("Сегодня", systemImage: "calendar")
+            }
+            .badge(model.dailyPlan().total)
+
             NavigationStack {
                 SearchView()
             }

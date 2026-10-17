@@ -44,23 +44,38 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
+            Section(header: Text("Сегодня"),
+                    footer: Text("Сколько новых слов из коллекций добавлять в план каждый день. Повторения добавляются сами в нужные дни. 10 новых в день — это около 10 минут занятий, когда наберутся повторения.")) {
+                Picker("Новых слов в день", selection: setting(\.newWordsPerDay)) {
+                    Text("5").tag(5)
+                    Text("10").tag(10)
+                    Text("15").tag(15)
+                    Text("20").tag(20)
+                    Text("30").tag(30)
+                }
+            }
+
             Section(header: Text("Упражнения")) {
                 Picker("Язык перевода", selection: setting(\.exerciseLanguage)) {
                     ForEach(languageChoices) { choice in
                         Text(choice.title).tag(choice.code)
                     }
                 }
-                Stepper(value: setting(\.masteryThreshold), in: 3...30) {
-                    Text("«Выучено» после \(model.settings.masteryThreshold) верных ответов")
-                }
-                Toggle("Ошибка снимает один балл", isOn: setting(\.wrongPenalty))
                 Toggle("Строго учитывать ударения и ç, ã", isOn: setting(\.strictAccents))
-                Picker("Слов в одной тренировке", selection: setting(\.sessionSize)) {
+                Picker("Слов в тренировке коллекции", selection: setting(\.sessionSize)) {
                     Text("Все слова").tag(0)
                     Text("10").tag(10)
                     Text("20").tag(20)
                     Text("30").tag(30)
                 }
+            }
+
+            Section(header: Text("Глаголы"),
+                    footer: Text("Для тренировки спряжения: сколько верных ответов нужно, чтобы время глагола считалось выученным.")) {
+                Stepper(value: setting(\.masteryThreshold), in: 3...30) {
+                    Text("«Выучено» после \(model.settings.masteryThreshold) верных")
+                }
+                Toggle("Ошибка снимает один балл", isOn: setting(\.wrongPenalty))
             }
 
             Section(header: Text("Озвучка"),
