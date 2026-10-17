@@ -111,7 +111,11 @@ struct StudySessionView: View {
     let collectionID: UUID?
 
     @State private var typed = ""
-    @FocusState private var fieldFocused: Bool
+    @State private var fieldFocused = false
+    /// Автопереход к следующему слову в уровнях с выбором ответа
+    @State private var advanceWork: DispatchWorkItem?
+    /// Короткая пауза после смены слова: случайное второе касание не должно выбрать вариант в новом вопросе.
+    @State private var inputLocked = false
 
     init(level: ExerciseLevel, collectionID: UUID?, generator: @escaping () -> [WordQuestion]) {
         self.level = level
@@ -144,6 +148,20 @@ struct StudySessionView: View {
             if !level.isChoice && !session.finished {
                 fieldFocused = true
             }
+            if level.isChoice {
+                inputLocked = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                    inputLocked = false
+                }
+            }
+        }
+        .onChange(of: session.answered) { answered in
+            if answered && level.isChoice {
+                scheduleAutoAdvance()
+            }
+        }
+        .onDisappear {
+            advanceWork?.cancel()
         }
         .onChange(of: session.finished) { done in
             if done {
@@ -169,7 +187,6 @@ struct StudySessionView: View {
         switch level {
         case .chooseTranslation: return "Выберите перевод"
         case .chooseWord: return "Выберите слово по-португальски"
-        case .typeTranslation: return "Напишите перевод · \(Languages.name(q.lang))"
         case .typeWord: return "Напишите по-португальски · перевод: \(Languages.name(q.lang))"
         }
     }
@@ -215,6 +232,11 @@ struct StudySessionView: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 24)
         }
+        .safeAreaInset(edge: .bottom) {
+            if session.answered && !level.isChoice {
+                nextButtonBar
+            }
+        }
     }
 
     // MARK: Выбор из вариантов
@@ -231,6 +253,7 @@ struct StudySessionView: View {
         VStack(spacing: 10) {
             ForEach(q.options.indices, id: \.self) { i in
                 Button {
+                    if inputLocked { return }
                     session.answerChoice(i, model: model)
                 } label: {
                     HStack {
@@ -264,17 +287,24 @@ struct StudySessionView: View {
     @ViewBuilder
     private func typingArea(_ q: WordQuestion) -> some View {
         VStack(spacing: 12) {
-            TextField("Ваш ответ", text: $typed)
-                .textFieldStyle(.roundedBorder)
-                .font(.title3)
-                .autocorrectionDisabled()
-                .textInputAutocapitalization(.never)
-                .submitLabel(.done)
-                .focused($fieldFocused)
-                .disabled(session.answered)
-                .onSubmit {
-                    check()
-                }
+            ColoredAnswerField(
+                text: $typed,
+                isFocused: $fieldFocused,
+                placeholder: "Ваш ответ",
+                isEnabled: !session.answered,
+                correctPrefix: { input in
+                    ExerciseBuilder.matchingPrefixLength(input: input, question: q,
+                                                         strictAccents: model.settings.strictAccents)
+                },
+                onSubmit: { check() }
+            )
+            .frame(height: 52)
+            if !session.answered {
+                Text("Зелёные буквы — пока всё верно, красные — с места ошибки.")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
             if !session.answered {
                 HStack(spacing: 12) {
                     Button {
@@ -336,17 +366,38 @@ struct StudySessionView: View {
                     SpeakButton(text: q.word.pt)
                 }
             }
-            Button {
-                session.next()
-            } label: {
-                Text(session.position + 1 >= session.queue.count ? "Завершить" : "Далее")
-                    .font(.headline)
-                    .frame(maxWidth: .infinity)
-            }
-            .buttonStyle(.borderedProminent)
-            .controlSize(.large)
         }
         .padding(.top, 6)
+    }
+
+    /// Кнопка «Далее» внизу экрана (уровень с вводом): туда удобно дотянуться большим пальцем.
+    private var nextButtonBar: some View {
+        Button {
+            session.next()
+        } label: {
+            Text(session.position + 1 >= session.queue.count ? "Завершить" : "Далее")
+                .font(.headline)
+                .frame(maxWidth: .infinity)
+        }
+        .buttonStyle(.borderedProminent)
+        .controlSize(.large)
+        .padding(.horizontal, 20)
+        .padding(.vertical, 10)
+        .background(.bar)
+    }
+
+    /// Уровни 1–2: результат виден пару секунд, затем следующее слово само.
+    private func scheduleAutoAdvance() {
+        advanceWork?.cancel()
+        let position = session.position
+        let delay = session.lastCorrect ? 1.5 : 2.5
+        let current = session
+        let work = DispatchWorkItem { [weak current] in
+            guard let s = current, s.answered, s.position == position, !s.finished else { return }
+            s.next()
+        }
+        advanceWork = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: work)
     }
 
     // MARK: Итоги
@@ -384,6 +435,7 @@ struct StudySessionView: View {
 
             Section {
                 Button {
+                    advanceWork?.cancel()
                     session.restart()
                     typed = ""
                     if !level.isChoice {

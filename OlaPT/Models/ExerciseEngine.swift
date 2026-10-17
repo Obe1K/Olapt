@@ -2,37 +2,41 @@ import Foundation
 
 // MARK: - Уровни
 
-/// Четыре уровня упражнений.
+/// Три уровня упражнений.
+/// rawValue — ключ для сохранённых лучших результатов коллекции. У ввода слова он остаётся 4
+/// (как в версии 1.0, где был ещё уровень «написать перевод»), чтобы старые результаты не перепутались.
 enum ExerciseLevel: Int, CaseIterable, Identifiable {
     case chooseTranslation = 1   // слово на португальском → выбрать перевод из 4
     case chooseWord = 2          // перевод → выбрать португальское слово из 4
-    case typeTranslation = 3     // слово на португальском → написать перевод
     case typeWord = 4            // перевод → написать португальское слово
 
     var id: Int { return rawValue }
+
+    /// Номер уровня на экране: 1, 2, 3.
+    var number: Int {
+        switch self {
+        case .chooseTranslation: return 1
+        case .chooseWord: return 2
+        case .typeWord: return 3
+        }
+    }
 
     var isChoice: Bool {
         return self == .chooseTranslation || self == .chooseWord
     }
 
     var promptIsPortuguese: Bool {
-        return self == .chooseTranslation || self == .typeTranslation
+        return self == .chooseTranslation
     }
 
     var title: String {
-        switch self {
-        case .chooseTranslation: return "Уровень 1 · Выбери перевод"
-        case .chooseWord: return "Уровень 2 · Выбери слово"
-        case .typeTranslation: return "Уровень 3 · Напиши перевод"
-        case .typeWord: return "Уровень 4 · Напиши слово"
-        }
+        return "Уровень \(number) · \(shortTitle)"
     }
 
     var shortTitle: String {
         switch self {
         case .chooseTranslation: return "Выбери перевод"
         case .chooseWord: return "Выбери слово"
-        case .typeTranslation: return "Напиши перевод"
         case .typeWord: return "Напиши слово"
         }
     }
@@ -41,7 +45,6 @@ enum ExerciseLevel: Int, CaseIterable, Identifiable {
         switch self {
         case .chooseTranslation: return "Слово по-португальски, перевод — из 4 вариантов"
         case .chooseWord: return "Перевод дан, слово по-португальски — из 4 вариантов"
-        case .typeTranslation: return "Слово по-португальски, перевод пишете сами"
         case .typeWord: return "Перевод дан, слово по-португальски пишете сами"
         }
     }
@@ -50,7 +53,6 @@ enum ExerciseLevel: Int, CaseIterable, Identifiable {
         switch self {
         case .chooseTranslation: return "list.bullet.rectangle"
         case .chooseWord: return "arrow.left.arrow.right"
-        case .typeTranslation: return "keyboard"
         case .typeWord: return "square.and.pencil"
         }
     }
@@ -195,12 +197,6 @@ struct ExerciseBuilder {
                                 correctIndex: correctIndex, accepted: [], acceptedLang: "pt",
                                 answerText: correct)
 
-        case .typeTranslation:
-            return WordQuestion(word: word, level: level, lang: lang,
-                                prompt: word.titleWithArticle, options: [],
-                                correctIndex: -1, accepted: translations, acceptedLang: lang,
-                                answerText: translations.joined(separator: ", "))
-
         case .typeWord:
             let prompt = word.translationText(lang: lang, limit: 3)
             var accepted: [String] = word.ptVariants
@@ -214,6 +210,35 @@ struct ExerciseBuilder {
                                 correctIndex: -1, accepted: accepted, acceptedLang: "pt",
                                 answerText: word.answerDisplay)
         }
+    }
+
+    // MARK: - Подсказка при вводе
+
+    /// Сколько первых символов ввода совпадают с началом хотя бы одного правильного ответа.
+    /// Регистр не важен, пробел и дефис равнозначны; диакритика учитывается, только если включена
+    /// строгая проверка ударений. Пример: ответ «curto», ввод «cuz» → 2 (c, u — верно, z — нет).
+    static func matchingPrefixLength(input: String, question: WordQuestion, strictAccents: Bool) -> Int {
+        func normalize(_ ch: Character) -> String {
+            var s = String(ch).lowercased()
+            if s == "-" || s == "–" || s == "—" { s = " " }
+            if s == "’" { s = "'" }
+            if !strictAccents {
+                s = s.folding(options: [.diacriticInsensitive], locale: nil)
+            }
+            return s
+        }
+        let typed = Array(input).map(normalize)
+        var best = 0
+        for answer in question.accepted {
+            let target = Array(answer).map(normalize)
+            var n = 0
+            while n < typed.count && n < target.count && typed[n] == target[n] {
+                n += 1
+            }
+            if n > best { best = n }
+            if best == typed.count { break }
+        }
+        return best
     }
 
     // MARK: - Проверка ответа

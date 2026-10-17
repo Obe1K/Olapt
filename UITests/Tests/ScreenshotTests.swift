@@ -192,12 +192,20 @@ final class ScreenshotTests: XCTestCase {
         tap(app.staticTexts["Приветствия и фразы"].firstMatch, "open collection")
         shot("14_collection_detail")
 
-        // Уровень 1: выбрать перевод
+        // Уровней теперь три; бывшего «написать перевод» нет.
+        note(button(containing: "Уровень 4").exists ? "CHECK FAILED: level 4 still listed" : "CHECK ok: only 3 levels")
+        note(button(containing: "Напиши перевод").exists ? "CHECK FAILED: old level 3 still listed" : "CHECK ok: old level 3 removed")
+
+        // Уровень 1: выбрать перевод — после ответа без кнопки «Далее», следующее слово само
         tap(button(containing: "Уровень 1"), "level 1")
         shot("15_level1_question")
         tap(firstOptionButton(), "level 1 option")
         shot("16_level1_feedback")
-        tap(app.buttons["Далее"], "next question")
+        let verdict = NSPredicate(format: "label CONTAINS 'Верно!' OR label CONTAINS 'Неверно'")
+        note(app.descendants(matching: .any).matching(verdict).firstMatch.exists ? "CHECK ok: level 1 feedback shown" : "CHECK FAILED: level 1 no feedback")
+        note(app.buttons["Далее"].exists ? "CHECK FAILED: level 1 still has Next button" : "CHECK ok: level 1 has no Next button")
+        Thread.sleep(forTimeInterval: 3.2)
+        note(app.descendants(matching: .any).matching(verdict).firstMatch.exists ? "CHECK FAILED: level 1 did not auto-advance" : "CHECK ok: level 1 auto-advanced")
         shot("17_level1_next")
         tap(app.buttons["Закрыть"], "close level 1")
 
@@ -206,22 +214,43 @@ final class ScreenshotTests: XCTestCase {
         shot("18_level2_question")
         tap(firstOptionButton(), "level 2 option")
         shot("19_level2_feedback")
+        note(app.buttons["Далее"].exists ? "CHECK FAILED: level 2 still has Next button" : "CHECK ok: level 2 has no Next button")
+        Thread.sleep(forTimeInterval: 3.2)
+        note(app.descendants(matching: .any).matching(verdict).firstMatch.exists ? "CHECK FAILED: level 2 did not auto-advance" : "CHECK ok: level 2 auto-advanced")
         tap(app.buttons["Закрыть"], "close level 2")
 
-        // Уровень 3: написать перевод
+        // Уровень 3: написать слово (бывший 4-й)
         tap(button(containing: "Уровень 3"), "level 3")
-        typeInto(app.textFields["Ваш ответ"], "cas", "answer field")
-        shot("20_level3_typing")
-        tap(app.buttons["Не знаю"], "give up")
-        shot("21_level3_feedback")
+        shot("22_level3_question")
+        tap(app.buttons["Не знаю"], "give up level 3")
+        shot("23_level3_feedback")
+        let next = app.buttons["Далее"].exists ? app.buttons["Далее"] : app.buttons["Завершить"]
+        if next.waitForExistence(timeout: 3) {
+            let low = next.frame.minY > app.frame.height * 0.7
+            note(low ? "CHECK ok: Next button at the bottom" : "CHECK FAILED: Next button too high (y=\(Int(next.frame.minY)) of \(Int(app.frame.height)))")
+        } else {
+            note("CHECK FAILED: level 3 Next button missing")
+        }
         tap(app.buttons["Закрыть"], "close level 3")
+        back()
 
-        // Уровень 4: написать слово
-        tap(button(containing: "Уровень 4"), "level 4")
-        shot("22_level4_question")
-        tap(app.buttons["Не знаю"], "give up level 4")
-        shot("23_level4_feedback")
-        tap(app.buttons["Закрыть"], "close level 4")
+        // Подсветка букв: коллекция с одним словом «casa» (её создаёт testA)
+        let mine = app.staticTexts["Моя первая коллекция"].firstMatch
+        if mine.waitForExistence(timeout: 4) {
+            tap(mine, "open my collection")
+            tap(button(containing: "Уровень 3"), "level 3 (casa)")
+            let field = app.textFields["Ваш ответ"]
+            typeInto(field, "cas", "answer field")
+            shot("20_level3_typing_green")
+            field.typeText("x")
+            note("CHECK info: typed value = " + ((field.value as? String) ?? "?"))
+            shot("21_level3_typing_red")
+            tap(app.buttons["Проверить"], "check answer")
+            shot("21b_level3_checked")
+            tap(app.buttons["Закрыть"], "close level 3 (casa)")
+        } else {
+            note("CHECK FAILED: collection «Моя первая коллекция» not found")
+        }
 
         shot("24_collection_after_exercises")
     }
