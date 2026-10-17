@@ -84,6 +84,7 @@ struct CollectionsView: View {
             }
         }
         .navigationTitle("Коллекции")
+        .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showScan) {
             PhotoWordsView(collectionID: nil)
                 .environmentObject(model)

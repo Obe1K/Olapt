@@ -64,6 +64,7 @@ struct TodayView: View {
             howItWorksSection
         }
         .navigationTitle("Сегодня")
+        .navigationBarTitleDisplayMode(.inline)
         .onChange(of: scenePhase) { phase in
             if phase == .active { refreshTick += 1 }
         }
@@ -96,7 +97,7 @@ struct TodayView: View {
                             .font(Theme.pixel(20, relativeTo: .title3))
                             .foregroundColor(Theme.text)
                         Spacer()
-                        Text("≈ \(model.estimatedMinutes(questions: plan.total)) мин")
+                        Text("~\(model.estimatedMinutes(questions: plan.total)) мин")
                             .font(Theme.pixel(20, relativeTo: .title3))
                             .foregroundColor(Theme.textDim)
                     }

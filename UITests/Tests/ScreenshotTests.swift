@@ -62,6 +62,12 @@ final class ScreenshotTests: XCTestCase {
 
     private func typeInto(_ field: XCUIElement, _ text: String, _ what: String) {
         if tap(field, "focus " + what) {
+            // Клавиатура может появиться не сразу (лист ещё выезжает) — ждём, при необходимости касаемся ещё раз.
+            if !app.keyboards.firstMatch.waitForExistence(timeout: 3) {
+                note("keyboard not shown, tapping again: " + what)
+                field.tap()
+                _ = app.keyboards.firstMatch.waitForExistence(timeout: 3)
+            }
             field.typeText(text)
             note("typed into " + what + ": " + text)
         }
@@ -202,10 +208,11 @@ final class ScreenshotTests: XCTestCase {
         tap(button(containing: "Уровень 1"), "level 1")
         shot("15_level1_question")
         tap(firstOptionButton(), "level 1 option")
-        shot("16_level1_feedback")
+        // Проверяем сразу: через 1,5 с после верного ответа слово сменится само.
         let verdict = NSPredicate(format: "label CONTAINS 'Верно!' OR label CONTAINS 'Неверно'")
-        note(app.descendants(matching: .any).matching(verdict).firstMatch.exists ? "CHECK ok: level 1 feedback shown" : "CHECK FAILED: level 1 no feedback")
+        note(app.descendants(matching: .any).matching(verdict).firstMatch.waitForExistence(timeout: 1) ? "CHECK ok: level 1 feedback shown" : "CHECK FAILED: level 1 no feedback")
         note(app.buttons["Далее"].exists ? "CHECK FAILED: level 1 still has Next button" : "CHECK ok: level 1 has no Next button")
+        shot("16_level1_feedback")
         Thread.sleep(forTimeInterval: 3.2)
         note(app.descendants(matching: .any).matching(verdict).firstMatch.exists ? "CHECK FAILED: level 1 did not auto-advance" : "CHECK ok: level 1 auto-advanced")
         // Второй вопрос — тоже с выбором (направление может быть любым)

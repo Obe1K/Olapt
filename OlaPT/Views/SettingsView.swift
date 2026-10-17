@@ -119,6 +119,7 @@ struct SettingsView: View {
             }
         }
         .navigationTitle("Настройки")
+        .navigationBarTitleDisplayMode(.inline)
         .confirmationDialog("Сбросить весь прогресс?", isPresented: $confirmReset, titleVisibility: .visible) {
             Button("Сбросить прогресс", role: .destructive) {
                 model.resetProgress()

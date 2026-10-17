@@ -70,7 +70,7 @@ enum Theme {
         nav.configureWithOpaqueBackground()
         nav.backgroundColor = bg
         nav.shadowColor = goldDarkUI
-        nav.titleTextAttributes = [.font: uiPixel(18), .foregroundColor: goldBrightUI]
+        nav.titleTextAttributes = [.font: uiPixel(20), .foregroundColor: goldBrightUI]
         nav.largeTitleTextAttributes = [.font: uiPixel(32), .foregroundColor: goldBrightUI]
         let barButton = UIBarButtonItemAppearance()
         barButton.normal.titleTextAttributes = [.font: uiPixel(15, bold: false), .foregroundColor: goldUI]

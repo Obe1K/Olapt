@@ -88,6 +88,13 @@ jobs:
                   print("::error title=UI checks failed::" + enc(fails))
           else:
               print("::warning title=UI checks::no CHECK lines in log")
+          errors = []
+          for m in re.finditer(r"error: ([^\n]*)", log):
+              e = m.group(1).strip()
+              if e not in errors:
+                  errors.append(e)
+          if errors:
+              print("::error title=Test errors::" + enc(errors[:15]))
           tests = re.findall(r"Test Case '-\[\S+ (\w+)\]' (passed|failed)", log)
           if tests:
               print("::notice title=UI tests::" + enc(sorted(set(n + " " + r for n, r in tests))))

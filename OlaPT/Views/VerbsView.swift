@@ -55,6 +55,7 @@ struct VerbsView: View {
             }
         }
         .navigationTitle("Глаголы")
+        .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $query, prompt: "Глагол или его перевод")
         .autocorrectionDisabled()
         .textInputAutocapitalization(.never)

@@ -33,6 +33,7 @@ struct SearchView: View {
             }
         }
         .navigationTitle("Словарь")
+        .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $query, prompt: "По-португальски, по-русски или по-английски")
         .autocorrectionDisabled()
         .textInputAutocapitalization(.never)
