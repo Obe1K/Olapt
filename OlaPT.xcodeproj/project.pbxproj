@@ -255,6 +255,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INFOPLIST_KEY_CFBundleDisplayName = "Olá PT";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Камера нужна, чтобы сфотографировать текст и найти в нём слова. Фото обрабатывается на iPhone и никуда не отправляется.";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
@@ -287,6 +288,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INFOPLIST_KEY_CFBundleDisplayName = "Olá PT";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Камера нужна, чтобы сфотографировать текст и найти в нём слова. Фото обрабатывается на iPhone и никуда не отправляется.";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;

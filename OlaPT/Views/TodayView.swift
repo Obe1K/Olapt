@@ -44,7 +44,7 @@ struct TodayView: View {
     var body: some View {
         let _ = refreshTick
         let plan = model.dailyPlan()
-        List {
+        GothicList {
             Section {
                 PetView(isVisible: active == nil)
                     .padding(.vertical, 6)
@@ -87,32 +87,30 @@ struct TodayView: View {
         Section {
             if !plan.isEmpty {
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("План на сегодня")
-                        .font(.footnote.weight(.semibold))
-                        .foregroundColor(.secondary)
-                        .textCase(.uppercase)
-                    HStack(alignment: .firstTextBaseline, spacing: 6) {
+                    GothicHeader("План на сегодня")
+                    HStack(alignment: .firstTextBaseline, spacing: 8) {
                         Text("\(plan.total)")
-                            .font(.system(size: 44, weight: .bold))
+                            .font(Theme.pixel(44, relativeTo: .largeTitle))
+                            .foregroundColor(Theme.text)
                         Text(Plural.words(plan.total))
-                            .font(.title3)
+                            .font(Theme.pixel(20, relativeTo: .title3))
+                            .foregroundColor(Theme.text)
                         Spacer()
                         Text("≈ \(model.estimatedMinutes(questions: plan.total)) мин")
-                            .font(.title3.weight(.semibold))
-                            .foregroundColor(.secondary)
+                            .font(Theme.pixel(20, relativeTo: .title3))
+                            .foregroundColor(Theme.textDim)
                     }
                     HStack(spacing: 16) {
-                        planChip(value: plan.dueIDs.count, title: "повторить", color: .orange)
-                        planChip(value: plan.newIDs.count, title: "новых", color: .accentColor)
+                        planChip(value: plan.dueIDs.count, title: "повторить", color: Theme.gold)
+                        planChip(value: plan.newIDs.count, title: "новых", color: Theme.bloodBright)
                     }
                     Button {
                         active = .daily
                     } label: {
                         Text(plan.reviewedToday > 0 ? "Продолжить" : "Начать")
-                            .font(.headline)
                             .frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(.borderedProminent)
+                    .buttonStyle(GothicButtonStyle(.primary))
                     .controlSize(.large)
                     .accessibilityIdentifier("today-start")
                     .padding(.top, 4)
@@ -122,14 +120,14 @@ struct TodayView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     if plan.reviewedToday > 0 {
                         Label("На сегодня всё", systemImage: "checkmark.seal.fill")
-                            .font(.title2.weight(.bold))
-                            .foregroundColor(.green)
+                            .font(Theme.pixel(24, relativeTo: .title2))
+                            .foregroundColor(Theme.moss)
                         Text("Сегодня пройдено: \(plan.reviewedToday) \(Plural.words(plan.reviewedToday)). Ещё раз проходить не нужно — приходите завтра.")
                             .font(.subheadline)
                     } else {
-                        Label("Сегодня повторять нечего", systemImage: "cup.and.saucer.fill")
-                            .font(.title3.weight(.semibold))
-                            .foregroundColor(.green)
+                        Label("Сегодня повторять нечего", systemImage: "moon.stars.fill")
+                            .font(Theme.pixel(20, relativeTo: .title3))
+                            .foregroundColor(Theme.moss)
                         Text(plan.hasMoreNew
                              ? "Все слова повторены вовремя."
                              : "Все слова повторены вовремя, а новых в коллекциях не осталось. Добавьте слова в коллекцию — они появятся здесь.")
@@ -153,12 +151,12 @@ struct TodayView: View {
 
     private func planChip(value: Int, title: String, color: Color) -> some View {
         return HStack(spacing: 4) {
-            Circle()
+            Rectangle()
                 .fill(color)
                 .frame(width: 8, height: 8)
             Text("\(value) \(title)")
                 .font(.subheadline)
-                .foregroundColor(.secondary)
+                .foregroundColor(Theme.textDim)
         }
     }
 
@@ -166,7 +164,7 @@ struct TodayView: View {
 
     private var forecastSection: some View {
         let days = model.forecast(days: 7)
-        return Section(header: Text("Повторения на неделю"),
+        return Section(header: GothicHeader("Повторения на неделю"),
                        footer: Text("Сюда добавятся новые слова — до \(model.settings.newWordsPerDay) в день, пока в коллекциях есть неначатые. Число новых слов в день меняется в Настройках.")) {
             ForEach(0..<days.count, id: \.self) { i in
                 HStack {
@@ -228,7 +226,7 @@ struct TodayView: View {
     // MARK: Как это работает
 
     private var howItWorksSection: some View {
-        Section(header: Text("Как заниматься")) {
+        Section(header: GothicHeader("Как заниматься")) {
             faqRow(question: "Сколько заниматься сегодня?",
                    answer: "Ровно план дня. Когда он выполнен, на сегодня всё.")
             faqRow(question: "Пройти ещё раз?",
@@ -292,14 +290,14 @@ struct DifficultWordsView: View {
 
     var body: some View {
         let words = model.difficultWords
-        List {
+        GothicList {
             if words.isEmpty {
                 Section {
                     EmptyHint(title: "Трудных слов пока нет",
                               message: "Сюда сами попадают слова, в которых вы ошиблись 2 раза и больше.")
                 }
             } else {
-                Section(header: Text("Учить"),
+                Section(header: GothicHeader("Учить"),
                         footer: Text("Сюда сами попадают слова, в которых вы ошиблись 2 раза и больше. Слово уходит из списка, когда становится «выученным».")) {
                     ForEach(ExerciseLevel.allCases) { level in
                         Button {
@@ -309,7 +307,7 @@ struct DifficultWordsView: View {
                         }
                     }
                 }
-                Section(header: Text("Слова (\(words.count))")) {
+                Section(header: GothicHeader("Слова (\(words.count))")) {
                     ForEach(words) { w in
                         NavigationLink {
                             WordCardView(word: w)
@@ -318,7 +316,7 @@ struct DifficultWordsView: View {
                                 WordRow(word: w, showStatus: false)
                                 Text("ошибок: \(model.progress(for: w.id).wrong)")
                                     .font(.caption)
-                                    .foregroundColor(.red)
+                                    .foregroundColor(Theme.red)
                             }
                         }
                     }

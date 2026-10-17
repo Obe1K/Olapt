@@ -7,20 +7,21 @@ struct StatusBadge: View {
 
     private var color: Color {
         switch status {
-        case .new: return .gray
-        case .learning: return .orange
-        case .learned: return .green
+        case .new: return Theme.textDim
+        case .learning: return Theme.ember
+        case .learned: return Theme.moss
         }
     }
 
     var body: some View {
         Text(status.title)
-            .font(.caption2.weight(.semibold))
+            .font(Theme.pixel(11, relativeTo: .caption2))
+            .textCase(.uppercase)
             .padding(.horizontal, 8)
-            .padding(.vertical, 3)
-            .background(color.opacity(0.18))
+            .padding(.vertical, 4)
             .foregroundColor(color)
-            .clipShape(Capsule())
+            .background(PixelFrame(fill: Theme.panelDeep, border: color.opacity(0.7),
+                                   highlight: color.opacity(0.7), shadow: color.opacity(0.4)))
     }
 }
 
@@ -47,6 +48,7 @@ struct WordRow: View {
                 HStack(spacing: 6) {
                     Text(word.titleWithArticle)
                         .font(.headline)
+                        .foregroundColor(Theme.text)
                     if !word.posLine.isEmpty {
                         Text(word.posLine)
                             .font(.caption)
@@ -81,8 +83,7 @@ struct MasteryBar: View {
     let fraction: Double
 
     var body: some View {
-        ProgressView(value: min(1.0, max(0.0, fraction)))
-            .tint(fraction >= 1.0 ? Color.green : Color.accentColor)
+        PixelProgressBar(fraction: fraction)
     }
 }
 
@@ -100,8 +101,8 @@ struct LevelRow: View {
                 .foregroundColor(.accentColor)
             VStack(alignment: .leading, spacing: 2) {
                 Text(level.title)
-                    .font(.headline)
-                    .foregroundColor(.primary)
+                    .font(Theme.pixel(15, relativeTo: .headline))
+                    .foregroundColor(Theme.goldBright)
                 Text(level.subtitle)
                     .font(.caption)
                     .foregroundColor(.secondary)
@@ -109,8 +110,8 @@ struct LevelRow: View {
             Spacer()
             if let best = best {
                 Text("\(best)%")
-                    .font(.subheadline.weight(.semibold))
-                    .foregroundColor(best >= 80 ? Color.green : Color.orange)
+                    .font(Theme.pixel(15, relativeTo: .subheadline))
+                    .foregroundColor(best >= 80 ? Theme.moss : Theme.ember)
             }
         }
         .padding(.vertical, 2)
@@ -143,7 +144,8 @@ struct EmptyHint: View {
     var body: some View {
         VStack(spacing: 6) {
             Text(title)
-                .font(.headline)
+                .font(Theme.pixel(15, relativeTo: .headline))
+                .foregroundColor(Theme.goldBright)
             Text(message)
                 .font(.subheadline)
                 .foregroundColor(.secondary)

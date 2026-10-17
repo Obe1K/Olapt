@@ -9,12 +9,12 @@ struct CollectionsView: View {
     @State private var showScan = false
 
     var body: some View {
-        List {
+        GothicList {
             if !model.user.srs.isEmpty {
                 Section {
                     HStack {
                         Image(systemName: "checkmark.seal.fill")
-                            .foregroundColor(.green)
+                            .foregroundColor(Theme.moss)
                         Text("Выучено слов: \(model.totalLearnedWords)")
                             .font(.headline)
                         Spacer()
@@ -24,7 +24,7 @@ struct CollectionsView: View {
                 }
             }
 
-            Section(header: Text("Мои коллекции")) {
+            Section(header: GothicHeader("Мои коллекции")) {
                 if model.user.collections.isEmpty {
                     EmptyHint(title: "Пока пусто",
                               message: "Найдите слово в словаре и сохраните его в коллекцию. Либо начните с готового набора по теме ниже.")
@@ -68,7 +68,7 @@ struct CollectionsView: View {
                 .accessibilityIdentifier("open-scan")
             }
 
-            Section(header: Text("Готовые наборы")) {
+            Section(header: GothicHeader("Готовые наборы")) {
                 NavigationLink {
                     TopicsView()
                 } label: {
@@ -161,20 +161,20 @@ struct CollectionDetailView: View {
         let counts = model.counts(for: c.wordIDs)
         let verbsInside = words.filter { $0.isVerb && model.verbs.verb(forWordID: $0.id) != nil }
 
-        List {
+        GothicList {
             Section {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack(spacing: 14) {
-                        statBox(title: "Новые", value: counts.new, color: .gray)
-                        statBox(title: "Учу", value: counts.learning, color: .orange)
-                        statBox(title: "Выучено", value: counts.learned, color: .green)
+                        statBox(title: "Новые", value: counts.new, color: Theme.textDim)
+                        statBox(title: "Учу", value: counts.learning, color: Theme.ember)
+                        statBox(title: "Выучено", value: counts.learned, color: Theme.moss)
                     }
                     MasteryBar(fraction: model.learnedFraction(of: c.wordIDs))
                 }
                 .padding(.vertical, 4)
             }
 
-            Section(header: Text("Учить"),
+            Section(header: GothicHeader("Учить"),
                     footer: Text("Слова из коллекций сами попадают в план на вкладке «Сегодня» — до \(model.settings.newWordsPerDay) новых в день, а потом в нужные дни на повторение. Уровни здесь — свободная тренировка, её можно проходить когда угодно.")) {
                 ForEach(ExerciseLevel.allCases) { level in
                     Button {
@@ -187,7 +187,7 @@ struct CollectionDetailView: View {
             }
 
             if !verbsInside.isEmpty {
-                Section(header: Text("Глаголы из коллекции")) {
+                Section(header: GothicHeader("Глаголы из коллекции")) {
                     NavigationLink {
                         VerbTrainerSetupView(initialCollectionID: c.id)
                     } label: {
@@ -196,7 +196,7 @@ struct CollectionDetailView: View {
                 }
             }
 
-            Section(header: Text("Слова (\(words.count))")) {
+            Section(header: GothicHeader("Слова (\(words.count))")) {
                 if words.isEmpty {
                     EmptyHint(title: "В коллекции нет слов",
                               message: "Нажмите «Добавить слова» или сохраните слово из карточки словаря.")
@@ -292,7 +292,7 @@ struct CollectionDetailView: View {
     private func statBox(title: String, value: Int, color: Color) -> some View {
         return VStack(spacing: 2) {
             Text("\(value)")
-                .font(.title2.weight(.bold))
+                .font(Theme.pixel(26, relativeTo: .title2))
                 .foregroundColor(color)
             Text(title)
                 .font(.caption)
@@ -316,7 +316,7 @@ struct AddWordsView: View {
 
     var body: some View {
         NavigationStack {
-            List {
+            GothicList {
                 if query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                     Text("Введите слово, чтобы найти его и добавить в коллекцию. Нажатие добавляет или убирает слово.")
                         .font(.subheadline)

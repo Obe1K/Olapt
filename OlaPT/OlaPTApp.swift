@@ -5,10 +5,17 @@ struct OlaPTApp: App {
     @StateObject private var model = AppModel()
     @Environment(\.scenePhase) private var scenePhase
 
+    init() {
+        Theme.registerFonts()
+        Theme.configureAppearance()
+    }
+
     var body: some Scene {
         WindowGroup {
             RootView()
                 .environmentObject(model)
+                .preferredColorScheme(.dark)
+                .tint(Theme.gold)
                 .onChange(of: scenePhase) { phase in
                     if phase != .active {
                         model.saveNow()
@@ -27,7 +34,7 @@ struct RootView: View {
                 TodayView()
             }
             .tabItem {
-                Label("Сегодня", systemImage: "calendar")
+                Label { Text("Сегодня") } icon: { Image("tab-candle") }
             }
             .badge(model.dailyPlan().total)
 
@@ -35,28 +42,28 @@ struct RootView: View {
                 SearchView()
             }
             .tabItem {
-                Label("Словарь", systemImage: "magnifyingglass")
+                Label { Text("Словарь") } icon: { Image("tab-book") }
             }
 
             NavigationStack {
                 CollectionsView()
             }
             .tabItem {
-                Label("Коллекции", systemImage: "rectangle.stack")
+                Label { Text("Коллекции") } icon: { Image("tab-chest") }
             }
 
             NavigationStack {
                 VerbsView()
             }
             .tabItem {
-                Label("Глаголы", systemImage: "textformat.abc")
+                Label { Text("Глаголы") } icon: { Image("tab-quill") }
             }
 
             NavigationStack {
                 SettingsView()
             }
             .tabItem {
-                Label("Настройки", systemImage: "gearshape")
+                Label { Text("Настройки") } icon: { Image("tab-gear") }
             }
         }
     }

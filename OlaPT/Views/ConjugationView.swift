@@ -24,11 +24,11 @@ struct ConjugationView: View {
     }
 
     var body: some View {
-        List {
+        GothicList {
             headerSection
 
             ForEach(model.verbs.tenseGroups) { group in
-                Section(header: Text(group.name)) {
+                Section(header: GothicHeader(group.name)) {
                     ForEach(group.tenses) { tense in
                         tenseBlock(tense)
                     }
@@ -127,14 +127,14 @@ struct ConjugationView: View {
                     Text("Выбрать форму")
                         .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.bordered)
+                .buttonStyle(GothicButtonStyle(.secondary))
                 Button {
                     request = VerbSessionRequest(verbs: [verb], tenses: [tense], mode: .typing, count: 0)
                 } label: {
                     Text("Написать форму")
                         .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(GothicButtonStyle(.primary))
             }
             .padding(.vertical, 4)
         } label: {

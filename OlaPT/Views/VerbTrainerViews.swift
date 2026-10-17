@@ -75,8 +75,8 @@ struct VerbTrainerSetupView: View {
     }
 
     var body: some View {
-        Form {
-            Section(header: Text("Какие глаголы")) {
+        GothicForm {
+            Section(header: GothicHeader("Какие глаголы")) {
                 Picker("Глаголы", selection: $scope) {
                     ForEach(Scope.allCases) { s in
                         Text(s.title).tag(s)
@@ -100,7 +100,7 @@ struct VerbTrainerSetupView: View {
                     .foregroundColor(.secondary)
             }
 
-            Section(header: Text("Времена"),
+            Section(header: GothicHeader("Времена"),
                     footer: Text("Можно выбрать несколько. Для новичка достаточно Presente, затем добавляйте Pretérito Perfeito и Imperfeito.")) {
                 ForEach(model.verbs.tenses) { t in
                     Toggle(isOn: tenseBinding(t.id)) {
@@ -117,7 +117,7 @@ struct VerbTrainerSetupView: View {
                 }
             }
 
-            Section(header: Text("Режим")) {
+            Section(header: GothicHeader("Режим")) {
                 Picker("Режим", selection: $mode) {
                     ForEach(VerbMode.allCases) { m in
                         Text(m.title).tag(m)
@@ -140,15 +140,14 @@ struct VerbTrainerSetupView: View {
                 start()
             } label: {
                 Text("Начать")
-                    .font(.headline)
                     .frame(maxWidth: .infinity)
             }
-            .buttonStyle(.borderedProminent)
+            .buttonStyle(GothicButtonStyle(.primary))
             .controlSize(.large)
             .disabled(!canStart)
             .padding(.horizontal, 16)
             .padding(.vertical, 8)
-            .background(.bar)
+            .background(Theme.background.opacity(0.95))
         }
         .navigationTitle("Тренировка глаголов")
         .navigationBarTitleDisplayMode(.inline)
@@ -347,18 +346,20 @@ struct VerbSessionView: View {
     private func questionView(_ q: VerbQuestion) -> some View {
         ScrollView {
             VStack(spacing: 16) {
-                ProgressView(value: Double(session.position), total: Double(max(1, session.queue.count)))
+                PixelProgressBar(fraction: Double(session.position) / Double(max(1, session.queue.count)),
+                                 fill: Theme.bloodBright)
                     .padding(.top, 8)
 
                 if q.isRetry {
                     Text("Повторим форму, в которой была ошибка")
                         .font(.footnote)
-                        .foregroundColor(.orange)
+                        .foregroundColor(Theme.ember)
                 }
 
                 VStack(spacing: 4) {
                     Text(q.tense.name)
-                        .font(.headline)
+                        .font(Theme.pixel(17, relativeTo: .headline))
+                        .foregroundColor(Theme.goldBright)
                     Text(q.tense.ru)
                         .font(.caption)
                         .foregroundColor(.secondary)
@@ -368,6 +369,7 @@ struct VerbSessionView: View {
                 HStack(spacing: 10) {
                     Text(q.verb.inf)
                         .font(.system(size: 34, weight: .bold))
+                        .foregroundColor(Theme.text)
                     SpeakButton(text: q.verb.base)
                 }
 
@@ -394,18 +396,19 @@ struct VerbSessionView: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 24)
         }
+        .background(StoneBackground().ignoresSafeArea())
     }
 
     private func answerColor(_ q: VerbQuestion) -> Color {
-        if !session.answered { return Color.primary }
-        return session.lastCorrect ? Color.green : Color.red
+        if !session.answered { return Theme.text }
+        return session.lastCorrect ? Theme.moss : Theme.red
     }
 
     private func choiceColor(_ i: Int, _ q: VerbQuestion) -> Color {
-        if !session.answered { return Color(.secondarySystemFill) }
-        if i == q.correctIndex { return Color.green.opacity(0.28) }
-        if session.selectedIndex == i { return Color.red.opacity(0.28) }
-        return Color(.secondarySystemFill)
+        if !session.answered { return Theme.panel }
+        if i == q.correctIndex { return Theme.mossDark }
+        if session.selectedIndex == i { return Theme.bloodDark }
+        return Theme.panel
     }
 
     @ViewBuilder
@@ -418,21 +421,20 @@ struct VerbSessionView: View {
                     HStack {
                         Text(q.options[i])
                             .font(.title3)
-                            .foregroundColor(.primary)
+                            .foregroundColor(Theme.text)
                         Spacer()
                         if session.answered && i == q.correctIndex {
                             Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(.green)
+                                .foregroundColor(Theme.moss)
                         } else if session.answered && session.selectedIndex == i {
                             Image(systemName: "xmark.circle.fill")
-                                .foregroundColor(.red)
+                                .foregroundColor(Theme.red)
                         }
                     }
                     .padding(.vertical, 14)
                     .padding(.horizontal, 16)
                     .frame(maxWidth: .infinity)
-                    .background(choiceColor(i, q))
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .background(PixelFrame(fill: choiceColor(i, q)))
                 }
                 .buttonStyle(.plain)
                 .disabled(session.answered)
@@ -444,8 +446,12 @@ struct VerbSessionView: View {
     private func typingArea(_ q: VerbQuestion) -> some View {
         VStack(spacing: 12) {
             TextField("Форма глагола", text: $typed)
-                .textFieldStyle(.roundedBorder)
+                .textFieldStyle(.plain)
                 .font(.title3)
+                .foregroundColor(Theme.text)
+                .padding(.horizontal, 12)
+                .frame(height: 50)
+                .background(PixelFrame(fill: Theme.panelDeep))
                 .autocorrectionDisabled()
                 .textInputAutocapitalization(.never)
                 .submitLabel(.done)
@@ -466,7 +472,7 @@ struct VerbSessionView: View {
                         Text("Не знаю")
                             .frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(.bordered)
+                    .buttonStyle(GothicButtonStyle(.secondary))
 
                     Button {
                         check()
@@ -474,7 +480,7 @@ struct VerbSessionView: View {
                         Text("Проверить")
                             .frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(.borderedProminent)
+                    .buttonStyle(GothicButtonStyle(.primary))
                     .disabled(typed.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 }
             }
@@ -493,12 +499,12 @@ struct VerbSessionView: View {
         VStack(spacing: 10) {
             if session.lastCorrect {
                 Label("Верно!", systemImage: "checkmark.circle.fill")
-                    .font(.title3.weight(.semibold))
-                    .foregroundColor(.green)
+                    .font(Theme.pixel(22, relativeTo: .title3))
+                    .foregroundColor(Theme.moss)
             } else {
                 Label("Неверно", systemImage: "xmark.circle.fill")
-                    .font(.title3.weight(.semibold))
-                    .foregroundColor(.red)
+                    .font(Theme.pixel(22, relativeTo: .title3))
+                    .foregroundColor(Theme.red)
                 Text("Правильно: \(q.lead) \(q.answer)")
                     .font(.headline)
                     .multilineTextAlignment(.center)
@@ -513,10 +519,9 @@ struct VerbSessionView: View {
                 session.next()
             } label: {
                 Text(session.position + 1 >= session.queue.count ? "Завершить" : "Далее")
-                    .font(.headline)
                     .frame(maxWidth: .infinity)
             }
-            .buttonStyle(.borderedProminent)
+            .buttonStyle(GothicButtonStyle(.primary))
             .controlSize(.large)
         }
         .padding(.top, 6)
@@ -525,12 +530,12 @@ struct VerbSessionView: View {
     // MARK: Итоги
 
     private var summaryView: some View {
-        List {
+        GothicList {
             Section {
                 VStack(spacing: 8) {
                     Text("\(session.percent)%")
                         .font(.system(size: 54, weight: .bold))
-                        .foregroundColor(session.percent >= 80 ? Color.green : Color.orange)
+                        .foregroundColor(session.percent >= 80 ? Theme.moss : Theme.ember)
                     Text("Верно с первого раза: \(session.correctCount) из \(session.totalCount)")
                         .foregroundColor(.secondary)
                 }
@@ -539,7 +544,7 @@ struct VerbSessionView: View {
             }
 
             if !session.mistakes.isEmpty {
-                Section(header: Text("Ошибки")) {
+                Section(header: GothicHeader("Ошибки")) {
                     ForEach(session.mistakes) { q in
                         VStack(alignment: .leading, spacing: 2) {
                             Text("\(q.verb.inf) · \(q.tense.name)")

@@ -25,11 +25,11 @@ struct VerbsView: View {
     }
 
     var body: some View {
-        List {
+        GothicList {
             if let error = model.verbs.loadError {
                 Section {
                     Text(error)
-                        .foregroundColor(.red)
+                        .foregroundColor(Theme.red)
                 }
             }
 
@@ -44,7 +44,7 @@ struct VerbsView: View {
                 Text("Выберите времена и глаголы — приложение будет спрашивать формы по лицам. Для каждой пары «глагол + время» ведётся свой прогресс.")
             }
 
-            Section(header: Text("Глаголы (\(filtered.count))")) {
+            Section(header: GothicHeader("Глаголы (\(filtered.count))")) {
                 ForEach(filtered) { v in
                     NavigationLink {
                         ConjugationView(verb: v)
@@ -85,8 +85,8 @@ struct VerbRow: View {
                         .font(.caption2.weight(.semibold))
                         .padding(.horizontal, 6)
                         .padding(.vertical, 2)
-                        .background(Color.orange.opacity(0.18))
-                        .foregroundColor(.orange)
+                        .background(Theme.ember.opacity(0.18))
+                        .foregroundColor(Theme.ember)
                         .clipShape(Capsule())
                 }
                 if verb.reflexive {
@@ -94,8 +94,8 @@ struct VerbRow: View {
                         .font(.caption2.weight(.semibold))
                         .padding(.horizontal, 6)
                         .padding(.vertical, 2)
-                        .background(Color.blue.opacity(0.15))
-                        .foregroundColor(.blue)
+                        .background(Theme.gold.opacity(0.15))
+                        .foregroundColor(Theme.gold)
                         .clipShape(Capsule())
                 }
             }

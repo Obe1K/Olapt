@@ -16,12 +16,12 @@ struct WordCardView: View {
     }
 
     var body: some View {
-        List {
+        GothicList {
             headerSection
 
             ForEach(model.index.languages, id: \.self) { lang in
                 if word.hasTranslation(lang: lang) {
-                    Section(header: Text(Languages.name(lang))) {
+                    Section(header: GothicHeader(Languages.name(lang))) {
                         ForEach(word.tr(lang), id: \.self) { t in
                             Text(t)
                         }
@@ -30,13 +30,13 @@ struct WordCardView: View {
             }
 
             if !word.brazilian.isEmpty {
-                Section(header: Text("В Бразилии говорят")) {
+                Section(header: GothicHeader("В Бразилии говорят")) {
                     Text(word.brazilian)
                 }
             }
 
             if !word.note.isEmpty {
-                Section(header: Text("Заметка")) {
+                Section(header: GothicHeader("Заметка")) {
                     Text(word.note)
                         .font(.subheadline)
                 }
@@ -155,7 +155,7 @@ struct WordCardView: View {
         let p = model.progress(for: word.id)
         let status = model.status(for: word.id)
         let state = model.srsState(for: word.id)
-        return Section(header: Text("Прогресс"),
+        return Section(header: GothicHeader("Прогресс"),
                        footer: Text("«Выучено» — когда слово держится в памяти 3 недели и дольше.")) {
             HStack {
                 StatusBadge(status: status)
@@ -219,8 +219,8 @@ struct CollectionPickerSheet: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                Section(header: Text("Мои коллекции")) {
+            GothicList {
+                Section(header: GothicHeader("Мои коллекции")) {
                     if model.user.collections.isEmpty {
                         Text("Коллекций пока нет. Создайте первую ниже.")
                             .foregroundColor(.secondary)
@@ -243,7 +243,7 @@ struct CollectionPickerSheet: View {
                         }
                     }
                 }
-                Section(header: Text("Новая коллекция")) {
+                Section(header: GothicHeader("Новая коллекция")) {
                     TextField("Название", text: $newName)
                     Button("Создать и добавить") {
                         createAndAdd()

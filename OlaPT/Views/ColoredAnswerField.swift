@@ -13,13 +13,10 @@ struct ColoredAnswerField: UIViewRepresentable {
     let correctPrefix: (String) -> Int
     let onSubmit: () -> Void
 
-    /// Тёмно-зелёный на светлом фоне (системный зелёный слишком светлый для текста), обычный — на тёмном.
-    static let goodColor = UIColor { traits in
-        traits.userInterfaceStyle == .dark
-            ? UIColor.systemGreen
-            : UIColor(red: 0.10, green: 0.55, blue: 0.22, alpha: 1)
-    }
-    static let badColor = UIColor.systemRed
+    /// Мох — пока верно, кровь — с места ошибки (приложение всегда в тёмной теме).
+    static let goodColor = UIColor(Theme.moss)
+    static let badColor = UIColor(Theme.red)
+    static let baseColor = UIColor(Theme.text)
 
     func makeCoordinator() -> Coordinator {
         return Coordinator(self)
@@ -27,7 +24,11 @@ struct ColoredAnswerField: UIViewRepresentable {
 
     func makeUIView(context: Context) -> UITextField {
         let field = UITextField()
-        field.placeholder = placeholder
+        field.attributedPlaceholder = NSAttributedString(string: placeholder,
+                                                         attributes: [.foregroundColor: UIColor(Theme.textDim)])
+        field.textColor = ColoredAnswerField.baseColor
+        field.tintColor = UIColor(Theme.gold)
+        field.keyboardAppearance = .dark
         field.font = UIFont.preferredFont(forTextStyle: .title2)
         field.adjustsFontForContentSizeCategory = true
         field.autocorrectionType = .no
@@ -37,7 +38,7 @@ struct ColoredAnswerField: UIViewRepresentable {
         field.smartDashesType = .no
         field.smartInsertDeleteType = .no
         field.returnKeyType = .done
-        field.borderStyle = .roundedRect
+        field.borderStyle = .none
         field.clearButtonMode = .whileEditing
         field.delegate = context.coordinator
         field.addTarget(context.coordinator, action: #selector(Coordinator.changed(_:)), for: .editingChanged)
@@ -87,7 +88,7 @@ struct ColoredAnswerField: UIViewRepresentable {
 
             let attributed = NSMutableAttributedString(string: value, attributes: [
                 .font: font,
-                .foregroundColor: UIColor.label
+                .foregroundColor: ColoredAnswerField.baseColor
             ])
             if goodLength > 0 {
                 attributed.addAttribute(.foregroundColor, value: ColoredAnswerField.goodColor,
@@ -103,7 +104,7 @@ struct ColoredAnswerField: UIViewRepresentable {
                 field.selectedTextRange = selection
             }
             // Следующая буква по умолчанию цвета «ещё не проверено», её окрасит следующий вызов.
-            field.typingAttributes = [.font: font, .foregroundColor: UIColor.label]
+            field.typingAttributes = [.font: font, .foregroundColor: ColoredAnswerField.baseColor]
         }
 
         func textFieldShouldReturn(_ field: UITextField) -> Bool {

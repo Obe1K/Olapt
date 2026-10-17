@@ -210,22 +210,24 @@ struct StudySessionView: View {
     private func questionView(_ q: WordQuestion) -> some View {
         ScrollView {
             VStack(spacing: 18) {
-                ProgressView(value: Double(session.position), total: Double(max(1, session.queue.count)))
+                PixelProgressBar(fraction: Double(session.position) / Double(max(1, session.queue.count)),
+                                 fill: Theme.bloodBright)
                     .padding(.top, 8)
 
                 if q.isRetry {
                     Text("Повторим слово, в котором была ошибка")
                         .font(.footnote)
-                        .foregroundColor(.orange)
+                        .foregroundColor(Theme.ember)
                 }
 
                 Text(caption(q))
                     .font(.footnote)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(Theme.textDim)
 
                 HStack(spacing: 10) {
                     Text(q.prompt)
                         .font(.system(size: 34, weight: .bold))
+                        .foregroundColor(Theme.text)
                         .multilineTextAlignment(.center)
                         .minimumScaleFactor(0.5)
                     if q.kind.promptIsPortuguese {
@@ -247,6 +249,7 @@ struct StudySessionView: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 24)
         }
+        .background(StoneBackground().ignoresSafeArea())
         .safeAreaInset(edge: .bottom) {
             if session.answered && !q.kind.isChoice {
                 nextButtonBar
@@ -257,10 +260,10 @@ struct StudySessionView: View {
     // MARK: Выбор из вариантов
 
     private func choiceColor(_ i: Int, _ q: WordQuestion) -> Color {
-        if !session.answered { return Color(.secondarySystemFill) }
-        if i == q.correctIndex { return Color.green.opacity(0.28) }
-        if session.selectedIndex == i { return Color.red.opacity(0.28) }
-        return Color(.secondarySystemFill)
+        if !session.answered { return Theme.panel }
+        if i == q.correctIndex { return Theme.mossDark }
+        if session.selectedIndex == i { return Theme.bloodDark }
+        return Theme.panel
     }
 
     @ViewBuilder
@@ -274,22 +277,21 @@ struct StudySessionView: View {
                     HStack {
                         Text(q.options[i])
                             .font(.title3)
-                            .foregroundColor(.primary)
+                            .foregroundColor(Theme.text)
                             .multilineTextAlignment(.leading)
                         Spacer()
                         if session.answered && i == q.correctIndex {
                             Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(.green)
+                                .foregroundColor(Theme.moss)
                         } else if session.answered && session.selectedIndex == i {
                             Image(systemName: "xmark.circle.fill")
-                                .foregroundColor(.red)
+                                .foregroundColor(Theme.red)
                         }
                     }
                     .padding(.vertical, 14)
                     .padding(.horizontal, 16)
                     .frame(maxWidth: .infinity)
-                    .background(choiceColor(i, q))
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .background(PixelFrame(fill: choiceColor(i, q)))
                 }
                 .buttonStyle(.plain)
                 .disabled(session.answered)
@@ -314,6 +316,8 @@ struct StudySessionView: View {
                 onSubmit: { check() }
             )
             .frame(height: 52)
+            .padding(.horizontal, 12)
+            .background(PixelFrame(fill: Theme.panelDeep))
             if !session.answered {
                 Text("Зелёные буквы — пока всё верно, красные — с места ошибки.")
                     .font(.caption)
@@ -329,7 +333,7 @@ struct StudySessionView: View {
                         Text("Не знаю")
                             .frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(.bordered)
+                    .buttonStyle(GothicButtonStyle(.secondary))
 
                     Button {
                         check()
@@ -337,7 +341,7 @@ struct StudySessionView: View {
                         Text("Проверить")
                             .frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(.borderedProminent)
+                    .buttonStyle(GothicButtonStyle(.primary))
                     .disabled(typed.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 }
             }
@@ -358,8 +362,8 @@ struct StudySessionView: View {
         VStack(spacing: 10) {
             if session.lastCorrect {
                 Label("Верно!", systemImage: "checkmark.circle.fill")
-                    .font(.title3.weight(.semibold))
-                    .foregroundColor(.green)
+                    .font(Theme.pixel(22, relativeTo: .title3))
+                    .foregroundColor(Theme.moss)
                 if session.lastVerdict == .accentsOnly {
                     Text("Правильно пишется: \(q.answerText)")
                         .font(.subheadline)
@@ -367,10 +371,11 @@ struct StudySessionView: View {
                 }
             } else {
                 Label("Неверно", systemImage: "xmark.circle.fill")
-                    .font(.title3.weight(.semibold))
-                    .foregroundColor(.red)
+                    .font(Theme.pixel(22, relativeTo: .title3))
+                    .foregroundColor(Theme.red)
                 Text("Правильный ответ: \(q.answerText)")
                     .font(.headline)
+                    .foregroundColor(Theme.text)
                     .multilineTextAlignment(.center)
             }
             if !q.kind.promptIsPortuguese {
@@ -391,14 +396,13 @@ struct StudySessionView: View {
             session.next()
         } label: {
             Text(session.position + 1 >= session.queue.count ? "Завершить" : "Далее")
-                .font(.headline)
                 .frame(maxWidth: .infinity)
         }
-        .buttonStyle(.borderedProminent)
+        .buttonStyle(GothicButtonStyle(.primary))
         .controlSize(.large)
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
-        .background(.bar)
+        .background(Theme.background.opacity(0.95))
     }
 
     /// Уровни 1–2: результат виден пару секунд, затем следующее слово само.
@@ -434,15 +438,15 @@ struct StudySessionView: View {
     }
 
     private var summaryView: some View {
-        List {
+        GothicList {
             if isDaily {
                 Section {
                     let plan = model.dailyPlan()
                     VStack(alignment: .leading, spacing: 8) {
                         if plan.isEmpty {
                             Label("На сегодня всё", systemImage: "checkmark.seal.fill")
-                                .font(.title3.weight(.semibold))
-                                .foregroundColor(.green)
+                                .font(Theme.pixel(20, relativeTo: .title3))
+                                .foregroundColor(Theme.moss)
                             Text("Ещё раз сегодня проходить не нужно: повторение раньше срока почти не укрепляет память.")
                                 .font(.subheadline)
                         } else {
@@ -461,8 +465,8 @@ struct StudySessionView: View {
             Section {
                 VStack(spacing: 8) {
                     Text("\(session.percent)%")
-                        .font(.system(size: 54, weight: .bold))
-                        .foregroundColor(session.percent >= 80 ? Color.green : Color.orange)
+                        .font(Theme.pixel(54, relativeTo: .largeTitle))
+                        .foregroundColor(session.percent >= 80 ? Theme.moss : Theme.ember)
                     Text("Верно с первого раза: \(session.correctCount) из \(session.totalCount)")
                         .foregroundColor(.secondary)
                     if isDaily {
@@ -482,7 +486,7 @@ struct StudySessionView: View {
             }
 
             if !session.mistakes.isEmpty {
-                Section(header: Text("Ошибки")) {
+                Section(header: GothicHeader("Ошибки")) {
                     ForEach(session.mistakes) { w in
                         WordRow(word: w, showStatus: false)
                     }

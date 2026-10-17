@@ -129,10 +129,7 @@ struct PixelScreen: View {
             }
         }
         .aspectRatio(CGFloat(buffer.width) / CGFloat(buffer.height), contentMode: .fit)
-        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-        .overlay(
-            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .stroke(Color(white: 0.2), lineWidth: 2)
-        )
+        .padding(6)
+        .background(PixelFrame(fill: .black))
     }
 }

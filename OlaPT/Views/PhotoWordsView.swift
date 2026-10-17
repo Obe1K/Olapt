@@ -84,7 +84,7 @@ struct PhotoWordsView: View {
                     VStack(spacing: 16) {
                         EmptyHint(title: "Не получилось", message: message)
                         Button("Попробовать снова") { stage = .pick }
-                            .buttonStyle(.borderedProminent)
+                            .buttonStyle(GothicButtonStyle(.primary))
                     }
                     .padding()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -173,7 +173,7 @@ struct PhotoWordsView: View {
     // MARK: - Выбор источника
 
     private var pickView: some View {
-        List {
+        GothicList {
             Section {
                 VStack(alignment: .leading, spacing: 6) {
                     Text("Найдите слова в тексте")
@@ -235,7 +235,7 @@ struct PhotoWordsView: View {
                 EmptyHint(title: "Текст не найден",
                           message: "На изображении не удалось распознать слова. Попробуйте более чёткое фото или скриншот.")
                 Button("Выбрать другое") { reset() }
-                    .buttonStyle(.borderedProminent)
+                    .buttonStyle(GothicButtonStyle(.primary))
             }
             .padding()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -248,9 +248,9 @@ struct PhotoWordsView: View {
                         .accessibilityIdentifier("scan-summary")
                     HStack(spacing: 10) {
                         Button("Выбрать новые") { selectNew() }
-                            .buttonStyle(.bordered)
+                            .buttonStyle(GothicButtonStyle(.secondary))
                         Button("Снять выбор") { selected.removeAll() }
-                            .buttonStyle(.bordered)
+                            .buttonStyle(GothicButtonStyle(.secondary))
                             .disabled(selected.isEmpty)
                     }
                     FlowLayout(spacing: 6, lineSpacing: 8) {
@@ -262,6 +262,7 @@ struct PhotoWordsView: View {
                 }
                 .padding()
             }
+            .background(StoneBackground().ignoresSafeArea())
             .safeAreaInset(edge: .bottom) {
                 bottomBar
             }
@@ -270,7 +271,7 @@ struct PhotoWordsView: View {
 
     private var legend: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text("Синие — есть в словаре, серые — нет (их можно добавить со своим переводом). Под словом показана словарная форма. Нажмите, чтобы отметить; долгое нажатие — карточка слова или словарь iOS.")
+            Text("Золотистые — есть в словаре, серые — нет (их можно добавить со своим переводом). Отмеченные — красные. Под словом показана словарная форма. Нажмите, чтобы отметить; долгое нажатие — карточка слова или словарь iOS.")
                 .font(.footnote)
                 .foregroundColor(.secondary)
         }
@@ -284,16 +285,16 @@ struct PhotoWordsView: View {
         let background: Color
         let foreground: Color
         if isSelected {
-            background = known ? Color.accentColor : Color.orange
-            foreground = .white
+            background = known ? Theme.blood : Color(red: 0.42, green: 0.24, blue: 0.08)
+            foreground = Theme.text
         } else if inCollection {
-            background = Color.green.opacity(0.16)
+            background = Theme.mossDark
             foreground = .primary
         } else if known {
-            background = Color.accentColor.opacity(0.13)
+            background = Theme.gold.opacity(0.16)
             foreground = .primary
         } else {
-            background = Color.gray.opacity(0.13)
+            background = Theme.panelRaised
             foreground = .secondary
         }
 
@@ -306,7 +307,7 @@ struct PhotoWordsView: View {
                 if let lemma = t.lemma {
                     Text(lemma)
                         .font(.caption2)
-                        .foregroundColor(isSelected ? Color.white.opacity(0.85) : .secondary)
+                        .foregroundColor(isSelected ? Theme.text.opacity(0.8) : .secondary)
                 }
             }
             .padding(.horizontal, 9)
@@ -318,7 +319,7 @@ struct PhotoWordsView: View {
                 if inCollection && !isSelected {
                     Image(systemName: "checkmark.circle.fill")
                         .font(.caption2)
-                        .foregroundColor(.green)
+                        .foregroundColor(Theme.moss)
                         .offset(x: 4, y: -4)
                 }
             }
@@ -388,14 +389,14 @@ struct PhotoWordsView: View {
                 Text(selected.isEmpty ? "Отметьте слова" : "Добавить: \(selected.count) \(Plural.words(selected.count))")
                     .frame(maxWidth: .infinity)
             }
-            .buttonStyle(.borderedProminent)
+            .buttonStyle(GothicButtonStyle(.primary))
             .controlSize(.large)
             .disabled(selected.isEmpty)
             .accessibilityIdentifier("scan-add")
         }
         .padding(.horizontal)
         .padding(.vertical, 10)
-        .background(.bar)
+        .background(Theme.background.opacity(0.95))
     }
 
     // MARK: - Действия
@@ -569,7 +570,7 @@ struct UnknownWordsSheet: View {
 
     var body: some View {
         NavigationStack {
-            List {
+            GothicList {
                 Section(footer: Text("Слова без перевода не добавятся. Перевод можно подсмотреть в словаре iOS (кнопка с книгой).")) {
                     ForEach($drafts) { $draft in
                         VStack(alignment: .leading, spacing: 6) {
