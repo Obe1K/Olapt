@@ -178,6 +178,9 @@ struct StudySessionView: View {
         .onChange(of: session.finished) { done in
             if done {
                 saveBestScore()
+                if isDaily && model.dailyPlan().isEmpty {
+                    model.feedPetFull()
+                }
             }
         }
         .onAppear {

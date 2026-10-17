@@ -241,6 +241,7 @@ final class AppModel: ObservableObject {
             rating = .hard
         }
         user.srs[wordID] = FSRS.review(previous, rating: rating, now: now)
+        feedPet(correct ? PetRules.foodPerCorrect : PetRules.foodPerWrong, now: now)
     }
 
     func counts(for wordIDs: [String]) -> (new: Int, learning: Int, learned: Int) {
@@ -379,6 +380,36 @@ final class AppModel: ObservableObject {
         return list.map { $0.0 }
     }
 
+    // MARK: - Питомец
+
+    func petFood(now: Date = Date()) -> Double {
+        return PetRules.food(user.pet, at: now)
+    }
+
+    /// Каждый ответ в упражнениях — немного еды.
+    func feedPet(_ amount: Double, now: Date = Date()) {
+        var p = user.pet
+        p.food = min(100, PetRules.food(p, at: now) + amount)
+        p.updated = now
+        p.pendingMeal = true
+        user.pet = p
+    }
+
+    /// План на сегодня выполнен — сыт полностью.
+    func feedPetFull(now: Date = Date()) {
+        var p = user.pet
+        p.food = 100
+        p.updated = now
+        p.pendingMeal = true
+        user.pet = p
+    }
+
+    func consumePendingMeal() {
+        if user.pet.pendingMeal {
+            user.pet.pendingMeal = false
+        }
+    }
+
     // MARK: - Прогресс по глаголам
 
     func verbProgress(verb: Verb, tense: TenseInfo) -> WordProgress {
@@ -411,6 +442,7 @@ final class AppModel: ObservableObject {
         }
         p.lastSeen = Date()
         user.verbProgress[key] = p
+        feedPet(correct ? PetRules.foodPerCorrect : PetRules.foodPerWrong)
     }
 
     /// Средняя выученность глагола по всем временам (0…1).

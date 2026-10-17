@@ -174,9 +174,11 @@ struct UserData: Codable {
     var settings: AppSettings
     /// Интервальные повторения: id слова → состояние
     var srs: [String: SRSState]
+    /// Тамагочи
+    var pet: PetData
 
     enum CodingKeys: String, CodingKey {
-        case collections, progress, verbProgress, customWords, settings, srs
+        case collections, progress, verbProgress, customWords, settings, srs, pet
     }
 
     init() {
@@ -186,6 +188,7 @@ struct UserData: Codable {
         customWords = []
         settings = AppSettings()
         srs = [:]
+        pet = PetData()
     }
 
     init(from decoder: Decoder) throws {
@@ -196,6 +199,7 @@ struct UserData: Codable {
         customWords = try c.decodeIfPresent([CustomWord].self, forKey: .customWords) ?? []
         settings = try c.decodeIfPresent(AppSettings.self, forKey: .settings) ?? AppSettings()
         srs = try c.decodeIfPresent([String: SRSState].self, forKey: .srs) ?? [:]
+        pet = try c.decodeIfPresent(PetData.self, forKey: .pet) ?? PetData()
     }
 }
 

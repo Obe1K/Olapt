@@ -15,7 +15,7 @@ final class ScreenshotTests: XCTestCase {
         continueAfterFailure = true
         steps = []
         app = XCUIApplication(bundleIdentifier: bundleID)
-        app.launchArguments += ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU"]
+        app.launchArguments += ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU", "-uitest-static", "YES"]
         app.launch()
         Thread.sleep(forTimeInterval: 1.5)
     }
@@ -123,7 +123,7 @@ final class ScreenshotTests: XCTestCase {
 
     /// Первая кнопка с вариантом ответа (не служебная).
     private func firstOptionButton() -> XCUIElement {
-        let service = ["Закрыть", "Произнести", "Далее", "Завершить", "Словарь", "Коллекции", "Глаголы", "Настройки"]
+        let service = ["Закрыть", "Произнести", "Далее", "Завершить", "Сегодня", "Словарь", "Коллекции", "Глаголы", "Настройки"]
         let predicate = NSPredicate(format: "NOT (label IN %@)", service as NSArray)
         return app.buttons.matching(predicate).element(boundBy: 0)
     }
@@ -131,6 +131,8 @@ final class ScreenshotTests: XCTestCase {
     // MARK: - Тесты
 
     func testA_SearchAndWordCard() {
+        shot("00_today_first_launch")
+        tapTab("Словарь")
         shot("01_dictionary_home")
 
         let field = app.searchFields.firstMatch
@@ -192,11 +194,11 @@ final class ScreenshotTests: XCTestCase {
         tap(app.staticTexts["Приветствия и фразы"].firstMatch, "open collection")
         shot("14_collection_detail")
 
-        // Уровней теперь три; бывшего «написать перевод» нет.
-        note(button(containing: "Уровень 4").exists ? "CHECK FAILED: level 4 still listed" : "CHECK ok: only 3 levels")
-        note(button(containing: "Напиши перевод").exists ? "CHECK FAILED: old level 3 still listed" : "CHECK ok: old level 3 removed")
+        // Уровней теперь два: выбор вперемешку и ввод слова.
+        note(button(containing: "Уровень 3").exists ? "CHECK FAILED: level 3 still listed" : "CHECK ok: only 2 levels")
+        note(button(containing: "Напиши слово").exists ? "CHECK ok: typing level listed" : "CHECK FAILED: typing level missing")
 
-        // Уровень 1: выбрать перевод — после ответа без кнопки «Далее», следующее слово само
+        // Уровень 1: выбор вперемешку — после ответа без кнопки «Далее», следующее слово само
         tap(button(containing: "Уровень 1"), "level 1")
         shot("15_level1_question")
         tap(firstOptionButton(), "level 1 option")
@@ -206,48 +208,42 @@ final class ScreenshotTests: XCTestCase {
         note(app.buttons["Далее"].exists ? "CHECK FAILED: level 1 still has Next button" : "CHECK ok: level 1 has no Next button")
         Thread.sleep(forTimeInterval: 3.2)
         note(app.descendants(matching: .any).matching(verdict).firstMatch.exists ? "CHECK FAILED: level 1 did not auto-advance" : "CHECK ok: level 1 auto-advanced")
+        // Второй вопрос — тоже с выбором (направление может быть любым)
+        tap(firstOptionButton(), "level 1 option 2")
+        shot("18_level1_second_feedback")
+        Thread.sleep(forTimeInterval: 3.2)
         shot("17_level1_next")
         tap(app.buttons["Закрыть"], "close level 1")
 
-        // Уровень 2: выбрать слово
+        // Уровень 2: написать слово
         tap(button(containing: "Уровень 2"), "level 2")
-        shot("18_level2_question")
-        tap(firstOptionButton(), "level 2 option")
-        shot("19_level2_feedback")
-        note(app.buttons["Далее"].exists ? "CHECK FAILED: level 2 still has Next button" : "CHECK ok: level 2 has no Next button")
-        Thread.sleep(forTimeInterval: 3.2)
-        note(app.descendants(matching: .any).matching(verdict).firstMatch.exists ? "CHECK FAILED: level 2 did not auto-advance" : "CHECK ok: level 2 auto-advanced")
-        tap(app.buttons["Закрыть"], "close level 2")
-
-        // Уровень 3: написать слово (бывший 4-й)
-        tap(button(containing: "Уровень 3"), "level 3")
-        shot("22_level3_question")
-        tap(app.buttons["Не знаю"], "give up level 3")
-        shot("23_level3_feedback")
+        shot("22_level2_question")
+        tap(app.buttons["Не знаю"], "give up level 2")
+        shot("23_level2_feedback")
         let next = app.buttons["Далее"].exists ? app.buttons["Далее"] : app.buttons["Завершить"]
         if next.waitForExistence(timeout: 3) {
             let low = next.frame.minY > app.frame.height * 0.7
             note(low ? "CHECK ok: Next button at the bottom" : "CHECK FAILED: Next button too high (y=\(Int(next.frame.minY)) of \(Int(app.frame.height)))")
         } else {
-            note("CHECK FAILED: level 3 Next button missing")
+            note("CHECK FAILED: level 2 Next button missing")
         }
-        tap(app.buttons["Закрыть"], "close level 3")
+        tap(app.buttons["Закрыть"], "close level 2")
         back()
 
         // Подсветка букв: коллекция с одним словом «casa» (её создаёт testA)
         let mine = app.staticTexts["Моя первая коллекция"].firstMatch
         if mine.waitForExistence(timeout: 4) {
             tap(mine, "open my collection")
-            tap(button(containing: "Уровень 3"), "level 3 (casa)")
+            tap(button(containing: "Уровень 2"), "level 2 (casa)")
             let field = app.textFields["Ваш ответ"]
             typeInto(field, "cas", "answer field")
-            shot("20_level3_typing_green")
+            shot("20_level2_typing_green")
             field.typeText("x")
             note("CHECK info: typed value = " + ((field.value as? String) ?? "?"))
-            shot("21_level3_typing_red")
+            shot("21_level2_typing_red")
             tap(app.buttons["Проверить"], "check answer")
-            shot("21b_level3_checked")
-            tap(app.buttons["Закрыть"], "close level 3 (casa)")
+            shot("21b_level2_checked")
+            tap(app.buttons["Закрыть"], "close level 2 (casa)")
         } else {
             note("CHECK FAILED: collection «Моя первая коллекция» not found")
         }
@@ -388,6 +384,7 @@ final class ScreenshotTests: XCTestCase {
 
     /// Новые экраны 1.1: наборы по уровням и словарь iOS для ненайденного слова.
     func testF_LevelsAndSystemDictionary() {
+        tapTab("Словарь")
         let field = app.searchFields.firstMatch
         typeInto(field, "zzzqqq", "search field")
         dismissKeyboard()
@@ -447,6 +444,92 @@ final class ScreenshotTests: XCTestCase {
             } else {
                 note("CHECK FAILED: chip " + text + " missing")
             }
+        }
+    }
+
+    /// «Сегодня»: план дня, тренировка до конца, итог с прогнозом, трудные слова, питомец.
+    func testH_TodayAndPet() {
+        tapTab("Сегодня")
+        shot("70_today")
+        note(app.otherElements["pet-screen"].exists || app.images["pet-screen"].exists || app.descendants(matching: .any)["pet-screen"].exists
+             ? "CHECK ok: pet shown" : "CHECK FAILED: pet missing")
+
+        let start = app.buttons["today-start"]
+        let extra = app.buttons["today-extra"]
+        if start.waitForExistence(timeout: 4) {
+            note("CHECK ok: plan shown: " + start.label)
+            tap(start, "start daily")
+        } else if extra.exists {
+            note("CHECK info: plan already empty, taking extra new words")
+            tap(extra, "extra new words")
+        } else {
+            note("CHECK FAILED: neither plan nor extra button")
+        }
+        shot("71_daily_question")
+
+        // Отвечаем до конца: выбор — касание варианта (дальше само), ввод — «Не знаю» и «Далее».
+        let summary = NSPredicate(format: "label CONTAINS 'На сегодня всё' OR label CONTAINS 'Осталось ещё' OR label CONTAINS 'Следующее повторение' OR label CONTAINS 'Следующих повторений'")
+        var answered = 0
+        while answered < 60 {
+            if app.descendants(matching: .any).matching(summary).firstMatch.exists { break }
+            if app.buttons["Не знаю"].exists {
+                app.buttons["Не знаю"].tap()
+                let next = app.buttons["Далее"].exists ? app.buttons["Далее"] : app.buttons["Завершить"]
+                if next.waitForExistence(timeout: 3) { next.tap() }
+            } else {
+                let option = firstOptionButton()
+                if option.exists && option.isHittable {
+                    option.tap()
+                    Thread.sleep(forTimeInterval: 2.8)
+                } else {
+                    Thread.sleep(forTimeInterval: 0.5)
+                }
+            }
+            answered += 1
+        }
+        note("CHECK info: answered \(answered) questions")
+        let done = app.descendants(matching: .any).matching(summary).firstMatch
+        if done.waitForExistence(timeout: 4) {
+            note("CHECK ok: daily summary: " + done.label)
+        } else {
+            note("CHECK FAILED: daily summary not shown")
+        }
+        shot("72_daily_summary")
+        tap(app.buttons["Закончить"], "finish daily")
+        shot("73_today_after")
+        note(app.descendants(matching: .any)["today-done"].exists ? "CHECK ok: today done state" : "CHECK info: today plan not empty yet")
+
+        let difficult = app.buttons["open-difficult"]
+        scrollUntilVisible(difficult)
+        tap(difficult, "open difficult words")
+        shot("74_difficult_words")
+        back()
+
+        let faq = app.staticTexts["Пройти ещё раз?"]
+        scrollUntilVisible(faq, maxSwipes: 8)
+        shot("75_today_bottom")
+
+        // Карточка слова: дата следующего повторения
+        tapTab("Словарь")
+        let field = app.searchFields.firstMatch
+        typeInto(field, "casa", "search field")
+        dismissKeyboard()
+        tap(app.staticTexts["a casa"].firstMatch, "result: a casa")
+        let nextReview = app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH 'Следующее повторение'")).firstMatch
+        scrollUntilVisible(nextReview)
+        note(nextReview.exists ? "CHECK ok: word card: " + nextReview.label : "CHECK FAILED: word card has no next review")
+        shot("76_word_card_srs")
+
+        // Все состояния питомца (застывший кадр)
+        for mood in ["happy", "ok", "angry", "skeleton", "eating"] {
+            app.terminate()
+            app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU", "-uitest-pet", mood]
+            app.launch()
+            Thread.sleep(forTimeInterval: 1.5)
+            tapTab("Сегодня")
+            let caption = app.staticTexts["pet-caption"]
+            note(caption.waitForExistence(timeout: 4) ? "CHECK ok: pet " + mood + ": " + caption.label : "CHECK FAILED: pet " + mood + " caption missing")
+            shot("77_pet_" + mood)
         }
     }
 }

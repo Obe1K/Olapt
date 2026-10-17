@@ -45,6 +45,13 @@ struct TodayView: View {
         let _ = refreshTick
         let plan = model.dailyPlan()
         List {
+            Section {
+                PetView(isVisible: active == nil)
+                    .padding(.vertical, 6)
+            }
+            .listRowBackground(Color.clear)
+            .listRowInsets(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4))
+
             if !hasAnyWords {
                 startSection
             } else {
