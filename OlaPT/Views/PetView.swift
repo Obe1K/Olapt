@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 // MARK: - Тамагочи на экране «Сегодня»
 
@@ -62,23 +63,17 @@ struct PetView: View {
 
     private func screen(mood: PetMood, food: Double, tick: Int, eating: Int?, reaction: Int?) -> some View {
         let caption = eating != nil ? PetRules.eatingCaption : PetRules.caption(mood)
-        return VStack(spacing: 8) {
-            PixelScreen(buffer: PetScene.compose(mood: mood, food: food, tick: tick,
-                                                 eatingFrame: eating, reactionFrame: reaction))
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    reactionStart = Date()
-                }
-                .accessibilityElement(children: .ignore)
-                .accessibilityLabel(caption)
-                .accessibilityIdentifier("pet-screen")
-            Text(caption)
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-                .frame(maxWidth: .infinity)
-                .accessibilityIdentifier("pet-caption")
-        }
+        // Подписи нет: сцена должна читаться без слов. Текст — только для VoiceOver.
+        return PixelScreen(buffer: PetScene.compose(mood: mood, food: food, tick: tick,
+                                                    eatingFrame: eating, reactionFrame: reaction))
+            .contentShape(Rectangle())
+            .onTapGesture {
+                reactionStart = Date()
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(caption)
+            .accessibilityIdentifier("pet-screen")
     }
 
     /// Покормили — показываем, как ест (только если он уже не голодный и не скелет).

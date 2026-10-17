@@ -6,6 +6,7 @@ Preview: python3 Tools/pet/dark_preview.py out.png
 import os, sys
 sys.path.insert(0, os.path.dirname(__file__))
 import dark as D
+import side as SD
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 OUT = os.path.join(ROOT, "OlaPT", "Models", "PetSprites.swift")
@@ -45,7 +46,13 @@ emit("tower", grid_rows(D.tower_scene()), out)
 emit("dungeon", grid_rows(D.dungeon_scene(False)), out)
 emit("dungeonChained", grid_rows(D.dungeon_scene(True)), out)
 for name, rows in D.SPRITES.items():
+    if name.startswith("mage_") and not name.startswith("mage_angry"):
+        continue  # в башне теперь маг в профиль (side.py)
     emit(camel(name), trim_bottom(rows), out)
+for name, rows in SD.SIDE_SPRITES.items():
+    emit(camel(name), trim_bottom(rows), out)
+for name in ["LECTERN", "PAGE_TURN", "GLOW_A", "GLOW_B", "THOUGHT_POTION", "HEART"]:
+    emit(camel(name), getattr(SD, name), out)
 for name in ["CANDLE_LIT_A", "CANDLE_LIT_B", "CANDLE_OUT", "RAT_A", "RAT_B", "DROP", "SPLASH"]:
     emit(camel(name), getattr(D, name), out)
 out.append("")

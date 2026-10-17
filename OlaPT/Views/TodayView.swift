@@ -60,8 +60,6 @@ struct TodayView: View {
             }
 
             difficultSection
-
-            howItWorksSection
         }
         .navigationTitle("Сегодня")
         .navigationBarTitleDisplayMode(.inline)
@@ -165,8 +163,7 @@ struct TodayView: View {
 
     private var forecastSection: some View {
         let days = model.forecast(days: 7)
-        return Section(header: GothicHeader("Повторения на неделю"),
-                       footer: Text("Сюда добавятся новые слова — до \(model.settings.newWordsPerDay) в день, пока в коллекциях есть неначатые. Число новых слов в день меняется в Настройках.")) {
+        return Section(header: GothicHeader("Повторения на неделю")) {
             ForEach(0..<days.count, id: \.self) { i in
                 HStack {
                     Text(dayTitle(offset: i + 1))
@@ -222,32 +219,6 @@ struct TodayView: View {
                 Label("Наборы слов по темам", systemImage: "square.grid.2x2")
             }
         }
-    }
-
-    // MARK: Как это работает
-
-    private var howItWorksSection: some View {
-        Section(header: GothicHeader("Как заниматься")) {
-            faqRow(question: "Сколько заниматься сегодня?",
-                   answer: "Ровно план дня. Когда он выполнен, на сегодня всё.")
-            faqRow(question: "Пройти ещё раз?",
-                   answer: "Не нужно. Повторение раньше срока почти не укрепляет память. Приложение само вернёт слово в тот день, когда вы начнёте его забывать.")
-            faqRow(question: "Завтра или можно через день?",
-                   answer: "Лучше каждый день — тогда план короткий. Пропуск дня не страшен: слова подождут, просто следующий план будет больше.")
-            faqRow(question: "Когда слово «выучено»?",
-                   answer: "Верный ответ отодвигает следующее повторение: завтра → через 4 дня → через 2 недели → через месяц и дальше. Ошибка возвращает слово на завтра. «Выучено» — когда слово держится в памяти 3 недели и дольше.")
-        }
-    }
-
-    private func faqRow(question: String, answer: String) -> some View {
-        return VStack(alignment: .leading, spacing: 4) {
-            Text(question)
-                .font(.subheadline.weight(.semibold))
-            Text(answer)
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-        }
-        .padding(.vertical, 2)
     }
 
     // MARK: Вопросы

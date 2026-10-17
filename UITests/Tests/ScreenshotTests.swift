@@ -512,8 +512,8 @@ final class ScreenshotTests: XCTestCase {
         shot("74_difficult_words")
         back()
 
-        let faq = app.staticTexts["Пройти ещё раз?"]
-        scrollUntilVisible(faq, maxSwipes: 8)
+        note(app.staticTexts["Пройти ещё раз?"].exists ? "CHECK FAILED: FAQ block still shown" : "CHECK ok: no FAQ block")
+        app.swipeUp()
         shot("75_today_bottom")
 
         // Карточка слова: дата следующего повторения
@@ -534,8 +534,9 @@ final class ScreenshotTests: XCTestCase {
             app.launch()
             Thread.sleep(forTimeInterval: 1.5)
             tapTab("Сегодня")
-            let caption = app.staticTexts["pet-caption"]
-            note(caption.waitForExistence(timeout: 4) ? "CHECK ok: pet " + mood + ": " + caption.label : "CHECK FAILED: pet " + mood + " caption missing")
+            let screen = app.descendants(matching: .any)["pet-screen"]
+            note(screen.waitForExistence(timeout: 4) ? "CHECK ok: pet " + mood + ": " + screen.label : "CHECK FAILED: pet " + mood + " missing")
+            note(app.staticTexts["pet-caption"].exists ? "CHECK FAILED: caption under pet still shown" : "CHECK ok: no caption under pet")
             shot("77_pet_" + mood)
         }
     }

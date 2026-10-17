@@ -117,10 +117,13 @@ enum PetScene {
     /// Длина анимации «пьёт зелье», в тиках по 0,5 с
     static let eatingFrames = 10
     /// Длина реакции на касание
-    static let reactionFrames = 4
+    static let reactionFrames = 6
 
-    private static let mageX = 34
-    private static let mageY = 12
+    /// Маг в профиль и кафедра с книгой (башня)
+    private static let mageX = 30
+    private static let mageY = 13
+    private static let lecternX = 52
+    private static let lecternY = 22
 
     private static func candles(_ buf: inout PixelBuffer, lit: Int, tick: Int) {
         for i in 0..<4 {
@@ -142,16 +145,30 @@ enum PetScene {
         }
     }
 
-    /// Искры поднимаются от книги.
-    private static func sparks(_ buf: inout PixelBuffer, tick: Int, burst: Bool) {
-        let count = burst ? 6 : 3
-        for k in 0..<count {
-            let phase = (tick + k * 3) % 9
-            if phase > 7 { continue }
-            let x = mageX + 9 + (k * 4) % 12 + (phase % 2)
-            let y = mageY + 16 - phase * 2
-            buf.set(x, y, phase < 5 ? 3 : 2)
+    /// Над раскрытой книгой поднимаются светящиеся руны.
+    private static func bookGlow(_ buf: inout PixelBuffer, tick: Int, burst: Bool) {
+        buf.stamp(tick % 2 == 0 ? PetSprites.glowA : PetSprites.glowB, x: lecternX + 3, y: lecternY - 1 - (tick % 3))
+        if burst {
+            buf.stamp(tick % 2 == 0 ? PetSprites.glowB : PetSprites.glowA, x: lecternX + 2, y: lecternY - 6)
+            buf.stamp(PetSprites.glowA, x: lecternX + 4, y: lecternY - 11 + (tick % 2))
         }
+    }
+
+    /// Башня: фон, звёзды, свечи и кафедра с книгой.
+    private static func towerBase(_ buf: inout PixelBuffer, lit: Int, tick: Int, pageTurn: Bool) {
+        buf.stamp(PetSprites.tower, x: 0, y: 0)
+        stars(&buf, tick: tick)
+        candles(&buf, lit: lit, tick: tick)
+        buf.stamp(PetSprites.lectern, x: lecternX, y: lecternY)
+        if pageTurn {
+            buf.stamp(PetSprites.pageTurn, x: lecternX + 2, y: lecternY - 1)
+        }
+    }
+
+    /// Машет рукой, над головой сердечко (реакция на касание в башне).
+    private static func wave(_ buf: inout PixelBuffer, frame: Int) {
+        buf.stamp(PetSprites.mageSideWave, x: mageX, y: mageY - (frame % 2))
+        buf.stamp(PetSprites.heart, x: mageX + 21, y: mageY - 6 - frame * 2)
     }
 
     /// Капля с потолка темницы.
@@ -173,48 +190,55 @@ enum PetScene {
         var buf = PixelBuffer(width: width, height: height)
         let lit = PetRules.hearts(food: food)
 
+        // Касание: короткая тряска экрана
+        let shake = reactionFrame.map { $0 < 2 ? ($0 % 2 == 0 ? 1 : -1) : 0 } ?? 0
+
         if let f = eatingFrame {
-            buf.stamp(PetSprites.tower, x: 0, y: 0)
-            stars(&buf, tick: tick)
-            candles(&buf, lit: lit, tick: tick)
+            towerBase(&buf, lit: lit, tick: tick, pageTurn: false)
             if f < 6 {
-                buf.stamp(PetSprites.mageDrink, x: mageX, y: mageY + (f % 2 == 0 ? 0 : -1))
-                // пузырьки над склянкой
-                buf.set(mageX + 14 + (f % 2), mageY + 9 - (f % 3), 3)
-                buf.set(mageX + 16 - (f % 2), mageY + 7 - (f % 3), 2)
+                // пьёт из склянки, пузырьки поднимаются
+                buf.stamp(PetSprites.mageSideDrink, x: mageX, y: mageY + (f % 2 == 0 ? 0 : -1))
+                buf.set(mageX + 18 + (f % 2), mageY + 7 - (f % 3), 3)
+                buf.set(mageX + 20 - (f % 2), mageY + 4 - (f % 3), 2)
             } else {
-                buf.stamp(f % 2 == 0 ? PetSprites.mageRead : PetSprites.mageRead2, x: mageX, y: mageY)
-                sparks(&buf, tick: tick, burst: true)
+                wave(&buf, frame: f - 6)
+                bookGlow(&buf, tick: tick, burst: true)
             }
             return buf
         }
 
         switch mood {
         case .happy:
-            buf.stamp(PetSprites.tower, x: 0, y: 0)
-            stars(&buf, tick: tick)
-            candles(&buf, lit: lit, tick: tick)
-            buf.stamp(tick % 2 == 0 ? PetSprites.mageRead : PetSprites.mageRead2, x: mageX, y: mageY)
-            sparks(&buf, tick: tick, burst: reactionFrame != nil)
+            // читает книгу за кафедрой, время от времени перелистывает
+            let turning = tick % 8 == 7
+            towerBase(&buf, lit: lit, tick: tick, pageTurn: turning)
+            if let r = reactionFrame {
+                wave(&buf, frame: r)
+                bookGlow(&buf, tick: tick, burst: true)
+            } else {
+                buf.stamp(turning ? PetSprites.mageSideRead2 : PetSprites.mageSideRead, x: mageX, y: mageY)
+                bookGlow(&buf, tick: tick, burst: false)
+            }
 
         case .ok:
-            buf.stamp(PetSprites.tower, x: 0, y: 0)
-            stars(&buf, tick: tick)
-            candles(&buf, lit: lit, tick: tick)
-            if reactionFrame != nil {
-                buf.stamp(PetSprites.mageRead, x: mageX, y: mageY)
-                sparks(&buf, tick: tick, burst: true)
+            // проголодался: книга заброшена, думает о зелье
+            towerBase(&buf, lit: lit, tick: tick, pageTurn: false)
+            if let r = reactionFrame {
+                wave(&buf, frame: r)
             } else {
-                buf.stamp(tick % 7 == 0 ? PetSprites.mageBlink : PetSprites.mageSit, x: mageX, y: mageY)
+                buf.stamp(PetSprites.mageSideTired, x: mageX, y: mageY)
+            }
+            if reactionFrame != nil || tick % 6 < 4 {
+                buf.stamp(PetSprites.thoughtPotion, x: mageX + 12, y: mageY - 13 + (tick % 2))
             }
 
         case .angry:
             buf.stamp(PetSprites.dungeon, x: 0, y: 0)
             candles(&buf, lit: lit, tick: tick)
             drip(&buf, tick: tick, x: 70)
-            buf.stamp(tick % 2 == 0 ? PetSprites.mageAngry : PetSprites.mageAngry2, x: 20, y: 10)
+            buf.stamp(tick % 2 == 0 ? PetSprites.mageAngry : PetSprites.mageAngry2, x: 20 + shake, y: 10)
             if reactionFrame != nil {
-                buf.runeBubble([9, 9, 9], x: 46, y: 16)
+                buf.runeBubble([9, 9, 9, 9], x: 46, y: 16)
             } else if tick % 6 < 4 {
                 let phrase = PetRules.curses[(tick / 6) % PetRules.curses.count]
                 buf.runeBubble(phrase, x: 46, y: 16)
@@ -224,9 +248,12 @@ enum PetScene {
             buf.stamp(PetSprites.dungeonChained, x: 0, y: 0)
             candles(&buf, lit: lit, tick: tick)
             drip(&buf, tick: tick, x: 70)
-            buf.stamp((tick / 2) % 2 == 0 ? PetSprites.skeleton1 : PetSprites.skeleton2, x: 18, y: 24)
+            // касание: кости гремят, крыса удирает
+            let rattle = reactionFrame.map { $0 % 2 == 0 ? -2 : 0 } ?? 0
+            buf.stamp((tick / 2) % 2 == 0 || reactionFrame != nil ? PetSprites.skeleton1 : PetSprites.skeleton2,
+                      x: 18 + shake, y: 24 + rattle)
             // крыса пробегает по полу справа налево
-            let ratX = 100 - (tick * 3) % 150
+            let ratX = reactionFrame.map { 60 - $0 * 18 } ?? (100 - (tick * 3) % 150)
             buf.stamp(tick % 2 == 0 ? PetSprites.ratA : PetSprites.ratB, x: ratX, y: 53)
             if reactionFrame != nil || tick % 12 >= 9 {
                 buf.runeBubble([10], x: 48, y: 20)
