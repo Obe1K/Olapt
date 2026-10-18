@@ -1,4 +1,4 @@
-"""App icon: pixel-art hooded mage over a glowing book (64x64 -> 1024x1024)."""
+"""App icon: the hooded mage in a red mask over a glowing grimoire (64x64 -> 1024x1024)."""
 import os, sys, math
 from PIL import Image
 
@@ -9,9 +9,15 @@ N = 64
 BG = (13, 11, 10)
 MORTAR = (24, 21, 18)
 BRICK = (17, 15, 13)
-HOOD = (46, 44, 54)
-HOOD_D = (30, 29, 36)
-HOOD_L = (98, 96, 106)
+HOOD = (24, 23, 31)
+HOOD_D = (14, 14, 19)
+HOOD_L = (92, 70, 128)
+MASK_D = (96, 12, 14)
+MASK = (160, 24, 24)
+MASK_L = (214, 58, 46)
+VIOLET = (150, 110, 220)
+VIOLET_B = (210, 180, 255)
+VIOLET_D = (70, 50, 96)
 GOLD = (201, 163, 90)
 GOLD_B = (240, 206, 130)
 GOLD_D = (110, 84, 40)
@@ -86,13 +92,24 @@ def make():
         for x in range(N):
             if ((x - 31.5) / 10.5) ** 2 + ((y - 31.5) / 9.5) ** 2 <= 1:
                 s(x, y, BLACK)
-    # glowing eyes with halo
-    for (ex, ey) in [(25, 30), (35, 30)]:
-        for (hx, hy) in [(-1, 0), (4, 0), (0, -1), (1, -1), (2, -1), (0, 2), (1, 2), (2, 2)]:
-            s(ex + hx, ey + hy, (60, 54, 40))
-        for x in range(ex, ex + 3):
-            for y in range(ey, ey + 2):
-                s(x, y, EYE)
+    # red lacquer mask deep in the hood: a smooth oval, narrower at the chin
+    for y in range(N):
+        for x in range(N):
+            ry = 8.6 if y < 32 else 7.6
+            rx = 7.0 if y < 33 else 7.0 - (y - 33) * 0.45
+            if rx > 0 and ((x - 31.5) / rx) ** 2 + ((y - 31.5) / ry) ** 2 <= 1:
+                s(x, y, MASK if x >= 31 else MASK_D)
+    # brow and nose ridge highlights
+    for (x, y) in [(29, 27), (30, 26), (31, 26), (32, 26), (33, 27), (32, 30), (32, 31), (32, 32), (33, 33)]:
+        s(x, y, MASK_L)
+    # slanted almond eye slits, an ember glow deep inside
+    for (x, y) in [(25, 29), (26, 29), (27, 30), (28, 30), (29, 30), (26, 30),
+                   (38, 29), (37, 29), (36, 30), (35, 30), (34, 30), (37, 30)]:
+        s(x, y, BLACK)
+    s(27, 30, (255, 110, 80)); s(36, 30, (255, 110, 80))
+    # a hairline crack from the forehead
+    for (x, y) in [(28, 24), (28, 25), (27, 26), (27, 27)]:
+        s(x, y, MASK_D)
 
     # open book at the bottom, glowing
     spine = 32
@@ -111,14 +128,14 @@ def make():
     for y in range(48, 62):
         s(spine - 1, y, GOLD_D)
         s(spine, y, (60, 46, 22))
-    # gold rim light on the robe near the book
+    # violet rim light on the robe near the book
     for (x, y) in list(hood):
         if 40 <= y < 47 and px[y][x] == HOOD_L:
-            s(x, y, GOLD)
-    # rising glow / runes from the book
-    for (x, y, c) in [(20, 42, GOLD), (23, 39, GOLD_B), (28, 43, GOLD), (36, 41, GOLD_B),
-                      (41, 43, GOLD), (44, 38, GOLD), (17, 36, GOLD_D), (47, 35, GOLD_D),
-                      (31, 44, GOLD_B)]:
+            s(x, y, VIOLET)
+    # rising sparks from the book
+    for (x, y, c) in [(20, 42, VIOLET), (23, 39, VIOLET_B), (28, 43, VIOLET), (36, 41, VIOLET_B),
+                      (41, 43, VIOLET), (44, 38, VIOLET), (17, 36, VIOLET_D), (47, 35, VIOLET_D),
+                      (31, 44, VIOLET_B)]:
         s(x, y, c)
     return px
 

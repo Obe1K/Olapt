@@ -20,6 +20,11 @@ P = {
     "bone": (228, 220, 200), "eye": (255, 230, 150),
     "mo0": (36, 70, 40), "mo1": (70, 128, 60), "mo2": (126, 196, 100),
     "ic0": (40, 70, 110), "ic1": (80, 140, 196), "ic2": (170, 214, 245),
+    # grim tower (19.10.2026): black wax, violet witch-light, dark lacquer red
+    "nr0": (8, 8, 11), "nr1": (16, 16, 22), "nr2": (27, 26, 35), "nr3": (44, 42, 56), "nr4": (70, 68, 88),
+    "vi0": (14, 9, 20), "vi1": (26, 16, 36), "vi2": (42, 28, 58), "vi3": (70, 50, 96), "vi4": (150, 110, 220),
+    "vi5": (210, 180, 255),
+    "rd0": (70, 10, 12), "rd1": (130, 20, 22), "rd2": (200, 40, 36),
 }
 
 
@@ -264,7 +269,7 @@ def arched_window(cv, x0, y0, x1, y1, moon=True, seed=3):
     return inside
 
 
-BOOK_COLORS = [("bl1", "bl2"), ("rb2", "rb3"), ("mo0", "mo1"), ("wd2", "wd3"), ("gd0", "gd1"), ("st3", "st4"), ("bl0", "bl1")]
+BOOK_COLORS = [("bl0", "bl1"), ("nr2", "nr3"), ("vi1", "vi2"), ("wd1", "wd2"), ("nr1", "nr3"), ("st2", "st3"), ("rd0", "rd1")]
 
 
 def bookshelf(cv, x0, y0, x1, y1, seed=5):
@@ -301,6 +306,10 @@ def bookshelf(cv, x0, y0, x1, y1, seed=5):
                 cv.line([(x, sy - 5), (x + bw - 1, sy - 5)], "gd0")
             x += bw + (1 if rnd.random() < 0.25 else 0)
         top = sy + 2
+
+
+LECTERN_X, LECTERN_Y = 104, 56
+BOOK_X, BOOK_Y = 103, 56
 
 
 def lectern(cv, x, y):
@@ -369,12 +378,13 @@ def wall_shelf(cv, x0, x1, y):
 
 def candle(cv, x, y, lit=True, frame=0, h=12):
     """Candle at base (x, y) bottom; width 4."""
-    cv.rect(x, y - h, x + 3, y, "pa1")
-    cv.line([(x, y - h), (x, y)], "pa2")
-    cv.line([(x + 3, y - h), (x + 3, y)], "pa0")
-    # drips
-    cv.px(x + 1, y - h + 2, "pa2")
-    cv.px(x + 2, y - h + 4, "pa0")
+    cv.rect(x, y - h, x + 3, y, "nr2")
+    cv.line([(x, y - h), (x, y)], "nr4")
+    cv.line([(x + 3, y - h), (x + 3, y)], "nr1")
+    # wax drips running down
+    cv.px(x, y - h + 3, "nr4"); cv.px(x, y - h + 4, "nr3")
+    cv.px(x + 3, y - h + 1, "nr3"); cv.px(x + 3, y - h + 2, "nr3"); cv.px(x + 3, y - h + 3, "nr2")
+    cv.line([(x - 1, y), (x + 4, y)], "nr2")
     cv.px(x + 1, y - h - 1, "st0")  # wick
     if lit:
         fy = y - h - 2
@@ -632,7 +642,7 @@ def thought_bubble_potion():
     # potion inside
     cv.rect(13, 3, 16, 5, "wd2")            # cork
     cv.rect(13, 6, 16, 8, "ic2")            # neck
-    cv.ellipse(9, 8, 20, 18, "mo2", outline="mo0")
+    cv.ellipse(9, 8, 20, 18, "vi4", outline="vi2")
     cv.rect(11, 9, 18, 11, "ic2")           # glass top (air)
     cv.px(11, 12, "pa2"); cv.px(11, 13, "pa2")
     # trail
@@ -656,17 +666,102 @@ def heart_hi():
     return cv
 
 
+# ------------------------------------------------------------------ grim props
+
+def flagstone_floor(cv, y0, seed=2):
+    """Cold flagstones with perspective rows, cracks and grime."""
+    rnd = random.Random(seed)
+    cv.rect(0, y0, cv.w - 1, cv.h - 1, "st0")
+    y = y0
+    k = 0
+    while y < cv.h:
+        hgt = 5 + k * 2
+        x = -rnd.randint(0, 24)
+        while x < cv.w:
+            w = rnd.randint(22, 38) + k * 4
+            shade = rnd.choice(["st1", "st1", "st2", "nr2"])
+            cv.rect(max(0, x + 1), y + 1, min(cv.w - 1, x + w - 1), min(cv.h - 1, y + hgt - 1), shade)
+            cv.line([(max(0, x + 1), y + 1), (min(cv.w - 1, x + w - 2), y + 1)], "st3" if shade == "st2" else "st2")
+            if rnd.random() < 0.4:
+                cx = rnd.randint(x + 3, x + w - 3)
+                for i in range(rnd.randint(3, 7)):
+                    cv.px(cx + i, y + 2 + (i * 3) % max(1, hgt - 2), "st0")
+            if rnd.random() < 0.25:
+                gx = rnd.randint(x + 2, x + w - 4)
+                cv.dither(gx, y + 2, gx + 5, min(cv.h - 1, y + hgt - 2), "nr1", 0.5)
+            x += w
+        y += hgt
+        k += 1
+
+
+def chains_from_ceiling(cv, xs, seed=3):
+    rnd = random.Random(seed)
+    for x in xs:
+        chain(cv, x, 0, rnd.randint(10, 22))
+
+
+def hanging_cage(cv, x, y):
+    chain(cv, x + 6, 0, y)
+    for yy in range(y, y + 16):
+        for xx in (x, x + 4, x + 8, x + 12):
+            cv.px(xx, yy, "st3")
+    cv.line([(x, y), (x + 12, y)], "st4")
+    cv.line([(x - 1, y + 16), (x + 13, y + 16)], "st3")
+    cv.poly([(x + 1, y), (x + 6, y - 4), (x + 11, y)], None, outline="st3")
+    # a bird skull inside
+    cv.px(x + 5, y + 14, "bone"); cv.px(x + 6, y + 14, "bone"); cv.px(x + 7, y + 15, "pa0")
+
+
+def skull(cv, x, y):
+    rows = [".###.", "#####", "#.#.#", "#####", ".#.#."]
+    for r, row in enumerate(rows):
+        for c, ch in enumerate(row):
+            if ch == "#":
+                cv.px(x + c, y + r, "bone" if r < 2 else "pa1")
+
+
+def bone_pile(cv, x, y1):
+    for (dx, dy, l) in [(0, 0, 9), (4, -2, 8), (10, 0, 7), (2, -4, 6)]:
+        cv.line([(x + dx, y1 + dy), (x + dx + l, y1 + dy - 1)], "pa1")
+        cv.px(x + dx, y1 + dy, "bone"); cv.px(x + dx + l, y1 + dy - 1, "bone")
+    skull(cv, x + 6, y1 - 9)
+
+
+def coffin(cv, x0, y1):
+    """Coffin leaning against the wall, lid ajar."""
+    pts = [(x0 + 6, y1 - 50), (x0 + 18, y1 - 50), (x0 + 24, y1 - 36), (x0 + 19, y1), (x0 + 5, y1), (x0, y1 - 36)]
+    cv.poly(pts, "wd0", outline="nr0")
+    cv.poly([(x0 + 8, y1 - 47), (x0 + 17, y1 - 47), (x0 + 21, y1 - 36), (x0 + 17, y1 - 3), (x0 + 7, y1 - 3), (x0 + 3, y1 - 36)], "wd1")
+    cv.line([(x0 + 12, y1 - 44), (x0 + 12, y1 - 18)], "nr1")
+    cv.line([(x0 + 8, y1 - 37), (x0 + 16, y1 - 37)], "nr1")
+    cv.line([(x0 + 6, y1 - 50), (x0 + 18, y1 - 50)], "wd2")
+
+
+def jar_shelf(cv, x0, x1, y):
+    wall_shelf(cv, x0, x1, y)
+    for i, x in enumerate(range(x0 + 3, x1 - 6, 8)):
+        c = ("mo0", "vi2", "rd0", "ic0")[i % 4]
+        cv.rect(x, y - 7, x + 4, y - 1, c)
+        cv.line([(x, y - 7), (x, y - 1)], "st4")
+        cv.rect(x + 1, y - 9, x + 3, y - 8, "wd1")
+        if i % 4 == 1:
+            cv.px(x + 2, y - 4, "pa2")   # an eye floating in the jar
+            cv.px(x + 2, y - 3, "void")
+
+
 # ------------------------------------------------------------------ rooms (backgrounds without dynamic parts)
 
 def room_base(cv, wall="stone", floor="wood", seed=1):
     if wall == "stone":
-        stone_wall(cv, 0, 0, W - 1, 92, seed=seed)
+        stone_wall(cv, 0, 0, W - 1, 92, seed=seed, dark=True)
     else:
         dungeon_wall(cv, 0, 0, W - 1, 92, seed=seed)
     cv.rect(0, 92, W - 1, 94, "st0")
     cv.line([(0, 92), (W - 1, 92)], "st3")
     if floor == "wood":
         wood_floor(cv, 95)
+    elif floor == "stone":
+        flagstone_floor(cv, 95, seed=seed + 2)
     else:
         straw_floor(cv, 93, seed=seed + 3)
 
@@ -736,28 +831,40 @@ def fire(cv, x0, y1, frame=0):
         x = x0 + 11 + i
         hgt = 8 + int(6 * abs(math.sin((i + frame * 3) * 0.7))) + (3 if 6 < i < 16 else 0)
         for k in range(hgt):
-            c = "fl2" if k < hgt * 0.3 else ("fl1" if k < hgt * 0.7 else "fl0")
+            c = "vi5" if k < hgt * 0.3 else ("vi4" if k < hgt * 0.7 else "vi3")
             cv.px(x, y1 - 5 - k, c)
 
 
 def banner(cv, x0, y0, w=24, h=40):
-    cv.line([(x0 - 2, y0), (x0 + w + 2, y0)], "wd2")
-    cv.rect(x0, y0 + 1, x0 + w, y0 + h, "bl1")
-    cv.line([(x0, y0 + 1), (x0, y0 + h)], "bl2")
-    cv.line([(x0 + w, y0 + 1), (x0 + w, y0 + h)], "bl0")
-    # swallowtail
+    """Tattered black banner with a dark red border and a bone skull sigil."""
+    rnd = random.Random(x0 * 7 + y0)
+    b = Canvas(w + 5, h + 1)
+    ox = 2
+    b.line([(0, 0), (w + 4, 0)], "wd1")
+    b.rect(ox, 1, ox + w, h, "nr1")
+    b.line([(ox, 1), (ox, h)], "rd0")
+    b.line([(ox + 1, 1), (ox + 1, h)], "rd1")
+    b.line([(ox + w, 1), (ox + w, h)], "rd0")
+    b.line([(ox + w - 1, 1), (ox + w - 1, h)], "rd0")
+    # tattered bottom and a few moth holes
     for i in range(w + 1):
-        cut = abs(i - w / 2) / (w / 2)
-        for y in range(y0 + h - 6 + int(6 * (1 - cut)), y0 + h + 1):
-            cv.px(x0 + i, y, "st1")
-    # gold emblem: a book with a star
-    cx, cy = x0 + w // 2, y0 + 14
-    cv.rect(cx - 6, cy - 4, cx + 6, cy + 4, "gd1")
-    cv.line([(cx, cy - 4), (cx, cy + 4)], "gd0")
-    cv.rect(cx - 5, cy - 3, cx - 1, cy + 3, "gd2")
-    cv.rect(cx + 1, cy - 3, cx + 5, cy + 3, "gd2")
-    cv.px(cx, cy - 9, "gd2"); cv.px(cx - 1, cy - 8, "gd1"); cv.px(cx + 1, cy - 8, "gd1"); cv.px(cx, cy - 7, "gd1")
-    cv.line([(x0 + 2, y0 + 26), (x0 + w - 2, y0 + 26)], "gd0")
+        for y in range(h - rnd.randint(0, 7), h + 1):
+            b.px(ox + i, y, (0, 0, 0, 0))
+    for _ in range(3):
+        hx, hy = rnd.randint(ox + 3, ox + w - 4), rnd.randint(20, h - 10)
+        b.px(hx, hy, (0, 0, 0, 0))
+        b.px(hx + 1, hy, (0, 0, 0, 0))
+    # skull sigil
+    cx, cy = ox + w // 2, 12
+    b.ellipse(cx - 5, cy - 5, cx + 5, cy + 4, "bone")
+    b.rect(cx - 3, cy + 3, cx + 3, cy + 6, "pa1")
+    b.rect(cx - 3, cy - 1, cx - 1, cy + 1, "nr0")
+    b.rect(cx + 1, cy - 1, cx + 3, cy + 1, "nr0")
+    b.px(cx, cy + 2, "nr0")
+    for k in range(-2, 3, 2):
+        b.px(cx + k, cy + 5, "nr0")
+    b.line([(ox + 3, 22), (ox + w - 3, 22)], "rd1")
+    cv.paste(b, x0 - ox, y0)
 
 
 def telescope(cv, x0, y1):
@@ -806,66 +913,93 @@ def summit_sky(cv, seed=4):
 def make_room(kind):
     cv = Canvas(bg="st1")
     if kind == "cellar":
-        room_base(cv, wall="stone", floor="straw", seed=11)
+        room_base(cv, wall="dungeon", floor="straw", seed=11)
         small_window(cv, 150, 10)
-        barrels(cv, 4, 93)
+        coffin(cv, 6, 93)
+        bone_pile(cv, 32, 93)
+        chains_from_ceiling(cv, (78, 128), seed=11)
         cobweb(cv, 0, 0)
         cobweb(cv, W - 1, 0, flip=True)
     elif kind == "hall":
-        room_base(cv, wall="stone", floor="wood", seed=12)
-        rug(cv)
+        room_base(cv, wall="stone", floor="stone", seed=12)
         arched_window(cv, 140, 14, 176, 70)
         fireplace(cv, 4, 93)
+        skull(cv, 22, 42)
         banner(cv, 104, 6)
+        chains_from_ceiling(cv, (60, 96), seed=12)
+        cobweb(cv, W - 1, 0, flip=True)
     elif kind == "library":
-        room_base(cv, wall="stone", floor="wood", seed=1)
-        rug(cv)
+        room_base(cv, wall="stone", floor="stone", seed=1)
         arched_window(cv, 140, 14, 176, 70)
         bookshelf(cv, 6, 30, 46, 92)
+        skull(cv, 30, 22)
+        cobweb(cv, 0, 0)
+        cobweb(cv, W - 1, 0, flip=True)
     elif kind == "summit":
         summit_sky(cv)
         cv.rect(0, 92, W - 1, 94, "st0")
         cv.line([(0, 92), (W - 1, 92)], "st3")
-        straw_floor(cv, 93, seed=21)
-        telescope(cv, 150, 92)
+        flagstone_floor(cv, 95, seed=21)
+        telescope(cv, 2, 92)
     elif kind == "dungeon":
         room_base(cv, wall="dungeon", floor="straw", seed=7)
         barred_window(cv, 80, 10, 108, 28)
-    if kind != "summit" and kind != "dungeon":
-        pass
+        bone_pile(cv, 150, 100)
     wall_shelf(cv, 8, 58, 22)
-    lectern_x = 104
     if kind != "dungeon":
-        lectern(cv, lectern_x, 52)
+        lectern(cv, LECTERN_X, LECTERN_Y)
     return cv
 
 
 def room_lighting(cv, kind, lit):
     for i in range(lit):
-        light(cv, 14 + i * 12, 6, 22, "fl1", 0.35)
+        light(cv, 14 + i * 12, 6, 18, "fl1", 0.22)
     if kind != "dungeon":
-        light(cv, 121, 44, 34, "gd2", 0.4 if kind != "cellar" else 0.3)
+        # the grimoire glows with a cold violet light
+        light(cv, 121, LECTERN_Y - 6, 30, "vi4", 0.3 if kind != "cellar" else 0.24)
     if kind in ("library", "hall"):
-        light(cv, 158, 40, 30, "ic1", 0.18)
+        light(cv, 158, 40, 34, "ic1", 0.24)
+    if kind == "cellar":
+        light(cv, 159, 22, 22, "ic1", 0.2)
     if kind == "hall":
-        light(cv, 25, 80, 40, "fl1", 0.45)
+        light(cv, 25, 80, 36, "vi4", 0.38)
     if kind == "dungeon":
         light_shaft(cv, 80, 108, 29, 93)
-    vignette(cv, 0.6 if kind != "dungeon" else 0.7)
+    vignette(cv, 0.74 if kind != "dungeon" else 0.72)
 
 
 # ------------------------------------------------------------------ items for learned words
 
 def item_cauldron(frame=0):
+    """Black iron cauldron with a dark violet brew."""
     cv = Canvas(30, 24)
-    cv.ellipse(2, 6, 28, 24, "st0", outline="st2")
-    cv.ellipse(4, 6, 26, 12, "mo1")
-    cv.ellipse(6, 7, 24, 11, "mo2")
-    cv.line([(2, 9), (28, 9)], "st3")
+    cv.ellipse(2, 6, 28, 24, "nr1", outline="nr3")
+    cv.ellipse(4, 6, 26, 12, "vi1")
+    cv.ellipse(6, 7, 24, 11, "vi2")
+    cv.px(9 + frame, 8, "vi3"); cv.px(18 - frame, 9, "vi3")
+    cv.line([(2, 9), (28, 9)], "nr4")
     for (x, y) in [(10, 4 - frame % 2), (16, 2 + frame % 2), (21, 5 - frame % 2)]:
-        cv.ellipse(x, y, x + 2, y + 2, "mo2")
-    cv.rect(6, 22, 8, 24, "st2"); cv.rect(22, 22, 24, 24, "st2")
-    cv.px(5, 12, "st4"); cv.px(4, 15, "st3")
+        cv.ellipse(x, y, x + 2, y + 2, "vi3")
+        cv.px(x + 1, y, "vi4")
+    cv.rect(6, 22, 8, 24, "nr2"); cv.rect(22, 22, 24, 24, "nr2")
+    cv.px(5, 12, "nr4"); cv.px(4, 15, "nr3")
+    return cv
+
+
+def item_bats(frame=0):
+    """Three bats flapping above the window. 32 x 12."""
+    cv = Canvas(32, 12)
+    up = ["#.....#", "##...##", ".#####.", "..###..", "...#..."]
+    down = [".......", "..###..", "#######", "#.###.#", "...#..."]
+    for i, (bx, by) in enumerate([(0, 4), (12, 0), (24, 5)]):
+        rows = up if (frame + i) % 2 == 0 else down
+        cv.sprite(rows, bx, by, {"#": "nr0"})
+        # moonlit wing edges
+        for r, row in enumerate(rows):
+            for c, ch in enumerate(row):
+                if ch == "#" and (r == 0 or rows[r - 1][c] != "#"):
+                    cv.px(bx + c, by + r, "nr4")
+        cv.px(bx + 3, by + 2, "rd2")
     return cv
 
 
@@ -913,8 +1047,8 @@ def item_crystal_ball(frame=0):
 
 def item_star_map():
     cv = Canvas(30, 18)
-    cv.rect(0, 0, 29, 17, "pa1")
-    cv.rect(1, 1, 28, 16, "pa2")
+    cv.rect(0, 0, 29, 17, "pa0")
+    cv.rect(1, 1, 28, 16, "pa1")
     cv.line([(0, 0), (29, 0)], "wd2"); cv.line([(0, 17), (29, 17)], "wd2")
     for (x, y) in [(5, 4), (9, 7), (14, 5), (20, 9), (24, 4), (17, 12), (7, 12)]:
         cv.px(x, y, "rb2")
@@ -989,24 +1123,24 @@ def item_armor():
 
 def item_magic_circle(frame=0):
     cv = Canvas(64, 14)
-    cv.ellipse(0, 0, 63, 13, None, outline="ic1" if frame % 2 else "ic2")
-    cv.ellipse(6, 2, 57, 11, None, outline="ic0")
+    cv.ellipse(0, 0, 63, 13, None, outline="vi3" if frame % 2 else "vi4")
+    cv.ellipse(6, 2, 57, 11, None, outline="vi2")
     for i, x in enumerate(range(8, 56, 8)):
-        cv.px(x, 6 + (i % 2), "ic2")
+        cv.px(x, 6 + (i % 2), "vi5")
     return cv
 
 
 ITEMS = [
     # (threshold, key, title, slot x, slot y)
-    (50, "cauldron", "Котёл с зельем", 12, 90),
+    (50, "cauldron", "Котёл с зельем", 140, 69),
     (100, "raven", "Ворон", 172, 61),
-    (150, "crystal", "Хрустальный шар", 172, 76),
+    (150, "crystal", "Хрустальный шар", 174, 76),
     (200, "starmap", "Карта звёзд", 66, 4),
     (250, "hourglass", "Песочные часы", 50, 9),
     (300, "cat", "Чёрный кот", 44, 102),
-    (350, "staff", "Посох", 50, 41),
+    (350, "bats", "Летучие мыши", 146, 0),
     (400, "banner", "Знамя", 104, 6),
-    (450, "armor", "Доспехи", 146, 54),
+    (450, "armor", "Доспехи", 48, 54),
     (500, "circle", "Магический круг", 64, 104),
 ]
 
@@ -1049,10 +1183,10 @@ def sparks_hi(frame=0):
     pts = [(rnd.randint(2, 37), rnd.randint(0, 29)) for _ in range(14)]
     for i, (x, y) in enumerate(pts):
         yy = (y - frame * 4) % 30
-        c = "gd2" if (i + frame) % 3 else "pa2"
+        c = "vi4" if (i + frame) % 3 else "vi5"
         cv.px(x + (frame + i) % 2, yy, c)
         if i % 4 == 0:
-            cv.px(x, yy + 1, "gd1")
+            cv.px(x, yy + 1, "vi3")
     return cv
 
 

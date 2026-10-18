@@ -26,9 +26,9 @@ def scene(room="library", mood="happy", lit=4, items=10, tick=0):
     if mood in ("happy", "ok"):
         if room == "hall":
             put(c, f"pet_fire{tick % 3}")
-        keys = ["cauldron", "raven", "crystal", "starmap", "hourglass", "cat", "staff", "banner", "armor", "circle"][:items]
+        keys = ["cauldron", "raven", "crystal", "starmap", "hourglass", "cat", "bats", "banner", "armor", "circle"][:items]
         for k in keys:
-            if room == "summit" and k in ("starmap", "staff", "banner"):
+            if room == "summit" and k in ("starmap", "banner"):
                 continue
             names = sorted(n for n in L if n.startswith(f"pet_item_{k}"))
             put(c, names[tick % len(names)])
@@ -36,6 +36,7 @@ def scene(room="library", mood="happy", lit=4, items=10, tick=0):
         if mood == "happy":
             put(c, f"pet_sparks{tick % 3}")
             put(c, "pet_mage_read")
+            put(c, f"pet_runes{tick % 10}")
         else:
             put(c, "pet_mage_tired")
             put(c, "pet_thought")

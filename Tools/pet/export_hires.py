@@ -6,6 +6,11 @@ import os, sys, json, shutil
 sys.path.insert(0, os.path.dirname(__file__))
 from hires import *
 from PIL import Image
+import mage2
+
+MAGE_X, MAGE_Y = 65, 28        # tower mage: hand on the book, feet on the floor
+ANGRY_X, ANGRY_Y = 40, 28      # starving mage in the dungeon
+BATTLE_X, BATTLE_Y = 14, 34    # mage in the boss arena
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 ASSETS = os.path.join(ROOT, "OlaPT", "Assets.xcassets", "Pet")
@@ -63,6 +68,8 @@ def main():
             for (rx, hx) in ((40, 40), (88, 88)):
                 cv.ellipse(rx - 3, 56, rx + 3, 62, None, outline="st4")
                 chain(cv, rx, 63, 76)
+            # the red mask fell into the straw
+            cv.paste(mage2.mask_on_floor(), 106, 103)
         room_lighting(cv, k, 0)
         img = cv.img.copy()
         # the vignette is applied in room_lighting; keep opaque
@@ -83,24 +90,31 @@ def main():
         for x in range(48):
             d = ((x - 24) ** 2 + (y - 24) ** 2) ** 0.5 / 24
             if d < 1:
-                a = int(255 * 0.30 * (1 - d) ** 2)
+                a = int(255 * 0.20 * (1 - d) ** 2)
                 px[x, y] = P["fl1"] + (a,)
     save_png("pet_candle_light", lc.img)
     layers["pet_candle_light"] = (-24, -24, 48, 48)
 
     # book and page turn, sparks
-    export_full("pet_book", at(lambda cv: open_book(cv, 103, 52, glow=False)))
-    export_full("pet_page_turn", sprite_at(page_turn_hi(), 104, 41))
+    export_full("pet_book", at(lambda cv: open_book(cv, BOOK_X, BOOK_Y, glow=False)))
+    export_full("pet_page_turn", sprite_at(page_turn_hi(), BOOK_X + 1, BOOK_Y - 11))
     for f in range(3):
-        export_full(f"pet_sparks{f}", sprite_at(sparks_hi(f), 103, 18))
+        export_full(f"pet_sparks{f}", sprite_at(sparks_hi(f), BOOK_X, BOOK_Y - 34))
 
     # mage poses (tower)
-    for pose, ph, name in [("read", 0, "pet_mage_read"), ("read", 1, "pet_mage_read2"), ("tired", 0, "pet_mage_tired"),
-                           ("drink", 0, "pet_mage_drink"), ("wave", 0, "pet_mage_wave")]:
-        export_full(name, sprite_at(mage_hi(pose, ph), 58, 24))
+    rune_origin = None
+    for pose, name in [("read", "pet_mage_read"), ("read2", "pet_mage_read2"), ("tired", "pet_mage_tired"),
+                       ("drink", "pet_mage_drink"), ("wave", "pet_mage_wave")]:
+        sprite, top = mage2.build(pose)
+        if pose == "read":
+            rune_origin = (MAGE_X + top[0], MAGE_Y + top[1])
+        export_full(name, sprite_at(sprite, MAGE_X, MAGE_Y))
+    # runes puffed from the lantern on the staff
+    for f in range(mage2.RUNE_FRAMES):
+        export_full(f"pet_runes{f}", at(lambda cv: mage2.rune_smoke(cv, rune_origin, f)))
     # dungeon
     for f in range(2):
-        export_full(f"pet_mage_angry{f}", sprite_at(mage_angry_hi(f), 40, 20))
+        export_full(f"pet_mage_angry{f}", sprite_at(mage2.angry(f), ANGRY_X, ANGRY_Y))
         export_full(f"pet_skeleton{f}", sprite_at(skeleton_hi(f), 36, 54))
         rat = rat_hi(f)
         save_png(f"pet_rat{f}", rat.img)
@@ -110,7 +124,7 @@ def main():
     tb = thought_bubble_potion()
     export_full("pet_thought", sprite_at(tb, 92, 0))
     hb = heart_hi()
-    save_png("pet_heart", hb.img); layers["pet_heart"] = (102, 14, hb.w, hb.h)
+    save_png("pet_heart", hb.img); layers["pet_heart"] = (90, 20, hb.w, hb.h)
     # rune bubbles: curses + "!!!!" + "…"
     curses = [[0, 2, 4, 9], [3, 1, 6, 9], [5, 7, 2, 9, 9], [4, 8, 0, 9], [6, 3, 5, 1], [2, 2, 7, 9]]
     for i, c in enumerate(curses):
@@ -129,7 +143,7 @@ def main():
         "starmap": [item_star_map()],
         "hourglass": [item_hourglass(0), item_hourglass(1), item_hourglass(2)],
         "cat": [item_cat(1), item_cat(0)],
-        "staff": [item_staff()],
+        "bats": [item_bats(0), item_bats(1)],
         "banner": None,
         "armor": [item_armor()],
         "circle": [item_magic_circle(0), item_magic_circle(1)],
@@ -147,8 +161,8 @@ def main():
     for f in range(4):
         for i, tx in enumerate((14, 176)):
             export_full(f"pet_torch{i}_{f}", sprite_at(torch_flame(f + i), tx - 2, 20))
-    export_full("pet_battle_mage", sprite_at(mage_hi("wave", 0), 18, 30))
-    export_full("pet_battle_mage_hurt", sprite_at(mage_hi("tired", 0), 18, 30))
+    export_full("pet_battle_mage", sprite_at(mage2.build("wave")[0], BATTLE_X, BATTLE_Y))
+    export_full("pet_battle_mage_hurt", sprite_at(mage2.build("tired")[0], BATTLE_X, BATTLE_Y))
     for f in range(2):
         bolt = fire_bolt(f)
         save_png(f"pet_bolt{f}", bolt.img)

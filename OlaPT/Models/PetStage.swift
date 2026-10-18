@@ -67,7 +67,10 @@ enum PetComposer {
     }
 
     /// Вещи, которые на вершине негде повесить (там нет стены)
-    private static let wallItems: Set<String> = ["starmap", "staff", "banner"]
+    private static let wallItems: Set<String> = ["starmap", "banner"]
+
+    /// Кадров у рун, которые маг выдувает из фонаря на посохе
+    private static let runeFrames = 10
 
     private struct Builder {
         var list: [PlacedLayer] = []
@@ -148,6 +151,8 @@ enum PetComposer {
                 b.add("pet_sparks\(tick % 3)")
                 if turning { b.add("pet_page_turn") }
                 b.add(turning ? "pet_mage_read2" : "pet_mage_read")
+                // из фонаря на посохе, как дым, поднимаются руны
+                b.add("pet_runes\(tick % runeFrames)")
             } else {
                 // проголодался: книга заброшена, мечтает о зелье
                 b.add("pet_mage_tired")
