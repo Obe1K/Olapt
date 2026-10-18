@@ -155,3 +155,27 @@ struct EmptyHint: View {
         .padding(.vertical, 12)
     }
 }
+
+// MARK: - Подсветка акцентов
+
+/// «falámos» с подсвеченной «á», если пользователь написал «falamos».
+enum AccentHighlight {
+    /// - lead: начало без подсветки, например «nós »
+    static func attributed(_ answer: String, typed: String, lead: String = "") -> AttributedString {
+        let marks = AccentCheck.slips(typed: typed, answer: answer)
+        var result = AttributedString(lead)
+        for (i, ch) in answer.enumerated() {
+            var piece = AttributedString(String(ch))
+            if marks.contains(i) {
+                piece.foregroundColor = Theme.goldBright
+                piece.underlineStyle = .single
+            }
+            result += piece
+        }
+        return result
+    }
+
+    static func text(_ answer: String, typed: String, lead: String = "") -> Text {
+        return Text(attributed(answer, typed: typed, lead: lead))
+    }
+}

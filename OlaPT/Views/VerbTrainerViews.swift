@@ -201,6 +201,11 @@ final class VerbStudySession: ObservableObject {
     @Published var correctCount: Int = 0
     @Published var totalCount: Int = 0
     @Published var mistakes: [VerbQuestion] = []
+    /// Как проверен последний ответ и что было введено (для подсветки акцентов)
+    @Published var lastVerdict: VerbVerdict = .wrong
+    @Published var lastTyped: String = ""
+    /// Формы, засчитанные без нужного акцента
+    @Published var accentSlips: [AccentSlip] = []
     @Published var finished: Bool = false
 
     init(request: VerbSessionRequest, library: VerbLibrary, progress: [String: WordProgress]) {
@@ -248,26 +253,40 @@ final class VerbStudySession: ObservableObject {
         correctCount = 0
         totalCount = 0
         mistakes = []
+        accentSlips = []
         finished = queue.isEmpty
     }
 
     func answerChoice(_ choice: Int, model: AppModel) {
         guard !answered, let q = current else { return }
         selectedIndex = choice
+        lastVerdict = choice == q.correctIndex ? .exact : .wrong
         finish(ok: choice == q.correctIndex, question: q, model: model)
     }
 
     func answerText(_ text: String, model: AppModel) {
         guard !answered, let q = current else { return }
-        finish(ok: VerbExerciseBuilder.isCorrect(input: text, question: q), question: q, model: model)
+        let verdict = VerbExerciseBuilder.verdict(input: text, question: q, tenses: model.verbs.tenses)
+        lastVerdict = verdict
+        lastTyped = text
+        // Строгий режим (Настройки → Упражнения): без акцента — ошибка
+        let accentOK = verdict == .accentsOnly && !model.settings.strictAccents
+        if accentOK && !q.isRetry {
+            let key = q.verb.inf + "|" + q.tense.id + "|\(q.person)"
+            if !accentSlips.contains(where: { $0.key == key }) {
+                accentSlips.append(AccentSlip(key: key, typed: text, answer: q.lead + " " + q.answer))
+            }
+        }
+        finish(ok: verdict == .exact || accentOK, accentsOnly: accentOK, question: q, model: model)
     }
 
     func giveUp(model: AppModel) {
         guard !answered, let q = current else { return }
+        lastVerdict = .wrong
         finish(ok: false, question: q, model: model)
     }
 
-    private func finish(ok: Bool, question q: VerbQuestion, model: AppModel) {
+    private func finish(ok: Bool, accentsOnly: Bool = false, question q: VerbQuestion, model: AppModel) {
         answered = true
         lastCorrect = ok
         SoundFX.shared.play(ok ? .correct : .wrong)
@@ -278,7 +297,8 @@ final class VerbStudySession: ObservableObject {
             } else {
                 mistakes.append(q)
             }
-            model.recordVerb(verb: q.verb, tense: q.tense, correct: ok, recognition: !q.options.isEmpty)
+            model.recordVerb(verb: q.verb, tense: q.tense, correct: ok, recognition: !q.options.isEmpty,
+                             accentsOnly: accentsOnly)
             if !ok {
                 var retry = q
                 retry.isRetry = true
@@ -479,7 +499,7 @@ struct VerbSessionView: View {
                     check()
                 }
             if !session.answered {
-                Text("Ударения важны: falamos ≠ falámos.")
+                Text("Забытый акцент засчитаем с напоминанием, но falamos ≠ falámos — это разные времена.")
                     .font(.caption)
                     .foregroundColor(.secondary)
                 HStack(spacing: 12) {
@@ -515,7 +535,19 @@ struct VerbSessionView: View {
     @ViewBuilder
     private func feedback(_ q: VerbQuestion) -> some View {
         VStack(spacing: 10) {
-            if session.lastCorrect {
+            if session.lastCorrect && session.lastVerdict == .accentsOnly {
+                Label("Верно, но с акцентом", systemImage: "checkmark.circle.fill")
+                    .font(Theme.pixel(20, relativeTo: .title3))
+                    .foregroundColor(Theme.goldBright)
+                    .accessibilityIdentifier("accent-feedback")
+                AccentHighlight.text(q.answer, typed: session.lastTyped, lead: q.lead + " ")
+                    .font(.title3.weight(.semibold))
+                    .foregroundColor(Theme.text)
+                Text("Засчитано. Не забывайте акцент: в глаголах он часто отличает одно время от другого.")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+            } else if session.lastCorrect {
                 Label("Верно!", systemImage: "checkmark.circle.fill")
                     .font(Theme.pixel(22, relativeTo: .title3))
                     .foregroundColor(Theme.moss)
@@ -523,9 +555,29 @@ struct VerbSessionView: View {
                 Label("Неверно", systemImage: "xmark.circle.fill")
                     .font(Theme.pixel(22, relativeTo: .title3))
                     .foregroundColor(Theme.red)
-                Text("Правильно: \(q.lead) \(q.answer)")
-                    .font(.headline)
-                    .multilineTextAlignment(.center)
+                switch session.lastVerdict {
+                case let .otherForm(form, tenseName, pronoun):
+                    Text("«\(form)» — это \(tenseName)\(pronoun.isEmpty ? "" : " (" + pronoun + ")"). Здесь нужен акцент:")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                        .accessibilityIdentifier("other-form-feedback")
+                    AccentHighlight.text(q.answer, typed: session.lastTyped, lead: q.lead + " ")
+                        .font(.headline)
+                        .foregroundColor(Theme.text)
+                case .accentsOnly:
+                    AccentHighlight.text(q.answer, typed: session.lastTyped, lead: q.lead + " ")
+                        .font(.headline)
+                        .foregroundColor(Theme.text)
+                    Text("Включена строгая проверка ударений (Настройки → Упражнения).")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                default:
+                    Text("Правильно: \(q.lead) \(q.answer)")
+                        .font(.headline)
+                        .multilineTextAlignment(.center)
+                }
             }
             HStack(spacing: 8) {
                 Text("\(q.lead) \(q.answer)")
@@ -559,6 +611,22 @@ struct VerbSessionView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 8)
+            }
+
+            if !session.accentSlips.isEmpty {
+                Section(header: GothicHeader("Проверьте акценты"),
+                        footer: Text("Эти ответы засчитаны, но в них не хватало акцента.")) {
+                    ForEach(session.accentSlips) { slip in
+                        VStack(alignment: .leading, spacing: 2) {
+                            AccentHighlight.text(slip.answer, typed: slip.typed)
+                                .font(.headline)
+                                .foregroundColor(Theme.text)
+                            Text("вы написали: \(slip.typed)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                }
             }
 
             if !session.mistakes.isEmpty {

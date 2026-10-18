@@ -55,7 +55,8 @@ struct SettingsView: View {
                 }
             }
 
-            Section(header: GothicHeader("Упражнения")) {
+            Section(header: GothicHeader("Упражнения"),
+                    footer: Text("Без строгой проверки ответ без акцента засчитывается, но приложение покажет, где он нужен. Со строгой — такой ответ считается ошибкой.")) {
                 Picker("Язык перевода", selection: setting(\.exerciseLanguage)) {
                     ForEach(languageChoices) { choice in
                         Text(choice.title).tag(choice.code)

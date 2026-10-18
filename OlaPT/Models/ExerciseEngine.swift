@@ -238,31 +238,10 @@ struct ExerciseBuilder {
 
     // MARK: - Подсказка при вводе
 
-    /// Сколько первых символов ввода совпадают с началом хотя бы одного правильного ответа.
-    /// Регистр не важен, пробел и дефис равнозначны; диакритика учитывается, только если включена
-    /// строгая проверка ударений. Пример: ответ «curto», ввод «cuz» → 2 (c, u — верно, z — нет).
-    static func matchingPrefixLength(input: String, question: WordQuestion, strictAccents: Bool) -> Int {
-        func normalize(_ ch: Character) -> String {
-            var s = String(ch).lowercased()
-            if s == "-" || s == "–" || s == "—" { s = " " }
-            if s == "’" { s = "'" }
-            if !strictAccents {
-                s = s.folding(options: [.diacriticInsensitive], locale: nil)
-            }
-            return s
-        }
-        let typed = Array(input).map(normalize)
-        var best = 0
-        for answer in question.accepted {
-            let target = Array(answer).map(normalize)
-            var n = 0
-            while n < typed.count && n < target.count && typed[n] == target[n] {
-                n += 1
-            }
-            if n > best { best = n }
-            if best == typed.count { break }
-        }
-        return best
+    /// Раскраска ввода: верное начало (без учёта диакритики) и места, где не хватает акцента.
+    /// Пример: ответ «lição», ввод «lica» → 4 верных символа, в позиции 2 нет седили.
+    static func coloring(input: String, question: WordQuestion) -> AnswerColoring {
+        return AccentCheck.coloring(input: input, answers: question.accepted)
     }
 
     // MARK: - Проверка ответа
@@ -283,5 +262,14 @@ struct ExerciseBuilder {
         if strictSet.contains(strictInput) { return .exact }
         if lenientSet.contains(lenientInput) { return .accentsOnly }
         return .wrong
+    }
+
+    /// Правильный ответ, с которым ввод совпал без учёта диакритики (для подсветки акцентов).
+    static func accentMatch(input: String, question: WordQuestion) -> String? {
+        let lang = question.acceptedLang
+        let lenientInput = TextUtil.normalizeAnswer(input, lang: lang, keepAccents: false)
+        return question.accepted.first {
+            TextUtil.normalizeAnswer($0, lang: lang, keepAccents: false) == lenientInput
+        }
     }
 }

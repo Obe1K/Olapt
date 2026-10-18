@@ -14,6 +14,11 @@ final class WordStudySession: ObservableObject {
     @Published var correctCount: Int = 0
     @Published var totalCount: Int = 0
     @Published var mistakes: [Word] = []
+    /// Ответы без нужного акцента: засчитаны, но в итогах напоминаем, как пишется
+    @Published var accentSlips: [AccentSlip] = []
+    /// Что ввёл пользователь и с каким ответом это совпало (для подсветки акцентов)
+    @Published var lastTyped: String = ""
+    @Published var lastMatch: String = ""
     @Published var finished: Bool = false
     /// Все верные и неверные ответы, включая повторы (для боя с боссом)
     @Published var hits: Int = 0
@@ -46,6 +51,7 @@ final class WordStudySession: ObservableObject {
         correctCount = 0
         totalCount = 0
         mistakes = []
+        accentSlips = []
         hits = 0
         misses = 0
         finished = queue.isEmpty
@@ -61,8 +67,13 @@ final class WordStudySession: ObservableObject {
     func answerText(_ text: String, model: AppModel) {
         guard !answered, let q = current else { return }
         var verdict = ExerciseBuilder.verdict(input: text, question: q)
+        lastTyped = text
+        lastMatch = ExerciseBuilder.accentMatch(input: text, question: q) ?? q.answerText
         if verdict == .accentsOnly && model.settings.strictAccents {
             verdict = .wrong
+        }
+        if verdict == .accentsOnly && !q.isRetry && !accentSlips.contains(where: { $0.key == q.word.id }) {
+            accentSlips.append(AccentSlip(key: q.word.id, typed: text, answer: lastMatch))
         }
         finish(ok: verdict != .wrong, verdict: verdict, model: model)
     }
@@ -340,9 +351,8 @@ struct StudySessionView: View {
                 isFocused: $fieldFocused,
                 placeholder: "Ваш ответ",
                 isEnabled: !session.answered,
-                correctPrefix: { input in
-                    ExerciseBuilder.matchingPrefixLength(input: input, question: q,
-                                                         strictAccents: model.settings.strictAccents)
+                coloring: { input in
+                    ExerciseBuilder.coloring(input: input, question: q)
                 },
                 onSubmit: { check() }
             )
@@ -350,7 +360,7 @@ struct StudySessionView: View {
             .padding(.horizontal, 12)
             .background(PixelFrame(fill: Theme.panelDeep))
             if !session.answered {
-                Text("Зелёные буквы — пока всё верно, красные — с места ошибки.")
+                Text("Зелёные буквы — верно, золотые — не хватает акцента, красные — с места ошибки.")
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -391,23 +401,41 @@ struct StudySessionView: View {
     @ViewBuilder
     private func feedback(_ q: WordQuestion) -> some View {
         VStack(spacing: 10) {
-            if session.lastCorrect {
+            if session.lastCorrect && session.lastVerdict == .accentsOnly {
+                Label("Верно, но с акцентом", systemImage: "checkmark.circle.fill")
+                    .font(Theme.pixel(20, relativeTo: .title3))
+                    .foregroundColor(Theme.goldBright)
+                    .accessibilityIdentifier("accent-feedback")
+                AccentHighlight.text(session.lastMatch, typed: session.lastTyped)
+                    .font(.title3.weight(.semibold))
+                    .foregroundColor(Theme.text)
+                Text("Засчитано. Не забывайте акцент: он меняет произношение, а иногда и смысл.")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+            } else if session.lastCorrect {
                 Label("Верно!", systemImage: "checkmark.circle.fill")
                     .font(Theme.pixel(22, relativeTo: .title3))
                     .foregroundColor(Theme.moss)
-                if session.lastVerdict == .accentsOnly {
-                    Text("Правильно пишется: \(q.answerText)")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                }
             } else {
                 Label("Неверно", systemImage: "xmark.circle.fill")
                     .font(Theme.pixel(22, relativeTo: .title3))
                     .foregroundColor(Theme.red)
-                Text("Правильный ответ: \(q.answerText)")
-                    .font(.headline)
-                    .foregroundColor(Theme.text)
-                    .multilineTextAlignment(.center)
+                if session.lastVerdict == .accentsOnly {
+                    // Строгий режим: без акцента — ошибка
+                    AccentHighlight.text(session.lastMatch, typed: session.lastTyped)
+                        .font(.headline)
+                        .foregroundColor(Theme.text)
+                    Text("Включена строгая проверка ударений (Настройки → Упражнения).")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                } else {
+                    Text("Правильный ответ: \(q.answerText)")
+                        .font(.headline)
+                        .foregroundColor(Theme.text)
+                        .multilineTextAlignment(.center)
+                }
             }
             if !q.kind.promptIsPortuguese {
                 HStack(spacing: 8) {
@@ -544,6 +572,22 @@ struct StudySessionView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 8)
+            }
+
+            if !session.accentSlips.isEmpty {
+                Section(header: GothicHeader("Проверьте акценты"),
+                        footer: Text("Эти ответы засчитаны, но в них не хватало акцента.")) {
+                    ForEach(session.accentSlips) { slip in
+                        VStack(alignment: .leading, spacing: 2) {
+                            AccentHighlight.text(slip.answer, typed: slip.typed)
+                                .font(.headline)
+                                .foregroundColor(Theme.text)
+                            Text("вы написали: \(slip.typed)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                }
             }
 
             if !session.mistakes.isEmpty {

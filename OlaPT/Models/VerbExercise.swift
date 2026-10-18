@@ -14,6 +14,16 @@ enum VerbMode: String, CaseIterable, Identifiable {
     }
 }
 
+/// Итог проверки введённой формы глагола.
+enum VerbVerdict: Equatable {
+    case exact
+    /// Всё верно, кроме диакритики: засчитываем с напоминанием
+    case accentsOnly
+    /// Без акцента вышла другая форма того же глагола: «falamos» (Presente) вместо «falámos»
+    case otherForm(form: String, tenseName: String, pronoun: String)
+    case wrong
+}
+
 struct VerbQuestion: Identifiable {
     let id = UUID()
     let verb: Verb
@@ -136,14 +146,8 @@ struct VerbExerciseBuilder {
         return Array(pool.prefix(3))
     }
 
-    /// Проверка введённой формы. Диакритика обязательна: falamos ≠ falámos.
-    static func isCorrect(input: String, question: VerbQuestion) -> Bool {
-        let typed = TextUtil.normalizeVerbForm(input)
-        if typed.isEmpty { return false }
-        let target = TextUtil.normalizeVerbForm(question.answer)
-        if typed == target { return true }
-
-        // Допускаем, что пользователь написал и местоимение: «tu falas», «que eu fale».
+    /// Местоимения (и «que», «se», «quando»), которые пользователь может написать перед формой.
+    static func leads(_ question: VerbQuestion) -> [String] {
         let pronouns = question.pronoun.split(separator: "/").map { String($0) }
         var leads: [String] = []
         for p in pronouns {
@@ -152,9 +156,44 @@ struct VerbExerciseBuilder {
                 leads.append(question.tense.prefix + " " + p)
             }
         }
-        for lead in leads {
+        return leads
+    }
+
+    /// Точная проверка введённой формы (с диакритикой).
+    static func isCorrect(input: String, question: VerbQuestion) -> Bool {
+        let typed = TextUtil.normalizeVerbForm(input)
+        if typed.isEmpty { return false }
+        let target = TextUtil.normalizeVerbForm(question.answer)
+        if typed == target { return true }
+        // Допускаем, что пользователь написал и местоимение: «tu falas», «que eu fale».
+        for lead in leads(question) {
             if typed == lead + " " + target { return true }
         }
         return false
+    }
+
+    /// Проверка с учётом акцентов. Забытый акцент засчитывается, но если без него получилась
+    /// другая форма того же глагола (falamos — Presente вместо falámos — Perfeito), это ошибка.
+    static func verdict(input: String, question: VerbQuestion, tenses: [TenseInfo]) -> VerbVerdict {
+        if isCorrect(input: input, question: question) { return .exact }
+        let typed = TextUtil.normalizeVerbForm(input)
+        if typed.isEmpty { return .wrong }
+        let target = TextUtil.normalizeVerbForm(question.answer)
+        let folded = AccentCheck.fold(typed)
+        let candidates = [target] + leads(question).map { $0 + " " + target }
+        guard candidates.contains(where: { AccentCheck.fold($0) == folded }) else { return .wrong }
+        // Сама форма без местоимения
+        let core = String(Array(typed).suffix(Array(target).count))
+        for t in tenses {
+            guard let list = question.verb.forms[t.id] else { continue }
+            for (p, f) in list.enumerated() {
+                let form = TextUtil.normalizeVerbForm(f)
+                if form == core && form != target && !(t.id == question.tense.id && p == question.person) {
+                    let label = p < t.labels.count ? t.labels[p] : ""
+                    return .otherForm(form: f, tenseName: t.name, pronoun: label)
+                }
+            }
+        }
+        return .accentsOnly
     }
 }

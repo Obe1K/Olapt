@@ -593,7 +593,8 @@ final class AppModel: ObservableObject {
         return min(1.0, Double(verbProgress(verb: verb, tense: tense).score) / Double(threshold))
     }
 
-    func recordVerb(verb: Verb, tense: TenseInfo, correct: Bool, recognition: Bool = false) {
+    /// - accentsOnly: верно, но без нужного акцента (засчитано, но повторим пораньше)
+    func recordVerb(verb: Verb, tense: TenseInfo, correct: Bool, recognition: Bool = false, accentsOnly: Bool = false) {
         let key = VerbLibrary.progressKey(verb: verb, tense: tense)
         var p = user.verbProgress[key] ?? WordProgress()
         if correct {
@@ -608,7 +609,7 @@ final class AppModel: ObservableObject {
         p.lastSeen = Date()
         user.verbProgress[key] = p
         // интервальные повторения для пары «глагол + время»
-        var rating: ReviewRating = correct ? .good : .again
+        var rating: ReviewRating = correct ? (accentsOnly ? .hard : .good) : .again
         let previous = user.verbSRS[key]
         if previous == nil && recognition && rating == .good { rating = .hard }
         user.verbSRS[key] = FSRS.review(previous, rating: rating)

@@ -455,12 +455,17 @@ final class ScreenshotTests: XCTestCase {
     }
 
     /// «Сегодня»: план дня, тренировка до конца, итог с прогнозом, трудные слова, питомец.
+    /// Строка итогов тренировки: «Верно с первого раза: 3 из 6».
+    private func firstTryRate() -> XCUIElement {
+        return app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH 'Верно с первого раза'")).firstMatch
+    }
+
     /// Отвечаем до итогов (на экране итогов есть «Закончить»): выбор — касание варианта (дальше само), ввод — «Не знаю» и «Далее».
     @discardableResult
     private func answerUntilSummary(limit: Int = 60) -> Int {
         var answered = 0
         while answered < limit {
-            if app.buttons["Закончить"].exists { break }
+            if app.buttons["Закончить"].exists || firstTryRate().exists { break }
             if app.buttons["Не знаю"].exists {
                 app.buttons["Не знаю"].tap()
                 let next = app.buttons["Далее"].exists ? app.buttons["Далее"] : app.buttons["Завершить"]
@@ -500,15 +505,16 @@ final class ScreenshotTests: XCTestCase {
 
         let answered = answerUntilSummary()
         note("CHECK info: answered \(answered) questions")
-        let done = app.buttons["Закончить"]
-        if done.waitForExistence(timeout: 4) {
-            let rate = app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH 'Верно с первого раза'")).firstMatch
-            note("CHECK ok: daily summary" + (rate.exists ? ": " + rate.label : ""))
+        let rate = firstTryRate()
+        if rate.waitForExistence(timeout: 4) {
+            note("CHECK ok: daily summary: " + rate.label)
         } else {
             note("CHECK FAILED: daily summary not shown")
         }
         shot("72_daily_summary")
-        tap(app.buttons["Закончить"], "finish daily")
+        let finishDaily = app.buttons["Закончить"]
+        scrollUntilVisible(finishDaily)
+        tap(finishDaily, "finish daily")
         shot("73_today_after")
         note(app.descendants(matching: .any)["today-done"].exists ? "CHECK ok: today done state" : "CHECK info: today plan not empty yet")
 
@@ -645,5 +651,37 @@ final class ScreenshotTests: XCTestCase {
         } else {
             note("CHECK FAILED: boss not available with seeded words")
         }
+    }
+
+    /// Ответ без акцента: засчитывается, но с напоминанием, где нужен акцент.
+    func testJ_AccentLeniency() {
+        tapTab("Словарь")
+        let field = app.searchFields.firstMatch
+        typeInto(field, "lição", "search field")
+        dismissKeyboard()
+        tap(app.staticTexts["a lição"].firstMatch, "result: a lição")
+        let save = app.buttons["Сохранить в коллекцию"]
+        scrollUntilVisible(save)
+        if tap(save, "save to collection") {
+            typeInto(app.textFields["Название"], "Акценты", "collection name field")
+            tap(app.buttons["Создать и добавить"], "create and add")
+        }
+
+        tapTab("Коллекции")
+        tap(app.staticTexts["Акценты"].firstMatch, "open collection Акценты")
+        tap(button(containing: "Уровень 2"), "level 2 (lição)")
+        let answer = app.textFields["Ваш ответ"]
+        typeInto(answer, "licao", "answer field")
+        shot("90_accent_typing")
+        tap(app.buttons["Проверить"], "check answer without accents")
+        let feedback = app.descendants(matching: .any)["accent-feedback"]
+        note(feedback.waitForExistence(timeout: 3) ? "CHECK ok: accent-only answer accepted: " + feedback.label : "CHECK FAILED: accent feedback missing")
+        shot("91_accent_feedback")
+
+        let next = app.buttons["Завершить"].exists ? app.buttons["Завершить"] : app.buttons["Далее"]
+        tap(next, "finish level 2")
+        let reminder = app.staticTexts.matching(NSPredicate(format: "label CONTAINS[c] 'акцент'")).firstMatch
+        note(reminder.waitForExistence(timeout: 3) ? "CHECK ok: summary reminds about accents" : "CHECK FAILED: no accent reminder in summary")
+        shot("92_accent_summary")
     }
 }

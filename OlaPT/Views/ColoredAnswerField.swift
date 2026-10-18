@@ -2,20 +2,22 @@ import SwiftUI
 import UIKit
 
 /// Поле ответа, в котором буквы окрашиваются прямо при вводе:
-/// зелёные — пока ввод совпадает с началом правильного ответа, красные — начиная с первой ошибки.
-/// Пример: ответ «curto»; ввод «cu» — обе буквы зелёные, ввод «k» — красная.
+/// зелёные — пока ввод совпадает с началом правильного ответа, золотые — буква верная, но без акцента,
+/// красные — начиная с первой ошибки.
+/// Пример: ответ «lição»; ввод «lic» — «l», «i» зелёные, «c» золотая (нужна «ç»).
 struct ColoredAnswerField: UIViewRepresentable {
     @Binding var text: String
     @Binding var isFocused: Bool
     let placeholder: String
     let isEnabled: Bool
-    /// Сколько первых символов ввода верны.
-    let correctPrefix: (String) -> Int
+    /// Сколько первых символов ввода верны и где не хватает акцента.
+    let coloring: (String) -> AnswerColoring
     let onSubmit: () -> Void
 
     /// Мох — пока верно, кровь — с места ошибки (приложение всегда в тёмной теме).
     static let goodColor = UIColor(Theme.moss)
     static let badColor = UIColor(Theme.red)
+    static let accentColor = UIColor(Theme.goldBright)
     static let baseColor = UIColor(Theme.text)
 
     func makeCoordinator() -> Coordinator {
@@ -75,14 +77,15 @@ struct ColoredAnswerField: UIViewRepresentable {
             recolor(field)
         }
 
-        /// Перекрашивает весь текст: верная часть — зелёным, остальное — красным.
+        /// Перекрашивает весь текст: верная часть — зелёным (без акцента — золотым), остальное — красным.
         func recolor(_ field: UITextField) {
             // Пока система собирает символ (например, диакритика через отдельную клавиатуру),
             // текст не трогаем, иначе ввод собьётся.
             if field.markedTextRange != nil { return }
             let value = field.text ?? ""
             let font = field.font ?? UIFont.preferredFont(forTextStyle: .title2)
-            let good = min(parent.correctPrefix(value), value.count)
+            let marks = parent.coloring(value)
+            let good = min(marks.prefix, value.count)
             let goodLength = String(value.prefix(good)).utf16.count
             let total = (value as NSString).length
 
@@ -97,6 +100,13 @@ struct ColoredAnswerField: UIViewRepresentable {
             if total > goodLength {
                 attributed.addAttribute(.foregroundColor, value: ColoredAnswerField.badColor,
                                         range: NSRange(location: goodLength, length: total - goodLength))
+            }
+            // Буквы без нужного акцента — золотые и подчёркнутые
+            for index in marks.accentSlips where index < good {
+                let start = value.index(value.startIndex, offsetBy: index)
+                let range = NSRange(start...start, in: value)
+                attributed.addAttribute(.foregroundColor, value: ColoredAnswerField.accentColor, range: range)
+                attributed.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: range)
             }
             let selection = field.selectedTextRange
             field.attributedText = attributed
