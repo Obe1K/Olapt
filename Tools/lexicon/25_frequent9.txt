@@ -1,0 +1,599 @@
+# Частотные слова, часть 9 (ранги 30–40 тыс. частотного списка европейского португальского, добавлено в 1.1).
+# Формат строки:  pt | pos [род] [f=жен.форма] [pl=мн.число] | en | ru | br (бразильский вариант) | note (пояснение по-русски)
+
+## words_more | Другие частые слова
+mortadela | n f B2 | mortadella | мортаделла
+cerne | n m B2 | core, heart | суть, сердцевина
+alameda | n f B2 | tree-lined avenue | аллея, бульвар
+imprudência | n f B2 | recklessness | неосторожность
+ampola | n f B2 | ampoule; blister | ампула; волдырь
+relance | n m B2 | glance | взгляд | | «De relance» — мельком.
+trinco | n m B2 | latch | щеколда
+camurça | n f B2 | suede | замша
+romancista | n mf B2 | novelist | романист
+flanela | n f B2 | flannel | фланель
+infestação | n f B2 | infestation | нашествие (вредителей)
+malícia | n f B2 | malice; mischief | злой умысел; лукавство
+clérigo | n m B2 | cleric | священнослужитель
+premissa | n f B2 | premise | предпосылка
+propagação | n f B2 | spread | распространение
+dominação | n f B2 | domination | господство
+cevada | n f B2 | barley | ячмень
+pinho | n m B2 | pine (wood) | сосна
+sofisticação | n f B2 | sophistication | изысканность
+pacifista | n mf B2 | pacifist | пацифист
+lince | n m B2 | lynx | рысь | | «Lince-ibérico» — пиренейская рысь, символ охраны природы в Португалии.
+laxante | n m B2 | laxative | слабительное
+cobiça | n f B2 | greed | алчность
+falatório | n m B2 | gossip, chatter | пересуды
+estandarte | n m B2 | banner | знамя, штандарт
+depravação | n f B2 | depravity | разврат
+desígnio | n m B2 | purpose, design | замысел
+cordeiro | n m B2 | lamb | ягнёнок | | В меню чаще «borrego».
+arrumador | n m f=arrumadora B2 | parking attendant; usher | «парковщик»; билетёр | flanelinha | В Португалии «arrumador» показывает место для парковки за монетку.
+beneficiário | n m f=beneficiária B2 | beneficiary | получатель
+decapitação | n f B2 | beheading | обезглавливание
+designação | n f B2 | designation | обозначение, название
+esquimó | n mf B2 | Eskimo | эскимос
+conhecedor | n m f=conhecedora B2 | connoisseur | знаток
+pavimento | n m B2 | floor; paving | пол; покрытие
+escapadela | n f B2 | getaway | короткая поездка, вылазка
+toureiro | n m B2 | bullfighter | тореадор
+desenhador | n m f=desenhadora B2 | designer, draughtsman | дизайнер, чертёжник | desenhista
+sangria | n f B2 | sangria; bloodletting | сангрия; кровопускание
+trombone | n m B2 | trombone | тромбон
+campista | n mf B2 | camper | турист с палаткой
+inalação | n f B2 | inhalation | вдыхание
+castor | n m B2 | beaver | бобр
+ninharia | n f B2 | trifle | пустяк
+aquisição | n f B2 | acquisition, purchase | приобретение
+mossa | n f B2 | dent | вмятина | | Разговорное (Португалия): «fazer mossa» — задеть, повлиять.
+ramificação | n f B2 | ramification, branch | ответвление
+confessionário | n m B2 | confessional | исповедальня
+monogamia | n f B2 | monogamy | моногамия
+tifo | n m B2 | typhus | тиф
+lontra | n f B2 | otter | выдра
+carabina | n f B2 | rifle | карабин
+parabólica | n f B2 | satellite dish | спутниковая антенна
+chicotada | n f B2 | lash | удар плетью
+coche | n m B2 | (royal) carriage | карета | | «Museu dos Coches» в Лиссабоне — музей карет.
+domínio | n m B2 | domain; mastery | владение; область
+movimentação | n f B2 | movement, activity | движение, оживление
+improvisação | n f B2 | improvisation | импровизация
+leproso | n m f=leprosa B2 | leper | прокажённый
+turbina | n f B2 | turbine | турбина
+apreciador | n m f=apreciadora B2 | lover, connoisseur | ценитель
+derivado | n m B2 | derivative | производное
+vestimenta | n f B2 | garment | одеяние
+inércia | n f B2 | inertia | инерция
+deportação | n f B2 | deportation | депортация
+produtividade | n f B2 | productivity | производительность
+marmota | n f B2 | marmot | сурок
+cajadada | n f B2 | blow with a stick | удар палкой | | «Matar dois coelhos de uma cajadada só» — убить двух зайцев одним ударом.
+tala | n f B2 | splint | шина (медицинская)
+subchefe | n mf B2 | deputy chief | заместитель начальника
+prisma | n m B2 | prism | призма
+laringe | n f B2 | larynx | гортань
+dirigível | n m pl=dirigíveis B2 | airship | дирижабль
+azia | n f B2 | heartburn | изжога
+empecilho | n m B2 | hindrance | помеха
+judaísmo | n m B2 | Judaism | иудаизм
+clipe | n m B2 | paper clip; music video | скрепка; клип
+tripé | n m B2 | tripod | штатив
+diácono | n m B2 | deacon | дьякон
+pipoca | n f A2 | popcorn | попкорн
+ferrão | n m pl=ferrões B2 | sting | жало
+cabaré | n m B2 | cabaret | кабаре
+anestesista | n mf B2 | anaesthetist | анестезиолог
+arado | n m B2 | plough | плуг
+mouro | n m f=moura B2 | Moor | мавр | | «Moura encantada» — заколдованная мавританка, героиня португальских легенд.
+praxe | n f B2 | custom; student initiation | обычай; посвящение первокурсников | | В португальских университетах «praxe» — ритуалы для первокурсников в чёрных мантиях.
+contratação | n f B2 | hiring | наём
+babuíno | n m B2 | baboon | павиан
+instância | n f B2 | instance; court level | инстанция | | «Em última instância» — в крайнем случае.
+posteridade | n f B2 | posterity | потомки
+picareta | n f B2 | pickaxe | кирка
+beicinho | n m B2 | pout | надутые губки | | «Fazer beicinho» — надуть губы.
+pingente | n m B2 | pendant | кулон
+eutanásia | n f B2 | euthanasia | эвтаназия
+deslocação | n f B2 | trip, travel | поездка, перемещение | deslocamento | «Deslocação em serviço» — командировка.
+cavilha | n f B2 | pin, peg | шпилька, штифт
+nódulo | n m B2 | nodule | узелок
+calúnia | n f B2 | slander | клевета
+haste | n f B2 | pole; stem | древко; стебель
+cascalho | n m B2 | gravel | гравий
+candelabro | n m B2 | candelabrum | канделябр
+vândalo | n m f=vândala B2 | vandal | вандал
+curativo | n m B2 | dressing (wound) | повязка
+epicentro | n m B2 | epicentre | эпицентр
+veleiro | n m B2 | sailing boat | парусник
+emancipação | n f B2 | emancipation | освобождение
+atrito | n m B2 | friction | трение; разногласие
+computação | n f B2 | computing | вычисления
+paradigma | n m B2 | paradigm | парадигма
+embargo | n m B2 | embargo | эмбарго
+fuligem | n f B2 | soot | сажа
+malabarismo | n m B2 | juggling | жонглирование
+respirador | n m B2 | ventilator | аппарат ИВЛ
+ventrículo | n m B2 | ventricle | желудочек
+esfinge | n f B2 | sphinx | сфинкс
+astrónomo | n m f=astrónoma B2 | astronomer | астроном | astrônomo
+biólogo | n m f=bióloga B2 | biologist | биолог
+militante | n mf B2 | activist | активист
+astrologia | n f B2 | astrology | астрология
+cangalheiro | n m B2 | undertaker | гробовщик | agente funerário
+teologia | n f B2 | theology | богословие
+erosão | n f B2 | erosion | эрозия
+geólogo | n m f=geóloga B2 | geologist | геолог
+vaselina | n f B2 | vaseline | вазелин
+multinacional | n f pl=multinacionais B2 | multinational | транснациональная компания
+rebento | n m B2 | sprout; offspring | росток; отпрыск
+irregularidade | n f B2 | irregularity | нарушение
+indiscrição | n f B2 | indiscretion | бестактность
+deleite | n m B2 | delight | наслаждение
+vitalidade | n f B2 | vitality | жизненная сила
+amplitude | n f B2 | amplitude, range | размах
+tocador | n m B2 | player | проигрыватель; музыкант
+longevidade | n f B2 | longevity | долголетие
+potro | n m B2 | colt | жеребёнок
+filantropo | n m f=filantropa B2 | philanthropist | филантроп
+reconstituição | n f B2 | reconstruction | реконструкция
+descontentamento | n m B2 | discontent | недовольство
+afrodisíaco | n m B2 | aphrodisiac | афродизиак
+exatidão | n f B2 | accuracy | точность | | До реформы писали «exactidão».
+relaxamento | n m B2 | relaxation | расслабление
+neurologia | n f B2 | neurology | неврология
+cremação | n f B2 | cremation | кремация
+budismo | n m B2 | Buddhism | буддизм
+percalço | n m B2 | mishap | неприятность
+regressão | n f B2 | regression | регресс
+diagonal | n f pl=diagonais B2 | diagonal | диагональ
+praticante | n mf B2 | practitioner | практикующий
+tulipa | n f B2 | tulip | тюльпан
+sulfato | n m B2 | sulphate | сульфат
+interseção | n f B2 | intersection | пересечение | | До реформы писали «intersecção».
+bazuca | n f B2 | bazooka | базука
+arruaceiro | n m f=arruaceira B2 | troublemaker | хулиган
+psique | n f B2 | psyche | психика
+progenitor | n m f=progenitora B2 | parent | родитель
+berlinde | n m B2 | marble (toy) | шарик (игра) | bola de gude
+imersão | n f B2 | immersion | погружение
+adversidade | n f B2 | adversity | невзгоды
+repertório | n m B2 | repertoire | репертуар
+claustrofobia | n f B2 | claustrophobia | клаустрофобия
+estanho | n m B2 | tin | олово
+cabeçalho | n m B2 | header | заголовок, шапка
+flautista | n mf B2 | flautist | флейтист
+cineasta | n mf B2 | filmmaker | кинорежиссёр
+zinco | n m B2 | zinc | цинк
+degelo | n m B2 | thaw | оттепель, таяние
+guita | n f B2 | string; cash | бечёвка; бабки | | Разговорное (Португалия): «guita» — деньги.
+centelha | n f B2 | spark | искра
+suavidade | n f B2 | smoothness | мягкость
+convergência | n f B2 | convergence | сближение
+obscuridade | n f B2 | obscurity | безвестность, мрак
+chapeleiro | n m B2 | hatter | шляпник
+estribeira | n f B2 | stirrup | стремя | | «Perder as estribeiras» — выйти из себя.
+escultor | n m f=escultora B2 | sculptor | скульптор
+impaciência | n f B2 | impatience | нетерпение
+calda | n f B2 | syrup | сироп
+amaciador | n m B2 | fabric softener; conditioner | смягчитель; кондиционер для волос
+saneamento | n m B2 | sanitation | канализация, санитария
+imediações | n f pl=imediações B2 | surroundings | окрестности
+busto | n m B2 | bust | бюст
+âmago | n m B2 | core | суть
+amoníaco | n m B2 | ammonia | аммиак
+hipertensão | n f B2 | hypertension | гипертония
+ginasta | n mf B2 | gymnast | гимнаст
+amígdala | n f B2 | tonsil | миндалина
+portador | n m f=portadora B2 | bearer; carrier | предъявитель; носитель
+sonambulismo | n m B2 | sleepwalking | лунатизм
+adido | n m B2 | attaché | атташе
+cervo | n m B2 | deer | олень
+libélula | n f B2 | dragonfly | стрекоза
+atelier | n m B2 | studio | мастерская | ateliê
+estofo | n m B2 | upholstery | обивка
+insistência | n f B2 | insistence | настойчивость
+aresta | n f B2 | edge | ребро, грань | | «Limar arestas» — сгладить острые углы.
+cônjuge | n mf B2 | spouse | супруг(а)
+entardecer | n m B2 | dusk | сумерки
+pasteleiro | n m f=pasteleira B2 | pastry cook | кондитер
+desistente | n mf B2 | dropout | выбывший
+glicose | n f B2 | glucose | глюкоза
+espátula | n f B2 | spatula | лопатка
+infusão | n f B2 | herbal tea | травяной чай, настой | chá | В Португалии «chá» — чай из чайного листа, всё остальное — «infusão».
+rosbife | n m B2 | roast beef | ростбиф
+ilusionista | n mf B2 | illusionist | иллюзионист
+hiena | n f B2 | hyena | гиена
+racionamento | n m B2 | rationing | нормирование
+despeito | n m B2 | spite | досада | | «A despeito de» — несмотря на.
+posicionamento | n m B2 | positioning | позиционирование
+prensa | n f B2 | press | пресс
+desapontamento | n m B2 | disappointment | разочарование
+regularidade | n f B2 | regularity | регулярность
+bichano | n m B2 | pussycat | котик | | Разговорное.
+requisição | n f B2 | requisition | заявка
+contingente | n m B2 | contingent | контингент
+náusea | n f B2 | nausea | тошнота
+laca | n f B2 | hairspray; lacquer | лак для волос; лак
+mosquete | n m B2 | musket | мушкет
+runa | n f B2 | rune | руна
+jacinto | n m B2 | hyacinth | гиацинт
+percevejo | n m B2 | bedbug; drawing pin | клоп; кнопка
+constrangimento | n m B2 | embarrassment; constraint | неловкость; принуждение
+espargo | n m B2 | asparagus | спаржа | aspargo
+grandiosidade | n f B2 | grandeur | величие
+eletrodoméstico | n m B2 | household appliance | бытовой прибор | | До реформы писали «electrodoméstico».
+poliomielite | n f B2 | polio | полиомиелит
+trecho | n m B2 | stretch; excerpt | отрезок; отрывок
+reprimenda | n f B2 | reprimand | выговор
+esquadrilha | n f B2 | squadron | эскадрилья
+superpoder | n m B2 | superpower | суперспособность
+deserção | n f B2 | desertion | дезертирство
+represália | n f B2 | reprisal | ответные меры
+supressão | n f B2 | suppression; deletion | подавление; удаление
+ímpeto | n m B2 | impetus | порыв
+brochura | n f B2 | brochure | брошюра
+trevo | n m B2 | clover | клевер | | «Trevo de quatro folhas» — четырёхлистный клевер.
+capoeira | n f B2 | henhouse; capoeira | курятник; капоэйра
+estetoscópio | n m B2 | stethoscope | стетоскоп
+servente | n mf B2 | labourer, helper | подсобный рабочий
+enrascada | n f B2 | fix, jam | переделка | | Разговорное: «estar numa enrascada» — попасть в переплёт.
+cova | n f B2 | pit; grave | яма; могила
+sensatez | n f B2 | good sense | здравомыслие
+viveiro | n m B2 | nursery (plants); fish farm | питомник; садок
+úlcera | n f B2 | ulcer | язва
+calcário | n m B2 | limestone | известняк
+fuselagem | n f B2 | fuselage | фюзеляж
+parmesão | n m B2 | parmesan | пармезан
+escrutínio | n m B2 | scrutiny; vote count | тщательная проверка; подсчёт голосов
+aval | n m pl=avales B2 | endorsement | одобрение
+triciclo | n m B2 | tricycle | трёхколёсный велосипед
+mosaico | n m B2 | mosaic | мозаика
+alongamento | n m B2 | stretching | растяжка
+autoestima | n f B2 | self-esteem | самооценка
+bíceps | n m pl=bíceps B2 | biceps | бицепс
+calhau | n m B2 | pebble, stone | булыжник
+sociologia | n f B2 | sociology | социология
+casualidade | n f B2 | chance | случайность
+retalho | n m B2 | scrap; retail | лоскут; розница | | «Comércio a retalho» — розничная торговля.
+solteirão | n m f=solteirona pl=solteirões B2 | confirmed bachelor | закоренелый холостяк
+patriarca | n m B2 | patriarch | патриарх
+cegonha | n f B2 | stork | аист
+cardume | n m B2 | shoal | косяк (рыб)
+lastro | n m B2 | ballast | балласт
+cepo | n m B2 | stump, block | пень, колода
+mordidela | n f B2 | little bite, nip | укус | | Разговорное (Португалия).
+atrevimento | n m B2 | cheek, audacity | дерзость
+rito | n m B2 | rite | обряд
+prolongamento | n m B2 | extension; extra time | продление; дополнительное время
+eunuco | n m B2 | eunuch | евнух
+aeróbica | n f B2 | aerobics | аэробика
+fragilidade | n f B2 | fragility | хрупкость
+rímel | n m pl=rímeis B2 | mascara | тушь для ресниц
+excesso | n m B1 | excess | избыток | | «Excesso de velocidade» — превышение скорости.
+abusador | n m f=abusadora B2 | abuser | насильник, обидчик
+apanhador | n m B2 | catcher | ловец
+gestação | n f B2 | pregnancy, gestation | беременность, вынашивание
+desorientação | n f B2 | disorientation | дезориентация
+álamo | n m B2 | poplar | тополь
+lucidez | n f B2 | lucidity | ясность ума
+xaile | n m B2 | shawl | шаль | xale | Чёрная шаль — атрибут исполнительниц фаду.
+arenque | n m B2 | herring | сельдь
+aritmética | n f B2 | arithmetic | арифметика
+argola | n f B2 | ring, hoop | кольцо; серьга-кольцо
+néon | n m B2 | neon | неон
+humanoide | n m B2 | humanoid | гуманоид | | До реформы писали «humanóide».
+hidratante | n m B2 | moisturiser | увлажняющий крем
+absorção | n f B2 | absorption | поглощение
+cabeçada | n f B2 | header; headbutt | удар головой
+fertilização | n f B2 | fertilisation | оплодотворение
+timidez | n f B2 | shyness | застенчивость
+bálsamo | n m B2 | balm | бальзам
+fisioterapeuta | n mf B2 | physiotherapist | физиотерапевт
+simbolismo | n m B2 | symbolism | символизм
+interação | n f B2 | interaction | взаимодействие | | До реформы писали «interacção».
+onça | n f B2 | jaguar; ounce | ягуар; унция
+tiroide | n f B2 | thyroid | щитовидная железа | | До реформы писали «tiróide».
+aro | n m B2 | rim, hoop | обод
+cadeirão | n m pl=cadeirões B2 | armchair | кресло | poltrona
+batizado | n m B2 | christening | крестины | | До реформы писали «baptizado».
+sentimentalismo | n m B2 | sentimentality | сентиментальность
+simpatizante | n mf B2 | sympathiser | сторонник
+telenovela | n f B2 | soap opera | телесериал, теленовелла
+tratador | n m f=tratadora B2 | keeper (animals) | смотритель (за животными)
+magma | n m B2 | magma | магма
+incubação | n f B2 | incubation | инкубация
+estabilizador | n m B2 | stabiliser | стабилизатор
+dique | n m B2 | dyke, dam | дамба
+equitação | n f B2 | horse riding | верховая езда
+semântica | n f B2 | semantics | семантика
+refresco | n m B1 | soft drink | прохладительный напиток
+hino | n m B2 | anthem, hymn | гимн
+pacificador | n m f=pacificadora B2 | peacemaker | миротворец
+veto | n m B2 | veto | вето
+trigonometria | n f B2 | trigonometry | тригонометрия
+cerejeira | n f B2 | cherry tree | вишня (дерево)
+artimanha | n f B2 | trick | уловка
+imperfeição | n f B2 | imperfection | несовершенство
+chacota | n f B2 | mockery | насмешка
+andarilho | n m B2 | wanderer; walker | странник; ходунки
+eliminatória | n f B2 | qualifying round | отборочный тур
+rompimento | n m B2 | break-up | разрыв
+dissidente | n mf B2 | dissident | инакомыслящий
+proclamação | n f B2 | proclamation | провозглашение
+simpósio | n m B2 | symposium | симпозиум
+pastagem | n f B2 | pasture | пастбище
+recontagem | n f B2 | recount | пересчёт
+podridão | n f B2 | rot | гниль
+pudor | n m B2 | modesty, shame | стыдливость
+livrete | n m B2 | car registration booklet | техпаспорт | | Раньше в Португалии — документ на машину; сейчас «Documento Único Automóvel».
+afilhado | n m f=afilhada B2 | godson | крестник
+enquadramento | n m B2 | framework, context | рамки, контекст
+psicanálise | n f B2 | psychoanalysis | психоанализ
+originalidade | n f B2 | originality | оригинальность
+objetividade | n f B2 | objectivity | объективность | | До реформы писали «objectividade».
+guelra | n f B2 | gill | жабра
+desistência | n f B2 | withdrawal | отказ
+docente | n mf B2 | teacher, lecturer | преподаватель | | «Corpo docente» — преподавательский состав.
+condecoração | n f B2 | decoration (medal) | награда, орден
+segregação | n f B2 | segregation | разделение
+lilás | n m pl=lilases B2 | lilac | сирень; сиреневый цвет
+ingestão | n f B2 | ingestion, intake | приём (пищи, лекарства)
+charneca | n f B2 | heath, moor | пустошь
+
+## adjectives | Прилагательные
+fresquinho | adj B1 | nice and fresh | свеженький
+instintivamente | adv B2 | instinctively | инстинктивно
+carismático | adj B2 | charismatic | харизматичный
+grotesco | adj B2 | grotesque | гротескный
+cordial | adj pl=cordiais B2 | cordial | сердечный
+entupido | adj B2 | blocked | забитый | | «Nariz entupido» — заложенный нос.
+contundente | adj B2 | blunt; forceful | тупой (о предмете); убедительный
+aterrorizante | adj B2 | terrifying | ужасающий
+ecológico | adj B2 | ecological | экологический
+cirurgicamente | adv B2 | surgically | хирургически
+perplexo | adj B2 | perplexed | озадаченный
+galês | adj f=galesa pl=galeses B2 | Welsh | валлийский
+parental | adj pl=parentais B2 | parental | родительский
+triunfante | adj B2 | triumphant | торжествующий
+gótico | adj B2 | Gothic | готический
+habitado | adj B2 | inhabited | обитаемый
+melancólico | adj B2 | melancholic | грустный
+dispendioso | adj B2 | expensive | дорогостоящий
+virtuoso | adj B2 | virtuous; virtuoso | добродетельный; виртуозный
+espirituoso | adj B2 | witty | остроумный
+imperfeito | adj B2 | imperfect | несовершенный | | «Pretérito imperfeito» — прошедшее несовершенное время.
+hispânico | adj B2 | Hispanic | испаноязычный
+insultuoso | adj B2 | insulting | оскорбительный
+encarcerado | adj B2 | imprisoned | заключённый
+exponencialmente | adv B2 | exponentially | экспоненциально
+afins | adj pl=afins B2 | related | родственный | | «E afins» — и тому подобное.
+afável | adj pl=afáveis B2 | affable | приветливый
+inexistente | adj B2 | non-existent | несуществующий
+sabotado | adj B2 | sabotaged | саботированный
+fictício | adj B2 | fictitious | вымышленный
+claustrofóbico | adj B2 | claustrophobic | клаустрофобный
+clandestinamente | adv B2 | secretly, illegally | тайно, нелегально
+constrangido | adj B2 | embarrassed | смущённый
+desprotegido | adj B2 | unprotected | незащищённый
+hesitante | adj B2 | hesitant | нерешительный
+nulo | adj B2 | null, void | недействительный
+opcional | adj pl=opcionais B2 | optional | необязательный
+sistematicamente | adv B2 | systematically | систематически
+magicamente | adv B2 | magically | волшебным образом
+imprestável | adj pl=imprestáveis B2 | useless | никчёмный
+evidente | adj B2 | evident | очевидный
+espontaneamente | adv B2 | spontaneously | спонтанно
+penoso | adj B2 | painful, arduous | тягостный
+disparatado | adj B2 | absurd | нелепый
+invejoso | adj B2 | envious | завистливый
+áspero | adj B2 | rough | шершавый, грубый
+maldisposto | adj B2 | unwell, queasy | плохо себя чувствующий | | «Estou maldisposto» — меня мутит / мне нехорошо.
+estaminal | adj pl=estaminais B2 | stem (cell) | стволовой | tronco | «Células estaminais» — стволовые клетки.
+notório | adj B2 | notorious | общеизвестный
+consumado | adj B2 | accomplished | свершившийся | | «Facto consumado» — свершившийся факт.
+evasivo | adj B2 | evasive | уклончивый
+mudo | adj B1 | mute | немой
+velhaco | adj B2 | roguish | плутоватый
+impuro | adj B2 | impure | нечистый
+encorajador | adj B2 | encouraging | обнадёживающий
+disfuncional | adj pl=disfuncionais B2 | dysfunctional | неблагополучный
+austríaco | adj B2 | Austrian | австрийский
+castrado | adj B2 | castrated | кастрированный
+hospitalizado | adj B2 | hospitalised | госпитализированный
+sovina | adj B2 | stingy | скупой
+espaçoso | adj B2 | spacious | просторный
+inabalável | adj pl=inabaláveis B2 | unshakeable | непоколебимый
+lesionado | adj B2 | injured | травмированный
+implícito | adj B2 | implicit | подразумеваемый
+artesanal | adj pl=artesanais B2 | handmade, craft | ремесленный, домашний | | «Cerveja artesanal» — крафтовое пиво.
+parolo | adj B2 | tacky; hick | деревенский, безвкусный | | Разговорное (Португалия).
+neurótico | adj B2 | neurotic | невротический
+engravatado | adj B2 | in a tie | в галстуке
+hidráulico | adj B2 | hydraulic | гидравлический
+acre | adj B2 | acrid | едкий
+explícito | adj B2 | explicit | явный
+marcante | adj B2 | memorable, striking | запоминающийся
+redundante | adj B2 | redundant | избыточный
+inato | adj B2 | innate | врождённый
+barbudo | adj B2 | bearded | бородатый
+ilegítimo | adj B2 | illegitimate | незаконный
+quiçá | adv B2 | perhaps | может быть | | Книжное.
+irreconhecível | adj pl=irreconhecíveis B2 | unrecognisable | неузнаваемый
+pacóvio | adj B2 | dim-witted | простоватый | | Разговорное (Португалия).
+contemporâneo | adj B2 | contemporary | современный
+estabilizado | adj B2 | stabilised | стабилизированный
+brando | adj B2 | mild, soft | мягкий, слабый | | «Em lume brando» — на медленном огне.
+mediano | adj B2 | average | средний
+camuflado | adj B2 | camouflaged | замаскированный
+interestelar | adj pl=interestelares B2 | interstellar | межзвёздный
+informativo | adj B2 | informative | информативный
+escarlate | adj B2 | scarlet | алый
+repulsivo | adj B2 | repulsive | отталкивающий
+cerimonial | adj pl=cerimoniais B2 | ceremonial | церемониальный
+inconstante | adj B2 | fickle | непостоянный
+biliar | adj pl=biliares B2 | biliary | желчный
+palpável | adj pl=palpáveis B2 | tangible | осязаемый
+desafiante | adj B2 | challenging | сложный, вызывающий
+lisonjeiro | adj B2 | flattering | лестный
+carnal | adj pl=carnais B2 | carnal | плотский
+sufocante | adj B2 | suffocating | удушающий
+eleitoral | adj pl=eleitorais B2 | electoral | избирательный
+enfraquecido | adj B2 | weakened | ослабленный
+glacial | adj pl=glaciais B2 | icy | ледяной
+horrorizado | adj B2 | horrified | в ужасе
+fraturado | adj B2 | fractured | сломанный | | До реформы писали «fracturado».
+sorrateiro | adj B2 | sneaky | крадущийся, хитрый
+viscoso | adj B2 | viscous | вязкий
+considerável | adj pl=consideráveis B2 | considerable | значительный
+mercante | adj B2 | merchant | торговый | | «Marinha mercante» — торговый флот.
+siamês | adj f=siamesa pl=siameses B2 | Siamese | сиамский
+simplório | adj B2 | simple-minded | простодушный
+exaustivo | adj B2 | exhaustive; exhausting | исчерпывающий; изнурительный
+carnívoro | adj B2 | carnivorous | плотоядный
+intermitente | adj B2 | intermittent | прерывистый
+vigoroso | adj B2 | vigorous | энергичный
+turvo | adj B2 | cloudy, murky | мутный
+rodoviário | adj B2 | road | дорожный, автомобильный | | «Estação rodoviária» — автовокзал.
+subjacente | adj B2 | underlying | лежащий в основе
+marado | adj B2 | nuts | чокнутый | | Разговорное (Португалия): «Estás marado?» — ты с ума сошёл?
+inclusivamente | adv B2 | even, including | даже, включительно
+disciplinado | adj B2 | disciplined | дисциплинированный
+ridiculamente | adv B2 | ridiculously | до смешного
+existencial | adj pl=existenciais B2 | existential | экзистенциальный
+mediante | prep B2 | by means of | посредством, при условии
+fardado | adj B2 | uniformed | в форме
+fuzilado | adj B2 | shot (executed) | расстрелянный
+biologicamente | adv B2 | biologically | биологически
+intitulado | adj B2 | entitled | озаглавленный
+piedoso | adj B2 | pious, merciful | благочестивый, милосердный
+malicioso | adj B2 | malicious; cheeky | злонамеренный; лукавый
+exuberante | adj B2 | exuberant, lush | пышный
+moralista | adj B2 | moralistic | нравоучительный
+irrefutável | adj pl=irrefutáveis B2 | irrefutable | неопровержимый
+amuado | adj B2 | sulky | надутый, обиженный
+havaiano | adj B2 | Hawaiian | гавайский
+sonoro | adj B2 | sound | звуковой | | «Banda sonora» — саундтрек.
+climático | adj B2 | climatic | климатический
+inadvertidamente | adv B2 | inadvertently | нечаянно
+maravilhado | adj B2 | amazed | восхищённый
+indiretamente | adv B2 | indirectly | косвенно | | До реформы писали «indirectamente».
+inaugural | adj pl=inaugurais B2 | inaugural | вступительный
+vendado | adj B2 | blindfolded | с завязанными глазами
+dramaticamente | adv B2 | dramatically | драматично
+patológico | adj B2 | pathological | патологический
+fatela | adj B2 | tacky, lame | убогий | | Разговорное (Португалия).
+transexual | adj pl=transexuais B2 | transsexual | транссексуальный
+demolido | adj B2 | demolished | снесённый
+punível | adj pl=puníveis B2 | punishable | наказуемый
+febril | adj pl=febris B2 | feverish | лихорадочный
+silvestre | adj B2 | wild | дикий (о растениях) | | «Frutos silvestres» — лесные ягоды.
+nitidamente | adv B2 | clearly | явно
+terapêutico | adj B2 | therapeutic | лечебный
+suplementar | adj pl=suplementares B2 | supplementary | дополнительный
+massacrado | adj B2 | massacred | истреблённый
+hereditário | adj B2 | hereditary | наследственный
+sulfúrico | adj B2 | sulphuric | серный
+rudimentar | adj pl=rudimentares B2 | rudimentary | примитивный
+cognitivo | adj B2 | cognitive | когнитивный
+solidário | adj B2 | supportive, caring | солидарный, отзывчивый
+perdidamente | adv B2 | madly | безумно | | «Perdidamente apaixonado» — безумно влюблён.
+listado | adj B2 | listed | указанный в списке
+flamejante | adj B2 | flaming | пылающий
+frouxo | adj B2 | loose, slack | слабый, вялый
+gradual | adj pl=graduais B2 | gradual | постепенный
+vantajoso | adj B2 | advantageous | выгодный
+lacrimogéneo | adj B2 | tear-jerking; tear (gas) | слезоточивый | lacrimogêneo | «Gás lacrimogéneo» — слезоточивый газ.
+erudito | adj B2 | erudite | учёный, образованный
+avarento | adj B2 | miserly | скупой
+filarmónico | adj B2 | philharmonic | филармонический | filarmônico | «A filarmónica» — духовой оркестр в португальской деревне.
+nostálgico | adj B2 | nostalgic | ностальгический
+pertencente | adj B2 | belonging | принадлежащий
+basco | adj B2 | Basque | баскский
+étnico | adj B2 | ethnic | этнический
+rústico | adj B2 | rustic | деревенский
+desfocado | adj B2 | out of focus | размытый
+perturbante | adj B2 | disturbing | тревожащий
+
+## verbs_more | Глаголы: дополнительные
+desprezar | v B2 | to despise | презирать
+colapsar | v B2 | to collapse | рухнуть
+mapear | v B2 | to map | наносить на карту
+privar | v B2 | to deprive | лишать
+replicar | v B2 | to reply; to replicate | возражать; воспроизводить
+inspecionar | v B2 | to inspect | осматривать | | До реформы писали «inspeccionar».
+desenrolar | v B2 | to unroll; to unfold | разворачивать | | «Desenrolar-se» — разворачиваться (о событиях).
+patrocinar | v B2 | to sponsor | спонсировать
+exceder | v B2 | to exceed | превышать
+coincidir | v B2 | to coincide | совпадать
+implantar | v B2 | to implant; to introduce | имплантировать; внедрять
+ausentar | v B2 | to be absent | отлучиться | | Обычно «ausentar-se».
+apodrecer | v B2 | to rot | гнить
+estranhar | v B2 | to find strange | удивляться; дичиться | | «Estranho que…» — странно, что…
+desatar | v B2 | to untie | развязывать | | «Desatar a rir» — расхохотаться.
+maltratar | v B2 | to mistreat | плохо обращаться
+tricotar | v B2 | to knit | вязать (спицами)
+clarear | v B2 | to brighten | светлеть, проясняться
+regatear | v B2 | to haggle | торговаться
+experienciar | v B2 | to experience | испытывать
+disputar | v B2 | to compete for | оспаривать, бороться за
+cegar | v B2 | to blind | ослеплять
+repelir | v B2 | to repel | отталкивать, отражать
+catalogar | v B2 | to catalogue | каталогизировать
+incentivar | v B2 | to encourage | поощрять
+redigir | v B2 | to draft, to write | составлять (текст)
+estrelar | v B2 | to star; to fry (egg) | сниматься в главной роли; жарить (яйцо) | | «Ovo estrelado» — яичница-глазунья.
+desabrochar | v B2 | to blossom | распускаться
+internar | v B2 | to admit (to hospital) | госпитализировать
+fundar | v B2 | to found | основывать
+corroborar | v B2 | to corroborate | подтверждать
+subjugar | v B2 | to subdue | покорять
+tranquilizar | v B2 | to reassure | успокаивать
+maximizar | v B2 | to maximise | максимизировать
+martelar | v B2 | to hammer | забивать молотком
+arrotar | v B2 | to burp | рыгать
+clonar | v B2 | to clone | клонировать
+deambular | v B2 | to wander | бродить
+afinar | v B2 | to tune | настраивать
+despedaçar | v B2 | to shatter | разбивать вдребезги
+afiar | v B2 | to sharpen | точить
+infligir | v B2 | to inflict | наносить (ущерб)
+transbordar | v B2 | to overflow | переливаться через край
+confraternizar | v B2 | to fraternise | общаться по-дружески
+remendar | v B2 | to patch | латать
+suavizar | v B2 | to soften | смягчать
+sincronizar | v B2 | to synchronise | синхронизировать
+ajeitar | v B2 | to adjust, to tidy | поправлять, приводить в порядок
+encarregar | v B2 | to put in charge | поручать | | «Encarregar-se de» — взяться за.
+sucumbir | v B2 | to succumb | поддаться, погибнуть
+espairecer | v B2 | to unwind | развеяться
+importunar | v B2 | to bother | докучать
+posicionar | v B2 | to position | располагать
+regenerar | v B2 | to regenerate | восстанавливать
+refutar | v B2 | to refute | опровергать
+presidir | v B2 | to preside | председательствовать
+girar | v B1 | to spin, to turn | вращаться, крутить
+sintetizar | v B2 | to synthesise; to sum up | синтезировать; обобщать
+atordoar | v B2 | to stun | оглушать
+renegociar | v B2 | to renegotiate | пересматривать условия
+massajar | v B2 | to massage | массировать | massagear
+defrontar | v B2 | to face | сталкиваться лицом к лицу | | «Defrontar-se com» — столкнуться с.
+empenhar | v B2 | to pawn; to commit | закладывать | | «Empenhar-se» — стараться изо всех сил.
+cravar | v B2 | to drive in, to stick | вонзать | | Разговорное (Португалия): «cravar um cigarro» — стрельнуть сигарету.
+louvar | v B2 | to praise | восхвалять
+batalhar | v B2 | to battle | сражаться, добиваться
+mascarar | v B2 | to mask | маскировать
+extinguir | v B2 | to extinguish | тушить, уничтожать
+reencontrar | v B2 | to meet again | снова встретить
+encurralar | v B2 | to corner | загнать в угол
+vacilar | v B2 | to waver | колебаться
+moer | v B2 | to grind | молоть | | «Moer a paciência» — выматывать нервы.
+embaraçar | v B2 | to embarrass | смущать
+enquadrar | v B2 | to frame | вписывать, обрамлять
+enxergar | v B2 | to see | видеть, различать | | Чаще в Бразилии; в Португалии обычно «ver».
+acatar | v B2 | to comply with | соблюдать, подчиняться
+soldar | v B2 | to weld | сваривать
+ventilar | v B2 | to ventilate | проветривать
+manusear | v B2 | to handle | обращаться (с предметом)
+enfurecer | v B2 | to infuriate | приводить в ярость
