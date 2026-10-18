@@ -78,6 +78,12 @@ struct SettingsView: View {
                 Toggle("Ошибка снимает один балл", isOn: setting(\.wrongPenalty))
             }
 
+            Section(header: GothicHeader("Звуки"),
+                    footer: Text("Короткие 8-битные звуки на верный и неверный ответ и тихая музыка башни на вкладке «Сегодня». В беззвучном режиме iPhone молчат.")) {
+                Toggle("Звуки ответов", isOn: setting(\.soundsOn))
+                Toggle("Музыка башни", isOn: setting(\.musicOn))
+            }
+
             Section(header: GothicHeader("Озвучка"),
                     footer: Text(Speaker.shared.hasEuropeanVoice
                                  ? "Найден голос европейского португальского (pt-PT)."

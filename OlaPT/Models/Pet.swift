@@ -29,6 +29,38 @@ struct PetData: Codable {
     }
 }
 
+/// Босс недели: побеждён ли на этой неделе и сколько всего побед.
+struct BossData: Codable {
+    /// Неделя последней победы, «2026-42»
+    var defeatedWeek: String
+    var wins: Int
+
+    init(defeatedWeek: String = "", wins: Int = 0) {
+        self.defeatedWeek = defeatedWeek
+        self.wins = wins
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case defeatedWeek, wins
+    }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        defeatedWeek = try c.decodeIfPresent(String.self, forKey: .defeatedWeek) ?? ""
+        wins = try c.decodeIfPresent(Int.self, forKey: .wins) ?? 0
+    }
+}
+
+/// Настройки боя с боссом.
+struct BossConfig {
+    let key: String
+    let title: String
+    /// Сколько верных ответов нужно, чтобы победить
+    let hp: Int
+    /// Сколько ошибок выдержит маг
+    let hearts: Int
+}
+
 enum PetMood: String, CaseIterable {
     case happy      // сыт: башня, читает книгу заклинаний
     case ok         // немного проголодался: башня, сидит

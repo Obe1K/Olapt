@@ -6,6 +6,8 @@ import SwiftUI
 enum TodaySession: Int, Identifiable {
     case daily      // план дня: повторения + новые слова
     case extraNew   // по желанию: ещё порция новых слов сверх дневной нормы
+    case boss       // бой с боссом недели
+    case verbs      // глаголы на сегодня
 
     var id: Int { return rawValue }
 }
@@ -55,6 +57,10 @@ struct TodayView: View {
                         startCard
                     } else {
                         planCard(plan)
+                        verbsCard
+                        if model.bossAvailable {
+                            bossCard
+                        }
                         forecastCard
                     }
                     linksCard
@@ -69,7 +75,11 @@ struct TodayView: View {
         .onChange(of: scenePhase) { phase in
             if phase == .active { refreshTick += 1 }
         }
-        .onAppear { refreshTick += 1 }
+        .onAppear {
+            refreshTick += 1
+            SoundFX.shared.startMusic()
+        }
+        .onDisappear { SoundFX.shared.stopMusic() }
         .fullScreenCover(item: $active) { kind in
             switch kind {
             case .daily:
@@ -78,6 +88,14 @@ struct TodayView: View {
             case .extraNew:
                 StudySessionView(level: nil, title: "Новые слова", collectionID: nil, isDaily: true,
                                  generator: { makeExtraNewQuestions() })
+            case .verbs:
+                let vp = model.dailyVerbPlan()
+                VerbSessionView(request: VerbSessionRequest(verbs: [], tenses: [], mode: .choice, count: 0,
+                                                            dailyPairs: vp.due + vp.new))
+            case .boss:
+                let cfg = model.bossConfig()
+                StudySessionView(level: nil, title: "Босс недели", collectionID: nil, boss: cfg,
+                                 generator: { makeBossQuestions(count: cfg.hp) })
             }
         }
     }
@@ -240,11 +258,107 @@ struct TodayView: View {
         .pixelPanel()
     }
 
+    // MARK: Глаголы
+
+    private var verbsCard: some View {
+        let vp = model.dailyVerbPlan()
+        return VStack(alignment: .leading, spacing: 10) {
+            GothicHeader("Глаголы на сегодня")
+            if vp.isEmpty {
+                Label("Спряжения на сегодня повторены", systemImage: "checkmark.seal.fill")
+                    .font(Theme.pixel(16, relativeTo: .headline))
+                    .foregroundColor(Theme.moss)
+                    .accessibilityIdentifier("verbs-done")
+            } else {
+                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    Text("\(vp.total)")
+                        .font(Theme.pixel(32, relativeTo: .title))
+                        .foregroundColor(Theme.text)
+                    Text(Plural.forms(vp.total))
+                        .font(Theme.pixel(18, relativeTo: .title3))
+                        .foregroundColor(Theme.text)
+                    Spacer()
+                    Text("~\(model.estimatedMinutes(questions: vp.total)) мин")
+                        .font(Theme.pixel(18, relativeTo: .title3))
+                        .foregroundColor(Theme.textDim)
+                }
+                HStack(spacing: 16) {
+                    planChip(value: vp.due.count, title: "повторить", color: Theme.gold)
+                    planChip(value: vp.new.count, title: "новых", color: Theme.bloodBright)
+                }
+                Text(vp.new.map { "\($0.verb.inf) — \($0.tense.name)" }.prefix(2).joined(separator: ", "))
+                    .font(.caption)
+                    .foregroundColor(Theme.textDim)
+                    .lineLimit(2)
+                Button {
+                    active = .verbs
+                } label: {
+                    Text("Спрягать")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(GothicButtonStyle(.secondary))
+                .accessibilityIdentifier("verbs-start")
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .pixelPanel()
+    }
+
+    // MARK: Босс недели
+
+    private var bossCard: some View {
+        let b = model.bossOfWeek
+        let defeated = model.bossDefeatedThisWeek
+        return HStack(alignment: .top, spacing: 12) {
+            Image("pet_boss_\(b.key)0")
+                .interpolation(.none)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 72, height: 72)
+                .padding(6)
+                .background(PixelFrame(fill: Color.black))
+                .opacity(defeated ? 0.45 : 1)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 8) {
+                GothicHeader("Босс недели")
+                Text(b.title)
+                    .font(Theme.pixel(18, relativeTo: .headline))
+                    .foregroundColor(Theme.goldBright)
+                Text(defeated
+                     ? "Повержен! Новый босс появится в понедельник."
+                     : "Бой со словами, которые вы повторяли на этой неделе. Ошибётесь \(model.bossConfig().hearts) раза — маг выбьется из сил.")
+                    .font(.subheadline)
+                    .foregroundColor(Theme.text)
+                    .fixedSize(horizontal: false, vertical: true)
+                if !defeated {
+                    Button {
+                        active = .boss
+                    } label: {
+                        Text("Бросить вызов")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(GothicButtonStyle(.primary))
+                    .accessibilityIdentifier("boss-start")
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .pixelPanel()
+    }
+
     // MARK: Ссылки
 
     private var linksCard: some View {
         let count = model.difficultWords.count
+        let spells = model.wordsInMemory()
         return VStack(spacing: 0) {
+            NavigationLink {
+                GrimoireView()
+            } label: {
+                linkRow(icon: "book.closed", title: "Гримуар", value: spells > 0 ? "\(spells) \(Plural.spells(spells))" : "пока пуст")
+            }
+            .accessibilityIdentifier("open-grimoire")
+            Rectangle().fill(Theme.goldDark).frame(height: 1).padding(.horizontal, 8)
             NavigationLink {
                 DifficultWordsView()
             } label: {
@@ -318,6 +432,13 @@ struct TodayView: View {
         let builder = ExerciseBuilder(index: model.index, settings: model.settings)
         return builder.makeDailyQuestions(dueWords: due, newWords: new, states: model.user.srs,
                                           pool: collectionPool() + due)
+    }
+
+    private func makeBossQuestions(count: Int) -> [WordQuestion] {
+        let words = model.bossWords(limit: count)
+        let builder = ExerciseBuilder(index: model.index, settings: model.settings)
+        return builder.makeDailyQuestions(dueWords: words, newWords: [], states: model.user.srs,
+                                          pool: collectionPool() + words)
     }
 
     private func makeExtraNewQuestions() -> [WordQuestion] {

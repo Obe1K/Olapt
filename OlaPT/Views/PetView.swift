@@ -90,6 +90,7 @@ struct PetView: View {
             .onTapGesture {
                 reactionStart = Date()
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                SoundFX.shared.play(.tap)
             }
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(caption)
@@ -109,6 +110,8 @@ struct PetView: View {
 /// Рисует слои сцены 192×120 без сглаживания, во всю ширину; низ плавно уходит в фон страницы.
 struct PixelStage: View {
     let layers: [PlacedLayer]
+    /// Плавно растворять верх и низ в фоне страницы
+    var fade: Bool = true
 
     var body: some View {
         GeometryReader { geo in
@@ -127,11 +130,14 @@ struct PixelStage: View {
         }
         .aspectRatio(CGFloat(PetAtlas.width) / CGFloat(PetAtlas.height), contentMode: .fit)
         .mask(
-            LinearGradient(stops: [
+            LinearGradient(stops: fade ? [
                 .init(color: .clear, location: 0),
                 .init(color: .black, location: 0.06),
                 .init(color: .black, location: 0.72),
                 .init(color: .clear, location: 1),
+            ] : [
+                .init(color: .black, location: 0),
+                .init(color: .black, location: 1),
             ], startPoint: .top, endPoint: .bottom)
         )
     }

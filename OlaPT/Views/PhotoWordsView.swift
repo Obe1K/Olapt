@@ -615,6 +615,26 @@ struct UnknownWordsSheet: View {
 // MARK: - Склонение «слово»
 
 enum Plural {
+    /// 1 форма, 2 формы, 5 форм
+    static func forms(_ n: Int) -> String {
+        let mod100 = n % 100
+        let mod10 = n % 10
+        if mod100 >= 11 && mod100 <= 14 { return "форм" }
+        if mod10 == 1 { return "форма" }
+        if mod10 >= 2 && mod10 <= 4 { return "формы" }
+        return "форм"
+    }
+
+    /// 1 заклинание, 2 заклинания, 5 заклинаний
+    static func spells(_ n: Int) -> String {
+        let mod100 = n % 100
+        let mod10 = n % 10
+        if mod100 >= 11 && mod100 <= 14 { return "заклинаний" }
+        if mod10 == 1 { return "заклинание" }
+        if mod10 >= 2 && mod10 <= 4 { return "заклинания" }
+        return "заклинаний"
+    }
+
     /// 1 неделя, 2 недели, 5 недель
     static func weeks(_ n: Int) -> String {
         let mod100 = n % 100

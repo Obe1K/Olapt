@@ -1091,3 +1091,241 @@ def rune_bubble_hi(idxs):
                     cv.px(x + xx, 5 + yy, "bl2")
         x += len(g[0]) + 3
     return cv
+
+
+# ------------------------------------------------------------------ boss arena and bosses
+
+def arena_bg():
+    cv = Canvas(bg="st0")
+    dungeon_wall(cv, 0, 0, W - 1, 84, seed=41)
+    # pillars
+    for px_ in (6, 168):
+        cv.rect(px_, 0, px_ + 17, 84, "st2")
+        cv.line([(px_, 0), (px_, 84)], "st3")
+        cv.line([(px_ + 17, 0), (px_ + 17, 84)], "st0")
+        for y in range(6, 84, 10):
+            cv.line([(px_, y), (px_ + 17, y)], "st1")
+    # banners between pillars
+    for bx in (40, 140):
+        cv.line([(bx - 2, 4), (bx + 14, 4)], "wd2")
+        cv.rect(bx, 5, bx + 12, 34, "bl1")
+        cv.line([(bx, 5), (bx, 34)], "bl2")
+        for i in range(13):
+            cut = abs(i - 6) / 6
+            for y in range(30 + int(4 * (1 - cut)), 35):
+                cv.px(bx + i, y, "st1")
+        cv.rect(bx + 4, 12, bx + 8, 18, "gd1")
+    # torches on pillars
+    for tx in (14, 176):
+        cv.rect(tx - 1, 30, tx + 2, 40, "wd1")
+        cv.rect(tx - 2, 28, tx + 3, 30, "st3")
+    # floor: big flagstones with perspective
+    cv.rect(0, 85, W - 1, H - 1, "st1")
+    cv.line([(0, 85), (W - 1, 85)], "st3")
+    for y in (92, 101, 112):
+        cv.line([(0, y), (W - 1, y)], "st0")
+    for x in range(-40, W + 40, 24):
+        cv.line([(W // 2 + (x - W // 2) // 3, 85), (x, H - 1)], "st0")
+    for tx in (14, 176):
+        light(cv, tx, 26, 30, "fl1", 0.45)
+    light(cv, W // 2, 100, 60, "bl1", 0.15)
+    vignette(cv, 0.65)
+    return cv
+
+
+def torch_flame(frame=0):
+    cv = Canvas(6, 9)
+    dx = (0, 1, 0, -1)[frame % 4]
+    cv.rect(1, 3, 4, 8, "fl1")
+    cv.rect(2, 1 + (frame % 2), 3, 8, "fl2")
+    cv.px(2 + dx, 0, "fl0")
+    cv.px(0, 6, "fl0"); cv.px(5, 6, "fl0")
+    return cv
+
+
+def _shade_mask(cv, mask, base, dark, light_c, outline, ox=0, oy=0, light_from=(-1, -1)):
+    for (x, y) in mask:
+        edge = any((x + dx, y + dy) not in mask for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)))
+        lit = (x + light_from[0], y + light_from[1]) not in mask
+        c = outline if edge and not lit else (light_c if lit else base)
+        if not edge and ((x + y) % 7 == 0) and (x + 1, y + 1) in mask and (x + 2, y + 2) not in mask:
+            c = dark
+        cv.px(x + ox, y + oy, c)
+
+
+def boss_goblin(frame=0, hit=False):
+    """Goblin usurer with a sack of coins."""
+    import dark
+    cv = Canvas(64, 64)
+    bob = frame % 2
+    mask = set()
+    # body
+    for p in dark.ellipse(32, 44 + bob, 16, 16):
+        mask.add(p)
+    # head
+    head = dark.ellipse(32, 22 + bob, 12, 11)
+    mask |= head
+    # ears
+    for i in range(10):
+        for k in range(max(1, 4 - i // 3)):
+            mask.add((19 - i, 18 + bob + i // 2 + k))
+            mask.add((45 + i, 18 + bob + i // 2 + k))
+    base, dk, lt, ol = ("mo1", "mo0", "mo2", "mo0") if not hit else ("pa2", "pa1", "pa2", "pa1")
+    _shade_mask(cv, mask, base, dk, lt, ol)
+    if not hit:
+        # vest
+        for p in dark.ellipse(32, 48 + bob, 13, 11):
+            if p in mask:
+                cv.px(p[0], p[1], "bl0" if (p[0] + p[1]) % 9 else "bl1")
+        # eyes and grin
+        for ex in (27, 36):
+            cv.rect(ex, 19 + bob, ex + 2, 21 + bob, "fl1")
+            cv.px(ex + 1, 20 + bob, "void")
+        cv.line([(26, 27 + bob), (38, 27 + bob)], "void")
+        for tx in (28, 31, 34, 37):
+            cv.px(tx, 28 + bob, "pa2")
+        cv.line([(24, 16 + bob), (30, 18 + bob)], "mo0")
+        cv.line([(40, 16 + bob), (34, 18 + bob)], "mo0")
+        # sack of gold
+        cv.ellipse(46, 40 + bob, 62, 58 + bob, "wd2", outline="wd0")
+        cv.line([(50, 41 + bob), (58, 41 + bob)], "wd0")
+        for (x, y) in [(51, 38), (54, 37), (57, 38)]:
+            cv.ellipse(x, y + bob, x + 3, y + 2 + bob, "gd2", outline="gd0")
+        # feet
+        cv.rect(22, 59, 28, 62, "mo0"); cv.rect(36, 59, 42, 62, "mo0")
+    return cv
+
+
+def boss_spider(frame=0, hit=False):
+    import dark
+    cv = Canvas(72, 56)
+    bob = frame % 2
+    legc = "rb2" if not hit else "pa1"
+    # legs (4 per side), bent
+    for i in range(4):
+        y0 = 26 + i * 4
+        kx = 14 - i * 2 + (bob if i % 2 else -bob)
+        cv.line([(30, y0), (kx, y0 - 12 + i * 3)], legc, 2)
+        cv.line([(kx, y0 - 12 + i * 3), (kx - 6, 54 - i)], legc, 2)
+        cv.line([(42, y0), (72 - kx, y0 - 12 + i * 3)], legc, 2)
+        cv.line([(72 - kx, y0 - 12 + i * 3), (78 - kx, 54 - i)], legc, 2)
+    mask = dark.ellipse(36, 20 + bob, 15, 13) | dark.ellipse(36, 36 + bob, 9, 8)
+    base, dk, lt, ol = ("rb0", "void", "rb2", "void") if not hit else ("pa2", "pa1", "pa2", "pa1")
+    _shade_mask(cv, mask, base, dk, lt, ol)
+    if not hit:
+        # red hourglass mark
+        cv.poly([(33, 14 + bob), (39, 14 + bob), (36, 18 + bob)], "bl2")
+        cv.poly([(33, 23 + bob), (39, 23 + bob), (36, 19 + bob)], "bl2")
+        # eyes cluster
+        for (x, y) in [(31, 34), (35, 33), (39, 34), (33, 37), (37, 37)]:
+            cv.rect(x, y + bob, x + 1, y + 1 + bob, "bl2")
+            cv.px(x, y + bob, "fl1")
+        # fangs
+        cv.line([(33, 42 + bob), (32, 46 + bob)], "pa1")
+        cv.line([(39, 42 + bob), (40, 46 + bob)], "pa1")
+    return cv
+
+
+def boss_dragon(frame=0, hit=False):
+    """Bone dragon: skull head on a vertebra neck, wings of bone."""
+    import dark
+    cv = Canvas(80, 64)
+    bob = frame % 2
+    bone, shade = ("bone", "pa0") if not hit else ("pa2", "pa2")
+    # wing bones
+    for side in (-1, 1):
+        sx = 40 + side * 8
+        tip = (40 + side * 38, 6 + bob)
+        cv.line([(sx, 30), tip], bone, 2)
+        for k in range(1, 4):
+            mid = (sx + (tip[0] - sx) * k // 4, 30 + (tip[1] - 30) * k // 4)
+            cv.line([mid, (mid[0] + side * 4, 46 - k * 3)], shade)
+    # neck vertebrae
+    for i in range(6):
+        x = 40 + int(3 * (i % 2) * (1 if bob else -1))
+        y = 56 - i * 5
+        cv.ellipse(x - 4, y - 2, x + 4, y + 2, bone, outline=shade)
+    # skull head
+    head = dark.ellipse(40, 16 + bob, 13, 10)
+    _shade_mask(cv, head, bone, shade, "pa2", shade)
+    # snout
+    cv.rect(30, 20 + bob, 50, 28 + bob, bone)
+    cv.line([(30, 28 + bob), (50, 28 + bob)], shade)
+    if not hit:
+        for ex in (32, 44):
+            cv.rect(ex, 12 + bob, ex + 4, 16 + bob, "void")
+            cv.rect(ex + 1, 13 + bob, ex + 2, 14 + bob, "mo2")
+        for tx in range(31, 50, 3):
+            cv.line([(tx, 28 + bob), (tx, 31 + bob)], "pa1")
+        # horns
+        cv.line([(30, 10 + bob), (22, 2 + bob)], "pa1", 2)
+        cv.line([(50, 10 + bob), (58, 2 + bob)], "pa1", 2)
+        # ghostly green glow in the jaws
+        cv.rect(33, 25 + bob, 47, 27 + bob, "mo1")
+    return cv
+
+
+def boss_lich(frame=0, hit=False):
+    """Floating lich with a crown and a staff, purple aura."""
+    import dark
+    cv = Canvas(64, 72)
+    bob = (0, 1, 2, 1)[frame % 4]
+    if not hit:
+        light(cv, 32, 36, 30, "rb3", 0.0)
+    robe = set()
+    for y in range(22, 66):
+        t = (y - 22) / 44
+        l = round(32 - 9 - 9 * t)
+        r = round(32 + 9 + 9 * t)
+        for x in range(l, r + 1):
+            if y < 64 or (x % 4) < 2:
+                robe.add((x, y + bob))
+    base, dk, lt, ol = ("rb1", "rb0", "rb3", "rb0") if not hit else ("pa2", "pa1", "pa2", "pa1")
+    _shade_mask(cv, robe, base, dk, lt, ol)
+    skull = dark.ellipse(32, 14 + bob, 8, 8)
+    _shade_mask(cv, skull, "bone" if not hit else "pa2", "pa0", "pa2", "pa0")
+    if not hit:
+        cv.rect(27, 12 + bob, 30, 15 + bob, "void"); cv.rect(34, 12 + bob, 37, 15 + bob, "void")
+        cv.px(28, 13 + bob, "ic2"); cv.px(35, 13 + bob, "ic2")
+        cv.line([(29, 19 + bob), (35, 19 + bob)], "void")
+        # crown
+        cv.rect(24, 4 + bob, 40, 7 + bob, "gd1")
+        for x in (24, 28, 32, 36, 40):
+            cv.px(x, 3 + bob, "gd2"); cv.px(x, 2 + bob, "gd1")
+        cv.px(32, 5 + bob, "bl2")
+        # bony hands and staff
+        cv.line([(52, 4 + bob), (52, 66 + bob)], "wd2", 2)
+        cv.ellipse(48, 0 + bob, 56, 8 + bob, "ic1", outline="ic0")
+        cv.px(51, 2 + bob, "ic2")
+        cv.rect(48, 30 + bob, 51, 33 + bob, "bone")
+        cv.rect(12, 32 + bob, 15, 35 + bob, "bone")
+        # gold trim
+        for y in range(24, 64, 2):
+            cv.px(32, y + bob, "gd0")
+    return cv
+
+
+def fire_bolt(frame=0):
+    cv = Canvas(26, 12)
+    for i in range(20):
+        c = "fl2" if i > 14 else ("fl1" if i > 7 else "fl0")
+        h = 1 + i // 3
+        cv.line([(i + 3, 6 - h // 2), (i + 3, 6 + h // 2)], c)
+    cv.ellipse(18, 2, 25, 9, "fl2")
+    cv.px(22, 4, "pa2"); cv.px(23, 5, "pa2")
+    for k in range(4):
+        cv.px(k * 3 + frame % 2, 3 + (k + frame) % 6, "fl0")
+    return cv
+
+
+def mage_battle():
+    """Mage casting: the wave pose works as a spell gesture."""
+    return mage_hi("wave", 0)
+
+
+BOSSES = [
+    ("goblin", "Гоблин-ростовщик", boss_goblin),
+    ("spider", "Гигантский паук", boss_spider),
+    ("dragon", "Костяной дракон", boss_dragon),
+    ("lich", "Лич", boss_lich),
+]

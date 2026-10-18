@@ -15,6 +15,11 @@ final class WordStudySession: ObservableObject {
     @Published var totalCount: Int = 0
     @Published var mistakes: [Word] = []
     @Published var finished: Bool = false
+    /// Все верные и неверные ответы, включая повторы (для боя с боссом)
+    @Published var hits: Int = 0
+    @Published var misses: Int = 0
+    /// Закончить раньше (босс повержен или маг выбился из сил)
+    var stopWhen: (() -> Bool)?
 
     init(generator: @escaping () -> [WordQuestion]) {
         self.generator = generator
@@ -41,6 +46,8 @@ final class WordStudySession: ObservableObject {
         correctCount = 0
         totalCount = 0
         mistakes = []
+        hits = 0
+        misses = 0
         finished = queue.isEmpty
     }
 
@@ -70,6 +77,8 @@ final class WordStudySession: ObservableObject {
         answered = true
         lastCorrect = ok
         lastVerdict = verdict
+        if ok { hits += 1 } else { misses += 1 }
+        SoundFX.shared.play(ok ? .correct : .wrong)
         if !q.isRetry {
             totalCount += 1
             if ok {
@@ -93,7 +102,7 @@ final class WordStudySession: ObservableObject {
         position += 1
         answered = false
         selectedIndex = nil
-        if position >= queue.count {
+        if position >= queue.count || stopWhen?() == true {
             finished = true
         }
         return finished
@@ -112,6 +121,8 @@ struct StudySessionView: View {
     let collectionID: UUID?
     /// Тренировка «Сегодня»: в конце показываем план на ближайшие дни
     let isDaily: Bool
+    /// Бой с боссом недели
+    let boss: BossConfig?
 
     @State private var typed = ""
     @State private var fieldFocused = false
@@ -121,12 +132,22 @@ struct StudySessionView: View {
     @State private var inputLocked = false
 
     init(level: ExerciseLevel?, title: String? = nil, collectionID: UUID?, isDaily: Bool = false,
-         generator: @escaping () -> [WordQuestion]) {
+         boss: BossConfig? = nil, generator: @escaping () -> [WordQuestion]) {
         self.level = level
         self.title = title ?? level?.shortTitle ?? "Тренировка"
         self.collectionID = collectionID
         self.isDaily = isDaily
-        _session = StateObject(wrappedValue: WordStudySession(generator: generator))
+        self.boss = boss
+        let s = WordStudySession(generator: generator)
+        if let b = boss {
+            s.stopWhen = { [unowned s] in s.hits >= b.hp || s.misses >= b.hearts }
+        }
+        _session = StateObject(wrappedValue: s)
+    }
+
+    private var bossWon: Bool {
+        guard let b = boss else { return false }
+        return session.hits >= b.hp
     }
 
     private var currentIsChoice: Bool {
@@ -181,6 +202,10 @@ struct StudySessionView: View {
                 if isDaily && model.dailyPlan().isEmpty {
                     model.feedPetFull()
                 }
+                if bossWon {
+                    model.recordBossVictory()
+                    SoundFX.shared.play(.victory)
+                }
             }
         }
         .onAppear {
@@ -210,9 +235,15 @@ struct StudySessionView: View {
     private func questionView(_ q: WordQuestion) -> some View {
         ScrollView {
             VStack(spacing: 18) {
-                PixelProgressBar(fraction: Double(session.position) / Double(max(1, session.queue.count)),
-                                 fill: Theme.bloodBright)
-                    .padding(.top, 8)
+                if let b = boss {
+                    BossArenaView(boss: b, hits: session.hits, misses: session.misses,
+                                  answered: session.answered, lastCorrect: session.lastCorrect)
+                        .padding(.horizontal, -20)
+                } else {
+                    PixelProgressBar(fraction: Double(session.position) / Double(max(1, session.queue.count)),
+                                     fill: Theme.bloodBright)
+                        .padding(.top, 8)
+                }
 
                 if q.isRetry {
                     Text("Повторим слово, в котором была ошибка")
@@ -439,6 +470,36 @@ struct StudySessionView: View {
 
     private var summaryView: some View {
         GothicList {
+            if let b = boss {
+                Section {
+                    VStack(spacing: 10) {
+                        BossArenaView(boss: b, hits: session.hits, misses: session.misses,
+                                      answered: false, lastCorrect: false, defeated: bossWon)
+                        if bossWon {
+                            Text("\(b.title) повержен!")
+                                .font(Theme.pixel(24, relativeTo: .title2))
+                                .foregroundColor(Theme.goldBright)
+                            Text("Маг получил полный котёл зелья. Следующий босс появится в понедельник.")
+                                .font(.subheadline)
+                                .foregroundColor(Theme.text)
+                                .multilineTextAlignment(.center)
+                        } else {
+                            Text("Маг выбился из сил")
+                                .font(Theme.pixel(22, relativeTo: .title2))
+                                .foregroundColor(Theme.red)
+                            Text("Повторите слова и бросьте вызов снова — босс ждёт до конца недели.")
+                                .font(.subheadline)
+                                .foregroundColor(Theme.text)
+                                .multilineTextAlignment(.center)
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 6)
+                    .accessibilityElement(children: .combine)
+                    .accessibilityIdentifier("boss-result")
+                }
+                .listRowBackground(Color.clear)
+            }
             if isDaily {
                 Section {
                     let plan = model.dailyPlan()
@@ -494,7 +555,7 @@ struct StudySessionView: View {
             }
 
             Section {
-                if !isDaily {
+                if !isDaily && !bossWon {
                 Button {
                     advanceWork?.cancel()
                     session.restart()
@@ -503,7 +564,7 @@ struct StudySessionView: View {
                         fieldFocused = true
                     }
                 } label: {
-                    Label("Пройти ещё раз", systemImage: "arrow.clockwise")
+                    Label(boss != nil ? "Сразиться снова" : "Пройти ещё раз", systemImage: "arrow.clockwise")
                 }
                 }
                 Button {

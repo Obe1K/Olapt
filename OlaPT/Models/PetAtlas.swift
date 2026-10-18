@@ -14,13 +14,30 @@ enum PetAtlas {
     static let height = 120
 
     static let layers: [String: PetLayer] = [
+        "pet_battle_mage": PetLayer(name: "pet_battle_mage", x: 19, y: 31, w: 54, h: 70),
+        "pet_battle_mage_hurt": PetLayer(name: "pet_battle_mage_hurt", x: 21, y: 33, w: 42, h: 68),
+        "pet_bg_arena": PetLayer(name: "pet_bg_arena", x: 0, y: 0, w: 192, h: 120),
         "pet_bg_cellar": PetLayer(name: "pet_bg_cellar", x: 0, y: 0, w: 192, h: 120),
         "pet_bg_dungeon": PetLayer(name: "pet_bg_dungeon", x: 0, y: 0, w: 192, h: 120),
         "pet_bg_dungeon_chained": PetLayer(name: "pet_bg_dungeon_chained", x: 0, y: 0, w: 192, h: 120),
         "pet_bg_hall": PetLayer(name: "pet_bg_hall", x: 0, y: 0, w: 192, h: 120),
         "pet_bg_library": PetLayer(name: "pet_bg_library", x: 0, y: 0, w: 192, h: 120),
         "pet_bg_summit": PetLayer(name: "pet_bg_summit", x: 0, y: 0, w: 192, h: 120),
+        "pet_bolt0": PetLayer(name: "pet_bolt0", x: 0, y: 52, w: 26, h: 12),
+        "pet_bolt1": PetLayer(name: "pet_bolt1", x: 0, y: 52, w: 26, h: 12),
         "pet_book": PetLayer(name: "pet_book", x: 103, y: 46, w: 36, h: 21),
+        "pet_boss_dragon0": PetLayer(name: "pet_boss_dragon0", x: 93, y: 27, w: 78, h: 58),
+        "pet_boss_dragon1": PetLayer(name: "pet_boss_dragon1", x: 93, y: 28, w: 78, h: 57),
+        "pet_boss_dragon_hit": PetLayer(name: "pet_boss_dragon_hit", x: 93, y: 31, w: 78, h: 54),
+        "pet_boss_goblin0": PetLayer(name: "pet_boss_goblin0", x: 118, y: 37, w: 53, h: 52),
+        "pet_boss_goblin1": PetLayer(name: "pet_boss_goblin1", x: 118, y: 38, w: 53, h: 51),
+        "pet_boss_goblin_hit": PetLayer(name: "pet_boss_goblin_hit", x: 118, y: 37, w: 45, h: 50),
+        "pet_boss_lich0": PetLayer(name: "pet_boss_lich0", x: 120, y: 18, w: 45, h: 67),
+        "pet_boss_lich1": PetLayer(name: "pet_boss_lich1", x: 120, y: 19, w: 45, h: 67),
+        "pet_boss_lich_hit": PetLayer(name: "pet_boss_lich_hit", x: 123, y: 24, w: 35, h: 60),
+        "pet_boss_spider0": PetLayer(name: "pet_boss_spider0", x: 102, y: 41, w: 70, h: 48),
+        "pet_boss_spider1": PetLayer(name: "pet_boss_spider1", x: 103, y: 42, w: 68, h: 47),
+        "pet_boss_spider_hit": PetLayer(name: "pet_boss_spider_hit", x: 102, y: 41, w: 70, h: 48),
         "pet_candle0_lit0": PetLayer(name: "pet_candle0_lit0", x: 0, y: -16, w: 4, h: 17),
         "pet_candle0_lit1": PetLayer(name: "pet_candle0_lit1", x: 0, y: -16, w: 4, h: 17),
         "pet_candle0_lit2": PetLayer(name: "pet_candle0_lit2", x: 0, y: -16, w: 4, h: 17),
@@ -80,7 +97,15 @@ enum PetAtlas {
         "pet_sparks1": PetLayer(name: "pet_sparks1", x: 105, y: 18, w: 30, h: 30),
         "pet_sparks2": PetLayer(name: "pet_sparks2", x: 105, y: 25, w: 29, h: 22),
         "pet_splash": PetLayer(name: "pet_splash", x: 67, y: 92, w: 7, h: 3),
-        "pet_thought": PetLayer(name: "pet_thought", x: 93, y: 0, w: 28, h: 28)
+        "pet_thought": PetLayer(name: "pet_thought", x: 93, y: 0, w: 28, h: 28),
+        "pet_torch0_0": PetLayer(name: "pet_torch0_0", x: 12, y: 20, w: 6, h: 9),
+        "pet_torch0_1": PetLayer(name: "pet_torch0_1", x: 12, y: 20, w: 6, h: 9),
+        "pet_torch0_2": PetLayer(name: "pet_torch0_2", x: 12, y: 20, w: 6, h: 9),
+        "pet_torch0_3": PetLayer(name: "pet_torch0_3", x: 12, y: 20, w: 6, h: 9),
+        "pet_torch1_0": PetLayer(name: "pet_torch1_0", x: 174, y: 20, w: 6, h: 9),
+        "pet_torch1_1": PetLayer(name: "pet_torch1_1", x: 174, y: 20, w: 6, h: 9),
+        "pet_torch1_2": PetLayer(name: "pet_torch1_2", x: 174, y: 20, w: 6, h: 9),
+        "pet_torch1_3": PetLayer(name: "pet_torch1_3", x: 174, y: 20, w: 6, h: 9)
     ]
 
     /// Вещи в башне за выученные слова: порог, ключ, название.
@@ -95,5 +120,13 @@ enum PetAtlas {
         (400, "banner", "Знамя"),
         (450, "armor", "Доспехи"),
         (500, "circle", "Магический круг")
+    ]
+
+    /// Боссы недели по кругу: ключ и название.
+    static let bosses: [(key: String, title: String)] = [
+        ("goblin", "Гоблин-ростовщик"),
+        ("spider", "Гигантский паук"),
+        ("dragon", "Костяной дракон"),
+        ("lich", "Лич")
     ]
 }

@@ -141,7 +141,24 @@ def main():
         for f, spr in enumerate(item_frames[key]):
             export_full(f"pet_item_{key}{f}", sprite_at(spr, x, y))
 
-    # vignette overlay is baked into backgrounds; nothing else
+    # boss arena
+    save_png("pet_bg_arena", arena_bg().img)
+    layers["pet_bg_arena"] = (0, 0, W, H)
+    for f in range(4):
+        for i, tx in enumerate((14, 176)):
+            export_full(f"pet_torch{i}_{f}", sprite_at(torch_flame(f + i), tx - 2, 20))
+    export_full("pet_battle_mage", sprite_at(mage_hi("wave", 0), 18, 30))
+    export_full("pet_battle_mage_hurt", sprite_at(mage_hi("tired", 0), 18, 30))
+    for f in range(2):
+        bolt = fire_bolt(f)
+        save_png(f"pet_bolt{f}", bolt.img)
+        layers[f"pet_bolt{f}"] = (0, 52, bolt.w, bolt.h)
+    for key, title, fn in BOSSES:
+        for f in range(2):
+            b = fn(f)
+            export_full(f"pet_boss_{key}{f}", sprite_at(b, 186 - b.w - 14, 90 - b.h))
+        b = fn(0, hit=True)
+        export_full(f"pet_boss_{key}_hit", sprite_at(b, 186 - b.w - 14, 90 - b.h))
 
     # Swift atlas
     out = ["// Сгенерировано Tools/pet/export_hires.py — не редактировать вручную.", "",
@@ -159,6 +176,11 @@ def main():
     out.append("    /// Вещи в башне за выученные слова: порог, ключ, название.")
     out.append("    static let items: [(threshold: Int, key: String, title: String)] = [")
     out.append(",\n".join(f'        ({th}, "{key}", "{title}")' for (th, key, title, x, y) in ITEMS))
+    out.append("    ]")
+    out.append("")
+    out.append("    /// Боссы недели по кругу: ключ и название.")
+    out.append("    static let bosses: [(key: String, title: String)] = [")
+    out.append(",\n".join(f'        ("{k}", "{t}")' for k, t, fn in BOSSES))
     out.append("    ]")
     out.append("}")
     open(SWIFT, "w", encoding="utf-8").write("\n".join(out) + "\n")

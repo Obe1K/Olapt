@@ -205,9 +205,7 @@ final class VerbStudySession: ObservableObject {
 
     init(request: VerbSessionRequest, library: VerbLibrary, progress: [String: WordProgress]) {
         self.request = request
-        let builder = VerbExerciseBuilder(library: library, progress: progress)
-        self.queue = builder.makeQuestions(verbs: request.verbs, tenses: request.tenses,
-                                           mode: request.mode, count: request.count)
+        self.queue = VerbStudySession.makeQueue(request: request, library: library, progress: progress)
         self.finished = queue.isEmpty
     }
 
@@ -216,15 +214,34 @@ final class VerbStudySession: ObservableObject {
         return nil
     }
 
+    /// Текущий вопрос — с вводом формы (у вопросов с выбором есть варианты)
+    var currentIsTyping: Bool {
+        return current.map { $0.options.isEmpty } ?? false
+    }
+
+    static func makeQueue(request: VerbSessionRequest, library: VerbLibrary, progress: [String: WordProgress]) -> [VerbQuestion] {
+        let builder = VerbExerciseBuilder(library: library, progress: progress)
+        if !request.dailyPairs.isEmpty {
+            var result: [VerbQuestion] = []
+            for pair in request.dailyPairs {
+                let persons = library.activePersons(pair.tense).filter { !pair.verb.form(pair.tense.id, $0).isEmpty }
+                guard let p = persons.randomElement() else { continue }
+                result.append(builder.makeQuestion(verb: pair.verb, tense: pair.tense, person: p,
+                                                   mode: pair.typing ? .typing : .choice))
+            }
+            return result.shuffled()
+        }
+        return builder.makeQuestions(verbs: request.verbs, tenses: request.tenses,
+                                     mode: request.mode, count: request.count)
+    }
+
     var percent: Int {
         if totalCount == 0 { return 0 }
         return Int((Double(correctCount) / Double(totalCount) * 100.0).rounded())
     }
 
     func restart(library: VerbLibrary, progress: [String: WordProgress]) {
-        let builder = VerbExerciseBuilder(library: library, progress: progress)
-        queue = builder.makeQuestions(verbs: request.verbs, tenses: request.tenses,
-                                      mode: request.mode, count: request.count)
+        queue = VerbStudySession.makeQueue(request: request, library: library, progress: progress)
         position = 0
         answered = false
         selectedIndex = nil
@@ -253,6 +270,7 @@ final class VerbStudySession: ObservableObject {
     private func finish(ok: Bool, question q: VerbQuestion, model: AppModel) {
         answered = true
         lastCorrect = ok
+        SoundFX.shared.play(ok ? .correct : .wrong)
         if !q.isRetry {
             totalCount += 1
             if ok {
@@ -260,7 +278,7 @@ final class VerbStudySession: ObservableObject {
             } else {
                 mistakes.append(q)
             }
-            model.recordVerb(verb: q.verb, tense: q.tense, correct: ok)
+            model.recordVerb(verb: q.verb, tense: q.tense, correct: ok, recognition: !q.options.isEmpty)
             if !ok {
                 var retry = q
                 retry.isRetry = true
@@ -325,14 +343,14 @@ struct VerbSessionView: View {
             if !started {
                 session.restart(library: model.verbs, progress: model.user.verbProgress)
                 started = true
-                if request.mode == .typing {
+                if session.currentIsTyping {
                     fieldFocused = true
                 }
             }
         }
         .onChange(of: session.position) { _ in
             typed = ""
-            if request.mode == .typing && !session.finished {
+            if session.currentIsTyping && !session.finished {
                 fieldFocused = true
             }
         }
@@ -383,7 +401,7 @@ struct VerbSessionView: View {
                 }
                 .padding(.vertical, 6)
 
-                if request.mode == .choice {
+                if !q.options.isEmpty {
                     choiceList(q)
                 } else {
                     typingArea(q)
@@ -561,7 +579,7 @@ struct VerbSessionView: View {
                 Button {
                     session.restart(library: model.verbs, progress: model.user.verbProgress)
                     typed = ""
-                    if request.mode == .typing {
+                    if session.currentIsTyping {
                         fieldFocused = true
                     }
                 } label: {

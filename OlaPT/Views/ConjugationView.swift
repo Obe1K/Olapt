@@ -7,6 +7,15 @@ struct VerbSessionRequest: Identifiable {
     let tenses: [TenseInfo]
     let mode: VerbMode
     let count: Int
+    /// План «Сегодня»: конкретные пары «глагол + время» (по одному лицу на пару)
+    var dailyPairs: [VerbPair] = []
+}
+
+/// Пара «глагол + время» для повторения; typing — писать форму, иначе выбор из вариантов.
+struct VerbPair {
+    let verb: Verb
+    let tense: TenseInfo
+    let typing: Bool
 }
 
 // MARK: - Таблицы спряжения одного глагола

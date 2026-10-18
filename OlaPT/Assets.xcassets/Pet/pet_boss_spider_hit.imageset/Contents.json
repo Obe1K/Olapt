@@ -1,0 +1,13 @@
+{
+  "images": [
+    {
+      "filename": "pet_boss_spider_hit.png",
+      "idiom": "universal",
+      "scale": "1x"
+    }
+  ],
+  "info": {
+    "author": "xcode",
+    "version": 1
+  }
+}

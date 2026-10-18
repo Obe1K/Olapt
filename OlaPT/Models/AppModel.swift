@@ -55,6 +55,7 @@ final class AppModel: ObservableObject {
         self.index = DictionaryIndex(packs: active, custom: custom, verbs: library)
         self.packs = AppModel.makeInfos(files: files, bundled: bundled)
         migrateProgressToSRS()
+        applySoundSettings()
     }
 
     private static func makeInfos(files: [PackFile], bundled: Set<String>) -> [PackInfo] {
@@ -94,7 +95,15 @@ final class AppModel: ObservableObject {
 
     var settings: AppSettings {
         get { return user.settings }
-        set { user.settings = newValue }
+        set {
+            user.settings = newValue
+            applySoundSettings()
+        }
+    }
+
+    func applySoundSettings() {
+        SoundFX.shared.effectsOn = user.settings.soundsOn
+        SoundFX.shared.musicOn = user.settings.musicOn
     }
 
     func isPackEnabled(_ id: String) -> Bool {
@@ -463,6 +472,67 @@ final class AppModel: ObservableObject {
         return (PetAtlas.items[count].title, wordsInMemory(), need)
     }
 
+    // MARK: - Босс недели
+
+    /// «2026-42»: год и номер недели (неделя начинается в понедельник).
+    func weekKey(_ date: Date = Date()) -> String {
+        var cal = Calendar(identifier: .iso8601)
+        cal.timeZone = TimeZone.current
+        let c = cal.dateComponents([.yearForWeekOfYear, .weekOfYear], from: date)
+        return "\(c.yearForWeekOfYear ?? 0)-\(c.weekOfYear ?? 0)"
+    }
+
+    /// Босс этой недели (по кругу).
+    var bossOfWeek: (key: String, title: String) {
+        var cal = Calendar(identifier: .iso8601)
+        cal.timeZone = TimeZone.current
+        let week = cal.component(.weekOfYear, from: Date())
+        return PetAtlas.bosses[week % PetAtlas.bosses.count]
+    }
+
+    /// Босс появляется, когда начато хотя бы 12 слов.
+    var bossAvailable: Bool {
+        return user.srs.count >= 12
+    }
+
+    var bossDefeatedThisWeek: Bool {
+        return user.boss.defeatedWeek == weekKey()
+    }
+
+    /// Слова для боя: повторённые за последние 7 дней, затем самые «слабые» из начатых.
+    func bossWords(limit: Int = 15) -> [Word] {
+        let weekAgo = Date().addingTimeInterval(-7 * 24 * 3600)
+        var recent: [(Word, Date)] = []
+        var others: [(Word, Double)] = []
+        for (id, s) in user.srs {
+            guard let w = index.word(id) else { continue }
+            if s.lastReview >= weekAgo {
+                recent.append((w, s.lastReview))
+            } else {
+                others.append((w, s.stability))
+            }
+        }
+        var result = recent.shuffled().map { $0.0 }
+        if result.count < limit {
+            result += others.sorted { $0.1 < $1.1 }.map { $0.0 }.prefix(limit - result.count)
+        }
+        return Array(result.prefix(limit))
+    }
+
+    func bossConfig() -> BossConfig {
+        let b = bossOfWeek
+        let words = min(15, max(8, user.srs.count))
+        return BossConfig(key: b.key, title: b.title, hp: words, hearts: 4)
+    }
+
+    func recordBossVictory() {
+        if user.boss.defeatedWeek != weekKey() {
+            user.boss.defeatedWeek = weekKey()
+            user.boss.wins += 1
+        }
+        feedPetFull()
+    }
+
     // MARK: - Прогресс по глаголам
 
     func verbProgress(verb: Verb, tense: TenseInfo) -> WordProgress {
@@ -481,7 +551,7 @@ final class AppModel: ObservableObject {
         return min(1.0, Double(verbProgress(verb: verb, tense: tense).score) / Double(threshold))
     }
 
-    func recordVerb(verb: Verb, tense: TenseInfo, correct: Bool) {
+    func recordVerb(verb: Verb, tense: TenseInfo, correct: Bool, recognition: Bool = false) {
         let key = VerbLibrary.progressKey(verb: verb, tense: tense)
         var p = user.verbProgress[key] ?? WordProgress()
         if correct {
@@ -495,7 +565,83 @@ final class AppModel: ObservableObject {
         }
         p.lastSeen = Date()
         user.verbProgress[key] = p
+        // интервальные повторения для пары «глагол + время»
+        var rating: ReviewRating = correct ? .good : .again
+        let previous = user.verbSRS[key]
+        if previous == nil && recognition && rating == .good { rating = .hard }
+        user.verbSRS[key] = FSRS.review(previous, rating: rating)
         feedPet(correct ? PetRules.foodPerCorrect : PetRules.foodPerWrong)
+    }
+
+    // MARK: - Глаголы в плане «Сегодня»
+
+    /// Новых пар «глагол + время» в день
+    static let newVerbPairsPerDay = 4
+    /// Порядок времён для изучения
+    static let verbTenseOrder = ["presente", "perfeito", "imperfeito", "futuro", "condicional",
+                                 "conjuntivo_presente", "imperativo", "mais_que_perfeito",
+                                 "conjuntivo_imperfeito", "conjuntivo_futuro", "infinitivo_pessoal"]
+    /// Если в коллекциях нет глаголов — самые нужные
+    static let coreVerbs = ["ser", "estar", "ter", "ir", "fazer", "poder", "querer", "dizer", "ver", "dar",
+                            "saber", "vir", "ficar", "falar", "comer", "viver", "gostar", "precisar", "conhecer", "sair"]
+
+    struct VerbPlan {
+        var due: [VerbPair]
+        var new: [VerbPair]
+        var total: Int { return due.count + new.count }
+        var isEmpty: Bool { return total == 0 }
+    }
+
+    /// Глаголы для плана: из коллекций по порядку, иначе — базовый список.
+    private func planVerbs() -> [Verb] {
+        var result: [Verb] = []
+        var seen = Set<String>()
+        for c in user.collections.sorted(by: { $0.created < $1.created }) {
+            for id in c.wordIDs {
+                if let v = verbs.verb(forWordID: id), !v.reflexive, seen.insert(v.inf).inserted {
+                    result.append(v)
+                }
+            }
+        }
+        if result.count < 5 {
+            for inf in AppModel.coreVerbs {
+                if let v = verbs.byInf[inf], seen.insert(v.inf).inserted {
+                    result.append(v)
+                }
+            }
+        }
+        return result
+    }
+
+    func dailyVerbPlan(now: Date = Date()) -> VerbPlan {
+        let today = FSRS.startOfDay(now)
+        let tenseByID = Dictionary(verbs.tenses.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
+        var due: [VerbPair] = []
+        var introduced = 0
+        for (key, s) in user.verbSRS {
+            let parts = key.split(separator: "|").map(String.init)
+            guard parts.count == 2, let v = verbs.byInf[parts[0]], let t = tenseByID[parts[1]] else { continue }
+            if s.due <= today {
+                due.append(VerbPair(verb: v, tense: t, typing: s.stability >= 4))
+            }
+            if FSRS.startOfDay(s.firstSeen) == today { introduced += 1 }
+        }
+        var new: [VerbPair] = []
+        let remaining = max(0, AppModel.newVerbPairsPerDay - introduced)
+        if remaining > 0 {
+            let list = planVerbs()
+            outer: for tid in AppModel.verbTenseOrder {
+                guard let t = tenseByID[tid] else { continue }
+                for v in list {
+                    let key = VerbLibrary.progressKey(verb: v, tense: t)
+                    if user.verbSRS[key] == nil {
+                        new.append(VerbPair(verb: v, tense: t, typing: false))
+                        if new.count >= remaining { break outer }
+                    }
+                }
+            }
+        }
+        return VerbPlan(due: Array(due.prefix(40)), new: new)
     }
 
     /// Средняя выученность глагола по всем временам (0…1).
@@ -510,6 +656,7 @@ final class AppModel: ObservableObject {
         user.progress = [:]
         user.verbProgress = [:]
         user.srs = [:]
+        user.verbSRS = [:]
         for i in user.collections.indices {
             user.collections[i].bestScores = [:]
         }

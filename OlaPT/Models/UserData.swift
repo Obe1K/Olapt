@@ -88,6 +88,10 @@ struct AppSettings: Codable, Hashable {
     var wrongPenalty: Bool
     /// Сколько новых слов в день брать в план «Сегодня»
     var newWordsPerDay: Int
+    /// 8-битные звуки ответов
+    var soundsOn: Bool
+    /// Тихая музыка башни
+    var musicOn: Bool
     /// Строго учитывать диакритику при вводе слов
     var strictAccents: Bool
     /// Произносить португальское слово при показе карточки
@@ -99,7 +103,7 @@ struct AppSettings: Codable, Hashable {
 
     enum CodingKeys: String, CodingKey {
         case exerciseLanguage, masteryThreshold, wrongPenalty, strictAccents, autoSpeak, sessionSize, disabledPacks
-        case newWordsPerDay
+        case newWordsPerDay, soundsOn, musicOn
     }
 
     init() {
@@ -111,6 +115,8 @@ struct AppSettings: Codable, Hashable {
         sessionSize = 0
         disabledPacks = []
         newWordsPerDay = 10
+        soundsOn = true
+        musicOn = false
     }
 
     init(from decoder: Decoder) throws {
@@ -123,6 +129,8 @@ struct AppSettings: Codable, Hashable {
         sessionSize = try c.decodeIfPresent(Int.self, forKey: .sessionSize) ?? 0
         disabledPacks = try c.decodeIfPresent([String].self, forKey: .disabledPacks) ?? []
         newWordsPerDay = try c.decodeIfPresent(Int.self, forKey: .newWordsPerDay) ?? 10
+        soundsOn = try c.decodeIfPresent(Bool.self, forKey: .soundsOn) ?? true
+        musicOn = try c.decodeIfPresent(Bool.self, forKey: .musicOn) ?? false
     }
 }
 
@@ -176,9 +184,13 @@ struct UserData: Codable {
     var srs: [String: SRSState]
     /// Тамагочи
     var pet: PetData
+    /// Босс недели
+    var boss: BossData
+    /// Интервальные повторения глаголов: «инфинитив|время» → состояние
+    var verbSRS: [String: SRSState]
 
     enum CodingKeys: String, CodingKey {
-        case collections, progress, verbProgress, customWords, settings, srs, pet
+        case collections, progress, verbProgress, customWords, settings, srs, pet, boss, verbSRS
     }
 
     init() {
@@ -189,6 +201,8 @@ struct UserData: Codable {
         settings = AppSettings()
         srs = [:]
         pet = PetData()
+        boss = BossData()
+        verbSRS = [:]
     }
 
     init(from decoder: Decoder) throws {
@@ -200,6 +214,8 @@ struct UserData: Codable {
         settings = try c.decodeIfPresent(AppSettings.self, forKey: .settings) ?? AppSettings()
         srs = try c.decodeIfPresent([String: SRSState].self, forKey: .srs) ?? [:]
         pet = try c.decodeIfPresent(PetData.self, forKey: .pet) ?? PetData()
+        boss = try c.decodeIfPresent(BossData.self, forKey: .boss) ?? BossData()
+        verbSRS = try c.decodeIfPresent([String: SRSState].self, forKey: .verbSRS) ?? [:]
     }
 }
 
