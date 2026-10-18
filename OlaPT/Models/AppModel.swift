@@ -410,6 +410,59 @@ final class AppModel: ObservableObject {
         }
     }
 
+    // MARK: - Башня: этажи и вещи
+
+    /// Слово «в памяти», если держится хотя бы неделю.
+    static let memoryStability = 7.0
+    /// Каждые 50 слов в памяти — новая вещь в башне.
+    static let wordsPerItem = 50
+
+    /// Сколько слов в памяти (всего или определённого уровня).
+    func wordsInMemory(level: String? = nil) -> Int {
+        var n = 0
+        for (id, s) in user.srs where s.stability >= AppModel.memoryStability {
+            if let lv = level {
+                if index.word(id)?.level == lv { n += 1 }
+            } else {
+                n += 1
+            }
+        }
+        return n
+    }
+
+    /// Самый высокий открытый этаж.
+    var towerRoom: PetRoom {
+        var room = PetRoom.cellar
+        for r in PetRoom.allCases.dropFirst() {
+            guard let req = r.requirement else { continue }
+            if wordsInMemory(level: req.level) >= req.count {
+                room = r
+            } else {
+                break
+            }
+        }
+        return room
+    }
+
+    var towerItems: Int {
+        return min(PetAtlas.items.count, wordsInMemory() / AppModel.wordsPerItem)
+    }
+
+    /// Следующий этаж и сколько до него осталось.
+    func nextRoomProgress() -> (room: PetRoom, level: String, have: Int, need: Int)? {
+        let current = towerRoom
+        guard let next = PetRoom(rawValue: current.rawValue + 1), let req = next.requirement else { return nil }
+        return (next, req.level, min(req.count, wordsInMemory(level: req.level)), req.count)
+    }
+
+    /// Следующая вещь в башне.
+    func nextItemProgress() -> (title: String, have: Int, need: Int)? {
+        let count = towerItems
+        guard count < PetAtlas.items.count else { return nil }
+        let need = (count + 1) * AppModel.wordsPerItem
+        return (PetAtlas.items[count].title, wordsInMemory(), need)
+    }
+
     // MARK: - Прогресс по глаголам
 
     func verbProgress(verb: Verb, tense: TenseInfo) -> WordProgress {

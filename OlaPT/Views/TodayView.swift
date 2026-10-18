@@ -44,23 +44,26 @@ struct TodayView: View {
     var body: some View {
         let _ = refreshTick
         let plan = model.dailyPlan()
-        GothicList {
-            Section {
+        ScrollView {
+            VStack(spacing: 14) {
+                // Сцена во всю ширину, без рамки: снизу растворяется в каменном фоне.
                 PetView(isVisible: active == nil)
-                    .padding(.vertical, 6)
-            }
-            .listRowBackground(Color.clear)
-            .listRowInsets(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4))
 
-            if !hasAnyWords {
-                startSection
-            } else {
-                planSection(plan)
-                forecastSection
+                VStack(spacing: 14) {
+                    towerCard
+                    if !hasAnyWords {
+                        startCard
+                    } else {
+                        planCard(plan)
+                        forecastCard
+                    }
+                    linksCard
+                }
+                .padding(.horizontal, 16)
             }
-
-            difficultSection
+            .padding(.bottom, 24)
         }
+        .background(StoneBackground().ignoresSafeArea())
         .navigationTitle("Сегодня")
         .navigationBarTitleDisplayMode(.inline)
         .onChange(of: scenePhase) { phase in
@@ -79,43 +82,89 @@ struct TodayView: View {
         }
     }
 
+    // MARK: Башня
+
+    private var towerCard: some View {
+        let room = model.towerRoom
+        let inMemory = model.wordsInMemory()
+        return VStack(alignment: .leading, spacing: 10) {
+            GothicHeader("\(room.title) · \(room.level)")
+            Text("Слов в памяти: \(inMemory)")
+                .font(Theme.pixel(17, relativeTo: .headline))
+                .foregroundColor(Theme.text)
+            if let next = model.nextRoomProgress() {
+                progressRow(title: "До этажа «\(next.room.title)»: \(next.have) / \(next.need) слов \(next.level)",
+                            fraction: Double(next.have) / Double(max(1, next.need)))
+            } else {
+                Text("Вы на вершине башни.")
+                    .font(.subheadline)
+                    .foregroundColor(Theme.textDim)
+            }
+            if let item = model.nextItemProgress() {
+                progressRow(title: "Следующая вещь в башне — \(item.title): ещё \(max(0, item.need - item.have)) \(Plural.words(max(0, item.need - item.have)))",
+                            fraction: Double(item.have % AppModel.wordsPerItem) / Double(AppModel.wordsPerItem))
+            } else {
+                Text("Башня обставлена полностью.")
+                    .font(.subheadline)
+                    .foregroundColor(Theme.textDim)
+            }
+            Text("Слово «в памяти», если вы помните его хотя бы неделю.")
+                .font(.caption)
+                .foregroundColor(Theme.textDim)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .pixelPanel()
+        .accessibilityElement(children: .combine)
+        .accessibilityIdentifier("tower-card")
+    }
+
+    private func progressRow(title: String, fraction: Double) -> some View {
+        return VStack(alignment: .leading, spacing: 6) {
+            Text(title)
+                .font(.subheadline)
+                .foregroundColor(Theme.text)
+                .fixedSize(horizontal: false, vertical: true)
+            PixelProgressBar(fraction: fraction)
+        }
+    }
+
     // MARK: План
 
     @ViewBuilder
-    private func planSection(_ plan: AppModel.DailyPlan) -> some View {
-        Section {
-            if !plan.isEmpty {
-                VStack(alignment: .leading, spacing: 10) {
-                    GothicHeader("План на сегодня")
-                    HStack(alignment: .firstTextBaseline, spacing: 8) {
-                        Text("\(plan.total)")
-                            .font(Theme.pixel(44, relativeTo: .largeTitle))
-                            .foregroundColor(Theme.text)
-                        Text(Plural.words(plan.total))
-                            .font(Theme.pixel(20, relativeTo: .title3))
-                            .foregroundColor(Theme.text)
-                        Spacer()
-                        Text("~\(model.estimatedMinutes(questions: plan.total)) мин")
-                            .font(Theme.pixel(20, relativeTo: .title3))
-                            .foregroundColor(Theme.textDim)
-                    }
-                    HStack(spacing: 16) {
-                        planChip(value: plan.dueIDs.count, title: "повторить", color: Theme.gold)
-                        planChip(value: plan.newIDs.count, title: "новых", color: Theme.bloodBright)
-                    }
-                    Button {
-                        active = .daily
-                    } label: {
-                        Text(plan.reviewedToday > 0 ? "Продолжить" : "Начать")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(GothicButtonStyle(.primary))
-                    .controlSize(.large)
-                    .accessibilityIdentifier("today-start")
-                    .padding(.top, 4)
+    private func planCard(_ plan: AppModel.DailyPlan) -> some View {
+        if !plan.isEmpty {
+            VStack(alignment: .leading, spacing: 10) {
+                GothicHeader("План на сегодня")
+                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    Text("\(plan.total)")
+                        .font(Theme.pixel(44, relativeTo: .largeTitle))
+                        .foregroundColor(Theme.text)
+                    Text(Plural.words(plan.total))
+                        .font(Theme.pixel(20, relativeTo: .title3))
+                        .foregroundColor(Theme.text)
+                    Spacer()
+                    Text("~\(model.estimatedMinutes(questions: plan.total)) мин")
+                        .font(Theme.pixel(20, relativeTo: .title3))
+                        .foregroundColor(Theme.textDim)
                 }
-                .padding(.vertical, 6)
-            } else {
+                HStack(spacing: 16) {
+                    planChip(value: plan.dueIDs.count, title: "повторить", color: Theme.gold)
+                    planChip(value: plan.newIDs.count, title: "новых", color: Theme.bloodBright)
+                }
+                Button {
+                    active = .daily
+                } label: {
+                    Text(plan.reviewedToday > 0 ? "Продолжить" : "Начать")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(GothicButtonStyle(.primary))
+                .accessibilityIdentifier("today-start")
+                .padding(.top, 4)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .pixelPanel()
+        } else {
+            VStack(alignment: .leading, spacing: 10) {
                 VStack(alignment: .leading, spacing: 8) {
                     if plan.reviewedToday > 0 {
                         Label("На сегодня всё", systemImage: "checkmark.seal.fill")
@@ -123,6 +172,7 @@ struct TodayView: View {
                             .foregroundColor(Theme.moss)
                         Text("Сегодня пройдено: \(plan.reviewedToday) \(Plural.words(plan.reviewedToday)). Ещё раз проходить не нужно — приходите завтра.")
                             .font(.subheadline)
+                            .foregroundColor(Theme.text)
                     } else {
                         Label("Сегодня повторять нечего", systemImage: "moon.stars.fill")
                             .font(Theme.pixel(20, relativeTo: .title3))
@@ -131,20 +181,25 @@ struct TodayView: View {
                              ? "Все слова повторены вовремя."
                              : "Все слова повторены вовремя, а новых в коллекциях не осталось. Добавьте слова в коллекцию — они появятся здесь.")
                             .font(.subheadline)
+                            .foregroundColor(Theme.text)
                     }
                 }
-                .padding(.vertical, 6)
+                .accessibilityElement(children: .combine)
                 .accessibilityIdentifier("today-done")
 
                 if plan.hasMoreNew {
                     Button {
                         active = .extraNew
                     } label: {
-                        Label("Есть время и желание? Ещё \(model.settings.newWordsPerDay) новых слов", systemImage: "plus.circle")
+                        Text("Ещё \(model.settings.newWordsPerDay) новых слов")
+                            .frame(maxWidth: .infinity)
                     }
+                    .buttonStyle(GothicButtonStyle(.secondary))
                     .accessibilityIdentifier("today-extra")
                 }
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .pixelPanel()
         }
     }
 
@@ -161,64 +216,85 @@ struct TodayView: View {
 
     // MARK: Прогноз
 
-    private var forecastSection: some View {
+    private var forecastCard: some View {
         let days = model.forecast(days: 7)
-        return Section(header: GothicHeader("Повторения на неделю")) {
+        return VStack(alignment: .leading, spacing: 8) {
+            GothicHeader("Повторения на неделю")
             ForEach(0..<days.count, id: \.self) { i in
                 HStack {
                     Text(dayTitle(offset: i + 1))
+                        .foregroundColor(Theme.text)
                     Spacer()
                     if days[i] == 0 {
                         Text("—")
-                            .foregroundColor(.secondary)
+                            .foregroundColor(Theme.textDim)
                     } else {
                         Text("\(days[i]) \(Plural.words(days[i])) · ≈ \(model.estimatedMinutes(questions: days[i])) мин")
-                            .foregroundColor(.secondary)
+                            .foregroundColor(Theme.textDim)
                     }
                 }
                 .font(.subheadline)
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .pixelPanel()
     }
 
-    // MARK: Трудные слова
+    // MARK: Ссылки
 
-    private var difficultSection: some View {
+    private var linksCard: some View {
         let count = model.difficultWords.count
-        return Section {
+        return VStack(spacing: 0) {
             NavigationLink {
                 DifficultWordsView()
             } label: {
-                HStack {
-                    Label("Трудные слова", systemImage: "flame")
-                    Spacer()
-                    Text(count > 0 ? "\(count)" : "пока нет")
-                        .foregroundColor(.secondary)
-                }
+                linkRow(icon: "flame", title: "Трудные слова", value: count > 0 ? "\(count)" : "пока нет")
             }
             .accessibilityIdentifier("open-difficult")
         }
+        .pixelPanel(padding: 6)
+    }
+
+    private func linkRow(icon: String, title: String, value: String) -> some View {
+        return HStack(spacing: 10) {
+            Image(systemName: icon)
+                .foregroundColor(Theme.gold)
+                .frame(width: 24)
+            Text(title)
+                .foregroundColor(Theme.text)
+            Spacer()
+            Text(value)
+                .foregroundColor(Theme.textDim)
+            Image(systemName: "chevron.right")
+                .font(.footnote.weight(.semibold))
+                .foregroundColor(Theme.goldDark)
+        }
+        .padding(.vertical, 10)
+        .padding(.horizontal, 8)
+        .contentShape(Rectangle())
     }
 
     // MARK: Начало
 
-    private var startSection: some View {
-        Section(footer: Text("Новые слова берутся из ваших коллекций по порядку — до \(model.settings.newWordsPerDay) в день.")) {
+    private var startCard: some View {
+        return VStack(alignment: .leading, spacing: 10) {
             EmptyHint(title: "Добавьте слова, чтобы начать",
-                      message: "Возьмите готовый набор или сохраните слова из словаря в коллекцию — и здесь появится план на каждый день.")
+                      message: "Возьмите готовый набор или сохраните слова из словаря в коллекцию — и здесь появится план на каждый день. Новые слова берутся из коллекций по порядку — до \(model.settings.newWordsPerDay) в день.")
             if !model.index.levels.isEmpty {
                 NavigationLink {
                     LevelsView()
                 } label: {
-                    Label("Наборы по уровням (A1, A2…)", systemImage: "chart.bar")
+                    linkRow(icon: "chart.bar", title: "Наборы по уровням (A1, A2…)", value: "")
                 }
             }
             NavigationLink {
                 TopicsView()
             } label: {
-                Label("Наборы слов по темам", systemImage: "square.grid.2x2")
+                linkRow(icon: "square.grid.2x2", title: "Наборы слов по темам", value: "")
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .pixelPanel()
     }
 
     // MARK: Вопросы

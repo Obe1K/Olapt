@@ -528,16 +528,21 @@ final class ScreenshotTests: XCTestCase {
         shot("76_word_card_srs")
 
         // Все состояния питомца (застывший кадр)
-        for mood in ["happy", "ok", "angry", "skeleton", "eating"] {
+        let variants: [(String, String, Int)] = [
+            ("happy", "cellar", 1), ("happy", "hall", 4), ("happy", "library", 7), ("happy", "summit", 10),
+            ("ok", "library", 3), ("eating", "hall", 5), ("angry", "cellar", 0), ("skeleton", "cellar", 0)
+        ]
+        for (mood, room, items) in variants {
             app.terminate()
-            app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU", "-uitest-pet", mood]
+            app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU", "-uitest-pet", mood,
+                                   "-uitest-room", room, "-uitest-items", String(items)]
             app.launch()
             Thread.sleep(forTimeInterval: 1.5)
             tapTab("Сегодня")
             let screen = app.descendants(matching: .any)["pet-screen"]
             note(screen.waitForExistence(timeout: 4) ? "CHECK ok: pet " + mood + ": " + screen.label : "CHECK FAILED: pet " + mood + " missing")
             note(app.staticTexts["pet-caption"].exists ? "CHECK FAILED: caption under pet still shown" : "CHECK ok: no caption under pet")
-            shot("77_pet_" + mood)
+            shot("77_pet_" + mood + "_" + room)
         }
     }
 }
