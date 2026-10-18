@@ -56,6 +56,29 @@ final class AppModel: ObservableObject {
         self.packs = AppModel.makeInfos(files: files, bundled: bundled)
         migrateProgressToSRS()
         applySoundSettings()
+        seedForUITests()
+    }
+
+    /// Только для UI-тестов: -uitest-seed N — N слов A1 «в памяти»,
+    /// чтобы снять башню с вещами, заполненный гримуар и босса.
+    private func seedForUITests() {
+        let n = UserDefaults.standard.integer(forKey: "uitest-seed")
+        guard n > 0 else { return }
+        let now = Date()
+        let strengths: [Double] = [8, 15, 25, 45, 70, 130]
+        var srs: [String: SRSState] = [:]
+        for (i, w) in index.words(inLevel: "A1").prefix(n).enumerated() {
+            let stability = strengths[i % strengths.count]
+            let last = now.addingTimeInterval(-Double(i % 6 + 1) * 86_400)
+            let due = Calendar.current.date(byAdding: .day, value: Int(stability), to: FSRS.startOfDay(last)) ?? now
+            srs[w.id] = SRSState(stability: stability, difficulty: 5, firstSeen: last.addingTimeInterval(-30 * 86_400),
+                                 lastReview: last, due: due, reps: 4, lapses: 0)
+        }
+        user.srs = srs
+        user.pet.food = 100
+        user.pet.updated = now
+        user.pet.seenRoom = towerRoom.rawValue
+        user.pet.seenItems = towerItems
     }
 
     private static func makeInfos(files: [PackFile], bundled: Set<String>) -> [PackInfo] {

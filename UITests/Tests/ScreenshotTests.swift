@@ -455,6 +455,30 @@ final class ScreenshotTests: XCTestCase {
     }
 
     /// «Сегодня»: план дня, тренировка до конца, итог с прогнозом, трудные слова, питомец.
+    /// Отвечаем до итогов (на экране итогов есть «Закончить»): выбор — касание варианта (дальше само), ввод — «Не знаю» и «Далее».
+    @discardableResult
+    private func answerUntilSummary(limit: Int = 60) -> Int {
+        var answered = 0
+        while answered < limit {
+            if app.buttons["Закончить"].exists { break }
+            if app.buttons["Не знаю"].exists {
+                app.buttons["Не знаю"].tap()
+                let next = app.buttons["Далее"].exists ? app.buttons["Далее"] : app.buttons["Завершить"]
+                if next.waitForExistence(timeout: 3) { next.tap() }
+            } else {
+                let option = firstOptionButton()
+                if option.exists && option.isHittable {
+                    option.tap()
+                    Thread.sleep(forTimeInterval: 2.8)
+                } else {
+                    Thread.sleep(forTimeInterval: 0.5)
+                }
+            }
+            answered += 1
+        }
+        return answered
+    }
+
     func testH_TodayAndPet() {
         tapTab("Сегодня")
         shot("70_today")
@@ -474,30 +498,12 @@ final class ScreenshotTests: XCTestCase {
         }
         shot("71_daily_question")
 
-        // Отвечаем до конца: выбор — касание варианта (дальше само), ввод — «Не знаю» и «Далее».
-        let summary = NSPredicate(format: "label CONTAINS 'На сегодня всё' OR label CONTAINS 'Осталось ещё' OR label CONTAINS 'Следующее повторение' OR label CONTAINS 'Следующих повторений'")
-        var answered = 0
-        while answered < 60 {
-            if app.descendants(matching: .any).matching(summary).firstMatch.exists { break }
-            if app.buttons["Не знаю"].exists {
-                app.buttons["Не знаю"].tap()
-                let next = app.buttons["Далее"].exists ? app.buttons["Далее"] : app.buttons["Завершить"]
-                if next.waitForExistence(timeout: 3) { next.tap() }
-            } else {
-                let option = firstOptionButton()
-                if option.exists && option.isHittable {
-                    option.tap()
-                    Thread.sleep(forTimeInterval: 2.8)
-                } else {
-                    Thread.sleep(forTimeInterval: 0.5)
-                }
-            }
-            answered += 1
-        }
+        let answered = answerUntilSummary()
         note("CHECK info: answered \(answered) questions")
-        let done = app.descendants(matching: .any).matching(summary).firstMatch
+        let done = app.buttons["Закончить"]
         if done.waitForExistence(timeout: 4) {
-            note("CHECK ok: daily summary: " + done.label)
+            let rate = app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH 'Верно с первого раза'")).firstMatch
+            note("CHECK ok: daily summary" + (rate.exists ? ": " + rate.label : ""))
         } else {
             note("CHECK FAILED: daily summary not shown")
         }
@@ -535,26 +541,8 @@ final class ScreenshotTests: XCTestCase {
         shot("79_grimoire")
         back()
 
-        // Босс недели
-        let boss = app.buttons["boss-start"]
-        scrollUntilVisible(boss, maxSwipes: 3)
-        if boss.exists {
-            tap(boss, "start boss")
-            let arena = app.descendants(matching: .any)["boss-arena"]
-            note(arena.waitForExistence(timeout: 4) ? "CHECK ok: boss arena: " + arena.label : "CHECK FAILED: boss arena missing")
-            shot("80_boss_arena")
-            let option = firstOptionButton()
-            if option.exists && option.isHittable {
-                option.tap()
-                shot("81_boss_answer")
-            } else if app.buttons["Не знаю"].exists {
-                app.buttons["Не знаю"].tap()
-                shot("81_boss_answer")
-            }
-            tap(app.buttons["Закрыть"], "close boss")
-        } else {
-            note("CHECK info: boss not available yet")
-        }
+        // Босс недели: в чистом приложении пока закрыт (нужен десяток начатых слов) — см. testI.
+        note(app.buttons["boss-start"].exists ? "CHECK info: boss already available" : "CHECK info: boss not available yet")
 
         let difficult = app.buttons["open-difficult"]
         scrollUntilVisible(difficult)
@@ -601,6 +589,61 @@ final class ScreenshotTests: XCTestCase {
             }
             note(app.staticTexts["pet-caption"].exists ? "CHECK FAILED: caption under pet still shown" : "CHECK ok: no caption under pet")
             shot("77_pet_" + mood + "_" + room)
+        }
+    }
+
+    /// Башня с вещами, полный гримуар и бой с боссом: приложение запускается с 260 словами «в памяти».
+    func testI_TowerGrimoireBoss() {
+        app.terminate()
+        app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU", "-uitest-static", "YES", "-uitest-seed", "260"]
+        app.launch()
+        Thread.sleep(forTimeInterval: 1.5)
+        tapTab("Сегодня")
+        let tower = app.descendants(matching: .any)["tower-card"]
+        note(tower.waitForExistence(timeout: 4) ? "CHECK ok: seeded tower: " + tower.label : "CHECK FAILED: tower card missing")
+        shot("82_today_seeded")
+
+        let grimoire = app.buttons["open-grimoire"]
+        scrollUntilVisible(grimoire)
+        if tap(grimoire, "open grimoire") {
+            note(app.descendants(matching: .any)["grimoire-empty"].exists ? "CHECK FAILED: grimoire empty" : "CHECK ok: grimoire filled")
+            shot("83_grimoire_full")
+            app.swipeUp()
+            shot("84_grimoire_more")
+            back()
+        }
+
+        app.swipeDown(); app.swipeDown()
+        let boss = app.buttons["boss-start"]
+        scrollUntilVisible(boss, maxSwipes: 4)
+        shot("85_boss_card")
+        if tap(boss, "start boss") {
+            let arena = app.descendants(matching: .any)["boss-arena"]
+            note(arena.waitForExistence(timeout: 4) ? "CHECK ok: boss arena: " + arena.label : "CHECK FAILED: boss arena missing")
+            shot("80_boss_arena")
+            var answered = 0
+            while answered < 40 && !app.descendants(matching: .any)["boss-result"].exists {
+                if app.buttons["Не знаю"].exists {
+                    app.buttons["Не знаю"].tap()
+                    let next = app.buttons["Далее"].exists ? app.buttons["Далее"] : app.buttons["Завершить"]
+                    if next.waitForExistence(timeout: 3) { next.tap() }
+                } else {
+                    let option = firstOptionButton()
+                    if option.exists && option.isHittable {
+                        option.tap()
+                        if answered == 0 { shot("81_boss_answer") }
+                        Thread.sleep(forTimeInterval: 2.8)
+                    } else {
+                        Thread.sleep(forTimeInterval: 0.5)
+                    }
+                }
+                answered += 1
+            }
+            let result = app.descendants(matching: .any)["boss-result"]
+            note(result.waitForExistence(timeout: 4) ? "CHECK ok: boss result: " + result.label : "CHECK FAILED: no boss result after \(answered)")
+            shot("86_boss_result")
+        } else {
+            note("CHECK FAILED: boss not available with seeded words")
         }
     }
 }
