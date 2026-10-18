@@ -10,15 +10,20 @@ struct PetData: Codable {
     var updated: Date
     /// Питомца покормили, а он ещё не показал, как ест
     var pendingMeal: Bool
+    /// Сколько вещей и какой этаж пользователь уже видел (чтобы объявить о новых)
+    var seenItems: Int
+    var seenRoom: Int
 
     enum CodingKeys: String, CodingKey {
-        case food, updated, pendingMeal
+        case food, updated, pendingMeal, seenItems, seenRoom
     }
 
     init(food: Double = 100, updated: Date = Date(), pendingMeal: Bool = false) {
         self.food = food
         self.updated = updated
         self.pendingMeal = pendingMeal
+        self.seenItems = 0
+        self.seenRoom = 0
     }
 
     init(from decoder: Decoder) throws {
@@ -26,6 +31,8 @@ struct PetData: Codable {
         food = try c.decodeIfPresent(Double.self, forKey: .food) ?? 100
         updated = try c.decodeIfPresent(Date.self, forKey: .updated) ?? Date()
         pendingMeal = try c.decodeIfPresent(Bool.self, forKey: .pendingMeal) ?? false
+        seenItems = try c.decodeIfPresent(Int.self, forKey: .seenItems) ?? 0
+        seenRoom = try c.decodeIfPresent(Int.self, forKey: .seenRoom) ?? 0
     }
 }
 

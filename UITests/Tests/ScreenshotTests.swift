@@ -586,11 +586,19 @@ final class ScreenshotTests: XCTestCase {
             app.terminate()
             app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU", "-uitest-pet", mood,
                                    "-uitest-room", room, "-uitest-items", String(items)]
+            let withNews = mood == "happy" && room == "hall"
+            if withNews {
+                app.launchArguments += ["-uitest-news", "Маг поднялся на новый этаж: Зал!\nВ башне появилось: Ворон"]
+            }
             app.launch()
             Thread.sleep(forTimeInterval: 1.5)
             tapTab("Сегодня")
             let screen = app.descendants(matching: .any)["pet-screen"]
             note(screen.waitForExistence(timeout: 4) ? "CHECK ok: pet " + mood + ": " + screen.label : "CHECK FAILED: pet " + mood + " missing")
+            if withNews {
+                let news = app.descendants(matching: .any)["tower-news"]
+                note(news.waitForExistence(timeout: 3) ? "CHECK ok: tower news shown" : "CHECK FAILED: tower news missing")
+            }
             note(app.staticTexts["pet-caption"].exists ? "CHECK FAILED: caption under pet still shown" : "CHECK ok: no caption under pet")
             shot("77_pet_" + mood + "_" + room)
         }

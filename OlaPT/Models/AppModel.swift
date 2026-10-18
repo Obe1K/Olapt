@@ -457,6 +457,25 @@ final class AppModel: ObservableObject {
         return min(PetAtlas.items.count, wordsInMemory() / AppModel.wordsPerItem)
     }
 
+    /// Новые вещи и этаж с прошлого раза: текст объявления (и отметка «увидено»).
+    func takeTowerNews() -> String? {
+        var news: [String] = []
+        let room = towerRoom.rawValue
+        if room > user.pet.seenRoom {
+            news.append("Маг поднялся на новый этаж: \(towerRoom.title)!")
+        }
+        let items = towerItems
+        if items > user.pet.seenItems {
+            let titles = PetAtlas.items[user.pet.seenItems..<items].map { $0.title }
+            news.append("В башне появилось: " + titles.joined(separator: ", "))
+        }
+        if room != user.pet.seenRoom || items != user.pet.seenItems {
+            user.pet.seenRoom = room
+            user.pet.seenItems = items
+        }
+        return news.isEmpty ? nil : news.joined(separator: "\n")
+    }
+
     /// Следующий этаж и сколько до него осталось.
     func nextRoomProgress() -> (room: PetRoom, level: String, have: Int, need: Int)? {
         let current = towerRoom

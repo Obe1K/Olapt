@@ -142,6 +142,12 @@ IRREG.update({
 })
 
 
+# roer, moer спрягаются как doer (róis, rói; roí; roía)
+for _v in ["roer", "moer"]:
+    IRREG[_v] = {k: ([_v[0] + x[1:] for x in v] if isinstance(v, list) else v)
+                 for k, v in IRREG["doer"].items()}
+
+
 def _prefixed(prefix, root):
     """Глагол-приставка по образцу корня: manter ← ter, propor ← pôr, prever ← ver."""
     out = {}
@@ -170,13 +176,13 @@ for _p in ["man", "ob", "con", "de", "re", "entre", "sus", "abs"]:
     _compound(_p + "ter", "ter", _p)
 for _p in ["con", "inter", "pro", "sobre"]:
     _compound(_p + "vir", "vir", _p)
-for _p in ["pro", "com", "su", "dis", "ex", "im", "o", "re", "de", "pressu", "decom", "trans", "sobre"]:
+for _p in ["pro", "com", "su", "dis", "ex", "im", "o", "re", "de", "pressu", "decom", "recom", "trans", "sobre"]:
     _compound(_p + "por", "pôr", _p)
 for _p in ["pre", "re", "ante"]:
     _compound(_p + "ver", "ver", _p)
 for _p in ["des", "re", "satis"]:
     _compound(_p + "fazer", "fazer", _p)
-for _p in ["contra", "des"]:
+for _p in ["contra", "des", "con"]:
     _compound(_p + "dizer", "dizer", _p)
 _compound("reler", "ler", "re")
 
@@ -198,6 +204,7 @@ SPEC = {
     "servir": dict(eu="sirv", alt="serv"),
     "vestir": dict(eu="vist", alt="vest"),
     "repetir": dict(eu="repit", alt="repet"),
+    "refletir": dict(eu="reflit", alt="reflet"),
     "divertir": dict(eu="divirt", alt="divert"),
     "fugir": dict(eu="fuj", alt="fog"),
     "subir": dict(eu="sub", alt="sob"),
@@ -205,6 +212,9 @@ SPEC = {
     "perder": dict(eu="perc", alt="perd"),
     "valer": dict(eu="valh", alt="val"),
     "abrir": dict(part="aberto"),
+    "reabrir": dict(part="reaberto"),
+    "entreabrir": dict(part="entreaberto"),
+    "encobrir": dict(eu="encubr", alt="encobr", part="encoberto"),
     "escrever": dict(part="escrito"),
     "ganhar": dict(part="ganho"),
     "gastar": dict(part="gasto"),
@@ -236,6 +246,7 @@ SPEC = {
     "descobrir": dict(eu="descubr", alt="descobr", part="descoberto"),
     "tossir": dict(eu="tuss", alt="toss"),
     "engolir": dict(eu="engul", alt="engol"),
+    "polir": dict(eu="pul", alt="pul"),
     "sacudir": dict(eu="sacud", alt="sacod"),
     "acudir": dict(eu="acud", alt="acod"),
     "cuspir": dict(eu="cusp", alt="cosp"),

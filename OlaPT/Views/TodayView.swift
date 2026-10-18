@@ -18,6 +18,8 @@ struct TodayView: View {
     @State private var active: TodaySession?
     /// Меняется при возвращении в приложение, чтобы план пересчитался после полуночи.
     @State private var refreshTick = 0
+    /// «В башне появилось: Ворон» — показывается несколько секунд поверх сцены
+    @State private var announcement: String?
 
     private static let dayFormatter: DateFormatter = {
         let f = DateFormatter()
@@ -50,6 +52,19 @@ struct TodayView: View {
             VStack(spacing: 14) {
                 // Сцена во всю ширину, без рамки: снизу растворяется в каменном фоне.
                 PetView(isVisible: active == nil)
+                    .overlay(alignment: .top) {
+                        if let text = announcement {
+                            Text(text)
+                                .font(Theme.pixel(14, relativeTo: .subheadline))
+                                .foregroundColor(Theme.goldBright)
+                                .multilineTextAlignment(.center)
+                                .pixelPanel(fill: Theme.panelDeep, padding: 10)
+                                .padding(.top, 10)
+                                .padding(.horizontal, 24)
+                                .transition(.opacity.combined(with: .move(edge: .top)))
+                                .accessibilityIdentifier("tower-news")
+                        }
+                    }
 
                 VStack(spacing: 14) {
                     towerCard
@@ -78,6 +93,10 @@ struct TodayView: View {
         .onAppear {
             refreshTick += 1
             SoundFX.shared.startMusic()
+            announceTowerNews()
+        }
+        .onChange(of: active == nil) { visible in
+            if visible { announceTowerNews() }
         }
         .onDisappear { SoundFX.shared.stopMusic() }
         .fullScreenCover(item: $active) { kind in
@@ -101,6 +120,20 @@ struct TodayView: View {
     }
 
     // MARK: Башня
+
+    private func announceTowerNews() {
+        // Для UI-тестов: -uitest-news "текст" — объявление висит, не исчезая.
+        if let sample = UserDefaults.standard.string(forKey: "uitest-news") {
+            announcement = sample
+            return
+        }
+        guard let news = model.takeTowerNews() else { return }
+        SoundFX.shared.play(.unlock)
+        withAnimation(.easeOut(duration: 0.3)) { announcement = news }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4.5) {
+            withAnimation(.easeIn(duration: 0.4)) { announcement = nil }
+        }
+    }
 
     private var towerCard: some View {
         let room = model.towerRoom
