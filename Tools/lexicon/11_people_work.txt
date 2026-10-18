@@ -69,7 +69,7 @@ peso | n m A2 | weight | вес
 aspeto | n m B1 | appearance, aspect | внешний вид, аспект | aspecto
 aparência | n f B1 | appearance | внешность
 personalidade | n f A2 | personality | личность, характер
-carácter | n m pl=caracteres B1 | character | характер | caráter
+carácter | n m pl=caracteres B1 | character, nature | характер | | В Португалии правильны оба написания: «carácter» и «caráter» (мн. ч. caracteres / carateres).
 feitio | n m B1 | temper, nature | нрав, характер | | Разговорное (Португалия).
 humor | n m B1 | mood, humour | настроение, юмор
 alegre | adj A1 | cheerful | весёлый

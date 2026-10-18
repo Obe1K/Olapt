@@ -40,6 +40,11 @@ final class DictionaryIndex {
     /// Формы множественного числа и женского рода → индексы слов
     private let inflectedExact: [String: [Int]]
     private let inflectedFolded: [String: [Int]]
+    /// Второе написание (dupla grafia): «carácter» → «caráter», «contacto» → «contato».
+    /// Ключ — слово или его форма без «немой» c/p перед t/ç; только для слов, где это написание отличается.
+    private let altSpelling: [String: [Int]]
+    /// То же для поиска: второе написание без диакритики (или пустая строка)
+    private let altFoldedPT: [String]
     private let indexByID: [String: Int]
     /// Самое длинное выражение в словах (для поиска выражений в тексте)
     let maxPhraseWords: Int
@@ -116,6 +121,8 @@ final class DictionaryIndex {
         var foldedMap: [String: [Int]] = [:]
         var inflExact: [String: [Int]] = [:]
         var inflFolded: [String: [Int]] = [:]
+        var alt: [String: [Int]] = [:]
+        var altFolded: [String] = []
         var idToIndex: [String: Int] = [:]
         var longestPhrase = 1
 
@@ -146,6 +153,20 @@ final class DictionaryIndex {
             for form in Inflection.forms(of: w) {
                 put(&inflExact, form.lowercased(), i)
                 put(&inflFolded, TextUtil.fold(form), i)
+            }
+            // Двойное написание: слово с c/p перед t/ç находится и без этой буквы.
+            let lowerSelf = w.pt.lowercased()
+            let modernSelf = TextUtil.modernSpelling(lowerSelf)
+            if modernSelf != lowerSelf {
+                put(&alt, modernSelf, i)
+                altFolded.append(TextUtil.fold(modernSelf))
+            } else {
+                altFolded.append("")
+            }
+            for form in Inflection.forms(of: w) {
+                let lf = form.lowercased()
+                let m = TextUtil.modernSpelling(lf)
+                if m != lf { put(&alt, m, i) }
             }
             var folded: [String] = []
             for (lang, list) in w.translations {
@@ -215,6 +236,8 @@ final class DictionaryIndex {
         self.foldedPTMap = foldedMap
         self.inflectedExact = inflExact
         self.inflectedFolded = inflFolded
+        self.altSpelling = alt
+        self.altFoldedPT = altFolded
         self.indexByID = idToIndex
         self.maxPhraseWords = min(longestPhrase, 6)
         self.foldedPT = fPT
@@ -292,6 +315,12 @@ final class DictionaryIndex {
             }
         }
 
+        // Второе написание: «caráter» → carácter, «contato» → contacto.
+        if let i = altSpelling[t]?.first {
+            let w = words[i]
+            return (w, t == TextUtil.modernSpelling(w.pt.lowercased()) ? "" : "форма слова «\(w.pt)»")
+        }
+
         // Старая орфография: «acção», «óptimo», «director».
         let modern = TextUtil.modernSpelling(t)
         if modern != t, let found = lookupToken(modern) {
@@ -361,6 +390,11 @@ final class DictionaryIndex {
 
         for i in 0..<words.count {
             var best = matchScore(foldedPT[i], q)
+            if best < 100 && !altFoldedPT[i].isEmpty {
+                // второе написание: «caráter» находит «carácter»
+                let s = matchScore(altFoldedPT[i], q) - 2
+                if s > best { best = s }
+            }
             if best < 100 {
                 for t in foldedTr[i] {
                     let s = matchScore(t, q) - 10
