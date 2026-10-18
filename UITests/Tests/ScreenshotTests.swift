@@ -129,7 +129,7 @@ final class ScreenshotTests: XCTestCase {
 
     /// Первая кнопка с вариантом ответа (не служебная).
     private func firstOptionButton() -> XCUIElement {
-        let service = ["Закрыть", "Произнести", "Далее", "Завершить", "Сегодня", "Словарь", "Коллекции", "Глаголы", "Настройки"]
+        let service = ["Закрыть", "Произнести", "Далее", "Завершить", "Сегодня", "Словарь", "Коллекции", "Глаголы", "Настройки", "Не знаю", "Проверить"]
         let predicate = NSPredicate(format: "NOT (label IN %@)", service as NSArray)
         return app.buttons.matching(predicate).element(boundBy: 0)
     }
@@ -505,6 +505,56 @@ final class ScreenshotTests: XCTestCase {
         tap(app.buttons["Закончить"], "finish daily")
         shot("73_today_after")
         note(app.descendants(matching: .any)["today-done"].exists ? "CHECK ok: today done state" : "CHECK info: today plan not empty yet")
+
+        let tower = app.descendants(matching: .any)["tower-card"]
+        note(tower.waitForExistence(timeout: 3) ? "CHECK ok: tower card: " + tower.label : "CHECK FAILED: tower card missing")
+
+        // Глаголы на сегодня
+        let verbs = app.buttons["verbs-start"]
+        scrollUntilVisible(verbs)
+        if tap(verbs, "start daily verbs") {
+            shot("78_verbs_daily_question")
+            for _ in 0..<3 {
+                if app.buttons["Не знаю"].exists {
+                    app.buttons["Не знаю"].tap()
+                } else {
+                    let option = firstOptionButton()
+                    if option.exists { option.tap() }
+                }
+                let next = app.buttons["Далее"].exists ? app.buttons["Далее"] : app.buttons["Завершить"]
+                if next.waitForExistence(timeout: 3) { next.tap() }
+            }
+            shot("78b_verbs_after")
+            tap(app.buttons["Закрыть"], "close verbs")
+        }
+
+        // Гримуар
+        let grimoire = app.buttons["open-grimoire"]
+        scrollUntilVisible(grimoire)
+        tap(grimoire, "open grimoire")
+        shot("79_grimoire")
+        back()
+
+        // Босс недели
+        let boss = app.buttons["boss-start"]
+        scrollUntilVisible(boss, maxSwipes: 3)
+        if boss.exists {
+            tap(boss, "start boss")
+            let arena = app.descendants(matching: .any)["boss-arena"]
+            note(arena.waitForExistence(timeout: 4) ? "CHECK ok: boss arena: " + arena.label : "CHECK FAILED: boss arena missing")
+            shot("80_boss_arena")
+            let option = firstOptionButton()
+            if option.exists && option.isHittable {
+                option.tap()
+                shot("81_boss_answer")
+            } else if app.buttons["Не знаю"].exists {
+                app.buttons["Не знаю"].tap()
+                shot("81_boss_answer")
+            }
+            tap(app.buttons["Закрыть"], "close boss")
+        } else {
+            note("CHECK info: boss not available yet")
+        }
 
         let difficult = app.buttons["open-difficult"]
         scrollUntilVisible(difficult)
