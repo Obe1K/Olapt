@@ -247,7 +247,7 @@ struct PhraseSessionView: View {
     private func tilesArea(_ q: PhraseQuestion) -> some View {
         VStack(spacing: 14) {
             // строка ответа: выбранные слова, касание возвращает слово обратно
-            FlowLayout(spacing: 8) {
+            FlowLayout(spacing: 8, lineSpacing: 8) {
                 ForEach(session.picked, id: \.self) { i in
                     tile(q.tiles[i], selected: true) { session.toggleTile(i) }
                 }
@@ -257,7 +257,7 @@ struct PhraseSessionView: View {
             .background(PixelFrame(fill: Theme.panelDeep, border: answerBorder))
             .accessibilityIdentifier("phrase-answer")
 
-            FlowLayout(spacing: 8) {
+            FlowLayout(spacing: 8, lineSpacing: 8) {
                 ForEach(q.tiles.indices, id: \.self) { i in
                     let used = session.picked.contains(i)
                     tile(q.tiles[i], selected: false) { session.toggleTile(i) }
@@ -431,49 +431,6 @@ struct PhraseSessionView: View {
                     Label("Закончить", systemImage: "checkmark")
                 }
             }
-        }
-    }
-}
-
-// MARK: - Раскладка «в строку с переносом» для плиток
-
-struct FlowLayout: Layout {
-    var spacing: CGFloat = 8
-
-    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
-        let maxWidth = proposal.width ?? .infinity
-        var x: CGFloat = 0
-        var y: CGFloat = 0
-        var rowHeight: CGFloat = 0
-        var width: CGFloat = 0
-        for v in subviews {
-            let s = v.sizeThatFits(.unspecified)
-            if x > 0 && x + s.width > maxWidth {
-                y += rowHeight + spacing
-                x = 0
-                rowHeight = 0
-            }
-            x += s.width + spacing
-            rowHeight = max(rowHeight, s.height)
-            width = max(width, x - spacing)
-        }
-        return CGSize(width: proposal.width ?? width, height: y + rowHeight)
-    }
-
-    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
-        var x = bounds.minX
-        var y = bounds.minY
-        var rowHeight: CGFloat = 0
-        for v in subviews {
-            let s = v.sizeThatFits(.unspecified)
-            if x > bounds.minX && x + s.width > bounds.maxX {
-                y += rowHeight + spacing
-                x = bounds.minX
-                rowHeight = 0
-            }
-            v.place(at: CGPoint(x: x, y: y), proposal: ProposedViewSize(s))
-            x += s.width + spacing
-            rowHeight = max(rowHeight, s.height)
         }
     }
 }
