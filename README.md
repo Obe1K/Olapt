@@ -15,6 +15,7 @@
 - **Гримуар** (`Views/GrimoireView.swift`): слова в памяти как книга заклинаний, сила 1–5 по стабильности.
 - **Звуки** (`Models/SoundFX.swift`): 8-битные эффекты синтезируются на лету (AVAudioEngine), музыка по желанию; выключаются в настройках.
 - **Тема**: тёмная пиксельная (`Views/Theme.swift`): камень, старое золото, кровь; шрифты Tiny5 и Jacquarda Bastarda 9 (OFL, `Resources/Fonts`).
+- **Фразы** (`Models/PhraseBank.swift`, `Views/PhraseViews.swift`): короткие предложения и выражения в лицах. Источник — `Tools/phrases/*.txt` (`~` — выражение, которое спрягается и согласуется: «estar com fome / ter fome», «estar cansado*»; `=` — готовая фраза), сборка — `Tools/phrasebank.py` из `build_data.py` → `Resources/phrases.json`. Новые фразы собираются из слов-плиток, знакомые набираются целиком; интервальные повторения по каждой фразе, 3 новые в день в плане «Сегодня». Выражения попадают и в словарь: «Слова из фото» и поиск находят их в любой форме («estamos com frio» → estar com frio).
 - **Глаголы**: 1 329 глаголов × 15 форм (Presente, Pretérito Perfeito, Imperfeito, Mais-que-perfeito, Futuro, Condicional, Conjuntivo ×3, Imperativo, Infinitivo Pessoal, составные и т. д.) в формах Португалии (`estou a falar`, форма vós не используется). Тренировка спряжений с выбором и вводом, отдельный прогресс для каждой пары «глагол + время». Частые глаголы входят в план «Сегодня»: 4 новые пары в день плюс повторения.
 
 ## Структура
