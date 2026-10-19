@@ -1,0 +1,40 @@
+## cafe | В кафе и ресторане | A1
+= Queria um café, por favor. / Queria um café. | I'd like a coffee, please. | Мне кофе, пожалуйста. || «Queria» вежливее, чем «quero». «Um café» в Португалии — это эспрессо.
+= Uma mesa para dois, por favor. | A table for two, please. | Столик на двоих, пожалуйста.
+= Pode trazer a ementa? / Pode trazer o menu? | Could you bring the menu? | Принесите меню, пожалуйста. || В Португалии меню — «a ementa».
+= A conta, por favor. | The bill, please. | Счёт, пожалуйста.
+= Posso pagar com cartão? | Can I pay by card? | Можно оплатить картой?
+= Um copo de água, por favor. | A glass of water, please. | Стакан воды, пожалуйста.
+= Está delicioso! / Está muito bom! | It's delicious! | Очень вкусно!
+= Sem açúcar, por favor. | Without sugar, please. | Без сахара, пожалуйста.
+= Para levar. | To take away. | С собой.
+= Onde fica a casa de banho? / Onde é a casa de banho? | Where is the toilet? | Где туалет? || В Португалии — «casa de banho», в Бразилии — «banheiro».
+= Uma imperial, por favor. | A small draught beer, please. | Маленькое разливное пиво, пожалуйста. || «Imperial» — маленький бокал пива (Лиссабон); на севере говорят «fino».
+= Sou vegetariano. / Sou vegetariana. | I'm vegetarian. | Я вегетарианец (вегетарианка).
+
+## talk | Знакомство и разговор | A1
+= Como te chamas? | What's your name? | Как тебя зовут?
+= Chamo-me Ana. | My name is Ana. | Меня зовут Ана.
+= De onde és? | Where are you from? | Откуда ты?
+= Muito prazer. / Prazer. | Nice to meet you. | Очень приятно.
+= Moro em Lisboa. / Vivo em Lisboa. | I live in Lisbon. | Я живу в Лиссабоне.
+= Falo um pouco de português. | I speak a little Portuguese. | Я немного говорю по-португальски.
+= Não percebo. / Não entendo. | I don't understand. | Я не понимаю. || В Португалии чаще говорят «não percebo».
+= Pode repetir, por favor? | Could you repeat, please? | Повторите, пожалуйста.
+= Pode falar mais devagar? | Could you speak more slowly? | Можете говорить помедленнее?
+= Como se diz isto em português? | How do you say this in Portuguese? | Как это сказать по-португальски?
+= Tudo bem? / Está tudo bem? | How are things? | Как дела?
+= Desculpe, não sei. | Sorry, I don't know. | Извините, я не знаю.
+= Até amanhã! | See you tomorrow! | До завтра!
+
+## city | В городе и в дороге | A1
+= Onde fica a estação? / Onde é a estação? | Where is the station? | Где вокзал?
+= É longe daqui? | Is it far from here? | Это далеко отсюда?
+= Vire à direita. / Vira à direita. | Turn right. | Поверните направо.
+= Siga em frente. / Segue em frente. | Go straight ahead. | Идите прямо.
+= Quanto custa? / Quanto é? | How much is it? | Сколько стоит?
+= Um bilhete para o Porto, por favor. | A ticket to Porto, please. | Билет до Порту, пожалуйста.
+= A que horas parte o comboio? | What time does the train leave? | Во сколько отправляется поезд? || «Comboio» — поезд в Португалии (в Бразилии — «trem»).
+= Onde fica a paragem do autocarro? / Onde é a paragem do autocarro? | Where is the bus stop? | Где автобусная остановка? || «Paragem» и «autocarro» — так говорят в Португалии.
+= Estou perdido. / Estou perdida. | I'm lost. | Я заблудился (заблудилась).
+= Pode ajudar-me? | Can you help me? | Можете мне помочь?

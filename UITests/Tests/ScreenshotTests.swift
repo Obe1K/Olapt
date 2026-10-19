@@ -435,7 +435,9 @@ final class ScreenshotTests: XCTestCase {
         let expectations: [(String, String)] = [
             ("tranças", "trança"), ("franja", ""), ("penteado", ""), ("oval", ""),
             ("lindíssima", "lindo"), ("Sentei-me", "sentar-se"), ("oiço", "ouvir"),
-            ("acção", "ação"), ("Falámos", "falar")
+            ("acção", "ação"), ("Falámos", "falar"),
+            // выражения: из таблицы учебника и в живых формах
+            ("estar com fome", ""), ("ter fome", ""), ("Estamos com frio", "estar com frio"), ("está cansada", "estar cansado")
         ]
         for (text, lemma) in expectations {
             let chip = app.buttons["scan-chip-" + text]
@@ -683,5 +685,62 @@ final class ScreenshotTests: XCTestCase {
         let reminder = app.staticTexts.matching(NSPredicate(format: "label CONTAINS[c] 'акцент'")).firstMatch
         note(reminder.waitForExistence(timeout: 3) ? "CHECK ok: summary reminds about accents" : "CHECK FAILED: no accent reminder in summary")
         shot("92_accent_summary")
+    }
+
+    /// Фразы: собрать из слов (сначала «Не знаю», затем на повторе — правильно по плиткам), список и карточка.
+    func testK_Phrases() {
+        tapTab("Сегодня")
+        let start = app.buttons["phrases-start"]
+        scrollUntilVisible(start, maxSwipes: 6)
+        guard tap(start, "start phrases") else {
+            note("CHECK FAILED: phrases card missing")
+            return
+        }
+        shot("93_phrase_tiles")
+        var answers: [String: String] = [:]   // подсказка → правильная фраза
+        var solved = 0
+        for _ in 0..<12 {
+            if firstTryRate().exists { break }
+            let prompt = app.staticTexts["phrase-prompt"]
+            guard prompt.waitForExistence(timeout: 3) else { break }
+            let key = prompt.label
+            if let show = answers[key] {
+                // повтор: собираем ответ из плиток
+                let words = show.components(separatedBy: CharacterSet(charactersIn: " .,!?")).filter { !$0.isEmpty }
+                for (k, w) in words.enumerated() {
+                    let word = k == 0 ? w.prefix(1).lowercased() + w.dropFirst() : w
+                    let tile = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'tile-' AND label == %@ AND enabled == true", word)).firstMatch
+                    if tile.exists { tile.tap() } else { note("CHECK FAILED: tile " + word + " missing") }
+                }
+                if solved == 0 { shot("94_phrase_built") }
+                tap(app.buttons["phrase-check"], "check phrase")
+                let ok = app.descendants(matching: .any)["phrase-correct"]
+                note(ok.waitForExistence(timeout: 3) ? "CHECK ok: phrase built from tiles: " + show : "CHECK FAILED: built phrase not accepted: " + show)
+                if solved == 0 { shot("95_phrase_correct") }
+                solved += 1
+            } else {
+                tap(app.buttons["Не знаю"], "give up phrase")
+                let show = app.staticTexts["phrase-show"]
+                if show.waitForExistence(timeout: 3) { answers[key] = show.label }
+                if answers.count == 1 { shot("94a_phrase_answer") }
+            }
+            let next = app.buttons["Далее"].exists ? app.buttons["Далее"] : app.buttons["Завершить"]
+            if next.waitForExistence(timeout: 3) { next.tap() }
+        }
+        note(solved > 0 ? "CHECK ok: phrases solved \(solved)" : "CHECK FAILED: no phrase solved")
+        shot("96_phrase_summary")
+        let finish = app.buttons["Закончить"]
+        scrollUntilVisible(finish)
+        tap(finish, "finish phrases")
+
+        let all = app.buttons["open-phrases"]
+        scrollUntilVisible(all, maxSwipes: 6)
+        if tap(all, "open phrases") {
+            shot("97_phrases_list")
+            tap(app.staticTexts["estar com fome / ter fome"].firstMatch, "open phrase card")
+            shot("98_phrase_card")
+            back()
+            back()
+        }
     }
 }

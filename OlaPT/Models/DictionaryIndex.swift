@@ -357,6 +357,46 @@ final class DictionaryIndex {
         return nil
     }
 
+    /// Словарная форма слова, если она отличается: «estou» → «estar», «cansada» → «cansado».
+    func lemma(_ token: String) -> String? {
+        guard let found = lookupToken(token) else { return nil }
+        let base = found.word.pt.lowercased()
+        if base.contains(" ") || TextUtil.fold(base) == TextUtil.fold(token) { return nil }
+        return base
+    }
+
+    /// Выражение с учётом форм слов: «estou com fome» → «estar com fome»,
+    /// «está cansada» → «estar cansado», «temos frio» → «ter frio».
+    /// - lemmas: словарные формы токенов (можно передать заранее посчитанные), nil — нет другой формы
+    func lookupPhraseForms(_ tokens: [String], lemmas: [String?]? = nil) -> Word? {
+        if tokens.count < 2 { return nil }
+        if let w = lookupPhrase(tokens) { return w }
+        let lem = lemmas ?? tokens.map { lemma($0) }
+        var options: [[String]] = []
+        var combos = 1
+        for (i, t) in tokens.enumerated() {
+            var opts = [t]
+            if i < lem.count, let l = lem[i], l != t.lowercased() { opts.append(l) }
+            options.append(opts)
+            combos *= opts.count
+        }
+        if combos == 1 || combos > 64 { return nil }
+        var choice = Array(repeating: 0, count: tokens.count)
+        while true {
+            // следующий вариант (первый — исходные слова — уже проверен выше)
+            var k = tokens.count - 1
+            while k >= 0 {
+                choice[k] += 1
+                if choice[k] < options[k].count { break }
+                choice[k] = 0
+                k -= 1
+            }
+            if k < 0 { return nil }
+            let candidate = (0..<tokens.count).map { options[$0][choice[$0]] }
+            if let w = lookupPhrase(candidate) { return w }
+        }
+    }
+
     // MARK: - Поиск
 
     private func matchScore(_ text: String, _ q: String) -> Int {
@@ -370,13 +410,19 @@ final class DictionaryIndex {
 
     /// Поиск по португальскому слову, любому переводу и по формам глаголов.
     func search(_ query: String, limit: Int = 80) -> [SearchResult] {
-        let found = searchExact(query, limit: limit)
+        var found = searchExact(query, limit: limit)
         if found.isEmpty {
             // «acção» → «ação» и т. п.: старое написание
             let modern = TextUtil.modernSpelling(query.lowercased())
             if modern != query.lowercased() {
-                return searchExact(modern, limit: limit)
+                found = searchExact(modern, limit: limit)
             }
+        }
+        // Выражение в любой форме: «estou com fome» находит «estar com fome»
+        let parts = TextUtil.removePunctuation(query.lowercased())
+            .split(whereSeparator: { $0 == " " }).map(String.init)
+        if parts.count >= 2, let w = lookupPhraseForms(parts), !found.contains(where: { $0.word.id == w.id }) {
+            found.insert(SearchResult(word: w, score: 100, hint: "выражение «\(w.pt)»"), at: 0)
         }
         return found
     }

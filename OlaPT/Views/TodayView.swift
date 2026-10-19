@@ -8,6 +8,7 @@ enum TodaySession: Int, Identifiable {
     case extraNew   // по желанию: ещё порция новых слов сверх дневной нормы
     case boss       // бой с боссом недели
     case verbs      // глаголы на сегодня
+    case phrases    // фразы на сегодня
 
     var id: Int { return rawValue }
 }
@@ -73,6 +74,7 @@ struct TodayView: View {
                     } else {
                         planCard(plan)
                         verbsCard
+                        phrasesCard
                         if model.bossAvailable {
                             bossCard
                         }
@@ -111,6 +113,8 @@ struct TodayView: View {
                 let vp = model.dailyVerbPlan()
                 VerbSessionView(request: VerbSessionRequest(verbs: [], tenses: [], mode: .choice, count: 0,
                                                             dailyPairs: vp.due + vp.new))
+            case .phrases:
+                PhraseSessionView(title: "Фразы", isDaily: true) { makeDailyPhraseQuestions() }
             case .boss:
                 let cfg = model.bossConfig()
                 StudySessionView(level: nil, title: "Босс недели", collectionID: nil, boss: cfg,
@@ -337,6 +341,59 @@ struct TodayView: View {
         .pixelPanel()
     }
 
+    // MARK: Фразы
+
+    private var phrasesCard: some View {
+        let pp = model.dailyPhrasePlan()
+        return VStack(alignment: .leading, spacing: 10) {
+            GothicHeader("Фразы на сегодня")
+            if pp.isEmpty {
+                Label("Фразы на сегодня повторены", systemImage: "checkmark.seal.fill")
+                    .font(Theme.pixel(16, relativeTo: .headline))
+                    .foregroundColor(Theme.moss)
+                    .accessibilityIdentifier("phrases-done")
+            } else {
+                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    Text("\(pp.total)")
+                        .font(Theme.pixel(32, relativeTo: .title))
+                        .foregroundColor(Theme.text)
+                    Text(Plural.phrases(pp.total))
+                        .font(Theme.pixel(18, relativeTo: .title3))
+                        .foregroundColor(Theme.text)
+                    Spacer()
+                    Text("~\(model.estimatedMinutes(questions: pp.total * 2)) мин")
+                        .font(Theme.pixel(18, relativeTo: .title3))
+                        .foregroundColor(Theme.textDim)
+                }
+                HStack(spacing: 16) {
+                    planChip(value: pp.due.count, title: "повторить", color: Theme.gold)
+                    planChip(value: pp.new.count, title: "новых", color: Theme.bloodBright)
+                }
+                Text((pp.new + pp.due).prefix(2).map { $0.title }.joined(separator: ", "))
+                    .font(.caption)
+                    .foregroundColor(Theme.textDim)
+                    .lineLimit(2)
+                Button {
+                    active = .phrases
+                } label: {
+                    Text("Говорить фразами")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(GothicButtonStyle(.secondary))
+                .accessibilityIdentifier("phrases-start")
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .pixelPanel()
+    }
+
+    private func makeDailyPhraseQuestions() -> [PhraseQuestion] {
+        let pp = model.dailyPhrasePlan()
+        let due = pp.due.shuffled().map { PhraseQuestion.make(item: $0, typing: model.phraseTyping($0.id)) }
+        let new = pp.new.map { PhraseQuestion.make(item: $0, typing: false) }
+        return new + due
+    }
+
     // MARK: Босс недели
 
     private var bossCard: some View {
@@ -391,6 +448,13 @@ struct TodayView: View {
                 linkRow(icon: "book.closed", title: "Гримуар", value: spells > 0 ? "\(spells) \(Plural.spells(spells))" : "пока пуст")
             }
             .accessibilityIdentifier("open-grimoire")
+            Rectangle().fill(Theme.goldDark).frame(height: 1).padding(.horizontal, 8)
+            NavigationLink {
+                PhrasesView()
+            } label: {
+                linkRow(icon: "text.bubble", title: "Фразы", value: "\(model.phrases.allItems.count)")
+            }
+            .accessibilityIdentifier("open-phrases")
             Rectangle().fill(Theme.goldDark).frame(height: 1).padding(.horizontal, 8)
             NavigationLink {
                 DifficultWordsView()

@@ -100,6 +100,8 @@ enum TextScanner {
     /// Слова текста с найденными переводами; выражения из нескольких слов собираются в один элемент.
     static func tokens(from lines: [String], index: DictionaryIndex) -> [ScanToken] {
         let list = words(from: lines, index: index)
+        // словарные формы считаем один раз: «estou» → estar, «cansada» → cansado
+        let lemmas = list.map { index.lemma($0) }
         var tokens: [ScanToken] = []
         var i = 0
         while i < list.count {
@@ -108,7 +110,7 @@ enum TextScanner {
             if longest >= 2 {
                 for n in stride(from: longest, through: 2, by: -1) {
                     let slice = Array(list[i..<(i + n)])
-                    if let w = index.lookupPhrase(slice) {
+                    if let w = index.lookupPhraseForms(slice, lemmas: Array(lemmas[i..<(i + n)])) {
                         tokens.append(ScanToken(id: tokens.count, text: slice.joined(separator: " "), word: w, hint: ""))
                         i += n
                         matched = true

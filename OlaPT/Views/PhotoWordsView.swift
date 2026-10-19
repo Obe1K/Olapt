@@ -208,7 +208,7 @@ struct PhotoWordsView: View {
                     }
                     .accessibilityIdentifier("scan-sample")
                     Button {
-                        process(text: "Ela tem tranças e franja. O penteado é oval.\nA casa é lindíssima. Sentei-me e oiço música.\nA acção decorre em Lisboa. Falámos ontem.")
+                        process(text: "Ela tem tranças e franja. O penteado é oval.\nA casa é lindíssima. Sentei-me e oiço música.\nA acção decorre em Lisboa. Falámos ontem.\nestar com fome / ter fome\nEstamos com frio. Ela está cansada.")
                     } label: {
                         Label("Тестовый текст", systemImage: "text.alignleft")
                     }
@@ -623,6 +623,16 @@ enum Plural {
         if mod10 == 1 { return "форма" }
         if mod10 >= 2 && mod10 <= 4 { return "формы" }
         return "форм"
+    }
+
+    /// 1 фраза, 2 фразы, 5 фраз
+    static func phrases(_ n: Int) -> String {
+        let mod100 = n % 100
+        let mod10 = n % 10
+        if mod100 >= 11 && mod100 <= 14 { return "фраз" }
+        if mod10 == 1 { return "фраза" }
+        if mod10 >= 2 && mod10 <= 4 { return "фразы" }
+        return "фраз"
     }
 
     /// 1 заклинание, 2 заклинания, 5 заклинаний

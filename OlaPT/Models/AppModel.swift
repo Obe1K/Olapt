@@ -10,6 +10,8 @@ final class AppModel: ObservableObject {
         didSet { scheduleSave() }
     }
     let verbs: VerbLibrary
+    /// Фразы и короткие предложения для упражнения «Фразы»
+    let phrases: PhraseBank
     /// Сообщение, если встроенные словари не удалось загрузить.
     let bundleError: String?
 
@@ -48,6 +50,7 @@ final class AppModel: ObservableObject {
         let custom = loaded.customWords.map { $0.toWord() }
 
         self.verbs = library
+        self.phrases = PhraseBank.load()
         self.bundleError = problem
         self.packFiles = files
         self.bundledIDs = bundled
@@ -700,9 +703,63 @@ final class AppModel: ObservableObject {
         user.verbProgress = [:]
         user.srs = [:]
         user.verbSRS = [:]
+        user.phraseSRS = [:]
         for i in user.collections.indices {
             user.collections[i].bestScores = [:]
         }
+    }
+
+    // MARK: - Фразы
+
+    /// Новых фраз в день
+    static let newPhrasesPerDay = 3
+    /// С какой стабильности фразу уже набирают с клавиатуры, а не собирают из слов
+    static let phraseTypingStability = 4.0
+
+    struct PhrasePlan {
+        var due: [PhraseItem]
+        var new: [PhraseItem]
+        var total: Int { return due.count + new.count }
+        var isEmpty: Bool { return total == 0 }
+    }
+
+    /// Фразы на сегодня: пора повторить + до 3 новых (по порядку наборов).
+    func dailyPhrasePlan(now: Date = Date()) -> PhrasePlan {
+        let today = FSRS.startOfDay(now)
+        var due: [PhraseItem] = []
+        var introduced = 0
+        for (id, s) in user.phraseSRS {
+            guard let item = phrases.byID[id] else { continue }
+            if s.due <= today { due.append(item) }
+            if FSRS.startOfDay(s.firstSeen) == today { introduced += 1 }
+        }
+        var new: [PhraseItem] = []
+        let remaining = max(0, AppModel.newPhrasesPerDay - introduced)
+        if remaining > 0 {
+            for item in phrases.allItems where user.phraseSRS[item.id] == nil {
+                new.append(item)
+                if new.count >= remaining { break }
+            }
+        }
+        return PhrasePlan(due: Array(due.prefix(30)), new: new)
+    }
+
+    func phraseState(_ id: String) -> SRSState? {
+        return user.phraseSRS[id]
+    }
+
+    /// Собирать из слов или набирать: новые и молодые фразы — из слов.
+    func phraseTyping(_ id: String) -> Bool {
+        return (user.phraseSRS[id]?.stability ?? 0) >= AppModel.phraseTypingStability
+    }
+
+    /// - recognition: фразу собирали из готовых слов (легче, чем набрать самому)
+    func recordPhrase(id: String, correct: Bool, recognition: Bool, accentsOnly: Bool = false, now: Date = Date()) {
+        var rating: ReviewRating = correct ? (accentsOnly ? .hard : .good) : .again
+        let previous = user.phraseSRS[id]
+        if previous == nil && recognition && rating == .good { rating = .hard }
+        user.phraseSRS[id] = FSRS.review(previous, rating: rating, now: now)
+        feedPet(correct ? PetRules.foodPerCorrect : PetRules.foodPerWrong, now: now)
     }
 
     // MARK: - Свои слова

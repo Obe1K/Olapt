@@ -19,6 +19,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import conj  # noqa: E402
+import phrasebank  # noqa: E402
 
 OUT = os.path.join(HERE, "..", "OlaPT", "Resources")
 
@@ -100,6 +101,28 @@ def main():
     if DUPES:
         raise SystemExit("\n".join(DUPES))
     os.makedirs(OUT, exist_ok=True)
+
+    # Банк фраз; выражения из него («estar com fome») попадают и в словарь — их узнаёт «Слова из фото»
+    phrases, phrase_entries, phrase_count = phrasebank.build(conj)
+    keys = {e["pt"].lower() + "|" + e["pos"] for e in entries}
+    added = 0
+    for pe in phrase_entries:
+        key = pe["pt"].lower() + "|phrase"
+        if key in keys:
+            continue
+        keys.add(key)
+        e = {"pt": pe["pt"], "pos": "phrase", "topic": "expressions", "lv": pe["lv"],
+             "_en": [x.strip() for x in pe["en"].split(";") if x.strip()],
+             "_ru": [x.strip() for x in pe["ru"].split(",") if x.strip()]}
+        if pe["note"]:
+            e["note"] = pe["note"]
+        entries.append(e)
+        added += 1
+    path = os.path.join(OUT, "phrases.json")
+    with open(path, "w", encoding="utf-8") as fh:
+        json.dump(phrases, fh, ensure_ascii=False, separators=(",", ":"))
+    print("%-22s %5d фраз, %6.1f КБ (в словарь добавлено выражений: %d)"
+          % ("phrases.json", phrase_count, os.path.getsize(path) / 1024, added))
 
     for pack in PACKS:
         items = []
