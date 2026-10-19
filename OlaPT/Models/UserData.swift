@@ -71,7 +71,7 @@ enum MasteryStatus {
     var title: String {
         switch self {
         case .new: return "Новое"
-        case .learning: return "Учу"
+        case .learning: return "В процессе"
         case .learned: return "Выучено"
         }
     }

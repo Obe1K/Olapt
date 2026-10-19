@@ -4,6 +4,15 @@ import SwiftUI
 
 struct StatusBadge: View {
     let status: MasteryStatus
+    /// Доля выученности 0…1: пока слово учится, вместо «Учу» показываем процент
+    var fraction: Double? = nil
+
+    private var text: String {
+        if status == .learning, let f = fraction {
+            return "\(min(99, max(1, Int((f * 100).rounded()))))%"
+        }
+        return status.title
+    }
 
     private var color: Color {
         switch status {
@@ -14,7 +23,7 @@ struct StatusBadge: View {
     }
 
     var body: some View {
-        Text(status.title)
+        Text(text)
             .font(Theme.pixel(11, relativeTo: .caption2))
             .textCase(.uppercase)
             .padding(.horizontal, 8)
@@ -69,7 +78,7 @@ struct WordRow: View {
             if showStatus {
                 let status = model.status(for: word.id)
                 if status != .new {
-                    StatusBadge(status: status)
+                    StatusBadge(status: status, fraction: model.fraction(for: word.id))
                 }
             }
         }

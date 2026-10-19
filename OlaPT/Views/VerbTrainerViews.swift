@@ -384,7 +384,7 @@ struct VerbSessionView: View {
     private func questionView(_ q: VerbQuestion) -> some View {
         ScrollView {
             VStack(spacing: 16) {
-                PixelProgressBar(fraction: Double(session.position) / Double(max(1, session.queue.count)),
+                PixelProgressBar(fraction: Double(session.position + (session.answered ? 1 : 0)) / Double(max(1, session.queue.count)),
                                  fill: Theme.bloodBright)
                     .padding(.top, 8)
 

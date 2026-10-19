@@ -251,7 +251,7 @@ struct StudySessionView: View {
                                   answered: session.answered, lastCorrect: session.lastCorrect)
                         .padding(.horizontal, -20)
                 } else {
-                    PixelProgressBar(fraction: Double(session.position) / Double(max(1, session.queue.count)),
+                    PixelProgressBar(fraction: Double(session.position + (session.answered ? 1 : 0)) / Double(max(1, session.queue.count)),
                                      fill: Theme.bloodBright)
                         .padding(.top, 8)
                 }

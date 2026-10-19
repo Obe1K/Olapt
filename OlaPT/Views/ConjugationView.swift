@@ -154,7 +154,7 @@ struct ConjugationView: View {
                     Spacer()
                     let status = model.verbStatus(verb: verb, tense: tense)
                     if status != .new {
-                        StatusBadge(status: status)
+                        StatusBadge(status: status, fraction: model.verbFraction(verb: verb, tense: tense))
                     }
                 }
                 Text(tense.ru)

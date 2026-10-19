@@ -242,7 +242,7 @@ final class AppModel: ObservableObject {
         return user.srs[wordID]
     }
 
-    /// «Новое» — ещё не начато; «Выучено» — держится в памяти не меньше 3 недель; иначе «Учу».
+    /// «Новое» — ещё не начато; «Выучено» — держится в памяти не меньше 3 недель; иначе «В процессе» (на бейдже — процент).
     func status(for wordID: String) -> MasteryStatus {
         guard let s = user.srs[wordID] else { return .new }
         return s.stability >= FSRS.learnedStability ? .learned : .learning

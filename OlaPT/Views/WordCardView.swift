@@ -158,7 +158,7 @@ struct WordCardView: View {
         return Section(header: GothicHeader("Прогресс"),
                        footer: Text("«Выучено» — когда слово держится в памяти 3 недели и дольше.")) {
             HStack {
-                StatusBadge(status: status)
+                StatusBadge(status: status, fraction: model.fraction(for: word.id))
                 Spacer()
                 if let s = state {
                     Text("помню ≈ \(spanText(s.stability))")

@@ -18,7 +18,7 @@ struct CollectionsView: View {
                         Text("Выучено слов: \(model.totalLearnedWords)")
                             .font(.headline)
                         Spacer()
-                        Text("учу: \(model.totalLearningWords)")
+                        Text("в процессе: \(model.totalLearningWords)")
                             .foregroundColor(.secondary)
                     }
                 }
@@ -166,9 +166,9 @@ struct CollectionDetailView: View {
             Section {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack(spacing: 14) {
-                        statBox(title: "Новые", value: counts.new, color: Theme.textDim)
-                        statBox(title: "Учу", value: counts.learning, color: Theme.ember)
-                        statBox(title: "Выучено", value: counts.learned, color: Theme.moss)
+                        statBox(title: "Новые", value: "\(counts.new)", color: Theme.textDim)
+                        statBox(title: "Освоено", value: "\(Int((model.learnedFraction(of: c.wordIDs) * 100).rounded()))%", color: Theme.ember)
+                        statBox(title: "Выучено", value: "\(counts.learned)", color: Theme.moss)
                     }
                     MasteryBar(fraction: model.learnedFraction(of: c.wordIDs))
                 }
@@ -290,7 +290,7 @@ struct CollectionDetailView: View {
         }
     }
 
-    private func statBox(title: String, value: Int, color: Color) -> some View {
+    private func statBox(title: String, value: String, color: Color) -> some View {
         return VStack(spacing: 2) {
             Text("\(value)")
                 .font(Theme.pixel(26, relativeTo: .title2))

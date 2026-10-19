@@ -316,21 +316,30 @@ struct GothicButtonStyle: ButtonStyle {
 struct PixelProgressBar: View {
     let fraction: Double
     var fill: Color = Theme.gold
+    /// Цвет полностью заполненной полоски (nil — тот же, что и fill; для здоровья босса)
+    var doneFill: Color? = Theme.moss
+    var height: CGFloat = 14
 
     var body: some View {
         GeometryReader { geo in
+            // рамка PixelFrame — 1 «пиксель» (2 pt), заливка отступает от неё ещё на 1
             let u: CGFloat = 2
-            let inner = max(0, geo.size.width - 6 * u)
+            let inset = 2 * u
+            let inner = max(0, geo.size.width - 2 * inset)
             let f = CGFloat(min(1, max(0, fraction)))
-            ZStack(alignment: .leading) {
+            // ширина кратна «пикселю», но непустая доля видна хотя бы одним «пикселем»
+            let steps = (inner * f / u).rounded(.down)
+            let width = f > 0 ? max(u, steps * u) : 0
+            ZStack(alignment: .topLeading) {
                 PixelFrame(fill: Theme.panelDeep, border: Theme.goldDark, highlight: Theme.goldDark, shadow: Theme.goldDark)
                 Rectangle()
-                    .fill(fraction >= 1 ? Theme.moss : fill)
-                    .frame(width: (inner * f / (2 * u)).rounded(.down) * 2 * u, height: max(0, geo.size.height - 6 * u))
-                    .padding(.leading, 3 * u)
+                    .fill(fraction >= 1 ? (doneFill ?? fill) : fill)
+                    .frame(width: width, height: max(0, geo.size.height - 2 * inset))
+                    .offset(x: inset, y: inset)
+                    .animation(.easeOut(duration: 0.25), value: fraction)
             }
         }
-        .frame(height: 12)
+        .frame(height: height)
         .accessibilityElement()
         .accessibilityValue("\(Int(fraction * 100)) %")
     }

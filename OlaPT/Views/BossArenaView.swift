@@ -73,8 +73,13 @@ struct BossArenaView: View {
                         Text(boss.title)
                             .font(Theme.pixel(12, relativeTo: .caption))
                             .foregroundColor(Theme.goldBright)
-                        PixelProgressBar(fraction: Double(bossHP) / Double(max(1, boss.hp)), fill: Theme.bloodBright)
+                        // здоровье босса: полная красная полоска, с каждым верным ответом короче
+                        PixelProgressBar(fraction: Double(bossHP) / Double(max(1, boss.hp)), fill: Theme.bloodBright,
+                                         doneFill: nil, height: 12)
                             .frame(width: 120)
+                        Text("\(bossHP) / \(boss.hp)")
+                            .font(Theme.pixel(11, relativeTo: .caption2))
+                            .foregroundColor(Theme.textDim)
                     }
                 }
                 .padding(.horizontal, 12)
