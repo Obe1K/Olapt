@@ -177,7 +177,8 @@ struct PhraseSessionView: View {
                     .multilineTextAlignment(.center)
                     .minimumScaleFactor(0.6)
                     .accessibilityIdentifier("phrase-prompt")
-                if q.item.isPerson {
+                if q.item.isPerson && !q.typing {
+                    // подсказка-выражение только при сборке из слов; знакомую фразу пишут без неё
                     Text(q.item.title)
                         .font(.caption)
                         .foregroundColor(Theme.textDim)
