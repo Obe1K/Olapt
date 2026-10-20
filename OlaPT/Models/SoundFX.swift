@@ -3,7 +3,8 @@ import AVFoundation
 
 // MARK: - 8-битные звуки
 
-/// Звуки синтезируются прямо в приложении (квадратная и треугольная волна), без файлов.
+/// Звуки синтезируются прямо в приложении (квадратная и треугольная волна), без файлов;
+/// музыка башни — TowerMusic.
 /// Категория «ambient»: не прерывает чужую музыку и молчит, когда включён беззвучный режим.
 final class SoundFX {
     static let shared = SoundFX()
@@ -14,7 +15,7 @@ final class SoundFX {
 
     /// Звуки ответов и событий
     var effectsOn = true
-    /// Тихая музыка башни на вкладке «Сегодня»
+    /// Музыка башни на вкладке «Сегодня» (TowerMusic)
     var musicOn = false {
         didSet { if !musicOn { stopMusic() } }
     }
@@ -22,35 +23,56 @@ final class SoundFX {
     private let engine = AVAudioEngine()
     private let player = AVAudioPlayerNode()
     private let musicPlayer = AVAudioPlayerNode()
-    private let sampleRate = 22050.0
+    private let sampleRate = TowerMusic.sampleRate
     private lazy var format = AVAudioFormat(standardFormatWithSampleRate: sampleRate, channels: 1)!
     private var buffers: [Effect: AVAudioPCMBuffer] = [:]
     private var musicBuffer: AVAudioPCMBuffer?
-    private var started = false
-    private var musicPlaying = false
+    private var configured = false
+    /// Вкладка «Сегодня» на экране и хочет музыку
+    private var musicWanted = false
+    private var musicRendering = false
     /// В UI-тестах молчим
     private let disabledForTests = ProcessInfo.processInfo.arguments.contains("-uitest-static")
         || UserDefaults.standard.string(forKey: "uitest-pet") != nil
 
     private init() {}
 
+    /// Готовит движок и запускает его, если он остановлен (после звонка, Siri, смены наушников
+    /// система его останавливает, а play() на остановленном движке роняет приложение).
     private func startIfNeeded() -> Bool {
         if disabledForTests { return false }
-        if started { return true }
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.ambient, options: [.mixWithOthers])
-            try AVAudioSession.sharedInstance().setActive(true)
+        if !configured {
+            do {
+                try AVAudioSession.sharedInstance().setCategory(.ambient, options: [.mixWithOthers])
+            } catch {
+                return false
+            }
             engine.attach(player)
             engine.attach(musicPlayer)
             engine.connect(player, to: engine.mainMixerNode, format: format)
             engine.connect(musicPlayer, to: engine.mainMixerNode, format: format)
-            try engine.start()
-            player.play()
-            started = true
-        } catch {
-            started = false
+            let center = NotificationCenter.default
+            center.addObserver(forName: .AVAudioEngineConfigurationChange, object: engine, queue: .main) { [weak self] _ in
+                self?.resumeMusic()
+            }
+            center.addObserver(forName: AVAudioSession.interruptionNotification, object: nil, queue: .main) { [weak self] note in
+                let raw = note.userInfo?[AVAudioSessionInterruptionTypeKey] as? UInt
+                if raw == AVAudioSession.InterruptionType.ended.rawValue { self?.resumeMusic() }
+            }
+            configured = true
         }
-        return started
+        if !engine.isRunning {
+            // плееры остановленного движка тоже сбрасываем, иначе isPlaying врёт и звук не пойдёт
+            player.stop()
+            musicPlayer.stop()
+            do {
+                try AVAudioSession.sharedInstance().setActive(true)
+                try engine.start()
+            } catch {
+                return false
+            }
+        }
+        return true
     }
 
     func play(_ effect: Effect) {
@@ -67,31 +89,51 @@ final class SoundFX {
         if !player.isPlaying { player.play() }
     }
 
+    /// Включить музыку (вкладка «Сегодня» появилась). Первый раз синтез идёт в фоне, ~0,1 с.
     func startMusic() {
-        guard musicOn, !musicPlaying, startIfNeeded() else { return }
-        if musicBuffer == nil { musicBuffer = renderMusic() }
-        guard let b = musicBuffer else { return }
-        musicPlayer.volume = 0.35
-        musicPlayer.scheduleBuffer(b, at: nil, options: .loops, completionHandler: nil)
-        musicPlayer.play()
-        musicPlaying = true
+        musicWanted = true
+        guard musicOn, !disabledForTests else { return }
+        if let b = musicBuffer {
+            playMusic(b)
+            return
+        }
+        guard !musicRendering else { return }
+        musicRendering = true
+        DispatchQueue.global(qos: .utility).async {
+            let samples = TowerMusic.render()
+            DispatchQueue.main.async {
+                self.musicRendering = false
+                self.musicBuffer = self.buffer(from: samples)
+                if self.musicWanted, let b = self.musicBuffer { self.playMusic(b) }
+            }
+        }
+    }
+
+    /// Вернуть музыку после паузы системы или возврата в приложение — только если вкладка её хотела.
+    func resumeMusic() {
+        if musicWanted { startMusic() }
     }
 
     func stopMusic() {
-        guard musicPlaying else { return }
-        musicPlayer.stop()
-        musicPlaying = false
+        musicWanted = false
+        if musicPlayer.isPlaying { musicPlayer.stop() }
+    }
+
+    private func playMusic(_ b: AVAudioPCMBuffer) {
+        guard musicOn, musicWanted, startIfNeeded(), !musicPlayer.isPlaying else { return }
+        musicPlayer.volume = 0.35
+        musicPlayer.scheduleBuffer(b, at: nil, options: .loops, completionHandler: nil)
+        musicPlayer.play()
     }
 
     // MARK: Синтез
 
-    private enum Wave { case square, triangle, noise }
+    private enum Wave { case square, triangle }
 
     /// Ноты: (частота Гц, длительность с). Частота 0 — пауза.
     private func synth(_ notes: [(Double, Double)], wave: Wave, volume: Float, decay: Double = 6) -> [Float] {
         var out: [Float] = []
         var phase = 0.0
-        var noiseState: UInt32 = 0x1234_5678
         for (freq, dur) in notes {
             let n = Int(dur * sampleRate)
             for i in 0..<n {
@@ -104,11 +146,6 @@ final class SoundFX {
                     switch wave {
                     case .square: v = phase < 0.5 ? 1 : -1
                     case .triangle: v = Float(4 * abs(phase - 0.5) - 1)
-                    case .noise:
-                        noiseState ^= noiseState << 13
-                        noiseState ^= noiseState >> 17
-                        noiseState ^= noiseState << 5
-                        v = Float(noiseState & 0xFFFF) / 32768 - 1
                     }
                 }
                 out.append(v * env * volume)
@@ -142,19 +179,4 @@ final class SoundFX {
         }
     }
 
-    /// Тихая мрачная мелодия башни (ля минор), ~13 секунд, по кругу.
-    private func renderMusic() -> AVAudioPCMBuffer? {
-        let a2 = 110.0, c3 = 130.8, e3 = 164.8, g3 = 196.0, f3 = 174.6, d3 = 146.8
-        let pattern: [(Double, Double)] = [
-            (a2, 0.4), (e3, 0.4), (c3, 0.4), (e3, 0.4),
-            (f3, 0.4), (c3, 0.4), (a2, 0.4), (c3, 0.4),
-            (d3, 0.4), (f3, 0.4), (a2, 0.4), (f3, 0.4),
-            (e3, 0.4), (g3, 0.4), (e3, 0.4), (0, 0.4),
-        ]
-        var samples = synth(pattern + pattern, wave: .triangle, volume: 0.10, decay: 2.5)
-        // лёгкий «ветер»
-        let wind = synth([(1, Double(samples.count) / sampleRate)], wave: .noise, volume: 0.006, decay: 0)
-        for i in 0..<min(samples.count, wind.count) { samples[i] += wind[i] }
-        return buffer(from: samples)
-    }
 }

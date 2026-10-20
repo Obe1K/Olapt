@@ -90,7 +90,10 @@ struct TodayView: View {
         .navigationTitle("Сегодня")
         .navigationBarTitleDisplayMode(.inline)
         .onChange(of: scenePhase) { phase in
-            if phase == .active { refreshTick += 1 }
+            if phase == .active {
+                refreshTick += 1
+                SoundFX.shared.resumeMusic()
+            }
         }
         .onAppear {
             refreshTick += 1

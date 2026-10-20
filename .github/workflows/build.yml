@@ -36,6 +36,17 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             2>&1 | tee build.log
 
+      - name: Музыка башни (Swift против эталона на Python)
+        run: |
+          mkdir -p build/music
+          swiftc -O OlaPT/Models/TowerMusic.swift Tools/music/main.swift -o build/music/dump
+          INFO=$(build/music/dump build/music/tower.f32)
+          RC=0
+          OUT=$(python3 Tools/music/tower_music.py --check build/music/tower.f32 2>&1) || RC=$?
+          printf '%s\n%s\n' "$INFO" "$OUT"
+          echo "::notice title=Музыка башни::$(printf '%s\n%s' "$INFO" "$OUT" | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')"
+          exit $RC
+
       - name: Показать ошибки в сводке
         if: always()
         run: |
