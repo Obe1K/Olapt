@@ -743,4 +743,98 @@ final class ScreenshotTests: XCTestCase {
             back()
         }
     }
+
+    /// Скриншоты для App Store (полный размер, файлы store_*): башня, фразы, словарь, фото, глаголы, босс, гримуар.
+    func testZ_StoreScreenshots() {
+        app.terminate()
+        app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU", "-uitest-static", "YES",
+                               "-uitest-seed", "260", "-uitest-scan-sample"]
+        app.launch()
+        Thread.sleep(forTimeInterval: 1.5)
+
+        // коллекция «Уровень A1» — чтобы в плане были новые слова
+        tapTab("Коллекции")
+        let levels = app.staticTexts["Наборы по уровням (A1, A2…)"]
+        scrollUntilVisible(levels)
+        tap(levels, "levels link")
+        tap(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH 'A1'")).firstMatch, "open A1")
+        tap(app.staticTexts["Все слова уровня"].firstMatch, "all A1 words")
+        if tap(app.buttons["Создать коллекцию из набора"], "create A1 collection") {
+            tap(app.alerts.buttons["OK"], "alert OK")
+        }
+        back(); back(); back()
+
+        // 1. Сегодня: маг в башне и план
+        tapTab("Сегодня")
+        Thread.sleep(forTimeInterval: 1.0)
+        shot("store_01_today")
+
+        // 2. Фразы: собрать из слов
+        let phrases = app.buttons["phrases-start"]
+        scrollUntilVisible(phrases, maxSwipes: 6)
+        if tap(phrases, "start phrases") {
+            let t0 = app.buttons["tile-0"]
+            if t0.waitForExistence(timeout: 3) {
+                t0.tap()
+                app.buttons["tile-1"].tap()
+            }
+            shot("store_02_phrases")
+            tap(app.buttons["Закрыть"], "close phrases")
+        }
+
+        // 3. Словарь: карточка слова
+        tapTab("Словарь")
+        let field = app.searchFields.firstMatch
+        typeInto(field, "saudade", "search field")
+        dismissKeyboard()
+        tap(app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'saudade'")).firstMatch, "result saudade")
+        Thread.sleep(forTimeInterval: 0.8)
+        shot("store_03_word_card")
+        back()
+
+        // 4. Слова из фото
+        tapTab("Коллекции")
+        let open = app.buttons["open-scan"]
+        scrollUntilVisible(open)
+        tap(open, "open scan")
+        tap(app.buttons["scan-sample-text"], "sample text")
+        _ = app.staticTexts["scan-summary"].waitForExistence(timeout: 10)
+        shot("store_04_photo_words")
+        tap(app.buttons["Закрыть"], "close scan")
+
+        // 5. Глаголы: таблица спряжения
+        tapTab("Глаголы")
+        typeInto(app.searchFields.firstMatch, "fazer", "verb search")
+        dismissKeyboard()
+        tap(app.staticTexts["fazer"].firstMatch, "open verb fazer")
+        tap(app.staticTexts["Pretérito Perfeito"].firstMatch, "expand Pretérito Perfeito")
+        shot("store_05_verbs")
+        back()
+
+        // 6. Босс недели
+        tapTab("Сегодня")
+        let boss = app.buttons["boss-start"]
+        scrollUntilVisible(boss, maxSwipes: 6)
+        if tap(boss, "start boss") {
+            Thread.sleep(forTimeInterval: 0.8)
+            shot("store_06_boss")
+            tap(app.buttons["Закрыть"], "close boss")
+        }
+
+        // 7. Гримуар
+        let grimoire = app.buttons["open-grimoire"]
+        scrollUntilVisible(grimoire, maxSwipes: 6)
+        if tap(grimoire, "open grimoire") {
+            shot("store_07_grimoire")
+            back()
+        }
+
+        // 8. Фраза в лицах
+        let all = app.buttons["open-phrases"]
+        scrollUntilVisible(all, maxSwipes: 6)
+        if tap(all, "open phrases") {
+            tap(app.staticTexts["estar com fome / ter fome"].firstMatch, "open phrase card")
+            shot("store_08_phrase_card")
+        }
+    }
 }

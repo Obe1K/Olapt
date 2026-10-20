@@ -3,6 +3,11 @@ name: UI tests and screenshots
 # Запускается только вручную: вкладка Actions → «UI tests and screenshots» → Run workflow.
 on:
   workflow_dispatch:
+    inputs:
+      only:
+        description: "Запустить только этот тест (например testZ_StoreScreenshots); пусто — все"
+        required: false
+        default: ""
 
 jobs:
   ui:
@@ -42,6 +47,9 @@ jobs:
           echo "UDID=$UDID" >> "$GITHUB_ENV"
           xcrun simctl boot "$UDID"
           xcrun simctl bootstatus "$UDID" -b
+          # аккуратная строка состояния для скриншотов App Store: 9:41, полный заряд
+          xcrun simctl status_bar "$UDID" override --time "9:41" --dataNetwork wifi --wifiMode active --wifiBars 3 \
+            --cellularMode active --cellularBars 4 --batteryState charged --batteryLevel 100 || true
           APP=$(find build/Build/Products -maxdepth 2 -name "OlaPT.app" | head -1)
           xcrun simctl install "$UDID" "$APP"
           xcrun simctl listapps "$UDID" | grep -i olapt || true
@@ -54,12 +62,17 @@ jobs:
 
       - name: Запустить автотесты
         continue-on-error: true
+        env:
+          ONLY: ${{ github.event.inputs.only }}
         run: |
           set -o pipefail
+          FILTER=""
+          if [ -n "$ONLY" ]; then FILTER="-only-testing:OlaPTUITests/ScreenshotTests/$ONLY"; fi
           xcodebuild test \
             -project UITests/OlaPTUITests.xcodeproj \
             -scheme OlaPTUITests \
             -destination "id=$UDID" \
+            $FILTER \
             -derivedDataPath uibuild \
             -resultBundlePath result.xcresult \
             CODE_SIGNING_ALLOWED=NO \
@@ -124,6 +137,21 @@ jobs:
           git add shots_out
           git commit -qm "UI screenshots, run $GITHUB_RUN_NUMBER ($GITHUB_REF_NAME)"
           git push -qf origin HEAD:refs/heads/ui-shots && echo "::notice title=Screenshots::pushed to branch ui-shots"
+
+      - name: Скриншоты для App Store в ветку store-shots (полный размер)
+        if: always()
+        run: |
+          set +e
+          ls shots_named/store_*.png >/dev/null 2>&1 || exit 0
+          TMP=$(mktemp -d)
+          cp shots_named/store_*.png "$TMP"/
+          git checkout -q --orphan store-shots-tmp
+          git rm -rq --cached . >/dev/null 2>&1
+          rm -rf store_shots && mkdir -p store_shots && cp "$TMP"/*.png store_shots/
+          sips -g pixelWidth -g pixelHeight store_shots/*.png | grep pixel | sort | uniq -c
+          git add store_shots
+          git commit -qm "App Store screenshots, run $GITHUB_RUN_NUMBER ($GITHUB_REF_NAME)"
+          git push -qf origin HEAD:refs/heads/store-shots && echo "::notice title=Store screenshots::pushed to branch store-shots"
 
       - name: Сводка
         if: always()

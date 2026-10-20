@@ -73,7 +73,9 @@ final class AppModel: ObservableObject {
         for (i, w) in index.words(inLevel: "A1").prefix(n).enumerated() {
             let stability = strengths[i % strengths.count]
             let last = now.addingTimeInterval(-Double(i % 6 + 1) * 86_400)
-            let due = Calendar.current.date(byAdding: .day, value: Int(stability), to: FSRS.startOfDay(last)) ?? now
+            // каждое 20-е слово ждёт повторения сегодня — чтобы в плане были и повторения
+            let due = i % 20 == 0 ? FSRS.startOfDay(now)
+                : (Calendar.current.date(byAdding: .day, value: Int(stability), to: FSRS.startOfDay(last)) ?? now)
             srs[w.id] = SRSState(stability: stability, difficulty: 5, firstSeen: last.addingTimeInterval(-30 * 86_400),
                                  lastReview: last, due: due, reps: 4, lapses: 0)
         }
