@@ -14,6 +14,7 @@
 import json
 import os
 import sys
+import time
 import urllib.error
 import urllib.request
 
@@ -149,6 +150,18 @@ def prepare(api, app, version, build_number):
     if not body.get("data"):
         raise SystemExit("Сборка %s (%s) не найдена: HTTP %d %s" % (build_number, version, code, errors(body)))
     bid = body["data"][0]["id"]
+    # Свежая сборка несколько минут в обработке: ждём VALID (не дольше ~3,5 мин, лимит задания 5 мин)
+    state = body["data"][0]["attributes"].get("processingState")
+    for _ in range(14):
+        if state != "PROCESSING":
+            break
+        print("Сборка %s ещё обрабатывается, жду…" % build_number)
+        time.sleep(15)
+        code, b = api.get("/v1/builds/%s" % bid)
+        state = (b.get("data") or {}).get("attributes", {}).get("processingState", state)
+    print("Сборка %s: %s" % (build_number, state))
+    if state != "VALID":
+        raise SystemExit("Сборка %s не готова (%s) — запустите ещё раз позже" % (build_number, state))
     code, body = api.call("PATCH", "/v1/appStoreVersions/%s/relationships/build" % vid,
                           {"data": {"type": "builds", "id": bid}})
     print("Сборка %s прикреплена: HTTP %d %s" % (build_number, code, errors(body)))
