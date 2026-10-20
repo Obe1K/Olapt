@@ -1,0 +1,45 @@
+name: App Store Connect status
+
+# Показывает состояние версий и отправок на проверку (App Review).
+# Запуск: пуш в ветку ops/asc-status или вручную (Actions → App Store Connect status → Run workflow).
+# Ключ берётся из секретов, кладётся во временный файл и удаляется; в журнал не печатается.
+on:
+  push:
+    branches: [ops/asc-status]
+  workflow_dispatch:
+
+jobs:
+  status:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+      ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Статус в App Store Connect
+        env:
+          ASC_KEY_ID_CANDIDATES: "53VA5T36RX JV733WA573"
+        run: |
+          KEY_PATH="$RUNNER_TEMP/asc_key.p8"
+          printf '%s\n' "$ASC_KEY_P8" | tr -d '\r' > "$KEY_PATH"
+          chmod 600 "$KEY_PATH"
+          KEY_ID=$(printf '%s' "$ASC_KEY_ID" | tr -d '[:space:]')
+          ISSUER=$(printf '%s' "$ASC_ISSUER_ID" | tr -d '[:space:]')
+          echo "::add-mask::$KEY_ID"
+          echo "::add-mask::$ISSUER"
+          BUNDLE_ID=$(grep -m1 'PRODUCT_BUNDLE_IDENTIFIER' OlaPT.xcodeproj/project.pbxproj | sed 's/.*= *//; s/;.*//; s/"//g')
+          OUT=$(python3 Tools/asc_check.py "$KEY_PATH" "$ISSUER" "$KEY_ID" $ASC_KEY_ID_CANDIDATES) || true
+          USED=$(printf '%s\n' "$OUT" | sed -n 's/^OK //p' | tail -1)
+          if [ -z "$USED" ]; then
+            rm -f "$KEY_PATH"
+            echo "::error::Ключ App Store Connect не подошёл"
+            exit 1
+          fi
+          STATUS=$(python3 Tools/asc_status.py "$KEY_PATH" "$ISSUER" "$USED" "$BUNDLE_ID" 2>&1) || true
+          rm -f "$KEY_PATH"
+          echo "$STATUS"
+          DETAILS=$(printf '%s' "$STATUS" | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')
+          echo "::notice title=App Store Connect::$DETAILS"
