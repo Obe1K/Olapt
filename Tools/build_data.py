@@ -54,13 +54,16 @@ def parse_lexicon():
                     continue
                 if line.startswith("#"):
                     continue
-                parts = [p.strip() for p in line.split(" | ")]
+                # Делим по «|» без учёта пробелов: «ru | | note» — пустое поле br, а не br = «| note».
+                parts = [p.strip() for p in line.split("|")]
                 where = "%s:%d" % (os.path.basename(path), lineno)
                 if len(parts) < 4:
                     raise SystemExit("Слишком мало полей: %s: %s" % (where, line))
                 pt, posfield, en, ru = parts[:4]
                 br = parts[4] if len(parts) > 4 else ""
-                note = parts[5] if len(parts) > 5 else ""
+                note = parts[-1] if len(parts) > 5 else ""
+                if len(parts) > 7 or (len(parts) == 7 and parts[5]):
+                    raise SystemExit("Лишние поля: %s: %s" % (where, line))
                 toks = posfield.split()
                 pos = toks[0]
                 e = {"pt": pt, "pos": pos, "topic": topic}

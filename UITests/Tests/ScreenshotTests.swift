@@ -773,11 +773,7 @@ final class ScreenshotTests: XCTestCase {
         let phrases = app.buttons["phrases-start"]
         scrollUntilVisible(phrases, maxSwipes: 6)
         if tap(phrases, "start phrases") {
-            let t0 = app.buttons["tile-0"]
-            if t0.waitForExistence(timeout: 3) {
-                t0.tap()
-                app.buttons["tile-1"].tap()
-            }
+            _ = app.buttons["tile-0"].waitForExistence(timeout: 3)
             shot("store_02_phrases")
             tap(app.buttons["Закрыть"], "close phrases")
         }
