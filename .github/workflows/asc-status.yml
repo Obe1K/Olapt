@@ -19,6 +19,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Скриншоты для App Store (ветка store-shots, если есть)
+        run: |
+          git fetch -q origin store-shots 2>/dev/null && git checkout -q origin/store-shots -- store_shots 2>/dev/null || true
+          ls store_shots 2>/dev/null | head -20 || true
+
       - name: Статус в App Store Connect
         env:
           ASC_KEY_ID_CANDIDATES: "53VA5T36RX JV733WA573"
