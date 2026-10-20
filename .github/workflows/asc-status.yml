@@ -38,7 +38,13 @@ jobs:
             echo "::error::Ключ App Store Connect не подошёл"
             exit 1
           fi
-          STATUS=$(python3 Tools/asc_status.py "$KEY_PATH" "$ISSUER" "$USED" "$BUNDLE_ID" 2>&1) || true
+          # Действие: файл .github/asc-action (одна строка, например «inspect»); по умолчанию — статус
+          ACTION=$(cat .github/asc-action 2>/dev/null | head -1 | tr -d '\r')
+          if [ -z "$ACTION" ] || [ "$ACTION" = "status" ]; then
+            STATUS=$(python3 Tools/asc_status.py "$KEY_PATH" "$ISSUER" "$USED" "$BUNDLE_ID" 2>&1) || true
+          else
+            STATUS=$(python3 Tools/asc_ops.py "$KEY_PATH" "$ISSUER" "$USED" "$BUNDLE_ID" $ACTION 2>&1) || true
+          fi
           rm -f "$KEY_PATH"
           echo "$STATUS"
           DETAILS=$(printf '%s' "$STATUS" | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')
