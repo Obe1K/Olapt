@@ -1,8 +1,9 @@
 name: Release to TestFlight
 
 # Запускается только вручную: Actions → «Release to TestFlight» → Run workflow.
-# Собирает приложение в Release, подписывает его облачной подписью Apple
-# (ключ App Store Connect API) и загружает сборку в App Store Connect / TestFlight.
+# Собирает приложение в Release, подписывает сертификатом Apple Distribution, выпущенным
+# через App Store Connect API (сертификат переиспользуется между запусками),
+# и загружает сборку в App Store Connect / TestFlight.
 #
 # Нужны четыре секрета репозитория (Settings → Secrets and variables → Actions):
 #   ASC_KEY_ID      — Key ID ключа App Store Connect API
@@ -118,12 +119,48 @@ jobs:
             CURRENT_PROJECT_VERSION="$BUILD_NUMBER" \
             2>&1 | tee archive.log
 
+      # Сертификат Apple Distribution живёт между запусками: если его отозвать после загрузки,
+      # Apple при отправке на проверку отклонит сборку (ITMS-90035 Invalid Signature).
+      # Его ключ хранится в кэше Actions только в зашифрованном виде; пароль выводится из секрета
+      # ASC_KEY_P8, которого нет ни у кого, кроме этого workflow.
+      - name: Сертификат прошлого запуска (зашифрованный кэш)
+        uses: actions/cache/restore@v4
+        with:
+          path: build/certcache/dist.tar.enc
+          key: olapt-dist-cert-none
+          restore-keys: olapt-dist-cert-
+
       - name: Сертификат и профиль (через API Apple)
         run: |
           set -euo pipefail
           mkdir -p build/sign
-          python3 Tools/asc_release.py setup "$KEY_PATH" "$ISSUER_USED" "$KEY_ID_USED" "$BUNDLE_ID" build/sign 2>&1 | tee sign.log
+          export CACHE_PASS=$(printf '%s' "$ASC_KEY_P8" | tr -d '\r' | /usr/bin/openssl dgst -sha256 | awk '{print $NF}')
+          echo "::add-mask::$CACHE_PASS"
+          CACHED=""
+          if [ -f build/certcache/dist.tar.enc ]; then
+            mkdir -p build/sign/cached
+            if /usr/bin/openssl enc -d -aes-256-cbc -md sha256 -pass env:CACHE_PASS -in build/certcache/dist.tar.enc \
+                | tar -x -C build/sign/cached; then
+              CACHED=build/sign/cached
+            else
+              echo "::warning::Кэш сертификата не расшифровался, будет выпущен новый сертификат"
+            fi
+          fi
+          python3 Tools/asc_release.py setup "$KEY_PATH" "$ISSUER_USED" "$KEY_ID_USED" "$BUNDLE_ID" build/sign $CACHED 2>&1 | tee sign.log
           cat build/sign/env.txt >> "$GITHUB_ENV"
+          rm -rf build/sign/cached
+          # Новый сертификат — зашифровать для следующих запусков (ошибка здесь не мешает релизу)
+          if [ "$(sed -n 's/^CERT_REUSED=//p' build/sign/env.txt)" != "1" ]; then
+            CERT_ID=$(sed -n 's/^CERT_ID=//p' build/sign/env.txt)
+            mkdir -p build/certcache
+            rm -f build/certcache/dist.tar.enc
+            if tar -c -C build/sign dist.key cert.cer cert_id \
+                | /usr/bin/openssl enc -aes-256-cbc -md sha256 -salt -pass env:CACHE_PASS -out build/certcache/dist.tar.enc; then
+              echo "CERT_CACHE_KEY=olapt-dist-cert-$CERT_ID" >> "$GITHUB_ENV"
+            else
+              echo "::warning::Не удалось зашифровать сертификат для кэша; в следующий раз будет выпущен новый"
+            fi
+          fi
           # Временная ключница с сертификатом
           KC_PASS=$(uuidgen)
           echo "::add-mask::$KC_PASS"
@@ -158,6 +195,13 @@ jobs:
             cp build/sign/profile.mobileprovision "$d/$PUUID.mobileprovision"
           done
           echo "PROFILE_UUID=$PUUID" >> "$GITHUB_ENV"
+
+      - name: Сохранить новый сертификат (зашифрованный кэш)
+        if: env.CERT_CACHE_KEY != ''
+        uses: actions/cache/save@v4
+        with:
+          path: build/certcache/dist.tar.enc
+          key: ${{ env.CERT_CACHE_KEY }}
 
       - name: Подписать и собрать IPA
         run: |
@@ -236,15 +280,13 @@ jobs:
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Очистка (удалить временный сертификат, профиль и ключ)
+      - name: Очистка (ключница, ключ API и файлы подписи на раннере)
         if: always()
         run: |
-          if [ -f build/sign/env.txt ] && [ -n "${KEY_ID_USED:-}" ] && [ -f "${KEY_PATH:-/nonexistent}" ]; then
-            python3 Tools/asc_release.py cleanup "$KEY_PATH" "$ISSUER_USED" "$KEY_ID_USED" build/sign/env.txt || true
-          fi
+          # Сертификат в Apple НЕ отзываем: им подписана загруженная сборка (см. комментарий выше).
           if [ -n "${KC_PATH:-}" ]; then security delete-keychain "$KC_PATH" || true; fi
           rm -f "$HOME"/.appstoreconnect/private_keys/AuthKey_*.p8
-          rm -rf build/sign
+          rm -rf build/sign build/certcache
 
       - name: Сохранить логи
         if: always()
