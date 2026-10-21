@@ -411,7 +411,7 @@ struct VerbSessionView: View {
                             .foregroundColor(Theme.text)
                         SpeakButton(text: q.verb.base)
                     }
-                    let translation = model.verbTranslation(q.verb)
+                    let translation = model.verbExerciseTranslation(q.verb)
                     if !translation.isEmpty {
                         Text(translation)
                             .font(.body)

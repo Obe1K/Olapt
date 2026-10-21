@@ -31,6 +31,12 @@ final class ScreenshotTests: XCTestCase {
 
     // MARK: - Помощники
 
+    /// Перевод на языке упражнений (русский) и без второго языка через «·».
+    private func isRussianOnly(_ text: String) -> Bool {
+        return text.range(of: "[а-яё]", options: .regularExpression) != nil && !text.contains("·")
+            && text.range(of: "[a-z]", options: .regularExpression) == nil
+    }
+
     private func note(_ text: String) {
         steps.append(text)
         print("STEP " + text)
@@ -274,7 +280,7 @@ final class ScreenshotTests: XCTestCase {
         shot("34_verb_trainer_setup")
         tap(app.buttons["Начать"], "start verb trainer (choice)")
         let trainerTr = app.staticTexts["verb-translation"]
-        note(trainerTr.waitForExistence(timeout: 3) ? "CHECK ok: trainer verb translation: " + trainerTr.label : "CHECK FAILED: trainer verb translation missing")
+        note(trainerTr.waitForExistence(timeout: 3) && isRussianOnly(trainerTr.label) ? "CHECK ok: trainer verb translation: " + trainerTr.label : "CHECK FAILED: trainer verb translation: " + trainerTr.label)
         shot("35_verb_question_choice")
         tap(firstOptionButton(), "verb option")
         shot("36_verb_feedback")
@@ -530,7 +536,7 @@ final class ScreenshotTests: XCTestCase {
         scrollUntilVisible(verbs)
         if tap(verbs, "start daily verbs") {
             let tr = app.staticTexts["verb-translation"]
-            note(tr.waitForExistence(timeout: 3) ? "CHECK ok: daily verb translation: " + tr.label : "CHECK FAILED: daily verb translation missing")
+            note(tr.waitForExistence(timeout: 3) && isRussianOnly(tr.label) ? "CHECK ok: daily verb translation: " + tr.label : "CHECK FAILED: daily verb translation: " + tr.label)
             shot("78_verbs_daily_question")
             for _ in 0..<3 {
                 if app.buttons["Не знаю"].exists {

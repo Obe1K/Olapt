@@ -118,4 +118,16 @@ extension AppModel {
         }
         return parts.joined(separator: "  ·  ")
     }
+
+    /// Перевод глагола для задания: только на языке упражнений из настроек (обычно русский),
+    /// если его нет — на первом доступном.
+    func verbExerciseTranslation(_ verb: Verb, limit: Int = 2) -> String {
+        guard let w = index.word(verb.wordID) else { return "" }
+        let pref = settings.exerciseLanguage
+        for lang in [pref, "ru"] + index.languages {
+            let text = w.translationText(lang: lang, limit: limit)
+            if !text.isEmpty { return text }
+        }
+        return ""
+    }
 }
