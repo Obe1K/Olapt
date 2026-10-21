@@ -7,6 +7,11 @@ on:
   push:
     branches: [ops/asc-status]
   workflow_dispatch:
+    inputs:
+      action:
+        description: "Действие (status, inspect, prepare VER BUILD, submit VER…); пусто — из .github/asc-action"
+        required: false
+        default: ""
 
 jobs:
   status:
@@ -27,6 +32,7 @@ jobs:
       - name: Статус в App Store Connect
         env:
           ASC_KEY_ID_CANDIDATES: "53VA5T36RX JV733WA573"
+          INPUT_ACTION: ${{ github.event.inputs.action }}
         run: |
           KEY_PATH="$RUNNER_TEMP/asc_key.p8"
           printf '%s\n' "$ASC_KEY_P8" | tr -d '\r' > "$KEY_PATH"
@@ -44,7 +50,8 @@ jobs:
             exit 1
           fi
           # Действие: файл .github/asc-action (одна строка, например «inspect»); по умолчанию — статус
-          ACTION=$(cat .github/asc-action 2>/dev/null | head -1 | tr -d '\r')
+          ACTION="$INPUT_ACTION"
+          [ -n "$ACTION" ] || ACTION=$(cat .github/asc-action 2>/dev/null | head -1 | tr -d '\r')
           if [ -z "$ACTION" ] || [ "$ACTION" = "status" ]; then
             STATUS=$(python3 Tools/asc_status.py "$KEY_PATH" "$ISSUER" "$USED" "$BUNDLE_ID" 2>&1) || true
           else
