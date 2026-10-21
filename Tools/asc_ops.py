@@ -10,6 +10,7 @@
                    и тексты из AppStore/asc_texts_VER.json; если такой версии нет (прошлая уже в продаже),
                    сначала создаёт версию VER; на проверку НЕ отправляет
     newversion VER    — только создать версию VER
+    submit VER        — отправить версию VER (со сборкой) на проверку App Review
     screenshots DIR   — заменить скриншоты iPhone в основной локализации файлами DIR/*.png (по имени)
 Ключ не печатается.
 """
@@ -155,6 +156,48 @@ def new_version(api, app, version):
     print("Версия %s создана: HTTP %d %s" % (version, code, errors(body)))
 
 
+def submit(api, app, version):
+    """Отправка на проверку: черновик отправки (или новый) → версия в нём → submitted=true."""
+    app_id = app["id"]
+    v = editable_version(api, app_id)
+    vid = v["id"]
+    if v["attributes"].get("versionString") != version:
+        raise SystemExit("Редактируемая версия — %s, а не %s" % (v["attributes"].get("versionString"), version))
+    c, b = api.get("/v1/appStoreVersions/%s/build" % vid)
+    if not (b or {}).get("data"):
+        raise SystemExit("У версии %s нет сборки — сначала prepare" % version)
+    print("Версия %s, сборка %s" % (version, b["data"]["attributes"].get("version")))
+    code, body = api.get("/v1/reviewSubmissions?filter[app]=%s&filter[state]=READY_FOR_REVIEW&limit=5" % app_id)
+    drafts = body.get("data", [])
+    if drafts:
+        sid = drafts[0]["id"]
+        print("Черновик отправки уже есть: %s" % sid[:8])
+    else:
+        code, body = api.call("POST", "/v1/reviewSubmissions", {"data": {
+            "type": "reviewSubmissions", "attributes": {"platform": "IOS"},
+            "relationships": {"app": {"data": {"type": "apps", "id": app_id}}}}})
+        if code not in (200, 201):
+            raise SystemExit("Не удалось создать отправку: HTTP %d %s" % (code, errors(body)))
+        sid = body["data"]["id"]
+        print("Отправка создана: %s" % sid[:8])
+    code, body = api.get("/v1/reviewSubmissions/%s/items?include=appStoreVersion" % sid)
+    has = any((it.get("relationships", {}).get("appStoreVersion", {}).get("data") or {}).get("id") == vid
+              for it in body.get("data", []))
+    if not has:
+        code, body = api.call("POST", "/v1/reviewSubmissionItems", {"data": {
+            "type": "reviewSubmissionItems",
+            "relationships": {
+                "reviewSubmission": {"data": {"type": "reviewSubmissions", "id": sid}},
+                "appStoreVersion": {"data": {"type": "appStoreVersions", "id": vid}}}}})
+        print("Версия добавлена в отправку: HTTP %d %s" % (code, errors(body)))
+        if code not in (200, 201):
+            raise SystemExit(1)
+    code, body = api.call("PATCH", "/v1/reviewSubmissions/%s" % sid, {"data": {
+        "type": "reviewSubmissions", "id": sid, "attributes": {"submitted": True}}})
+    state = (body.get("data") or {}).get("attributes", {}).get("state")
+    print("Отправлено на проверку: HTTP %d %s %s" % (code, state or "", errors(body)))
+
+
 def prepare(api, app, version, build_number):
     app_id = app["id"]
     new_version(api, app, version)
@@ -282,6 +325,8 @@ def main():
     app = find_app(api, bundle)
     if action == "inspect":
         inspect(api, app)
+    elif action == "submit":
+        submit(api, app, sys.argv[6])
     elif action == "newversion":
         new_version(api, app, sys.argv[6])
     elif action == "prepare":

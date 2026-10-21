@@ -28,6 +28,7 @@ final class SoundFX {
     private var buffers: [Effect: AVAudioPCMBuffer] = [:]
     private var musicBuffer: AVAudioPCMBuffer?
     private var configured = false
+    private var engineStartedOnce = false
     /// Вкладка «Сегодня» на экране и хочет музыку
     private var musicWanted = false
     private var musicRendering = false
@@ -62,15 +63,19 @@ final class SoundFX {
             configured = true
         }
         if !engine.isRunning {
-            // плееры остановленного движка тоже сбрасываем, иначе isPlaying врёт и звук не пойдёт
-            player.stop()
-            musicPlayer.stop()
+            if engineStartedOnce {
+                // Система остановила движок: сбрасываем и плееры, иначе isPlaying врёт и звук не пойдёт.
+                // При самом первом запуске не трогаем — тот же путь, что в 1.1.
+                player.stop()
+                musicPlayer.stop()
+            }
             do {
                 try AVAudioSession.sharedInstance().setActive(true)
                 try engine.start()
             } catch {
                 return false
             }
+            engineStartedOnce = true
         }
         return true
     }
@@ -116,7 +121,8 @@ final class SoundFX {
 
     func stopMusic() {
         musicWanted = false
-        if musicPlayer.isPlaying { musicPlayer.stop() }
+        // До первого звука плеер ещё не подключён к движку — его не трогаем
+        if configured && musicPlayer.isPlaying { musicPlayer.stop() }
     }
 
     private func playMusic(_ b: AVAudioPCMBuffer) {
