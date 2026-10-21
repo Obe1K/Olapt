@@ -7,7 +7,9 @@
     status       — версии и отправки на проверку (как Tools/asc_status.py)
     inspect      — подробно: локализации, наборы скриншотов, сборки, возрастной рейтинг, заметки для ревьюера
     prepare VER BUILD — версии, ожидающей отправки (или отклонённой), дать номер VER, сборку BUILD
-                   и тексты из AppStore/asc_texts_VER.json; на проверку НЕ отправляет
+                   и тексты из AppStore/asc_texts_VER.json; если такой версии нет (прошлая уже в продаже),
+                   сначала создаёт версию VER; на проверку НЕ отправляет
+    newversion VER    — только создать версию VER
     screenshots DIR   — заменить скриншоты iPhone в основной локализации файлами DIR/*.png (по имени)
 Ключ не печатается.
 """
@@ -136,8 +138,26 @@ def check_privacy():
         print("Политика конфиденциальности недоступна: %s" % e)
 
 
+def new_version(api, app, version):
+    """Новая версия App Store (после выхода предыдущей). Если редактируемая уже есть — ничего не создаёт."""
+    code, body = api.get("/v1/apps/%s/appStoreVersions?limit=10" % app["id"])
+    for v in body.get("data", []):
+        a = v["attributes"]
+        st = a.get("appVersionState") or a.get("appStoreState")
+        if st in EDITABLE:
+            print("Редактируемая версия уже есть: %s (%s)" % (a.get("versionString"), st))
+            return
+    code, body = api.call("POST", "/v1/appStoreVersions", {"data": {
+        "type": "appStoreVersions",
+        "attributes": {"platform": "IOS", "versionString": version, "releaseType": "AFTER_APPROVAL"},
+        "relationships": {"app": {"data": {"type": "apps", "id": app["id"]}}},
+    }})
+    print("Версия %s создана: HTTP %d %s" % (version, code, errors(body)))
+
+
 def prepare(api, app, version, build_number):
     app_id = app["id"]
+    new_version(api, app, version)
     v = editable_version(api, app_id)
     vid = v["id"]
     old = v["attributes"].get("versionString")
@@ -262,6 +282,8 @@ def main():
     app = find_app(api, bundle)
     if action == "inspect":
         inspect(api, app)
+    elif action == "newversion":
+        new_version(api, app, sys.argv[6])
     elif action == "prepare":
         prepare(api, app, sys.argv[6], sys.argv[7])
         inspect(api, app)
