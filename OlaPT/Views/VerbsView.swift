@@ -67,13 +67,7 @@ struct VerbRow: View {
     let verb: Verb
 
     private var translationLine: String {
-        guard let w = model.index.word(verb.wordID) else { return "" }
-        var parts: [String] = []
-        for lang in model.index.languages {
-            let text = w.translationText(lang: lang, limit: 2)
-            if !text.isEmpty { parts.append(text) }
-        }
-        return parts.joined(separator: "  ·  ")
+        return model.verbTranslation(verb)
     }
 
     var body: some View {
@@ -110,5 +104,18 @@ struct VerbRow: View {
             }
         }
         .padding(.vertical, 2)
+    }
+}
+
+extension AppModel {
+    /// Перевод глагола из словаря (1–2 значения на язык): «говорить, разговаривать  ·  to speak, to talk».
+    func verbTranslation(_ verb: Verb, limit: Int = 2) -> String {
+        guard let w = index.word(verb.wordID) else { return "" }
+        var parts: [String] = []
+        for lang in index.languages {
+            let text = w.translationText(lang: lang, limit: limit)
+            if !text.isEmpty { parts.append(text) }
+        }
+        return parts.joined(separator: "  ·  ")
     }
 }

@@ -404,11 +404,21 @@ struct VerbSessionView: View {
                         .multilineTextAlignment(.center)
                 }
 
-                HStack(spacing: 10) {
-                    Text(q.verb.inf)
-                        .font(.system(size: 34, weight: .bold))
-                        .foregroundColor(Theme.text)
-                    SpeakButton(text: q.verb.base)
+                VStack(spacing: 4) {
+                    HStack(spacing: 10) {
+                        Text(q.verb.inf)
+                            .font(.system(size: 34, weight: .bold))
+                            .foregroundColor(Theme.text)
+                        SpeakButton(text: q.verb.base)
+                    }
+                    let translation = model.verbTranslation(q.verb)
+                    if !translation.isEmpty {
+                        Text(translation)
+                            .font(.body)
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                            .accessibilityIdentifier("verb-translation")
+                    }
                 }
 
                 HStack(spacing: 8) {

@@ -273,6 +273,8 @@ final class ScreenshotTests: XCTestCase {
         tap(app.staticTexts["Тренировка спряжений"].firstMatch, "verb trainer link")
         shot("34_verb_trainer_setup")
         tap(app.buttons["Начать"], "start verb trainer (choice)")
+        let trainerTr = app.staticTexts["verb-translation"]
+        note(trainerTr.waitForExistence(timeout: 3) ? "CHECK ok: trainer verb translation: " + trainerTr.label : "CHECK FAILED: trainer verb translation missing")
         shot("35_verb_question_choice")
         tap(firstOptionButton(), "verb option")
         shot("36_verb_feedback")
@@ -527,6 +529,8 @@ final class ScreenshotTests: XCTestCase {
         let verbs = app.buttons["verbs-start"]
         scrollUntilVisible(verbs)
         if tap(verbs, "start daily verbs") {
+            let tr = app.staticTexts["verb-translation"]
+            note(tr.waitForExistence(timeout: 3) ? "CHECK ok: daily verb translation: " + tr.label : "CHECK FAILED: daily verb translation missing")
             shot("78_verbs_daily_question")
             for _ in 0..<3 {
                 if app.buttons["Не знаю"].exists {
