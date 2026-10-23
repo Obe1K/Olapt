@@ -109,6 +109,6 @@ NOTES = {
     "guiar|v": "“Guiar” a car is colloquial; the neutral word is “conduzir”.",
     "suportar|v": "False friend: “to support (someone)” is apoiar.",
     "calhar|v": "“Se calhar” — maybe.",
-    "favor|n": "“Fazer um favor” — to do a favor.",
+    "favor|n": "“Fazer um favor” — to do a favour.",
     "cena|n": "Colloquial (Portugal): “Que cena!” — what a thing!",
 }

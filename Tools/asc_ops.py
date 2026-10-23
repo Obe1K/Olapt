@@ -11,7 +11,8 @@
                    сначала создаёт версию VER; на проверку НЕ отправляет
     newversion VER    — только создать версию VER
     submit VER        — отправить версию VER (со сборкой) на проверку App Review
-    screenshots DIR   — заменить скриншоты iPhone в основной локализации файлами DIR/*.png (по имени)
+    screenshots DIR [LOCALE PREFIX] — заменить скриншоты iPhone в локализации LOCALE (по умолчанию основной)
+                   файлами DIR/PREFIX*.png (по имени); без PREFIX — все, кроме английских store_en_*
 Ключ не печатается.
 """
 import json
@@ -238,6 +239,21 @@ def prepare(api, app, version, build_number):
         code, body = api.call("PATCH", "/v1/appStoreVersionLocalizations/%s" % loc["id"],
                               {"data": {"type": "appStoreVersionLocalizations", "id": loc["id"], "attributes": t}})
         print("Тексты %s: HTTP %d %s" % (loc["attributes"]["locale"], code, errors(body)))
+    # Название и подзаголовок страницы (AppInfo редактируется, пока новая версия готовится к отправке)
+    if texts.get("appInfo"):
+        code, infos = api.get("/v1/apps/%s/appInfos" % app_id)
+        editable = [i for i in infos.get("data", [])
+                    if (i["attributes"].get("appStoreState") or i["attributes"].get("state")) in EDITABLE]
+        if not editable:
+            print("Название не изменено: нет AppInfo в состоянии подготовки")
+        else:
+            code, il = api.get("/v1/appInfos/%s/appInfoLocalizations" % editable[0]["id"])
+            for l in il.get("data", []):
+                attrs = texts["appInfo"].get(l["attributes"]["locale"])
+                if attrs:
+                    code, body = api.call("PATCH", "/v1/appInfoLocalizations/%s" % l["id"],
+                                          {"data": {"type": "appInfoLocalizations", "id": l["id"], "attributes": attrs}})
+                    print("Название/подзаголовок %s: HTTP %d %s" % (l["attributes"]["locale"], code, errors(body)))
     check_privacy()
 
 
@@ -251,9 +267,12 @@ def png_size(path):
     return int.from_bytes(head[16:20], "big"), int.from_bytes(head[20:24], "big")
 
 
-def screenshots(api, app, folder):
+def screenshots(api, app, folder, locale=None, prefix=None):
+    """Скриншоты локализации LOCALE (по умолчанию основной) из DIR: файлы PREFIX*.png;
+    без PREFIX — все, кроме английских store_en_*."""
     import hashlib
-    files = sorted(f for f in os.listdir(folder) if f.endswith(".png"))
+    files = sorted(f for f in os.listdir(folder) if f.endswith(".png")
+                   and (f.startswith(prefix) if prefix else not f.startswith("store_en_")))
     if not files:
         raise SystemExit("Нет файлов в " + folder)
     size = png_size(os.path.join(folder, files[0]))
@@ -262,7 +281,7 @@ def screenshots(api, app, folder):
         raise SystemExit("Неподходящий размер скриншотов: %dx%d" % size)
     print("Скриншоты: %d шт., %dx%d → %s" % (len(files), size[0], size[1], dtype))
     v = editable_version(api, app["id"])
-    primary = app["attributes"].get("primaryLocale")
+    primary = locale or app["attributes"].get("primaryLocale")
     code, locs = api.get("/v1/appStoreVersions/%s/appStoreVersionLocalizations" % v["id"])
     loc = next((l for l in locs.get("data", []) if l["attributes"]["locale"] == primary), None)
     if not loc:
@@ -333,7 +352,7 @@ def main():
         prepare(api, app, sys.argv[6], sys.argv[7])
         inspect(api, app)
     elif action == "screenshots":
-        screenshots(api, app, sys.argv[6])
+        screenshots(api, app, sys.argv[6], *(sys.argv[7:9]))
     else:
         print("Неизвестное действие: " + action)
         return 2

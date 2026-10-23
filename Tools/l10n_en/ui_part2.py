@@ -3,7 +3,7 @@
 T = {
     # PhotoWordsView
     "Из фото ": "From photo ",
-    "Распознаю текст…": "Recognizing text…",
+    "Распознаю текст…": "Recognising text…",
     "Не получилось": "That didn't work",
     "Попробовать снова": "Try again",
     "Слова из фото": "Words from a photo",
@@ -14,9 +14,9 @@ T = {
     "Остаться": "Stay",
     "Найдите слова в тексте": "Find words in a text",
     "Сфотографируйте текст или выберите скриншот. Приложение распознает слова и подсветит те, что есть в словаре. Отметьте нужные — они попадут в коллекцию с переводами.":
-        "Take a photo of a text or pick a screenshot. The app recognizes the words and highlights the ones in the dictionary. Select the ones you need and they'll go into a collection with translations.",
+        "Take a photo of a text or pick a screenshot. The app recognises the words and highlights the ones in the dictionary. Select the ones you need and they'll go into a collection with translations.",
     "Текст распознаётся прямо на iPhone. Фото никуда не отправляется и не сохраняется.":
-        "Text is recognized right on your iPhone. The photo is never sent anywhere or saved.",
+        "Text is recognised right on your iPhone. The photo is never sent anywhere or saved.",
     "Выбрать фото или скриншот": "Choose a photo or screenshot",
     "Сфотографировать текст": "Take a photo of a text",
     "Вставить текст": "Paste text",
@@ -24,13 +24,13 @@ T = {
     "Тестовый текст": "Test text",
     "Текст не найден": "No text found",
     "На изображении не удалось распознать слова. Попробуйте более чёткое фото или скриншот.":
-        "No words could be recognized in the image. Try a sharper photo or a screenshot.",
+        "No words could be recognised in the image. Try a sharper photo or a screenshot.",
     "Выбрать другое": "Choose another",
     "Есть в словаре: %d · нет в словаре: %d": "In the dictionary: %d · not in the dictionary: %d",
     "Выбрать новые": "Select new",
     "Снять выбор": "Deselect all",
     "Золотистые — есть в словаре, серые — нет (их можно добавить со своим переводом). Отмеченные — красные. Под словом показана словарная форма. Нажмите, чтобы отметить; долгое нажатие — карточка слова или словарь iOS.":
-        "Gold words are in the dictionary, gray ones aren't (you can add them with your own translation). Selected words are red. The dictionary form is shown under each word. Tap to select; long-press for the word card or the iOS dictionary.",
+        "Gold words are in the dictionary, grey ones aren't (you can add them with your own translation). Selected words are red. The dictionary form is shown under each word. Tap to select; long-press for the word card or the iOS dictionary.",
     "Карточка слова": "Word card",
     "Словарь iOS": "iOS dictionary",
     "словарная форма ": "dictionary form ",
@@ -40,7 +40,7 @@ T = {
     "В коллекцию:": "To collection:",
     "Отметьте слова": "Select words",
     "Добавить: %d %@": "Add: %d %@",
-    "Не удалось распознать текст: %@": "Couldn't recognize the text: %@",
+    "Не удалось распознать текст: %@": "Couldn't recognise the text: %@",
     "Добавлено %d %@ в коллекцию «%@».": "Added %d %@ to the collection “%@”.",
     " Уже были в коллекции: %d.": " Already in the collection: %d.",
     " Без перевода не добавлены: %d.": " Not added (no translation): %d.",
@@ -80,7 +80,7 @@ T = {
     "Закончить": "Finish",
     "Выражения в лицах: «estar com fome» — «Estou com fome», «Ela está com fome». Новые фразы собираются из слов, знакомые — пишутся целиком. По три новые фразы в день попадают в план «Сегодня».":
         "Expressions by person: “estar com fome” — “Estou com fome”, “Ela está com fome”. New phrases are built from word tiles, familiar ones are typed in full. Three new phrases a day go into the Today plan.",
-    "Тренировать набор (%d %@)": "Practice the set (%d %@)",
+    "Тренировать набор (%d %@)": "Practise the set (%d %@)",
     "Фразы": "Phrases",
     "По лицам": "By person",
     "Как сказать": "How to say it",

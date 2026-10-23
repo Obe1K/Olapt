@@ -11,7 +11,7 @@ NOTES = {
     "tareia|n": "Colloquial (Portugal).",
     "bófia|n": "Slang (Portugal).",
     "balear|v": "“Foi baleado” — he was shot.",
-    "homenagem|n": "“Em homenagem a” — in honor of.",
+    "homenagem|n": "“Em homenagem a” — in honour of.",
     "gentileza|n": "“Tenha a gentileza de…” — would you be so kind as to…",
     "borla|n": "Colloquial (Portugal): “Entrámos de borla” — we got in for free.",
     "chatice|n": "Colloquial (Portugal): “Que chatice!” — what a pain!",

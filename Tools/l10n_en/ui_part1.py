@@ -33,7 +33,7 @@ T = {
     "Слова из коллекций сами попадают в план на вкладке «Сегодня» — до %d новых в день, а потом в нужные дни на повторение. Уровни здесь — свободная тренировка, её можно проходить когда угодно.":
         "Words from your collections go into the plan on the Today tab automatically — up to %d new ones a day, then back for review on the right days. The levels here are free practice you can do any time.",
     "Глаголы из коллекции": "Verbs in this collection",
-    "Тренировать спряжение (%d)": "Practice conjugation (%d)",
+    "Тренировать спряжение (%d)": "Practise conjugation (%d)",
     "Слова (%d)": "Words (%d)",
     "В коллекции нет слов": "No words in this collection",
     "Нажмите «Добавить слова» или сохраните слово из карточки словаря.": "Tap “Add words” or save a word from its dictionary card.",
@@ -120,7 +120,7 @@ T = {
     "Голодает в темнице и проклинает вас. Пройдите план на сегодня — и он вернётся в башню":
         "Starving in the dungeon and cursing you. Finish today's plan and he'll return to the tower",
     "Совсем зачах в темнице… Пара упражнений — и он оживёт": "He has withered away in the dungeon… A couple of exercises will bring him back to life",
-    "Пьёт зелье — спасибо за занятия!": "Drinking his potion — thanks for practicing!",
+    "Пьёт зелье — спасибо за занятия!": "Drinking his potion — thanks for practising!",
     # PetAtlas
     "Котёл с зельем": "Potion cauldron",
     "Ворон": "Raven",
@@ -130,7 +130,7 @@ T = {
     "Чёрный кот": "Black cat",
     "Летучие мыши": "Bats",
     "Знамя": "Banner",
-    "Доспехи": "Suit of armor",
+    "Доспехи": "Suit of armour",
     "Магический круг": "Magic circle",
     "Гоблин-ростовщик": "Goblin Moneylender",
     "Гигантский паук": "Giant Spider",

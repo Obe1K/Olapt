@@ -43,7 +43,7 @@ NOTES = {
     "furado|adj": "“Pneu furado” — a flat tyre.",
     "ártico|adj": "Before the reform it was written “árctico”.",
     "foleiro|adj": "Colloquial (Portugal).",
-    "operatório|adj": "“Bloco operatório” — operating theater.",
+    "operatório|adj": "“Bloco operatório” — operating theatre.",
     "farpado|adj": "“Arame farpado” — barbed wire.",
     "lamechas|adj": "Colloquial (Portugal).",
     "efetivamente|adv": "Before the reform it was written “efectivamente”.",

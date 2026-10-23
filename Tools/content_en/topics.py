@@ -13,7 +13,7 @@ TOPICS = {
     "city": "Town and directions",
     "transport": "Transport and travel",
     "shopping": "Shopping, money and clothes",
-    "colors": "Colors",
+    "colors": "Colours",
     "nature": "Nature and weather",
     "animals": "Animals",
     "countries": "Countries and nationalities",
