@@ -348,13 +348,15 @@ struct CSVImportSheet: View {
 // MARK: - Справка по формату
 
 struct DictionaryFormatHelpView: View {
-    private let csvExample = """  // l10n-ok: пример файла словаря (украинский)
+    // l10n-ok: пример файла словаря (украинский)
+    private let csvExample = """
     casa; будинок | дім
     obrigado; дякую
     pequeno-almoço; сніданок
     """
 
-    private let jsonExample = """  // l10n-ok: пример файла словаря (украинский)
+    // l10n-ok: пример файла словаря (украинский)
+    private let jsonExample = """
     {
       "id": "uk-pt-eu",
       "name": "Українська ↔ Португальська (Європа)",

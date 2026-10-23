@@ -113,9 +113,11 @@ def wrapped(src, lit):
 
 
 def line_text(src, lit):
+    """Строка с началом литерала и строка перед ней (там может стоять «// l10n-ok»)."""
     a = src.rfind("\n", 0, lit.start) + 1
     b = src.find("\n", lit.start)
-    return src[a: b if b >= 0 else len(src)]
+    prev = src.rfind("\n", 0, max(0, a - 1)) + 1
+    return src[prev: b if b >= 0 else len(src)]
 
 
 def analyze():
