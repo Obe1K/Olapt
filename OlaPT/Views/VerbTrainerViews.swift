@@ -407,7 +407,7 @@ struct VerbSessionView: View {
                 VStack(spacing: 4) {
                     HStack(spacing: 10) {
                         Text(q.verb.inf)
-                            .font(.system(size: 34, weight: .bold))
+                            .font(.system(size: 28, weight: .semibold))
                             .foregroundColor(Theme.text)
                         SpeakButton(text: q.verb.base)
                     }
@@ -421,15 +421,21 @@ struct VerbSessionView: View {
                     }
                 }
 
-                HStack(spacing: 8) {
-                    Text(q.lead)
-                        .font(.title2)
-                        .foregroundColor(.secondary)
-                    Text(session.answered ? q.answer : "_____")
-                        .font(.title2.weight(.semibold))
-                        .foregroundColor(answerColor(q))
+                // Главное в задании — лицо, в которое ставим глагол: крупно, золотом, в рамке.
+                ViewThatFits(in: .horizontal) {
+                    HStack(spacing: 12) {
+                        leadText(q)
+                        blankText(q)
+                    }
+                    VStack(spacing: 6) {
+                        leadText(q)
+                        blankText(q)
+                    }
                 }
-                .padding(.vertical, 6)
+                .frame(maxWidth: .infinity)
+                .pixelPanel(fill: Theme.panelRaised, border: Theme.gold, padding: 14)
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier("verb-prompt")
 
                 if !q.options.isEmpty {
                     choiceList(q)
@@ -445,6 +451,24 @@ struct VerbSessionView: View {
             .padding(.bottom, 24)
         }
         .background(StoneBackground().ignoresSafeArea())
+    }
+
+    /// «que» / «quando» — светлым, само местоимение — золотом; всё жирным и крупно.
+    private func leadText(_ q: VerbQuestion) -> some View {
+        let pronoun = Text(q.pronoun).foregroundColor(Theme.goldBright)
+        let lead = q.tense.prefix.isEmpty ? pronoun : Text(q.tense.prefix + " ").foregroundColor(Theme.text) + pronoun
+        return lead
+            .font(.system(size: 30, weight: .bold))
+            .lineLimit(1)
+            .minimumScaleFactor(0.6)
+    }
+
+    private func blankText(_ q: VerbQuestion) -> some View {
+        return Text(session.answered ? q.answer : "_____")
+            .font(.system(size: 30, weight: .semibold))
+            .foregroundColor(answerColor(q))
+            .lineLimit(1)
+            .minimumScaleFactor(0.6)
     }
 
     private func answerColor(_ q: VerbQuestion) -> Color {

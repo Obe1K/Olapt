@@ -47,9 +47,22 @@ struct TenseGroup: Identifiable {
 
 // MARK: - Библиотека глаголов
 
+struct VerbLetterSection: Identifiable {
+    let letter: String
+    let verbs: [Verb]
+    var id: String { return letter }
+}
+
 final class VerbLibrary {
     let tenses: [TenseInfo]
+    /// В порядке частотности (для упражнений)
     let verbs: [Verb]
+    /// По алфавиту (португальский порядок без учёта акцентов: «à» рядом с «a»)
+    let alphabetical: [Verb]
+    /// Алфавит по первым буквам — для списка на вкладке «Глаголы»
+    let letterSections: [VerbLetterSection]
+    /// Инфинитив без акцентов и дефисов — для поиска
+    let foldedInf: [String: String]
     let byInf: [String: Verb]
     let byWordID: [String: Verb]
     let loadError: String?
@@ -59,10 +72,32 @@ final class VerbLibrary {
         self.verbs = verbs
         var map: [String: Verb] = [:]
         var map2: [String: Verb] = [:]
+        var folded: [String: String] = [:]
         for v in verbs {
             map[v.inf] = v
             map2[v.wordID] = v
+            folded[v.inf] = TextUtil.fold(v.inf)
         }
+        let sorted = verbs.sorted { a, b in
+            let fa = folded[a.inf] ?? a.inf, fb = folded[b.inf] ?? b.inf
+            return fa != fb ? fa < fb : a.inf < b.inf
+        }
+        var sections: [VerbLetterSection] = []
+        var current = ""
+        var bucket: [Verb] = []
+        for v in sorted {
+            let letter = String((folded[v.inf] ?? v.inf).prefix(1)).uppercased()
+            if letter != current, !bucket.isEmpty {
+                sections.append(VerbLetterSection(letter: current, verbs: bucket))
+                bucket = []
+            }
+            current = letter
+            bucket.append(v)
+        }
+        if !bucket.isEmpty { sections.append(VerbLetterSection(letter: current, verbs: bucket)) }
+        self.alphabetical = sorted
+        self.letterSections = sections
+        self.foldedInf = folded
         self.byInf = map
         self.byWordID = map2
         self.loadError = loadError

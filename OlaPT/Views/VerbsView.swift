@@ -6,14 +6,27 @@ struct VerbsView: View {
     @EnvironmentObject var model: AppModel
     @State private var query = ""
 
-    private var filtered: [Verb] {
+    /// Результаты поиска: сначала совпадение инфинитива целиком, потом начало слова, потом вхождение,
+    /// потом совпадение по переводу; внутри каждой группы — по алфавиту.
+    private var searchResults: [Verb] {
         let q = TextUtil.fold(query)
-        if q.isEmpty { return model.verbs.verbs }
-        return model.verbs.verbs.filter { matches($0, q) }
+        var exact: [Verb] = [], prefix: [Verb] = [], inside: [Verb] = [], byTranslation: [Verb] = []
+        for v in model.verbs.alphabetical {
+            let f = model.verbs.foldedInf[v.inf] ?? v.inf
+            if f == q {
+                exact.append(v)
+            } else if f.hasPrefix(q) {
+                prefix.append(v)
+            } else if f.contains(q) {
+                inside.append(v)
+            } else if translationMatches(v, q) {
+                byTranslation.append(v)
+            }
+        }
+        return exact + prefix + inside + byTranslation
     }
 
-    private func matches(_ v: Verb, _ q: String) -> Bool {
-        if TextUtil.fold(v.inf).contains(q) { return true }
+    private func translationMatches(_ v: Verb, _ q: String) -> Bool {
         if let w = model.index.word(v.wordID) {
             for (_, list) in w.translations {
                 for t in list {
@@ -22,6 +35,14 @@ struct VerbsView: View {
             }
         }
         return false
+    }
+
+    private func row(_ v: Verb) -> some View {
+        NavigationLink {
+            ConjugationView(verb: v)
+        } label: {
+            VerbRow(verb: v)
+        }
     }
 
     var body: some View {
@@ -44,13 +65,17 @@ struct VerbsView: View {
                 Text("Выберите времена и глаголы — приложение будет спрашивать формы по лицам. Для каждой пары «глагол + время» ведётся свой прогресс.")
             }
 
-            Section(header: GothicHeader("Глаголы (\(filtered.count))")) {
-                ForEach(filtered) { v in
-                    NavigationLink {
-                        ConjugationView(verb: v)
-                    } label: {
-                        VerbRow(verb: v)
+            if TextUtil.fold(query).isEmpty {
+                // Весь список по алфавиту, с буквами
+                ForEach(model.verbs.letterSections) { section in
+                    Section(header: GothicHeader(section.letter)) {
+                        ForEach(section.verbs) { v in row(v) }
                     }
+                }
+            } else {
+                let results = searchResults
+                Section(header: GothicHeader("Глаголы (\(results.count))")) {
+                    ForEach(results) { v in row(v) }
                 }
             }
         }
