@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       only:
-        description: "Запустить только этот тест (например testZ_StoreScreenshots); пусто — все"
+        description: "Запустить только эти тесты через запятую (например testZ_StoreScreenshots,testZ2_StoreScreenshotsEnglish); пусто — все"
         required: false
         default: ""
 
@@ -67,7 +67,10 @@ jobs:
         run: |
           set -o pipefail
           FILTER=""
-          if [ -n "$ONLY" ]; then FILTER="-only-testing:OlaPTUITests/ScreenshotTests/$ONLY"; fi
+          # Один тест или несколько через запятую: testZ_StoreScreenshots,testZ2_StoreScreenshotsEnglish
+          for T in $(printf '%s' "$ONLY" | tr ',' ' '); do
+            FILTER="$FILTER -only-testing:OlaPTUITests/ScreenshotTests/$T"
+          done
           xcodebuild test \
             -project UITests/OlaPTUITests.xcodeproj \
             -scheme OlaPTUITests \
