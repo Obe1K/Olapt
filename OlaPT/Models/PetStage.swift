@@ -20,10 +20,10 @@ enum PetRoom: Int, CaseIterable {
 
     var title: String {
         switch self {
-        case .cellar: return "Подвал"
-        case .hall: return "Зал"
-        case .library: return "Библиотека"
-        case .summit: return "Вершина башни"
+        case .cellar: return L("Подвал")
+        case .hall: return L("Зал")
+        case .library: return L("Библиотека")
+        case .summit: return L("Вершина башни")
         }
     }
 

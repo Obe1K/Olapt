@@ -1,0 +1,148 @@
+# -*- coding: utf-8 -*-
+# Английские переводы интерфейса (часть 3): тренировки, «Сегодня», глаголы, карточка слова.
+T = {
+    # StudySessionView
+    "Тренировка": "Practice",
+    "Нет вопросов": "No questions",
+    "Выберите перевод": "Choose the translation",
+    "Выберите слово по-португальски": "Choose the Portuguese word",
+    "Напишите по-португальски · перевод: %@": "Write it in Portuguese · translation: %@",
+    "Повторим слово, в котором была ошибка": "Let's repeat the word you got wrong",
+    "Ваш ответ": "Your answer",
+    "Зелёные буквы — верно, золотые — не хватает акцента, красные — с места ошибки.":
+        "Green letters are right, gold ones are missing an accent, red ones start where the mistake is.",
+    "Засчитано. Не забывайте акцент: он меняет произношение, а иногда и смысл.":
+        "Accepted. Don't forget the accent: it changes the pronunciation and sometimes the meaning.",
+    "Включена строгая проверка ударений (Настройки → Упражнения).": "Strict accent checking is on (Settings → Exercises).",
+    "Правильный ответ: %@": "Correct answer: %@",
+    "Следующих повторений пока нет. Добавьте новые слова в коллекции — они появятся в плане «Сегодня».":
+        "No upcoming reviews yet. Add new words to your collections and they'll appear in the Today plan.",
+    "завтра": "tomorrow",
+    "послезавтра": "the day after tomorrow",
+    "через %d %@": "in %d %@",
+    "Следующее повторение — %@: %d %@ (≈ %d мин).": "Next review — %@: %d %@ (≈ %d min).",
+    "%@ повержен!": "%@ defeated!",
+    "Маг получил полный котёл зелья. Следующий босс появится в понедельник.": "The mage got a full cauldron of potion. The next boss appears on Monday.",
+    "Маг выбился из сил": "The mage is exhausted",
+    "Повторите слова и бросьте вызов снова — босс ждёт до конца недели.": "Review the words and challenge it again — the boss waits until the end of the week.",
+    "На сегодня всё": "That's all for today",
+    "Ещё раз сегодня проходить не нужно: повторение раньше срока почти не укрепляет память.":
+        "No need to go again today: reviewing early barely strengthens memory.",
+    "Осталось ещё %d %@": "%d more %@ left",
+    "Продолжите на вкладке «Сегодня».": "Continue on the Today tab.",
+    "Отличный результат! Можно переходить к следующему уровню.": "Excellent! You can move on to the next level.",
+    "Повторите ещё раз, чтобы слова закрепились.": "Go through it once more so the words stick.",
+    "Сразиться снова": "Fight again",
+    # TextRecognizer
+    "Не удалось открыть изображение.": "Couldn't open the image.",
+    # TodayView
+    "Завтра": "Tomorrow",
+    "Послезавтра": "The day after tomorrow",
+    "Новые слова": "New words",
+    "Босс недели": "Boss of the week",
+    "Слов в памяти: %d": "Words in memory: %d",
+    "До этажа «%@»: %d / %d слов %@": "Next floor, “%@”: %d / %d %@ words",
+    "Вы на вершине башни.": "You're at the top of the tower.",
+    "Следующая вещь в башне — %@: ещё %d %@": "Next item in the tower — %@: %d more %@",
+    "Башня обставлена полностью.": "The tower is fully furnished.",
+    "Слово «в памяти», если вы помните его хотя бы неделю.": "A word is “in memory” once you've remembered it for at least a week.",
+    "План на сегодня": "Today's plan",
+    "~%d мин": "~%d min",
+    "повторить": "to review",
+    "новых": "new",
+    "Продолжить": "Continue",
+    "Начать": "Start",
+    "Сегодня пройдено: %d %@. Ещё раз проходить не нужно — приходите завтра.":
+        "Done today: %d %@. No need to go again — come back tomorrow.",
+    "Сегодня повторять нечего": "Nothing to review today",
+    "Все слова повторены вовремя.": "All words have been reviewed on time.",
+    "Все слова повторены вовремя, а новых в коллекциях не осталось. Добавьте слова в коллекцию — они появятся здесь.":
+        "All words have been reviewed on time, and there are no new ones left in your collections. Add words to a collection and they'll show up here.",
+    "Ещё %d новых слов": "%d more new words",
+    "Повторения на неделю": "Reviews this week",
+    "%d %@ · ≈ %d мин": "%d %@ · ≈ %d min",
+    "Глаголы на сегодня": "Today's verbs",
+    "Спряжения на сегодня повторены": "Today's conjugations are done",
+    "Спрягать": "Conjugate",
+    "Фразы на сегодня": "Today's phrases",
+    "Фразы на сегодня повторены": "Today's phrases are done",
+    "Говорить фразами": "Speak in phrases",
+    "Повержен! Новый босс появится в понедельник.": "Defeated! A new boss appears on Monday.",
+    "Бой со словами, которые вы повторяли на этой неделе. Ошибётесь %d раза — маг выбьется из сил.":
+        "A battle with the words you reviewed this week. Make %d mistakes and the mage will be exhausted.",
+    "Бросить вызов": "Challenge",
+    "пока пуст": "empty so far",
+    "пока нет": "none yet",
+    "Добавьте слова, чтобы начать": "Add words to get started",
+    "Возьмите готовый набор или сохраните слова из словаря в коллекцию — и здесь появится план на каждый день. Новые слова берутся из коллекций по порядку — до %d в день.":
+        "Take a ready-made set or save words from the dictionary to a collection, and a daily plan will appear here. New words are taken from your collections in order — up to %d a day.",
+    "Трудных слов пока нет": "No difficult words yet",
+    "Сюда сами попадают слова, в которых вы ошиблись 2 раза и больше.": "Words you've got wrong 2 or more times land here automatically.",
+    "Сюда сами попадают слова, в которых вы ошиблись 2 раза и больше. Слово уходит из списка, когда становится «выученным».":
+        "Words you've got wrong 2 or more times land here automatically. A word leaves the list once it's “learned”.",
+    "ошибок: %d": "mistakes: %d",
+    # UserData
+    "Коллекция": "Collection",
+    "Новое": "New",
+    "В процессе": "In progress",
+    "Выучено": "Learned",
+    # VerbExercise
+    "Выбрать из 4": "Choose from 4",
+    "Написать форму": "Type the form",
+    # VerbModels
+    "Файл verbs.json не найден в приложении.": "The file verbs.json is missing from the app.",
+    "Не удалось прочитать verbs.json: %@": "Couldn't read verbs.json: %@",
+    # VerbTrainerViews
+    "Все глаголы": "All verbs",
+    "Только неправильные": "Irregular only",
+    "Из коллекции": "From a collection",
+    "Какие глаголы": "Which verbs",
+    "Нет коллекций с глаголами. Добавьте глаголы в коллекцию через карточку слова.":
+        "No collections with verbs. Add verbs to a collection from the word card.",
+    "Выбрано глаголов: %d": "Verbs selected: %d",
+    "Времена": "Tenses",
+    "Можно выбрать несколько. Для новичка достаточно Presente, затем добавляйте Pretérito Perfeito и Imperfeito.":
+        "You can pick several. Beginners only need Presente; then add Pretérito Perfeito and Imperfeito.",
+    "Основные: настоящее, прошедшие, будущее": "Core: present, past, future",
+    "Режим": "Mode",
+    "Количество вопросов": "Number of questions",
+    "Тренировка глаголов": "Verb practice",
+    "Спряжение": "Conjugation",
+    "Повторим форму, в которой была ошибка": "Let's repeat the form you got wrong",
+    "Форма глагола": "Verb form",
+    "Забытый акцент засчитаем с напоминанием, но falamos ≠ falámos — это разные времена.":
+        "A missing accent counts, with a reminder — but falamos ≠ falámos: they're different tenses.",
+    "Засчитано. Не забывайте акцент: в глаголах он часто отличает одно время от другого.":
+        "Accepted. Don't forget the accent: in verbs it often tells one tense from another.",
+    "«%@» — это %@%@. Здесь нужен акцент:": "“%@” is %@%@. This one needs the accent:",
+    "Правильно: %@ %@": "Correct: %@ %@",
+    # VerbsView
+    "Тренировка спряжений": "Conjugation practice",
+    "Выберите времена и глаголы — приложение будет спрашивать формы по лицам. Для каждой пары «глагол + время» ведётся свой прогресс.":
+        "Choose tenses and verbs and the app will quiz you on the forms for each person. Progress is tracked for every verb + tense pair.",
+    "Глаголы (%d)": "Verbs (%d)",
+    "Глагол или его перевод": "Verb or its translation",
+    "неправильный": "irregular",
+    "возвратный": "reflexive",
+    # WordCardView
+    "В Бразилии говорят": "In Brazil they say",
+    "Заметка": "Note",
+    "Спряжение глагола": "Verb conjugation",
+    "Удалить своё слово": "Delete your word",
+    "Удалить слово «%@»?": "Delete the word “%@”?",
+    "женский род: %@": "feminine: %@",
+    "мн. число: %@": "plural: %@",
+    "сегодня": "today",
+    "через %d %@ (%@)": "in %d %@ (%@)",
+    "Прогресс": "Progress",
+    "«Выучено» — когда слово держится в памяти 3 недели и дольше.": "“Learned” means the word has stayed in your memory for 3 weeks or longer.",
+    "помню ≈ %@": "remembered ≈ %@",
+    "Следующее повторение: %@": "Next review: %@",
+    "Верных ответов: %d · ошибок: %d": "Correct answers: %d · mistakes: %d",
+    "Слово появится в плане «Сегодня», когда до него дойдёт очередь новых слов.":
+        "The word will appear in the Today plan when its turn among the new words comes.",
+    "Добавьте слово в коллекцию — оно появится в плане «Сегодня».": "Add the word to a collection and it will appear in the Today plan.",
+    "Коллекций пока нет. Создайте первую ниже.": "No collections yet. Create your first one below.",
+    "Создать и добавить": "Create and add",
+    "В коллекцию": "To collection",
+}

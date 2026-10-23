@@ -44,7 +44,7 @@ struct WordRow: View {
 
     private var translationLine: String {
         var parts: [String] = []
-        for lang in model.index.languages {
+        for lang in model.displayLanguages {
             let text = word.translationText(lang: lang, limit: 2)
             if !text.isEmpty { parts.append(text) }
         }
@@ -140,7 +140,7 @@ struct SpeakButton: View {
                 .font(.title2)
         }
         .buttonStyle(.borderless)
-        .accessibilityLabel("Произнести")
+        .accessibilityLabel(L("Произнести"))
     }
 }
 

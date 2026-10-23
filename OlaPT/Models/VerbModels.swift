@@ -105,14 +105,14 @@ final class VerbLibrary {
 
     static func load() -> VerbLibrary {
         guard let url = Bundle.main.findResource("verbs", ext: "json") else {
-            return VerbLibrary(tenses: [], verbs: [], loadError: "Файл verbs.json не найден в приложении.")
+            return VerbLibrary(tenses: [], verbs: [], loadError: L("Файл verbs.json не найден в приложении."))
         }
         do {
             let data = try Data(contentsOf: url)
             let file = try JSONDecoder().decode(VerbFile.self, from: data)
             return VerbLibrary(tenses: file.tenses, verbs: file.verbs)
         } catch {
-            return VerbLibrary(tenses: [], verbs: [], loadError: "Не удалось прочитать verbs.json: \(error.localizedDescription)")
+            return VerbLibrary(tenses: [], verbs: [], loadError: L("Не удалось прочитать verbs.json: %@", error.localizedDescription))
         }
     }
 

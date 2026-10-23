@@ -53,7 +53,7 @@ struct PhotoWordsView: View {
     private var defaultNewName: String {
         let f = DateFormatter()
         f.dateFormat = "dd.MM"
-        return "Из фото " + f.string(from: Date())
+        return L("Из фото ") + f.string(from: Date())
     }
 
     /// Язык, на котором просим перевод своих слов.
@@ -74,7 +74,7 @@ struct PhotoWordsView: View {
                 case .working:
                     VStack(spacing: 14) {
                         ProgressView()
-                        Text("Распознаю текст…")
+                        Text(L("Распознаю текст…"))
                             .foregroundColor(.secondary)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -82,23 +82,23 @@ struct PhotoWordsView: View {
                     resultView
                 case .failed(let message):
                     VStack(spacing: 16) {
-                        EmptyHint(title: "Не получилось", message: message)
-                        Button("Попробовать снова") { stage = .pick }
+                        EmptyHint(title: L("Не получилось"), message: message)
+                        Button(L("Попробовать снова")) { stage = .pick }
                             .buttonStyle(GothicButtonStyle(.primary))
                     }
                     .padding()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
-            .navigationTitle("Слова из фото")
+            .navigationTitle(L("Слова из фото"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Закрыть") { dismiss() }
+                    Button(L("Закрыть")) { dismiss() }
                 }
                 if stage == .result {
                     ToolbarItem(placement: .primaryAction) {
-                        Button("Другой текст") { reset() }
+                        Button(L("Другой текст")) { reset() }
                     }
                 }
             }
@@ -112,7 +112,7 @@ struct PhotoWordsView: View {
                 if let data = data, let image = UIImage(data: data) {
                     process(image: image)
                 } else {
-                    stage = .failed("Не удалось открыть это изображение. Попробуйте другое.")
+                    stage = .failed(L("Не удалось открыть это изображение. Попробуйте другое."))
                 }
             }
         }
@@ -150,7 +150,7 @@ struct PhotoWordsView: View {
                 WordCardView(word: w)
                     .toolbar {
                         ToolbarItem(placement: .confirmationAction) {
-                            Button("Готово") { cardWord = nil }
+                            Button(L("Готово")) { cardWord = nil }
                         }
                     }
             }
@@ -159,12 +159,12 @@ struct PhotoWordsView: View {
         .sheet(item: $dictionaryTerm) { term in
             SystemDictionaryView(term: term.text)
         }
-        .alert("Готово", isPresented: Binding(
+        .alert(L("Готово"), isPresented: Binding(
             get: { doneMessage != nil },
             set: { if !$0 { doneMessage = nil } }
         )) {
-            Button("Закрыть экран") { dismiss() }
-            Button("Остаться", role: .cancel) {}
+            Button(L("Закрыть экран")) { dismiss() }
+            Button(L("Остаться"), role: .cancel) {}
         } message: {
             Text(doneMessage ?? "")
         }
@@ -176,41 +176,41 @@ struct PhotoWordsView: View {
         GothicList {
             Section {
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("Найдите слова в тексте")
+                    Text(L("Найдите слова в тексте"))
                         .font(.headline)
-                    Text("Сфотографируйте текст или выберите скриншот. Приложение распознает слова и подсветит те, что есть в словаре. Отметьте нужные — они попадут в коллекцию с переводами.")
+                    Text(L("Сфотографируйте текст или выберите скриншот. Приложение распознает слова и подсветит те, что есть в словаре. Отметьте нужные — они попадут в коллекцию с переводами."))
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
                 .padding(.vertical, 4)
             }
-            Section(footer: Text("Текст распознаётся прямо на iPhone. Фото никуда не отправляется и не сохраняется.")) {
+            Section(footer: Text(L("Текст распознаётся прямо на iPhone. Фото никуда не отправляется и не сохраняется."))) {
                 PhotosPicker(selection: $pickerItem, matching: .images) {
-                    Label("Выбрать фото или скриншот", systemImage: "photo.on.rectangle")
+                    Label(L("Выбрать фото или скриншот"), systemImage: "photo.on.rectangle")
                 }
                 if UIImagePickerController.isSourceTypeAvailable(.camera) {
                     Button {
                         showCamera = true
                     } label: {
-                        Label("Сфотографировать текст", systemImage: "camera")
+                        Label(L("Сфотографировать текст"), systemImage: "camera")
                     }
                 }
                 Button {
                     showPaste = true
                 } label: {
-                    Label("Вставить текст", systemImage: "doc.on.clipboard")
+                    Label(L("Вставить текст"), systemImage: "doc.on.clipboard")
                 }
                 if isUITestSample {
                     Button {
                         process(image: TextRecognizer.sampleImage())
                     } label: {
-                        Label("Тестовое изображение", systemImage: "photo")
+                        Label(L("Тестовое изображение"), systemImage: "photo")
                     }
                     .accessibilityIdentifier("scan-sample")
                     Button {
                         process(text: "Ela tem tranças e franja. O penteado é oval.\nA casa é lindíssima. Sentei-me e oiço música.\nA acção decorre em Lisboa. Falámos ontem.\nestar com fome / ter fome\nEstamos com frio. Ela está cansada.")
                     } label: {
-                        Label("Тестовый текст", systemImage: "text.alignleft")
+                        Label(L("Тестовый текст"), systemImage: "text.alignleft")
                     }
                     .accessibilityIdentifier("scan-sample-text")
                 }
@@ -232,9 +232,9 @@ struct PhotoWordsView: View {
     private var resultView: some View {
         if tokens.isEmpty {
             VStack(spacing: 16) {
-                EmptyHint(title: "Текст не найден",
-                          message: "На изображении не удалось распознать слова. Попробуйте более чёткое фото или скриншот.")
-                Button("Выбрать другое") { reset() }
+                EmptyHint(title: L("Текст не найден"),
+                          message: L("На изображении не удалось распознать слова. Попробуйте более чёткое фото или скриншот."))
+                Button(L("Выбрать другое")) { reset() }
                     .buttonStyle(GothicButtonStyle(.primary))
             }
             .padding()
@@ -242,14 +242,14 @@ struct PhotoWordsView: View {
         } else {
             ScrollView {
                 VStack(alignment: .leading, spacing: 14) {
-                    Text("Есть в словаре: \(knownCount) · нет в словаре: \(unknownCount)")
+                    Text(L("Есть в словаре: %d · нет в словаре: %d", knownCount, unknownCount))
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .accessibilityIdentifier("scan-summary")
                     HStack(spacing: 10) {
-                        Button("Выбрать новые") { selectNew() }
+                        Button(L("Выбрать новые")) { selectNew() }
                             .buttonStyle(GothicButtonStyle(.secondary))
-                        Button("Снять выбор") { selected.removeAll() }
+                        Button(L("Снять выбор")) { selected.removeAll() }
                             .buttonStyle(GothicButtonStyle(.secondary))
                             .disabled(selected.isEmpty)
                     }
@@ -271,7 +271,7 @@ struct PhotoWordsView: View {
 
     private var legend: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text("Золотистые — есть в словаре, серые — нет (их можно добавить со своим переводом). Отмеченные — красные. Под словом показана словарная форма. Нажмите, чтобы отметить; долгое нажатие — карточка слова или словарь iOS.")
+            Text(L("Золотистые — есть в словаре, серые — нет (их можно добавить со своим переводом). Отмеченные — красные. Под словом показана словарная форма. Нажмите, чтобы отметить; долгое нажатие — карточка слова или словарь iOS."))
                 .font(.footnote)
                 .foregroundColor(.secondary)
         }
@@ -330,18 +330,18 @@ struct PhotoWordsView: View {
                 Button {
                     cardWord = w
                 } label: {
-                    Label("Карточка слова", systemImage: "text.book.closed")
+                    Label(L("Карточка слова"), systemImage: "text.book.closed")
                 }
             }
             Button {
                 Speaker.shared.speak(t.word?.pt ?? t.text)
             } label: {
-                Label("Произнести", systemImage: "speaker.wave.2")
+                Label(L("Произнести"), systemImage: "speaker.wave.2")
             }
             Button {
                 dictionaryTerm = IdentifiedTerm(text: t.word?.pt ?? t.text)
             } label: {
-                Label("Словарь iOS", systemImage: "character.book.closed")
+                Label(L("Словарь iOS"), systemImage: "character.book.closed")
             }
         }
         .accessibilityLabel(accessibilityText(t, selected: isSelected, inCollection: inCollection))
@@ -351,15 +351,15 @@ struct PhotoWordsView: View {
 
     private func accessibilityText(_ t: ScanToken, selected: Bool, inCollection: Bool) -> String {
         var parts = [t.text]
-        if let lemma = t.lemma { parts.append("словарная форма " + lemma) }
+        if let lemma = t.lemma { parts.append(L("словарная форма ") + lemma) }
         if let w = t.word {
             let tr = w.translationText(lang: translationLanguage, limit: 2)
             if !tr.isEmpty { parts.append(tr) }
         } else {
-            parts.append("нет в словаре")
+            parts.append(L("нет в словаре"))
         }
-        if inCollection { parts.append("уже в коллекции") }
-        if selected { parts.append("отмечено") }
+        if inCollection { parts.append(L("уже в коллекции")) }
+        if selected { parts.append(L("отмечено")) }
         return parts.joined(separator: ", ")
     }
 
@@ -367,11 +367,11 @@ struct PhotoWordsView: View {
         VStack(spacing: 8) {
             if collectionID == nil {
                 HStack {
-                    Text("В коллекцию:")
+                    Text(L("В коллекцию:"))
                         .foregroundColor(.secondary)
                     Spacer()
-                    Picker("Коллекция", selection: $target) {
-                        Text("Новая коллекция").tag(UUID?.none)
+                    Picker(L("Коллекция"), selection: $target) {
+                        Text(L("Новая коллекция")).tag(UUID?.none)
                         ForEach(model.user.collections) { c in
                             Text(c.name).tag(UUID?.some(c.id))
                         }
@@ -386,7 +386,7 @@ struct PhotoWordsView: View {
             Button {
                 addSelected()
             } label: {
-                Text(selected.isEmpty ? "Отметьте слова" : "Добавить: \(selected.count) \(Plural.words(selected.count))")
+                Text(selected.isEmpty ? L("Отметьте слова") : L("Добавить: %d %@", selected.count, Plural.words(selected.count)))
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(GothicButtonStyle(.primary))
@@ -414,7 +414,7 @@ struct PhotoWordsView: View {
                 let lines = try await TextRecognizer.recognize(image)
                 show(lines: lines)
             } catch {
-                stage = .failed("Не удалось распознать текст: \(error.localizedDescription)")
+                stage = .failed(L("Не удалось распознать текст: %@", error.localizedDescription))
             }
         }
     }
@@ -503,10 +503,10 @@ struct PhotoWordsView: View {
         let after = model.collection(destID)?.wordIDs.count ?? 0
         let added = after - before
         let name = model.collection(destID)?.name ?? ""
-        var message = "Добавлено \(added) \(Plural.words(added)) в коллекцию «\(name)»."
+        var message = L("Добавлено %d %@ в коллекцию «%@».", added, Plural.words(added), name)
         let already = ids.count - added
-        if already > 0 { message += " Уже были в коллекции: \(already)." }
-        if skipped > 0 { message += " Без перевода не добавлены: \(skipped)." }
+        if already > 0 { message += L(" Уже были в коллекции: %d.", already) }
+        if skipped > 0 { message += L(" Без перевода не добавлены: %d.", skipped) }
         selected.removeAll()
         doneMessage = message
     }
@@ -522,7 +522,7 @@ struct PasteTextSheet: View {
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 10) {
-                Text("Вставьте или наберите текст на португальском.")
+                Text(L("Вставьте или наберите текст на португальском."))
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 TextEditor(text: $text)
@@ -540,14 +540,14 @@ struct PasteTextSheet: View {
                 Spacer()
             }
             .padding()
-            .navigationTitle("Текст")
+            .navigationTitle(L("Текст"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Отмена") { dismiss() }
+                    Button(L("Отмена")) { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Найти слова") {
+                    Button(L("Найти слова")) {
                         let value = text
                         dismiss()
                         onDone(value)
@@ -571,11 +571,11 @@ struct UnknownWordsSheet: View {
     var body: some View {
         NavigationStack {
             GothicList {
-                Section(footer: Text("Слова без перевода не добавятся. Перевод можно подсмотреть в словаре iOS (кнопка с книгой).")) {
+                Section(footer: Text(L("Слова без перевода не добавятся. Перевод можно подсмотреть в словаре iOS (кнопка с книгой)."))) {
                     ForEach($drafts) { $draft in
                         VStack(alignment: .leading, spacing: 6) {
                             HStack {
-                                TextField("Слово", text: $draft.pt)
+                                TextField(L("Слово"), text: $draft.pt)
                                     .font(.headline)
                                     .autocorrectionDisabled()
                                     .textInputAutocapitalization(.never)
@@ -585,23 +585,23 @@ struct UnknownWordsSheet: View {
                                     Image(systemName: "character.book.closed")
                                 }
                                 .buttonStyle(.borderless)
-                                .accessibilityLabel("Словарь iOS")
+                                .accessibilityLabel(L("Словарь iOS"))
                             }
-                            TextField("Перевод (\(languageName.lowercased()))", text: $draft.translation)
+                            TextField(L("Перевод (%@)", languageName.lowercased()), text: $draft.translation)
                                 .autocorrectionDisabled()
                         }
                         .padding(.vertical, 2)
                     }
                 }
             }
-            .navigationTitle("Нет в словаре")
+            .navigationTitle(L("Нет в словаре"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Пропустить") { onSkip() }
+                    Button(L("Пропустить")) { onSkip() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Добавить") { onAdd() }
+                    Button(L("Добавить")) { onAdd() }
                 }
             }
             .sheet(item: $lookup) { term in
@@ -609,79 +609,5 @@ struct UnknownWordsSheet: View {
             }
         }
         .interactiveDismissDisabled()
-    }
-}
-
-// MARK: - Склонение «слово»
-
-enum Plural {
-    /// 1 форма, 2 формы, 5 форм
-    static func forms(_ n: Int) -> String {
-        let mod100 = n % 100
-        let mod10 = n % 10
-        if mod100 >= 11 && mod100 <= 14 { return "форм" }
-        if mod10 == 1 { return "форма" }
-        if mod10 >= 2 && mod10 <= 4 { return "формы" }
-        return "форм"
-    }
-
-    /// 1 фраза, 2 фразы, 5 фраз
-    static func phrases(_ n: Int) -> String {
-        let mod100 = n % 100
-        let mod10 = n % 10
-        if mod100 >= 11 && mod100 <= 14 { return "фраз" }
-        if mod10 == 1 { return "фраза" }
-        if mod10 >= 2 && mod10 <= 4 { return "фразы" }
-        return "фраз"
-    }
-
-    /// 1 заклинание, 2 заклинания, 5 заклинаний
-    static func spells(_ n: Int) -> String {
-        let mod100 = n % 100
-        let mod10 = n % 10
-        if mod100 >= 11 && mod100 <= 14 { return "заклинаний" }
-        if mod10 == 1 { return "заклинание" }
-        if mod10 >= 2 && mod10 <= 4 { return "заклинания" }
-        return "заклинаний"
-    }
-
-    /// 1 неделя, 2 недели, 5 недель
-    static func weeks(_ n: Int) -> String {
-        let mod100 = n % 100
-        let mod10 = n % 10
-        if mod100 >= 11 && mod100 <= 14 { return "недель" }
-        if mod10 == 1 { return "неделя" }
-        if mod10 >= 2 && mod10 <= 4 { return "недели" }
-        return "недель"
-    }
-
-    /// 1 месяц, 2 месяца, 5 месяцев
-    static func months(_ n: Int) -> String {
-        let mod100 = n % 100
-        let mod10 = n % 10
-        if mod100 >= 11 && mod100 <= 14 { return "месяцев" }
-        if mod10 == 1 { return "месяц" }
-        if mod10 >= 2 && mod10 <= 4 { return "месяца" }
-        return "месяцев"
-    }
-
-    /// 1 день, 2 дня, 5 дней
-    static func days(_ n: Int) -> String {
-        let mod100 = n % 100
-        let mod10 = n % 10
-        if mod100 >= 11 && mod100 <= 14 { return "дней" }
-        if mod10 == 1 { return "день" }
-        if mod10 >= 2 && mod10 <= 4 { return "дня" }
-        return "дней"
-    }
-
-    /// 1 слово, 2 слова, 5 слов
-    static func words(_ n: Int) -> String {
-        let mod100 = n % 100
-        let mod10 = n % 10
-        if mod100 >= 11 && mod100 <= 14 { return "слов" }
-        if mod10 == 1 { return "слово" }
-        if mod10 >= 2 && mod10 <= 4 { return "слова" }
-        return "слов"
     }
 }

@@ -101,14 +101,14 @@ enum PetRules {
 
     static func caption(_ mood: PetMood) -> String {
         switch mood {
-        case .happy: return "Сыт и доволен — читает книгу заклинаний за кафедрой в своей башне"
-        case .ok: return "Проголодался: забросил книгу и мечтает о зелье"
-        case .angry: return "Голодает в темнице и проклинает вас. Пройдите план на сегодня — и он вернётся в башню"
-        case .skeleton: return "Совсем зачах в темнице… Пара упражнений — и он оживёт"
+        case .happy: return L("Сыт и доволен — читает книгу заклинаний за кафедрой в своей башне")
+        case .ok: return L("Проголодался: забросил книгу и мечтает о зелье")
+        case .angry: return L("Голодает в темнице и проклинает вас. Пройдите план на сегодня — и он вернётся в башню")
+        case .skeleton: return L("Совсем зачах в темнице… Пара упражнений — и он оживёт")
         }
     }
 
-    static let eatingCaption = "Пьёт зелье — спасибо за занятия!"
+    static var eatingCaption: String { return L("Пьёт зелье — спасибо за занятия!") }
 
     /// Проклятия рунами: номера знаков из PetSprites.runes (9 — «!»).
     static let curses: [[Int]] = [

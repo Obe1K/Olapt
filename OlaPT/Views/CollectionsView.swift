@@ -15,19 +15,19 @@ struct CollectionsView: View {
                     HStack {
                         Image(systemName: "checkmark.seal.fill")
                             .foregroundColor(Theme.moss)
-                        Text("Выучено слов: \(model.totalLearnedWords)")
+                        Text(L("Выучено слов: %d", model.totalLearnedWords))
                             .font(.headline)
                         Spacer()
-                        Text("в процессе: \(model.totalLearningWords)")
+                        Text(L("в процессе: %d", model.totalLearningWords))
                             .foregroundColor(.secondary)
                     }
                 }
             }
 
-            Section(header: GothicHeader("Мои коллекции")) {
+            Section(header: GothicHeader(L("Мои коллекции"))) {
                 if model.user.collections.isEmpty {
-                    EmptyHint(title: "Пока пусто",
-                              message: "Найдите слово в словаре и сохраните его в коллекцию. Либо начните с готового набора по теме ниже.")
+                    EmptyHint(title: L("Пока пусто"),
+                              message: L("Найдите слово в словаре и сохраните его в коллекцию. Либо начните с готового набора по теме ниже."))
                 }
                 ForEach(model.user.collections) { c in
                     NavigationLink {
@@ -48,9 +48,9 @@ struct CollectionsView: View {
                         DifficultWordsView()
                     } label: {
                         VStack(alignment: .leading, spacing: 4) {
-                            Label("Трудные слова", systemImage: "flame")
+                            Label(L("Трудные слова"), systemImage: "flame")
                                 .font(.headline)
-                            Text("\(difficult) \(Plural.words(difficult)) · собирается само из ваших ошибок")
+                            Text(L("%d %@ · собирается само из ваших ошибок", difficult, Plural.words(difficult)))
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                         }
@@ -63,27 +63,27 @@ struct CollectionsView: View {
                 Button {
                     showScan = true
                 } label: {
-                    Label("Слова из фото или текста", systemImage: "text.viewfinder")
+                    Label(L("Слова из фото или текста"), systemImage: "text.viewfinder")
                 }
                 .accessibilityIdentifier("open-scan")
             }
 
-            Section(header: GothicHeader("Готовые наборы")) {
+            Section(header: GothicHeader(L("Готовые наборы"))) {
                 NavigationLink {
                     TopicsView()
                 } label: {
-                    Label("Наборы слов по темам", systemImage: "square.grid.2x2")
+                    Label(L("Наборы слов по темам"), systemImage: "square.grid.2x2")
                 }
                 if !model.index.levels.isEmpty {
                     NavigationLink {
                         LevelsView()
                     } label: {
-                        Label("Наборы по уровням (A1, A2…)", systemImage: "chart.bar")
+                        Label(L("Наборы по уровням (A1, A2…)"), systemImage: "chart.bar")
                     }
                 }
             }
         }
-        .navigationTitle("Коллекции")
+        .navigationTitle(L("Коллекции"))
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showScan) {
             PhotoWordsView(collectionID: nil)
@@ -96,16 +96,16 @@ struct CollectionsView: View {
                 } label: {
                     Image(systemName: "plus")
                 }
-                .accessibilityLabel("Новая коллекция")
+                .accessibilityLabel(L("Новая коллекция"))
             }
         }
-        .alert("Новая коллекция", isPresented: $showNew) {
-            TextField("Название", text: $newName)
-            Button("Создать") {
+        .alert(L("Новая коллекция"), isPresented: $showNew) {
+            TextField(L("Название"), text: $newName)
+            Button(L("Создать")) {
                 model.createCollection(name: newName)
                 newName = ""
             }
-            Button("Отмена", role: .cancel) {
+            Button(L("Отмена"), role: .cancel) {
                 newName = ""
             }
         }
@@ -122,7 +122,7 @@ struct CollectionRow: View {
         VStack(alignment: .leading, spacing: 6) {
             Text(collection.name)
                 .font(.headline)
-            Text("\(words.count) \(Plural.words(words.count)) · выучено \(counts.learned)")
+            Text(L("%d %@ · выучено %d", words.count, Plural.words(words.count), counts.learned))
                 .font(.subheadline)
                 .foregroundColor(.secondary)
             MasteryBar(fraction: model.learnedFraction(of: collection.wordIDs))
@@ -150,7 +150,7 @@ struct CollectionDetailView: View {
             if let c = model.collection(collectionID) {
                 content(c)
             } else {
-                Text("Коллекция удалена")
+                Text(L("Коллекция удалена"))
                     .foregroundColor(.secondary)
             }
         }
@@ -166,17 +166,17 @@ struct CollectionDetailView: View {
             Section {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack(spacing: 14) {
-                        statBox(title: "Новые", value: "\(counts.new)", color: Theme.textDim)
-                        statBox(title: "Освоено", value: "\(Int((model.learnedFraction(of: c.wordIDs) * 100).rounded()))%", color: Theme.ember)
-                        statBox(title: "Выучено", value: "\(counts.learned)", color: Theme.moss)
+                        statBox(title: L("Новые"), value: "\(counts.new)", color: Theme.textDim)
+                        statBox(title: L("Освоено"), value: "\(Int((model.learnedFraction(of: c.wordIDs) * 100).rounded()))%", color: Theme.ember)
+                        statBox(title: L("Выучено"), value: "\(counts.learned)", color: Theme.moss)
                     }
                     MasteryBar(fraction: model.learnedFraction(of: c.wordIDs))
                 }
                 .padding(.vertical, 4)
             }
 
-            Section(header: GothicHeader("Учить"),
-                    footer: Text("Слова из коллекций сами попадают в план на вкладке «Сегодня» — до \(model.settings.newWordsPerDay) новых в день, а потом в нужные дни на повторение. Уровни здесь — свободная тренировка, её можно проходить когда угодно.")) {
+            Section(header: GothicHeader(L("Учить")),
+                    footer: Text(L("Слова из коллекций сами попадают в план на вкладке «Сегодня» — до %d новых в день, а потом в нужные дни на повторение. Уровни здесь — свободная тренировка, её можно проходить когда угодно.", model.settings.newWordsPerDay))) {
                 ForEach(ExerciseLevel.allCases) { level in
                     Button {
                         activeLevel = level
@@ -188,19 +188,19 @@ struct CollectionDetailView: View {
             }
 
             if !verbsInside.isEmpty {
-                Section(header: GothicHeader("Глаголы из коллекции")) {
+                Section(header: GothicHeader(L("Глаголы из коллекции"))) {
                     NavigationLink {
                         VerbTrainerSetupView(initialCollectionID: c.id)
                     } label: {
-                        Label("Тренировать спряжение (\(verbsInside.count))", systemImage: "textformat.abc")
+                        Label(L("Тренировать спряжение (%d)", verbsInside.count), systemImage: "textformat.abc")
                     }
                 }
             }
 
-            Section(header: GothicHeader("Слова (\(words.count))")) {
+            Section(header: GothicHeader(L("Слова (%d)", words.count))) {
                 if words.isEmpty {
-                    EmptyHint(title: "В коллекции нет слов",
-                              message: "Нажмите «Добавить слова» или сохраните слово из карточки словаря.")
+                    EmptyHint(title: L("В коллекции нет слов"),
+                              message: L("Нажмите «Добавить слова» или сохраните слово из карточки словаря."))
                 }
                 ForEach(words) { w in
                     NavigationLink {
@@ -218,12 +218,12 @@ struct CollectionDetailView: View {
                 Button {
                     showAdd = true
                 } label: {
-                    Label("Добавить слова", systemImage: "plus.circle")
+                    Label(L("Добавить слова"), systemImage: "plus.circle")
                 }
                 Button {
                     showScan = true
                 } label: {
-                    Label("Слова из фото или текста", systemImage: "text.viewfinder")
+                    Label(L("Слова из фото или текста"), systemImage: "text.viewfinder")
                 }
             }
         }
@@ -235,23 +235,23 @@ struct CollectionDetailView: View {
                     Button {
                         showAdd = true
                     } label: {
-                        Label("Добавить слова", systemImage: "plus")
+                        Label(L("Добавить слова"), systemImage: "plus")
                     }
                     Button {
                         showScan = true
                     } label: {
-                        Label("Слова из фото или текста", systemImage: "text.viewfinder")
+                        Label(L("Слова из фото или текста"), systemImage: "text.viewfinder")
                     }
                     Button {
                         renameText = c.name
                         showRename = true
                     } label: {
-                        Label("Переименовать", systemImage: "pencil")
+                        Label(L("Переименовать"), systemImage: "pencil")
                     }
                     Button(role: .destructive) {
                         confirmDelete = true
                     } label: {
-                        Label("Удалить коллекцию", systemImage: "trash")
+                        Label(L("Удалить коллекцию"), systemImage: "trash")
                     }
                 } label: {
                     Image(systemName: "ellipsis.circle")
@@ -265,21 +265,21 @@ struct CollectionDetailView: View {
             PhotoWordsView(collectionID: c.id)
                 .environmentObject(model)
         }
-        .alert("Переименовать", isPresented: $showRename) {
-            TextField("Название", text: $renameText)
-            Button("Сохранить") {
+        .alert(L("Переименовать"), isPresented: $showRename) {
+            TextField(L("Название"), text: $renameText)
+            Button(L("Сохранить")) {
                 model.renameCollection(c.id, to: renameText)
             }
-            Button("Отмена", role: .cancel) {}
+            Button(L("Отмена"), role: .cancel) {}
         }
-        .confirmationDialog("Удалить коллекцию «\(c.name)»?", isPresented: $confirmDelete, titleVisibility: .visible) {
-            Button("Удалить", role: .destructive) {
+        .confirmationDialog(L("Удалить коллекцию «%@»?", c.name), isPresented: $confirmDelete, titleVisibility: .visible) {
+            Button(L("Удалить"), role: .destructive) {
                 model.deleteCollection(c.id)
                 dismiss()
             }
-            Button("Отмена", role: .cancel) {}
+            Button(L("Отмена"), role: .cancel) {}
         } message: {
-            Text("Прогресс по самим словам сохранится.")
+            Text(L("Прогресс по самим словам сохранится."))
         }
         .fullScreenCover(item: $activeLevel) { level in
             StudySessionView(level: level, collectionID: c.id, generator: {
@@ -319,11 +319,11 @@ struct AddWordsView: View {
         NavigationStack {
             GothicList {
                 if query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                    Text("Введите слово, чтобы найти его и добавить в коллекцию. Нажатие добавляет или убирает слово.")
+                    Text(L("Введите слово, чтобы найти его и добавить в коллекцию. Нажатие добавляет или убирает слово."))
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 } else if found.isEmpty {
-                    Text("Ничего не найдено")
+                    Text(L("Ничего не найдено"))
                         .foregroundColor(.secondary)
                 } else {
                     ForEach(found) { r in
@@ -340,14 +340,14 @@ struct AddWordsView: View {
                     }
                 }
             }
-            .navigationTitle("Добавить слова")
+            .navigationTitle(L("Добавить слова"))
             .navigationBarTitleDisplayMode(.inline)
-            .searchable(text: $query, prompt: "Найти слово")
+            .searchable(text: $query, prompt: L("Найти слово"))
             .autocorrectionDisabled()
             .textInputAutocapitalization(.never)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Готово") { dismiss() }
+                    Button(L("Готово")) { dismiss() }
                 }
             }
         }

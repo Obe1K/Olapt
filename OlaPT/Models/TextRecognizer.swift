@@ -10,7 +10,7 @@ enum TextRecognizer {
 
         var errorDescription: String? {
             switch self {
-            case .badImage: return "Не удалось открыть изображение."
+            case .badImage: return L("Не удалось открыть изображение.")
             }
         }
     }

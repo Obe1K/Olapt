@@ -57,14 +57,14 @@ struct GrimoireView: View {
                         .font(Theme.gothic(42))
                         .foregroundColor(Theme.goldBright)
                         .shadow(color: Theme.blood, radius: 0, x: 2, y: 2)
-                    Text(total > 0 ? "\(total) \(Plural.spells(total))" : "Пока пусто")
+                    Text(total > 0 ? "\(total) \(Plural.spells(total))" : L("Пока пусто"))
                         .font(Theme.pixel(15, relativeTo: .subheadline))
                         .foregroundColor(Theme.textDim)
                 }
                 .padding(.top, 8)
 
                 if total == 0 {
-                    Text("Слово становится заклинанием, когда вы помните его хотя бы неделю. Занимайтесь по плану «Сегодня» — и книга начнёт заполняться.")
+                    Text(L("Слово становится заклинанием, когда вы помните его хотя бы неделю. Занимайтесь по плану «Сегодня» — и книга начнёт заполняться."))
                         .font(.subheadline)
                         .foregroundColor(GrimoireView.ink)
                         .multilineTextAlignment(.center)
@@ -82,7 +82,7 @@ struct GrimoireView: View {
             .padding(.bottom, 24)
         }
         .background(StoneBackground().ignoresSafeArea())
-        .navigationTitle("Гримуар")
+        .navigationTitle(L("Гримуар"))
         .navigationBarTitleDisplayMode(.inline)
     }
 
@@ -116,8 +116,7 @@ struct GrimoireView: View {
 
     private func spellRow(_ sp: Spell) -> some View {
         let p = GrimoireView.power(sp.stability)
-        let ru = sp.word.translationText(lang: "ru", limit: 2)
-        let tr = ru.isEmpty ? sp.word.translationText(lang: model.index.languages.first ?? "en", limit: 2) : ru
+        let tr = model.primaryTranslation(sp.word)
         return HStack(alignment: .firstTextBaseline, spacing: 8) {
             VStack(alignment: .leading, spacing: 2) {
                 Text(sp.word.titleWithArticle)
@@ -136,7 +135,7 @@ struct GrimoireView: View {
                         .frame(width: 7, height: 7)
                 }
             }
-            .accessibilityLabel("Сила \(p) из 5")
+            .accessibilityLabel(L("Сила %d из 5", p))
         }
         .padding(.vertical, 6)
         .contentShape(Rectangle())

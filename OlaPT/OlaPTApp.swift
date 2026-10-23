@@ -4,6 +4,8 @@ import SwiftUI
 struct OlaPTApp: App {
     @StateObject private var model = AppModel()
     @Environment(\.scenePhase) private var scenePhase
+    /// Выбранная вкладка живёт выше RootView, чтобы пережить смену языка
+    @State private var tab = 0
 
     init() {
         Theme.registerFonts()
@@ -12,7 +14,9 @@ struct OlaPTApp: App {
 
     var body: some Scene {
         WindowGroup {
-            RootView()
+            // При смене языка интерфейса весь экран собирается заново — все надписи берутся на новом языке
+            RootView(tab: $tab)
+                .id(model.settings.uiLanguage)
                 .environmentObject(model)
                 .preferredColorScheme(.dark)
                 .tint(Theme.gold)
@@ -27,44 +31,50 @@ struct OlaPTApp: App {
 
 struct RootView: View {
     @EnvironmentObject var model: AppModel
+    @Binding var tab: Int
 
     var body: some View {
-        TabView {
+        TabView(selection: $tab) {
             NavigationStack {
                 TodayView()
             }
             .tabItem {
-                Label { Text("Сегодня") } icon: { Image("tab-candle") }
+                Label { Text(L("Сегодня")) } icon: { Image("tab-candle") }
             }
             .badge(model.dailyPlan().total)
+            .tag(0)
 
             NavigationStack {
                 SearchView()
             }
             .tabItem {
-                Label { Text("Словарь") } icon: { Image("tab-book") }
+                Label { Text(L("Словарь")) } icon: { Image("tab-book") }
             }
+            .tag(1)
 
             NavigationStack {
                 CollectionsView()
             }
             .tabItem {
-                Label { Text("Коллекции") } icon: { Image("tab-chest") }
+                Label { Text(L("Коллекции")) } icon: { Image("tab-chest") }
             }
+            .tag(2)
 
             NavigationStack {
                 VerbsView()
             }
             .tabItem {
-                Label { Text("Глаголы") } icon: { Image("tab-quill") }
+                Label { Text(L("Глаголы")) } icon: { Image("tab-quill") }
             }
+            .tag(3)
 
             NavigationStack {
                 SettingsView()
             }
             .tabItem {
-                Label { Text("Настройки") } icon: { Image("tab-gear") }
+                Label { Text(L("Настройки")) } icon: { Image("tab-gear") }
             }
+            .tag(4)
         }
     }
 }

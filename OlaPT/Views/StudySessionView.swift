@@ -145,7 +145,7 @@ struct StudySessionView: View {
     init(level: ExerciseLevel?, title: String? = nil, collectionID: UUID?, isDaily: Bool = false,
          boss: BossConfig? = nil, generator: @escaping () -> [WordQuestion]) {
         self.level = level
-        self.title = title ?? level?.shortTitle ?? "Тренировка"
+        self.title = title ?? level?.shortTitle ?? L("Тренировка")
         self.collectionID = collectionID
         self.isDaily = isDaily
         self.boss = boss
@@ -173,7 +173,7 @@ struct StudySessionView: View {
                 } else if let q = session.current {
                     questionView(q)
                 } else {
-                    Text("Нет вопросов")
+                    Text(L("Нет вопросов"))
                         .foregroundColor(.secondary)
                 }
             }
@@ -181,7 +181,7 @@ struct StudySessionView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Закрыть") { dismiss() }
+                    Button(L("Закрыть")) { dismiss() }
                 }
             }
         }
@@ -236,9 +236,9 @@ struct StudySessionView: View {
 
     private func caption(_ q: WordQuestion) -> String {
         switch q.kind {
-        case .chooseTranslation: return "Выберите перевод"
-        case .chooseWord: return "Выберите слово по-португальски"
-        case .typeWord: return "Напишите по-португальски · перевод: \(Languages.name(q.lang))"
+        case .chooseTranslation: return L("Выберите перевод")
+        case .chooseWord: return L("Выберите слово по-португальски")
+        case .typeWord: return L("Напишите по-португальски · перевод: %@", Languages.name(q.lang))
         }
     }
 
@@ -257,7 +257,7 @@ struct StudySessionView: View {
                 }
 
                 if q.isRetry {
-                    Text("Повторим слово, в котором была ошибка")
+                    Text(L("Повторим слово, в котором была ошибка"))
                         .font(.footnote)
                         .foregroundColor(Theme.ember)
                 }
@@ -349,7 +349,7 @@ struct StudySessionView: View {
             ColoredAnswerField(
                 text: $typed,
                 isFocused: $fieldFocused,
-                placeholder: "Ваш ответ",
+                placeholder: L("Ваш ответ"),
                 isEnabled: !session.answered,
                 coloring: { input in
                     ExerciseBuilder.coloring(input: input, question: q)
@@ -360,7 +360,7 @@ struct StudySessionView: View {
             .padding(.horizontal, 12)
             .background(PixelFrame(fill: Theme.panelDeep))
             if !session.answered {
-                Text("Зелёные буквы — верно, золотые — не хватает акцента, красные — с места ошибки.")
+                Text(L("Зелёные буквы — верно, золотые — не хватает акцента, красные — с места ошибки."))
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -371,7 +371,7 @@ struct StudySessionView: View {
                         session.giveUp(model: model)
                         fieldFocused = false
                     } label: {
-                        Text("Не знаю")
+                        Text(L("Не знаю"))
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(GothicButtonStyle(.secondary))
@@ -379,7 +379,7 @@ struct StudySessionView: View {
                     Button {
                         check()
                     } label: {
-                        Text("Проверить")
+                        Text(L("Проверить"))
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(GothicButtonStyle(.primary))
@@ -402,23 +402,23 @@ struct StudySessionView: View {
     private func feedback(_ q: WordQuestion) -> some View {
         VStack(spacing: 10) {
             if session.lastCorrect && session.lastVerdict == .accentsOnly {
-                Label("Верно, но с акцентом", systemImage: "checkmark.circle.fill")
+                Label(L("Верно, но с акцентом"), systemImage: "checkmark.circle.fill")
                     .font(Theme.pixel(20, relativeTo: .title3))
                     .foregroundColor(Theme.goldBright)
                     .accessibilityIdentifier("accent-feedback")
                 AccentHighlight.text(session.lastMatch, typed: session.lastTyped)
                     .font(.title3.weight(.semibold))
                     .foregroundColor(Theme.text)
-                Text("Засчитано. Не забывайте акцент: он меняет произношение, а иногда и смысл.")
+                Text(L("Засчитано. Не забывайте акцент: он меняет произношение, а иногда и смысл."))
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
             } else if session.lastCorrect {
-                Label("Верно!", systemImage: "checkmark.circle.fill")
+                Label(L("Верно!"), systemImage: "checkmark.circle.fill")
                     .font(Theme.pixel(22, relativeTo: .title3))
                     .foregroundColor(Theme.moss)
             } else {
-                Label("Неверно", systemImage: "xmark.circle.fill")
+                Label(L("Неверно"), systemImage: "xmark.circle.fill")
                     .font(Theme.pixel(22, relativeTo: .title3))
                     .foregroundColor(Theme.red)
                 if session.lastVerdict == .accentsOnly {
@@ -426,12 +426,12 @@ struct StudySessionView: View {
                     AccentHighlight.text(session.lastMatch, typed: session.lastTyped)
                         .font(.headline)
                         .foregroundColor(Theme.text)
-                    Text("Включена строгая проверка ударений (Настройки → Упражнения).")
+                    Text(L("Включена строгая проверка ударений (Настройки → Упражнения)."))
                         .font(.caption)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
                 } else {
-                    Text("Правильный ответ: \(q.answerText)")
+                    Text(L("Правильный ответ: %@", q.answerText))
                         .font(.headline)
                         .foregroundColor(Theme.text)
                         .multilineTextAlignment(.center)
@@ -454,7 +454,7 @@ struct StudySessionView: View {
         Button {
             session.next()
         } label: {
-            Text(session.position + 1 >= session.queue.count ? "Завершить" : "Далее")
+            Text(session.position + 1 >= session.queue.count ? L("Завершить") : L("Далее"))
                 .frame(maxWidth: .infinity)
         }
         .buttonStyle(GothicButtonStyle(.primary))
@@ -484,16 +484,16 @@ struct StudySessionView: View {
     private var nextReviewText: String {
         let days = model.forecast(days: 30)
         guard let i = days.firstIndex(where: { $0 > 0 }) else {
-            return "Следующих повторений пока нет. Добавьте новые слова в коллекции — они появятся в плане «Сегодня»."
+            return L("Следующих повторений пока нет. Добавьте новые слова в коллекции — они появятся в плане «Сегодня».")
         }
         let n = days[i]
         let when: String
         switch i {
-        case 0: when = "завтра"
-        case 1: when = "послезавтра"
-        default: when = "через \(i + 1) \(Plural.days(i + 1))"
+        case 0: when = L("завтра")
+        case 1: when = L("послезавтра")
+        default: when = L("через %d %@", i + 1, Plural.days(i + 1))
         }
-        return "Следующее повторение — \(when): \(n) \(Plural.words(n)) (≈ \(model.estimatedMinutes(questions: n)) мин)."
+        return L("Следующее повторение — %@: %d %@ (≈ %d мин).", when, n, Plural.words(n), model.estimatedMinutes(questions: n))
     }
 
     private var summaryView: some View {
@@ -504,18 +504,18 @@ struct StudySessionView: View {
                         BossArenaView(boss: b, hits: session.hits, misses: session.misses,
                                       answered: false, lastCorrect: false, defeated: bossWon)
                         if bossWon {
-                            Text("\(b.title) повержен!")
+                            Text(L("%@ повержен!", b.title))
                                 .font(Theme.pixel(24, relativeTo: .title2))
                                 .foregroundColor(Theme.goldBright)
-                            Text("Маг получил полный котёл зелья. Следующий босс появится в понедельник.")
+                            Text(L("Маг получил полный котёл зелья. Следующий босс появится в понедельник."))
                                 .font(.subheadline)
                                 .foregroundColor(Theme.text)
                                 .multilineTextAlignment(.center)
                         } else {
-                            Text("Маг выбился из сил")
+                            Text(L("Маг выбился из сил"))
                                 .font(Theme.pixel(22, relativeTo: .title2))
                                 .foregroundColor(Theme.red)
-                            Text("Повторите слова и бросьте вызов снова — босс ждёт до конца недели.")
+                            Text(L("Повторите слова и бросьте вызов снова — босс ждёт до конца недели."))
                                 .font(.subheadline)
                                 .foregroundColor(Theme.text)
                                 .multilineTextAlignment(.center)
@@ -533,15 +533,15 @@ struct StudySessionView: View {
                     let plan = model.dailyPlan()
                     VStack(alignment: .leading, spacing: 8) {
                         if plan.isEmpty {
-                            Label("На сегодня всё", systemImage: "checkmark.seal.fill")
+                            Label(L("На сегодня всё"), systemImage: "checkmark.seal.fill")
                                 .font(Theme.pixel(20, relativeTo: .title3))
                                 .foregroundColor(Theme.moss)
-                            Text("Ещё раз сегодня проходить не нужно: повторение раньше срока почти не укрепляет память.")
+                            Text(L("Ещё раз сегодня проходить не нужно: повторение раньше срока почти не укрепляет память."))
                                 .font(.subheadline)
                         } else {
-                            Label("Осталось ещё \(plan.total) \(Plural.words(plan.total))", systemImage: "clock")
+                            Label(L("Осталось ещё %d %@", plan.total, Plural.words(plan.total)), systemImage: "clock")
                                 .font(.headline)
-                            Text("Продолжите на вкладке «Сегодня».")
+                            Text(L("Продолжите на вкладке «Сегодня»."))
                                 .font(.subheadline)
                         }
                         Text(nextReviewText)
@@ -556,16 +556,16 @@ struct StudySessionView: View {
                     Text("\(session.percent)%")
                         .font(Theme.pixel(54, relativeTo: .largeTitle))
                         .foregroundColor(session.percent >= 80 ? Theme.moss : Theme.ember)
-                    Text("Верно с первого раза: \(session.correctCount) из \(session.totalCount)")
+                    Text(L("Верно с первого раза: %d из %d", session.correctCount, session.totalCount))
                         .foregroundColor(.secondary)
                     if isDaily {
                         EmptyView()
                     } else if session.percent >= 80 {
-                        Text("Отличный результат! Можно переходить к следующему уровню.")
+                        Text(L("Отличный результат! Можно переходить к следующему уровню."))
                             .font(.subheadline)
                             .multilineTextAlignment(.center)
                     } else if session.totalCount > 0 {
-                        Text("Повторите ещё раз, чтобы слова закрепились.")
+                        Text(L("Повторите ещё раз, чтобы слова закрепились."))
                             .font(.subheadline)
                             .multilineTextAlignment(.center)
                     }
@@ -575,14 +575,14 @@ struct StudySessionView: View {
             }
 
             if !session.accentSlips.isEmpty {
-                Section(header: GothicHeader("Проверьте акценты"),
-                        footer: Text("Эти ответы засчитаны, но в них не хватало акцента.")) {
+                Section(header: GothicHeader(L("Проверьте акценты")),
+                        footer: Text(L("Эти ответы засчитаны, но в них не хватало акцента."))) {
                     ForEach(session.accentSlips) { slip in
                         VStack(alignment: .leading, spacing: 2) {
                             AccentHighlight.text(slip.answer, typed: slip.typed)
                                 .font(.headline)
                                 .foregroundColor(Theme.text)
-                            Text("вы написали: \(slip.typed)")
+                            Text(L("вы написали: %@", slip.typed))
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -591,7 +591,7 @@ struct StudySessionView: View {
             }
 
             if !session.mistakes.isEmpty {
-                Section(header: GothicHeader("Ошибки")) {
+                Section(header: GothicHeader(L("Ошибки"))) {
                     ForEach(session.mistakes) { w in
                         WordRow(word: w, showStatus: false)
                     }
@@ -608,13 +608,13 @@ struct StudySessionView: View {
                         fieldFocused = true
                     }
                 } label: {
-                    Label(boss != nil ? "Сразиться снова" : "Пройти ещё раз", systemImage: "arrow.clockwise")
+                    Label(boss != nil ? L("Сразиться снова") : L("Пройти ещё раз"), systemImage: "arrow.clockwise")
                 }
                 }
                 Button {
                     dismiss()
                 } label: {
-                    Label("Закончить", systemImage: "checkmark")
+                    Label(L("Закончить"), systemImage: "checkmark")
                 }
             }
         }

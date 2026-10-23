@@ -112,9 +112,9 @@ struct Word: Identifiable, Hashable {
 
     var genderLabel: String {
         switch gender {
-        case "m": return "м. р."
-        case "f": return "ж. р."
-        case "mf": return "м./ж. р."
+        case "m": return L("м. р.")
+        case "f": return L("ж. р.")
+        case "mf": return L("м./ж. р.")
         default: return ""
         }
     }
@@ -148,17 +148,17 @@ struct Word: Identifiable, Hashable {
 enum PartOfSpeech {
     static func label(_ pos: String) -> String {
         switch pos {
-        case "n": return "сущ."
-        case "v": return "глагол"
-        case "adj": return "прил."
-        case "adv": return "нареч."
-        case "prep": return "предлог"
-        case "conj": return "союз"
-        case "pron": return "местоим."
-        case "det": return "определит."
-        case "num": return "числит."
-        case "interj": return "межд."
-        case "phrase": return "фраза"
+        case "n": return L("сущ.")
+        case "v": return L("глагол")
+        case "adj": return L("прил.")
+        case "adv": return L("нареч.")
+        case "prep": return L("предлог")
+        case "conj": return L("союз")
+        case "pron": return L("местоим.")
+        case "det": return L("определит.")
+        case "num": return L("числит.")
+        case "interj": return L("межд.")
+        case "phrase": return L("фраза")
         default: return ""
         }
     }
@@ -168,12 +168,15 @@ enum PartOfSpeech {
 }
 
 enum Languages {
-    static let names: [String: String] = [
-        "en": "Английский", "ru": "Русский", "uk": "Украинский", "es": "Испанский",
-        "fr": "Французский", "de": "Немецкий", "it": "Итальянский", "pl": "Польский",
-        "nl": "Нидерландский", "tr": "Турецкий", "zh": "Китайский", "ja": "Японский",
-        "ar": "Арабский", "pt": "Португальский"
-    ]
+    /// Вычисляется при каждом обращении — чтобы следовать языку интерфейса.
+    static var names: [String: String] {
+        return [
+        "en": L("Английский"), "ru": L("Русский"), "uk": L("Украинский"), "es": L("Испанский"),
+        "fr": L("Французский"), "de": L("Немецкий"), "it": L("Итальянский"), "pl": L("Польский"),
+        "nl": L("Нидерландский"), "tr": L("Турецкий"), "zh": L("Китайский"), "ja": L("Японский"),
+        "ar": L("Арабский"), "pt": L("Португальский")
+        ]
+    }
 
     /// Языки, которые можно выбрать при импорте CSV.
     static let importable: [String] = ["en", "ru", "uk", "es", "fr", "de", "it", "pl", "nl", "tr", "zh", "ja", "ar"]

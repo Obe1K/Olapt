@@ -8,8 +8,8 @@ enum VerbMode: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .choice: return "Выбрать из 4"
-        case .typing: return "Написать форму"
+        case .choice: return L("Выбрать из 4")
+        case .typing: return L("Написать форму")
         }
     }
 }

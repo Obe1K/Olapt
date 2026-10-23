@@ -22,6 +22,14 @@ final class AppModel: ObservableObject {
     // MARK: - Загрузка
 
     init() {
+        var loaded = Persistence.loadUser()
+        // UI-тесты: -ui-language ru|en — язык интерфейса и упражнений на время запуска
+        if let forced = UserDefaults.standard.string(forKey: "ui-language"), Loc.supported.contains(forced) {
+            loaded.settings.uiLanguage = forced
+            loaded.settings.exerciseLanguage = forced
+        }
+        Loc.set(loaded.settings.uiLanguage)
+
         let library = VerbLibrary.load()
         var files: [PackFile] = []
         var bundled = Set<String>()
@@ -35,17 +43,16 @@ final class AppModel: ObservableObject {
                     files.append(pack)
                     bundled.insert(pack.id)
                 } catch {
-                    problem = "Не удалось прочитать словарь \(name): \(error.localizedDescription)"
+                    problem = L("Не удалось прочитать словарь %@: %@", name, error.localizedDescription)
                 }
             } else {
-                problem = "Файл словаря \(name).json не найден в приложении."
+                problem = L("Файл словаря %@.json не найден в приложении.", name)
             }
         }
         for pack in Persistence.loadImportedPacks() where !bundled.contains(pack.id) {
             files.append(pack)
         }
 
-        let loaded = Persistence.loadUser()
         let active = files.filter { !loaded.settings.disabledPacks.contains($0.id) }
         let custom = loaded.customWords.map { $0.toWord() }
 
@@ -174,6 +181,41 @@ final class AppModel: ObservableObject {
         return index.languages
     }
 
+    // MARK: - Язык интерфейса
+
+    /// Переключить язык интерфейса (сразу, без перезапуска: корневой экран пересобирается по .id).
+    /// Переводы в упражнениях переходят на тот же язык. Системные надписи iOS (запрос камеры)
+    /// следуют выбору после следующего запуска.
+    func setUILanguage(_ code: String) {
+        guard Loc.supported.contains(code), code != user.settings.uiLanguage else { return }
+        Loc.set(code)
+        var s = user.settings
+        s.uiLanguage = code
+        if index.languages.contains(code) { s.exerciseLanguage = code }
+        settings = s
+        UserDefaults.standard.set([code], forKey: "AppleLanguages")
+    }
+
+    /// Языки переводов на карточках и в списках: в английском интерфейсе — без русского,
+    /// в русском — сначала русский, потом остальные.
+    var displayLanguages: [String] {
+        let all = index.languages
+        if Loc.isEnglish {
+            let rest = all.filter { $0 != "ru" }
+            return rest.isEmpty ? all : rest
+        }
+        return all.filter { $0 == "ru" } + all.filter { $0 != "ru" }
+    }
+
+    /// Перевод слова одной строкой на главном языке интерфейса (с запасным вариантом).
+    func primaryTranslation(_ word: Word, limit: Int = 2) -> String {
+        for lang in [user.settings.uiLanguage] + displayLanguages {
+            let text = word.translationText(lang: lang, limit: limit)
+            if !text.isEmpty { return text }
+        }
+        return ""
+    }
+
     // MARK: - Коллекции
 
     func collection(_ id: UUID) -> WordCollection? {
@@ -183,7 +225,7 @@ final class AppModel: ObservableObject {
     @discardableResult
     func createCollection(name: String, wordIDs: [String] = []) -> WordCollection {
         let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        let finalName = trimmed.isEmpty ? "Новая коллекция" : trimmed
+        let finalName = trimmed.isEmpty ? L("Новая коллекция") : trimmed
         let c = WordCollection(name: finalName, wordIDs: wordIDs)
         user.collections.append(c)
         return c
@@ -490,12 +532,12 @@ final class AppModel: ObservableObject {
         var news: [String] = []
         let room = towerRoom.rawValue
         if room > user.pet.seenRoom {
-            news.append("Маг поднялся на новый этаж: \(towerRoom.title)!")
+            news.append(L("Маг поднялся на новый этаж: %@!", towerRoom.title))
         }
         let items = towerItems
         if items > user.pet.seenItems {
             let titles = PetAtlas.items[user.pet.seenItems..<items].map { $0.title }
-            news.append("В башне появилось: " + titles.joined(separator: ", "))
+            news.append(L("В башне появилось: ") + titles.joined(separator: ", "))
         }
         if room != user.pet.seenRoom || items != user.pet.seenItems {
             user.pet.seenRoom = room

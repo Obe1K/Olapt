@@ -25,7 +25,7 @@ struct WordCollection: Codable, Identifiable, Hashable {
     init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         id = try c.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
-        name = try c.decodeIfPresent(String.self, forKey: .name) ?? "Коллекция"
+        name = try c.decodeIfPresent(String.self, forKey: .name) ?? L("Коллекция")
         wordIDs = try c.decodeIfPresent([String].self, forKey: .wordIDs) ?? []
         created = try c.decodeIfPresent(Date.self, forKey: .created) ?? Date()
         bestScores = try c.decodeIfPresent([String: Int].self, forKey: .bestScores) ?? [:]
@@ -70,9 +70,9 @@ enum MasteryStatus {
 
     var title: String {
         switch self {
-        case .new: return "Новое"
-        case .learning: return "В процессе"
-        case .learned: return "Выучено"
+        case .new: return L("Новое")
+        case .learning: return L("В процессе")
+        case .learned: return L("Выучено")
         }
     }
 }
@@ -80,6 +80,8 @@ enum MasteryStatus {
 // MARK: - Настройки
 
 struct AppSettings: Codable, Hashable {
+    /// Язык интерфейса: "ru" или "en"
+    var uiLanguage: String
     /// "ru", "en" или "mixed"
     var exerciseLanguage: String
     /// Глаголы: сколько верных ответов нужно, чтобы пара «глагол + время» считалась выученной
@@ -102,12 +104,14 @@ struct AppSettings: Codable, Hashable {
     var disabledPacks: [String]
 
     enum CodingKeys: String, CodingKey {
-        case exerciseLanguage, masteryThreshold, wrongPenalty, strictAccents, autoSpeak, sessionSize, disabledPacks
+        case uiLanguage, exerciseLanguage, masteryThreshold, wrongPenalty, strictAccents, autoSpeak, sessionSize, disabledPacks
         case newWordsPerDay, soundsOn, musicOn
     }
 
+    /// Новая установка: язык интерфейса по языкам iPhone, переводы в упражнениях — на нём же.
     init() {
-        exerciseLanguage = "ru"
+        uiLanguage = Loc.systemDefault()
+        exerciseLanguage = uiLanguage
         masteryThreshold = 10
         wrongPenalty = true
         strictAccents = false
@@ -121,6 +125,8 @@ struct AppSettings: Codable, Hashable {
 
     init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
+        // До 1.3 приложение было только на русском: у прежних пользователей интерфейс остаётся русским.
+        uiLanguage = try c.decodeIfPresent(String.self, forKey: .uiLanguage) ?? "ru"
         exerciseLanguage = try c.decodeIfPresent(String.self, forKey: .exerciseLanguage) ?? "ru"
         masteryThreshold = try c.decodeIfPresent(Int.self, forKey: .masteryThreshold) ?? 10
         wrongPenalty = try c.decodeIfPresent(Bool.self, forKey: .wrongPenalty) ?? true
@@ -214,7 +220,13 @@ struct UserData: Codable {
         progress = try c.decodeIfPresent([String: WordProgress].self, forKey: .progress) ?? [:]
         verbProgress = try c.decodeIfPresent([String: WordProgress].self, forKey: .verbProgress) ?? [:]
         customWords = try c.decodeIfPresent([CustomWord].self, forKey: .customWords) ?? []
-        settings = try c.decodeIfPresent(AppSettings.self, forKey: .settings) ?? AppSettings()
+        settings = try c.decodeIfPresent(AppSettings.self, forKey: .settings) ?? {
+            // Сохранённые данные без настроек — значит, пользователь был до 1.3: оставляем русский.
+            var old = AppSettings()
+            old.uiLanguage = "ru"
+            old.exerciseLanguage = "ru"
+            return old
+        }()
         srs = try c.decodeIfPresent([String: SRSState].self, forKey: .srs) ?? [:]
         pet = try c.decodeIfPresent(PetData.self, forKey: .pet) ?? PetData()
         boss = try c.decodeIfPresent(BossData.self, forKey: .boss) ?? BossData()

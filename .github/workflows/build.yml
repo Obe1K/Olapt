@@ -36,6 +36,15 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             2>&1 | tee build.log
 
+      - name: Локализация (русские строки без L(...), ключи без английского перевода)
+        if: always()
+        run: |
+          RC=0
+          OUT=$(python3 Tools/l10n.py check 2>&1) || RC=$?
+          echo "$OUT"
+          echo "::notice title=Локализация::$(printf '%s' "$OUT" | tail -25 | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')"
+          exit $RC
+
       - name: Музыка башни (Swift против эталона на Python)
         run: |
           mkdir -p build/music

@@ -44,11 +44,11 @@ struct ConjugationView: View {
                 }
             }
 
-            Section(footer: Text("Форма vós в современном португальском почти не используется, поэтому здесь не показана. В Португалии настоящее продолженное строится как «estar a + инфинитив» (estou a falar), а не герундием.")) {
+            Section(footer: Text(L("Форма vós в современном португальском почти не используется, поэтому здесь не показана. В Португалии настоящее продолженное строится как «estar a + инфинитив» (estou a falar), а не герундием."))) {
                 Button {
                     showPicker = true
                 } label: {
-                    Label("Сохранить в коллекцию", systemImage: "plus.rectangle.on.folder")
+                    Label(L("Сохранить в коллекцию"), systemImage: "plus.rectangle.on.folder")
                 }
             }
         }
@@ -74,7 +74,7 @@ struct ConjugationView: View {
                     SpeakButton(text: verb.base)
                 }
                 if let w = word {
-                    ForEach(model.index.languages, id: \.self) { lang in
+                    ForEach(model.displayLanguages, id: \.self) { lang in
                         let text = w.translationText(lang: lang, limit: 4)
                         if !text.isEmpty {
                             Text(text)
@@ -85,13 +85,13 @@ struct ConjugationView: View {
                 }
                 HStack(spacing: 6) {
                     Text(verb.group)
-                    if verb.irregular { Text("· неправильный") }
-                    if verb.reflexive { Text("· возвратный") }
+                    if verb.irregular { Text(L("· неправильный")) }
+                    if verb.reflexive { Text(L("· возвратный")) }
                 }
                 .font(.subheadline)
                 .foregroundColor(.secondary)
 
-                Text("Герундий: \(verb.gerund)  ·  Причастие: \(verb.participle)")
+                Text(L("Герундий: %@  ·  Причастие: %@", verb.gerund, verb.participle))
                     .font(.subheadline)
             }
             .padding(.vertical, 4)
@@ -133,14 +133,14 @@ struct ConjugationView: View {
                 Button {
                     request = VerbSessionRequest(verbs: [verb], tenses: [tense], mode: .choice, count: 0)
                 } label: {
-                    Text("Выбрать форму")
+                    Text(L("Выбрать форму"))
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(GothicButtonStyle(.secondary))
                 Button {
                     request = VerbSessionRequest(verbs: [verb], tenses: [tense], mode: .typing, count: 0)
                 } label: {
-                    Text("Написать форму")
+                    Text(L("Написать форму"))
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(GothicButtonStyle(.primary))

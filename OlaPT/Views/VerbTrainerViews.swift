@@ -14,9 +14,9 @@ struct VerbTrainerSetupView: View {
 
         var title: String {
             switch self {
-            case .all: return "Все глаголы"
-            case .irregular: return "Только неправильные"
-            case .collection: return "Из коллекции"
+            case .all: return L("Все глаголы")
+            case .irregular: return L("Только неправильные")
+            case .collection: return L("Из коллекции")
             }
         }
     }
@@ -76,32 +76,32 @@ struct VerbTrainerSetupView: View {
 
     var body: some View {
         GothicForm {
-            Section(header: GothicHeader("Какие глаголы")) {
-                Picker("Глаголы", selection: $scope) {
+            Section(header: GothicHeader(L("Какие глаголы"))) {
+                Picker(L("Глаголы"), selection: $scope) {
                     ForEach(Scope.allCases) { s in
                         Text(s.title).tag(s)
                     }
                 }
                 if scope == .collection {
                     if collectionsWithVerbs.isEmpty {
-                        Text("Нет коллекций с глаголами. Добавьте глаголы в коллекцию через карточку слова.")
+                        Text(L("Нет коллекций с глаголами. Добавьте глаголы в коллекцию через карточку слова."))
                             .font(.footnote)
                             .foregroundColor(.secondary)
                     } else {
-                        Picker("Коллекция", selection: $collectionID) {
+                        Picker(L("Коллекция"), selection: $collectionID) {
                             ForEach(collectionsWithVerbs) { c in
                                 Text(c.name).tag(Optional(c.id))
                             }
                         }
                     }
                 }
-                Text("Выбрано глаголов: \(scopedVerbs.count)")
+                Text(L("Выбрано глаголов: %d", scopedVerbs.count))
                     .font(.footnote)
                     .foregroundColor(.secondary)
             }
 
-            Section(header: GothicHeader("Времена"),
-                    footer: Text("Можно выбрать несколько. Для новичка достаточно Presente, затем добавляйте Pretérito Perfeito и Imperfeito.")) {
+            Section(header: GothicHeader(L("Времена")),
+                    footer: Text(L("Можно выбрать несколько. Для новичка достаточно Presente, затем добавляйте Pretérito Perfeito и Imperfeito."))) {
                 ForEach(model.verbs.tenses) { t in
                     Toggle(isOn: tenseBinding(t.id)) {
                         VStack(alignment: .leading, spacing: 2) {
@@ -112,19 +112,19 @@ struct VerbTrainerSetupView: View {
                         }
                     }
                 }
-                Button("Основные: настоящее, прошедшие, будущее") {
+                Button(L("Основные: настоящее, прошедшие, будущее")) {
                     selectedTenses = ["presente", "perfeito", "imperfeito", "futuro"]
                 }
             }
 
-            Section(header: GothicHeader("Режим")) {
-                Picker("Режим", selection: $mode) {
+            Section(header: GothicHeader(L("Режим"))) {
+                Picker(L("Режим"), selection: $mode) {
                     ForEach(VerbMode.allCases) { m in
                         Text(m.title).tag(m)
                     }
                 }
                 .pickerStyle(.segmented)
-                Picker("Количество вопросов", selection: $count) {
+                Picker(L("Количество вопросов"), selection: $count) {
                     Text("10").tag(10)
                     Text("20").tag(20)
                     Text("30").tag(30)
@@ -139,7 +139,7 @@ struct VerbTrainerSetupView: View {
             Button {
                 start()
             } label: {
-                Text("Начать")
+                Text(L("Начать"))
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(GothicButtonStyle(.primary))
@@ -149,7 +149,7 @@ struct VerbTrainerSetupView: View {
             .padding(.vertical, 8)
             .background(Theme.background.opacity(0.95))
         }
-        .navigationTitle("Тренировка глаголов")
+        .navigationTitle(L("Тренировка глаголов"))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             if !didSetup {
@@ -347,15 +347,15 @@ struct VerbSessionView: View {
                 } else if let q = session.current {
                     questionView(q)
                 } else {
-                    Text("Нет вопросов")
+                    Text(L("Нет вопросов"))
                         .foregroundColor(.secondary)
                 }
             }
-            .navigationTitle("Спряжение")
+            .navigationTitle(L("Спряжение"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Закрыть") { dismiss() }
+                    Button(L("Закрыть")) { dismiss() }
                 }
             }
         }
@@ -389,7 +389,7 @@ struct VerbSessionView: View {
                     .padding(.top, 8)
 
                 if q.isRetry {
-                    Text("Повторим форму, в которой была ошибка")
+                    Text(L("Повторим форму, в которой была ошибка"))
                         .font(.footnote)
                         .foregroundColor(Theme.ember)
                 }
@@ -517,7 +517,7 @@ struct VerbSessionView: View {
     @ViewBuilder
     private func typingArea(_ q: VerbQuestion) -> some View {
         VStack(spacing: 12) {
-            TextField("Форма глагола", text: $typed)
+            TextField(L("Форма глагола"), text: $typed)
                 .textFieldStyle(.plain)
                 .font(.title3)
                 .foregroundColor(Theme.text)
@@ -533,7 +533,7 @@ struct VerbSessionView: View {
                     check()
                 }
             if !session.answered {
-                Text("Забытый акцент засчитаем с напоминанием, но falamos ≠ falámos — это разные времена.")
+                Text(L("Забытый акцент засчитаем с напоминанием, но falamos ≠ falámos — это разные времена."))
                     .font(.caption)
                     .foregroundColor(.secondary)
                 HStack(spacing: 12) {
@@ -541,7 +541,7 @@ struct VerbSessionView: View {
                         session.giveUp(model: model)
                         fieldFocused = false
                     } label: {
-                        Text("Не знаю")
+                        Text(L("Не знаю"))
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(GothicButtonStyle(.secondary))
@@ -549,7 +549,7 @@ struct VerbSessionView: View {
                     Button {
                         check()
                     } label: {
-                        Text("Проверить")
+                        Text(L("Проверить"))
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(GothicButtonStyle(.primary))
@@ -570,28 +570,28 @@ struct VerbSessionView: View {
     private func feedback(_ q: VerbQuestion) -> some View {
         VStack(spacing: 10) {
             if session.lastCorrect && session.lastVerdict == .accentsOnly {
-                Label("Верно, но с акцентом", systemImage: "checkmark.circle.fill")
+                Label(L("Верно, но с акцентом"), systemImage: "checkmark.circle.fill")
                     .font(Theme.pixel(20, relativeTo: .title3))
                     .foregroundColor(Theme.goldBright)
                     .accessibilityIdentifier("accent-feedback")
                 AccentHighlight.text(q.answer, typed: session.lastTyped, lead: q.lead + " ")
                     .font(.title3.weight(.semibold))
                     .foregroundColor(Theme.text)
-                Text("Засчитано. Не забывайте акцент: в глаголах он часто отличает одно время от другого.")
+                Text(L("Засчитано. Не забывайте акцент: в глаголах он часто отличает одно время от другого."))
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
             } else if session.lastCorrect {
-                Label("Верно!", systemImage: "checkmark.circle.fill")
+                Label(L("Верно!"), systemImage: "checkmark.circle.fill")
                     .font(Theme.pixel(22, relativeTo: .title3))
                     .foregroundColor(Theme.moss)
             } else {
-                Label("Неверно", systemImage: "xmark.circle.fill")
+                Label(L("Неверно"), systemImage: "xmark.circle.fill")
                     .font(Theme.pixel(22, relativeTo: .title3))
                     .foregroundColor(Theme.red)
                 switch session.lastVerdict {
                 case let .otherForm(form, tenseName, pronoun):
-                    Text("«\(form)» — это \(tenseName)\(pronoun.isEmpty ? "" : " (" + pronoun + ")"). Здесь нужен акцент:")
+                    Text(L("«%@» — это %@%@. Здесь нужен акцент:", form, tenseName, pronoun.isEmpty ? "" : " (" + pronoun + ")"))
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
@@ -603,12 +603,12 @@ struct VerbSessionView: View {
                     AccentHighlight.text(q.answer, typed: session.lastTyped, lead: q.lead + " ")
                         .font(.headline)
                         .foregroundColor(Theme.text)
-                    Text("Включена строгая проверка ударений (Настройки → Упражнения).")
+                    Text(L("Включена строгая проверка ударений (Настройки → Упражнения)."))
                         .font(.caption)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
                 default:
-                    Text("Правильно: \(q.lead) \(q.answer)")
+                    Text(L("Правильно: %@ %@", q.lead, q.answer))
                         .font(.headline)
                         .multilineTextAlignment(.center)
                 }
@@ -622,7 +622,7 @@ struct VerbSessionView: View {
             Button {
                 session.next()
             } label: {
-                Text(session.position + 1 >= session.queue.count ? "Завершить" : "Далее")
+                Text(session.position + 1 >= session.queue.count ? L("Завершить") : L("Далее"))
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(GothicButtonStyle(.primary))
@@ -640,7 +640,7 @@ struct VerbSessionView: View {
                     Text("\(session.percent)%")
                         .font(.system(size: 54, weight: .bold))
                         .foregroundColor(session.percent >= 80 ? Theme.moss : Theme.ember)
-                    Text("Верно с первого раза: \(session.correctCount) из \(session.totalCount)")
+                    Text(L("Верно с первого раза: %d из %d", session.correctCount, session.totalCount))
                         .foregroundColor(.secondary)
                 }
                 .frame(maxWidth: .infinity)
@@ -648,14 +648,14 @@ struct VerbSessionView: View {
             }
 
             if !session.accentSlips.isEmpty {
-                Section(header: GothicHeader("Проверьте акценты"),
-                        footer: Text("Эти ответы засчитаны, но в них не хватало акцента.")) {
+                Section(header: GothicHeader(L("Проверьте акценты")),
+                        footer: Text(L("Эти ответы засчитаны, но в них не хватало акцента."))) {
                     ForEach(session.accentSlips) { slip in
                         VStack(alignment: .leading, spacing: 2) {
                             AccentHighlight.text(slip.answer, typed: slip.typed)
                                 .font(.headline)
                                 .foregroundColor(Theme.text)
-                            Text("вы написали: \(slip.typed)")
+                            Text(L("вы написали: %@", slip.typed))
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -664,7 +664,7 @@ struct VerbSessionView: View {
             }
 
             if !session.mistakes.isEmpty {
-                Section(header: GothicHeader("Ошибки")) {
+                Section(header: GothicHeader(L("Ошибки"))) {
                     ForEach(session.mistakes) { q in
                         VStack(alignment: .leading, spacing: 2) {
                             Text("\(q.verb.inf) · \(q.tense.name)")
@@ -685,12 +685,12 @@ struct VerbSessionView: View {
                         fieldFocused = true
                     }
                 } label: {
-                    Label("Пройти ещё раз", systemImage: "arrow.clockwise")
+                    Label(L("Пройти ещё раз"), systemImage: "arrow.clockwise")
                 }
                 Button {
                     dismiss()
                 } label: {
-                    Label("Закончить", systemImage: "checkmark")
+                    Label(L("Закончить"), systemImage: "checkmark")
                 }
             }
         }

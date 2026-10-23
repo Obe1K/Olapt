@@ -18,20 +18,20 @@ enum ExerciseLevel: Int, CaseIterable, Identifiable {
     }
 
     var title: String {
-        return "Уровень \(number) · \(shortTitle)"
+        return L("Уровень %d · %@", number, shortTitle)
     }
 
     var shortTitle: String {
         switch self {
-        case .chooseMixed: return "Выбери вариант"
-        case .typeWord: return "Напиши слово"
+        case .chooseMixed: return L("Выбери вариант")
+        case .typeWord: return L("Напиши слово")
         }
     }
 
     var subtitle: String {
         switch self {
-        case .chooseMixed: return "Перевод или слово по-португальски — из 4 вариантов, вперемешку"
-        case .typeWord: return "Перевод дан, слово по-португальски пишете сами"
+        case .chooseMixed: return L("Перевод или слово по-португальски — из 4 вариантов, вперемешку")
+        case .typeWord: return L("Перевод дан, слово по-португальски пишете сами")
         }
     }
 

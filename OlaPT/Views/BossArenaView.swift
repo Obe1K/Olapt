@@ -86,7 +86,7 @@ struct BossArenaView: View {
                 .padding(.top, 8)
             }
             .accessibilityElement(children: .ignore)
-            .accessibilityLabel("\(boss.title): осталось \(bossHP) из \(boss.hp). Сердец у мага: \(hearts)")
+            .accessibilityLabel(L("%@: осталось %d из %d. Сердец у мага: %d", boss.title, bossHP, boss.hp, hearts))
             .accessibilityIdentifier("boss-arena")
     }
 }

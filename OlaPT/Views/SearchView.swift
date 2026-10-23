@@ -32,9 +32,9 @@ struct SearchView: View {
                 resultsSection
             }
         }
-        .navigationTitle("Словарь")
+        .navigationTitle(L("Словарь"))
         .navigationBarTitleDisplayMode(.inline)
-        .searchable(text: $query, prompt: "По-португальски, по-русски или по-английски")
+        .searchable(text: $query, prompt: L("По-португальски, по-русски или по-английски"))
         .autocorrectionDisabled()
         .textInputAutocapitalization(.never)
         .sheet(isPresented: $showEditor) {
@@ -56,10 +56,10 @@ struct SearchView: View {
                     .shadow(color: Theme.blood, radius: 0, x: 2, y: 2)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .accessibilityHidden(true)
-                Text("Введите слово")
+                Text(L("Введите слово"))
                     .font(Theme.pixel(17, relativeTo: .headline))
                     .foregroundColor(Theme.goldBright)
-                Text("Можно искать по-португальски, по-русски или по-английски. Работает и поиск по формам глаголов: например, «falámos» найдёт глагол falar.")
+                Text(L("Можно искать по-португальски, по-русски или по-английски. Работает и поиск по формам глаголов: например, «falámos» найдёт глагол falar."))
                     .font(.subheadline)
                     .foregroundColor(.secondary)
             }
@@ -70,7 +70,7 @@ struct SearchView: View {
     @ViewBuilder
     private var topicsSection: some View {
         if !model.index.levels.isEmpty {
-            Section(header: GothicHeader("Обзор по уровням")) {
+            Section(header: GothicHeader(L("Обзор по уровням"))) {
                 ForEach(model.index.levels, id: \.self) { level in
                     NavigationLink {
                         LevelTopicsView(level: level)
@@ -85,7 +85,7 @@ struct SearchView: View {
                 }
             }
         }
-        Section(header: GothicHeader("Обзор по темам")) {
+        Section(header: GothicHeader(L("Обзор по темам"))) {
             ForEach(model.index.topics) { topic in
                 NavigationLink {
                     TopicWordsView(topic: topic)
@@ -105,22 +105,22 @@ struct SearchView: View {
     private var resultsSection: some View {
         let found = results
         if found.isEmpty {
-            Section(footer: Text("Словарь iOS работает без интернета, если он загружен: при первом открытии нажмите «Управлять» и скачайте, например, «Português — English».")) {
-                EmptyHint(title: "Ничего не найдено",
-                          message: "Проверьте написание, посмотрите слово в словаре iOS или добавьте его в свой словарь.")
+            Section(footer: Text(L("Словарь iOS работает без интернета, если он загружен: при первом открытии нажмите «Управлять» и скачайте, например, «Português — English»."))) {
+                EmptyHint(title: L("Ничего не найдено"),
+                          message: L("Проверьте написание, посмотрите слово в словаре iOS или добавьте его в свой словарь."))
                 Button {
                     dictionaryTerm = IdentifiedTerm(text: trimmedQuery)
                 } label: {
-                    Label("Посмотреть «\(trimmedQuery)» в словаре iOS", systemImage: "character.book.closed")
+                    Label(L("Посмотреть «%@» в словаре iOS", trimmedQuery), systemImage: "character.book.closed")
                 }
                 Button {
                     showEditor = true
                 } label: {
-                    Label("Добавить «\(trimmedQuery)» как своё слово", systemImage: "plus.circle")
+                    Label(L("Добавить «%@» как своё слово", trimmedQuery), systemImage: "plus.circle")
                 }
             }
         } else {
-            Section(header: GothicHeader("Найдено: \(found.count)")) {
+            Section(header: GothicHeader(L("Найдено: %d", found.count))) {
                 ForEach(found) { result in
                     NavigationLink {
                         WordCardView(word: result.word)
@@ -133,12 +133,12 @@ struct SearchView: View {
                 Button {
                     dictionaryTerm = IdentifiedTerm(text: trimmedQuery)
                 } label: {
-                    Label("Посмотреть в словаре iOS", systemImage: "character.book.closed")
+                    Label(L("Посмотреть в словаре iOS"), systemImage: "character.book.closed")
                 }
                 Button {
                     showEditor = true
                 } label: {
-                    Label("Нет нужного слова? Добавить своё", systemImage: "plus.circle")
+                    Label(L("Нет нужного слова? Добавить своё"), systemImage: "plus.circle")
                 }
             }
         }
@@ -150,10 +150,10 @@ struct SearchView: View {
 enum Levels {
     static func title(_ level: String) -> String {
         switch level {
-        case "A1": return "A1 — начальный"
-        case "A2": return "A2 — элементарный"
-        case "B1": return "B1 — средний"
-        case "B2": return "B2 — выше среднего"
+        case "A1": return L("A1 — начальный")
+        case "A2": return L("A2 — элементарный")
+        case "B1": return L("B1 — средний")
+        case "B2": return L("B2 — выше среднего")
         default: return level
         }
     }
@@ -164,7 +164,7 @@ struct LevelsView: View {
 
     var body: some View {
         GothicList {
-            Section(footer: Text("Уровни по шкале CEFR. Откройте уровень и выберите тему, чтобы создать коллекцию поменьше, или возьмите все слова уровня сразу.")) {
+            Section(footer: Text(L("Уровни по шкале CEFR. Откройте уровень и выберите тему, чтобы создать коллекцию поменьше, или возьмите все слова уровня сразу."))) {
                 ForEach(model.index.levels, id: \.self) { level in
                     NavigationLink {
                         LevelTopicsView(level: level)
@@ -179,7 +179,7 @@ struct LevelsView: View {
                 }
             }
         }
-        .navigationTitle("По уровням")
+        .navigationTitle(L("По уровням"))
     }
 }
 
@@ -193,17 +193,17 @@ struct LevelTopicsView: View {
         GothicList {
             Section {
                 NavigationLink {
-                    WordSetView(title: "Уровень \(level)", collectionName: "Уровень \(level)", words: all)
+                    WordSetView(title: L("Уровень %@", level), collectionName: L("Уровень %@", level), words: all)
                 } label: {
                     HStack {
-                        Text("Все слова уровня")
+                        Text(L("Все слова уровня"))
                         Spacer()
                         Text("\(all.count)")
                             .foregroundColor(.secondary)
                     }
                 }
             }
-            Section(header: GothicHeader("По темам")) {
+            Section(header: GothicHeader(L("По темам"))) {
                 ForEach(groups, id: \.topic.id) { g in
                     NavigationLink {
                         WordSetView(title: "\(level) · \(g.topic.name)",
@@ -238,12 +238,12 @@ struct WordSetView: View {
             Section {
                 Button {
                     let created = model.createCollection(name: collectionName, wordIDs: words.map { $0.id })
-                    createdMessage = "Коллекция «\(created.name)» создана: \(created.wordIDs.count) \(Plural.words(created.wordIDs.count)). Найдите её на вкладке «Коллекции»."
+                    createdMessage = L("Коллекция «%@» создана: %d %@. Найдите её на вкладке «Коллекции».", created.name, created.wordIDs.count, Plural.words(created.wordIDs.count))
                 } label: {
-                    Label("Создать коллекцию из набора", systemImage: "rectangle.stack.badge.plus")
+                    Label(L("Создать коллекцию из набора"), systemImage: "rectangle.stack.badge.plus")
                 }
             }
-            Section(header: GothicHeader("Слова (\(words.count))")) {
+            Section(header: GothicHeader(L("Слова (%d)", words.count))) {
                 ForEach(words) { w in
                     NavigationLink {
                         WordCardView(word: w)
@@ -255,7 +255,7 @@ struct WordSetView: View {
         }
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
-        .alert("Готово", isPresented: Binding(
+        .alert(L("Готово"), isPresented: Binding(
             get: { createdMessage != nil },
             set: { if !$0 { createdMessage = nil } }
         )) {
@@ -273,7 +273,7 @@ struct TopicsView: View {
 
     var body: some View {
         GothicList {
-            Section(footer: Text("Откройте набор и нажмите «Создать коллекцию», чтобы начать учить слова из него.")) {
+            Section(footer: Text(L("Откройте набор и нажмите «Создать коллекцию», чтобы начать учить слова из него."))) {
                 ForEach(model.index.topics) { topic in
                     NavigationLink {
                         TopicWordsView(topic: topic)
@@ -288,7 +288,7 @@ struct TopicsView: View {
                 }
             }
         }
-        .navigationTitle("Готовые наборы")
+        .navigationTitle(L("Готовые наборы"))
     }
 }
 
@@ -306,12 +306,12 @@ struct TopicWordsView: View {
             Section {
                 Button {
                     let created = model.createCollection(name: topic.name, wordIDs: words.map { $0.id })
-                    createdMessage = "Коллекция «\(created.name)» создана: \(created.wordIDs.count) слов. Найдите её на вкладке «Коллекции»."
+                    createdMessage = L("Коллекция «%@» создана: %d %@. Найдите её на вкладке «Коллекции».", created.name, created.wordIDs.count, Plural.words(created.wordIDs.count))
                 } label: {
-                    Label("Создать коллекцию из набора", systemImage: "rectangle.stack.badge.plus")
+                    Label(L("Создать коллекцию из набора"), systemImage: "rectangle.stack.badge.plus")
                 }
             }
-            Section(header: GothicHeader("Слова (\(words.count))")) {
+            Section(header: GothicHeader(L("Слова (%d)", words.count))) {
                 ForEach(words) { w in
                     NavigationLink {
                         WordCardView(word: w)
@@ -323,7 +323,7 @@ struct TopicWordsView: View {
         }
         .navigationTitle(topic.name)
         .navigationBarTitleDisplayMode(.inline)
-        .alert("Готово", isPresented: Binding(
+        .alert(L("Готово"), isPresented: Binding(
             get: { createdMessage != nil },
             set: { if !$0 { createdMessage = nil } }
         )) {
@@ -358,38 +358,38 @@ struct CustomWordEditor: View {
     var body: some View {
         NavigationStack {
             GothicForm {
-                Section(header: GothicHeader("Слово по-португальски")) {
-                    TextField("Например, saudade", text: $pt)
+                Section(header: GothicHeader(L("Слово по-португальски"))) {
+                    TextField(L("Например, saudade"), text: $pt)
                         .autocorrectionDisabled()
                         .textInputAutocapitalization(.never)
-                    Picker("Часть речи", selection: $pos) {
+                    Picker(L("Часть речи"), selection: $pos) {
                         ForEach(PartOfSpeech.choices, id: \.self) { p in
                             Text(PartOfSpeech.label(p)).tag(p)
                         }
                     }
                     if pos == "n" {
-                        Picker("Род", selection: $gender) {
-                            Text("м. р. (o)").tag("m")
-                            Text("ж. р. (a)").tag("f")
-                            Text("м./ж. р.").tag("mf")
+                        Picker(L("Род"), selection: $gender) {
+                            Text(L("м. р. (o)")).tag("m")
+                            Text(L("ж. р. (a)")).tag("f")
+                            Text(L("м./ж. р.")).tag("mf")
                         }
                     }
                 }
-                Section(header: GothicHeader("Переводы"), footer: Text("Несколько переводов разделяйте запятой.")) {
-                    ForEach(model.index.languages, id: \.self) { lang in
+                Section(header: GothicHeader(L("Переводы")), footer: Text(L("Несколько переводов разделяйте запятой."))) {
+                    ForEach(model.displayLanguages, id: \.self) { lang in
                         TextField(Languages.name(lang), text: bindingFor(lang))
                             .autocorrectionDisabled()
                     }
                 }
             }
-            .navigationTitle("Новое слово")
+            .navigationTitle(L("Новое слово"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Отмена") { dismiss() }
+                    Button(L("Отмена")) { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Сохранить") { save() }
+                    Button(L("Сохранить")) { save() }
                         .disabled(!canSave)
                 }
             }

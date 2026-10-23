@@ -285,10 +285,10 @@ final class DictionaryIndex {
 
         if let i = exactPT[t]?.first { return (words[i], "") }
         // Множественное число и женский род раньше форм глаголов: «casas» — это casa, а не «tu casas».
-        if let i = inflectedExact[t]?.first { return (words[i], "форма слова «\(words[i].pt)»") }
+        if let i = inflectedExact[t]?.first { return (words[i], L("форма слова «%@»", words[i].pt)) }
         if let hit = formIndex[f]?.first(where: { $0.form.lowercased() == t }),
            let w = byID[hit.verbWordID] {
-            return (w, "форма глагола «\(w.pt)»")
+            return (w, L("форма глагола «%@»", w.pt))
         }
 
         // Без учёта диакритики сравниваем только слова, в которых её нет совсем (её потеряли
@@ -298,27 +298,27 @@ final class DictionaryIndex {
         if !hasMarks {
             if let i = foldedPTMap[f]?.first { return (words[i], "") }
             if let hit = formIndex[f]?.first, let w = byID[hit.verbWordID] {
-                return (w, "форма глагола «\(w.pt)»")
+                return (w, L("форма глагола «%@»", w.pt))
             }
-            if let i = inflectedFolded[f]?.first { return (words[i], "форма слова «\(words[i].pt)»") }
+            if let i = inflectedFolded[f]?.first { return (words[i], L("форма слова «%@»", words[i].pt)) }
         }
 
         // Другие написания форм: «oiço» = «ouço» (ouvir).
         if let inf = Inflection.verbAliases[t], let i = exactPT[inf]?.first {
-            return (words[i], "форма глагола «\(words[i].pt)»")
+            return (words[i], L("форма глагола «%@»", words[i].pt))
         }
 
         // Превосходная степень: «lindíssimo» → lindo, «tardíssimo» → tarde, «facílimo» → fácil.
         for base in Inflection.superlativeBases(t) {
             if let i = exactPT[base]?.first, words[i].pos == "adj" || words[i].pos == "adv" {
-                return (words[i], "превосходная степень от «\(words[i].pt)»")
+                return (words[i], L("превосходная степень от «%@»", words[i].pt))
             }
         }
 
         // Второе написание: «caráter» → carácter, «contato» → contacto.
         if let i = altSpelling[t]?.first {
             let w = words[i]
-            return (w, t == TextUtil.modernSpelling(w.pt.lowercased()) ? "" : "форма слова «\(w.pt)»")
+            return (w, t == TextUtil.modernSpelling(w.pt.lowercased()) ? "" : L("форма слова «%@»", w.pt))
         }
 
         // Старая орфография: «acção», «óptimo», «director».
@@ -339,7 +339,7 @@ final class DictionaryIndex {
                 if let found = lookupToken(c) {
                     let w = found.word
                     let isVerb = w.isVerb
-                    return (w, isVerb ? "форма глагола «\(w.pt)»" : found.hint)
+                    return (w, isVerb ? L("форма глагола «%@»", w.pt) : found.hint)
                 }
             }
         }
@@ -422,7 +422,7 @@ final class DictionaryIndex {
         let parts = TextUtil.removePunctuation(query.lowercased())
             .split(whereSeparator: { $0 == " " }).map(String.init)
         if parts.count >= 2, let w = lookupPhraseForms(parts), !found.contains(where: { $0.word.id == w.id }) {
-            found.insert(SearchResult(word: w, score: 100, hint: "выражение «\(w.pt)»"), at: 0)
+            found.insert(SearchResult(word: w, score: 100, hint: L("выражение «%@»", w.pt)), at: 0)
         }
         return found
     }
@@ -458,7 +458,7 @@ final class DictionaryIndex {
                     let label = h.personLabel.isEmpty ? "" : ", " + h.personLabel
                     // Если введено с ударением («falámos»), показываем именно эту форму.
                     if hints[i] == nil || h.form.lowercased() == typed {
-                        hints[i] = "форма «\(h.form)» — \(h.tenseName)\(label)"
+                        hints[i] = L("форма «%@» — %@", h.form, h.tenseName) + label
                     }
                     let current = scores[i] ?? 0
                     if current < 95 { scores[i] = 95 }

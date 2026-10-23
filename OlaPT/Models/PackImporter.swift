@@ -11,9 +11,9 @@ enum PackImporter {
         var errorDescription: String? {
             switch self {
             case .unreadable:
-                return "Не удалось прочитать файл. Нужен текстовый файл в кодировке UTF-8."
+                return L("Не удалось прочитать файл. Нужен текстовый файл в кодировке UTF-8.")
             case .empty:
-                return "В файле не найдено ни одного слова."
+                return L("В файле не найдено ни одного слова.")
             case .invalid(let message):
                 return message
             }
@@ -51,7 +51,7 @@ enum PackImporter {
             if pt.isEmpty { continue }
 
             if entries.isEmpty {
-                let headerWords: Set<String> = ["pt", "portugues", "portuguese", "palavra", "word", "слово"]
+                let headerWords: Set<String> = ["pt", "portugues", "portuguese", "palavra", "word", "слово"]  // l10n-ok: заголовок столбца в импортируемом файле
                 if headerWords.contains(TextUtil.fold(pt)) { continue }
             }
 

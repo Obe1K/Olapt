@@ -30,7 +30,7 @@ struct SettingsView: View {
             list.append(LanguageChoice(code: code, title: Languages.name(code)))
         }
         if model.exerciseLanguages.count > 1 {
-            list.append(LanguageChoice(code: "mixed", title: "Все языки вперемешку"))
+            list.append(LanguageChoice(code: "mixed", title: L("Все языки вперемешку")))
         }
         return list
     }
@@ -42,11 +42,31 @@ struct SettingsView: View {
         return version + " (" + build + ")"
     }
 
+    /// Язык интерфейса: переключается сразу.
+    private var uiLanguage: Binding<String> {
+        return Binding(
+            get: { model.settings.uiLanguage },
+            set: { model.setUILanguage($0) }
+        )
+    }
+
     var body: some View {
         GothicForm {
-            Section(header: GothicHeader("Сегодня"),
-                    footer: Text("Сколько новых слов из коллекций добавлять в план каждый день. Повторения добавляются сами в нужные дни. 10 новых в день — это около 10 минут занятий, когда наберутся повторения.")) {
-                Picker("Новых слов в день", selection: setting(\.newWordsPerDay)) {
+            // Заголовок на двух языках — чтобы его нашёл тот, кто случайно включил чужой язык
+            Section(header: GothicHeader("Язык · Language"),  // l10n-ok: одинаково на обоих языках
+                    footer: Text(L("Язык меню и подсказок. Переводы слов в упражнениях переключаются на тот же язык — его можно поменять ниже."))) {
+                Picker(L("Язык приложения"), selection: uiLanguage) {
+                    ForEach(Loc.supported, id: \.self) { code in
+                        Text(Loc.nativeName(code)).tag(code)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .accessibilityIdentifier("ui-language")
+            }
+
+            Section(header: GothicHeader(L("Сегодня")),
+                    footer: Text(L("Сколько новых слов из коллекций добавлять в план каждый день. Повторения добавляются сами в нужные дни. 10 новых в день — это около 10 минут занятий, когда наберутся повторения."))) {
+                Picker(L("Новых слов в день"), selection: setting(\.newWordsPerDay)) {
                     Text("5").tag(5)
                     Text("10").tag(10)
                     Text("15").tag(15)
@@ -55,62 +75,62 @@ struct SettingsView: View {
                 }
             }
 
-            Section(header: GothicHeader("Упражнения"),
-                    footer: Text("Без строгой проверки ответ без акцента засчитывается, но приложение покажет, где он нужен. Со строгой — такой ответ считается ошибкой.")) {
-                Picker("Язык перевода", selection: setting(\.exerciseLanguage)) {
+            Section(header: GothicHeader(L("Упражнения")),
+                    footer: Text(L("Без строгой проверки ответ без акцента засчитывается, но приложение покажет, где он нужен. Со строгой — такой ответ считается ошибкой."))) {
+                Picker(L("Язык перевода"), selection: setting(\.exerciseLanguage)) {
                     ForEach(languageChoices) { choice in
                         Text(choice.title).tag(choice.code)
                     }
                 }
-                Toggle("Строго учитывать ударения и ç, ã", isOn: setting(\.strictAccents))
-                Picker("Слов в тренировке коллекции", selection: setting(\.sessionSize)) {
-                    Text("Все слова").tag(0)
+                Toggle(L("Строго учитывать ударения и ç, ã"), isOn: setting(\.strictAccents))
+                Picker(L("Слов в тренировке коллекции"), selection: setting(\.sessionSize)) {
+                    Text(L("Все слова")).tag(0)
                     Text("10").tag(10)
                     Text("20").tag(20)
                     Text("30").tag(30)
                 }
             }
 
-            Section(header: GothicHeader("Глаголы"),
-                    footer: Text("Для тренировки спряжения: сколько верных ответов нужно, чтобы время глагола считалось выученным.")) {
+            Section(header: GothicHeader(L("Глаголы")),
+                    footer: Text(L("Для тренировки спряжения: сколько верных ответов нужно, чтобы время глагола считалось выученным."))) {
                 Stepper(value: setting(\.masteryThreshold), in: 3...30) {
-                    Text("«Выучено» после \(model.settings.masteryThreshold) верных")
+                    Text(L("«Выучено» после %d верных", model.settings.masteryThreshold))
                 }
-                Toggle("Ошибка снимает один балл", isOn: setting(\.wrongPenalty))
+                Toggle(L("Ошибка снимает один балл"), isOn: setting(\.wrongPenalty))
             }
 
-            Section(header: GothicHeader("Звуки"),
-                    footer: Text("Короткие 8-битные звуки на верный и неверный ответ и тихая музыка башни на вкладке «Сегодня». В беззвучном режиме iPhone молчат.")) {
-                Toggle("Звуки ответов", isOn: setting(\.soundsOn))
-                Toggle("Музыка башни", isOn: setting(\.musicOn))
+            Section(header: GothicHeader(L("Звуки")),
+                    footer: Text(L("Короткие 8-битные звуки на верный и неверный ответ и тихая музыка башни на вкладке «Сегодня». В беззвучном режиме iPhone молчат."))) {
+                Toggle(L("Звуки ответов"), isOn: setting(\.soundsOn))
+                Toggle(L("Музыка башни"), isOn: setting(\.musicOn))
             }
 
-            Section(header: GothicHeader("Озвучка"),
+            Section(header: GothicHeader(L("Озвучка")),
                     footer: Text(Speaker.shared.hasEuropeanVoice
-                                 ? "Найден голос европейского португальского (pt-PT)."
-                                 : "Голос европейского португальского не найден. Скачайте его: Настройки iPhone → Универсальный доступ → Устный контент → Голоса → Португальский (Португалия).")) {
-                Toggle("Произносить слово при открытии карточки", isOn: setting(\.autoSpeak))
+                                 ? L("Найден голос европейского португальского (pt-PT).")
+                                 : L("Голос европейского португальского не найден. Скачайте его: Настройки iPhone → Универсальный доступ → Устный контент → Голоса → Португальский (Португалия)."))) {
+                Toggle(L("Произносить слово при открытии карточки"), isOn: setting(\.autoSpeak))
             }
 
-            Section(header: GothicHeader("Словари")) {
+            Section(header: GothicHeader(L("Словари"))) {
                 NavigationLink {
                     DictionariesView()
                 } label: {
-                    Label("Словари и импорт", systemImage: "books.vertical")
+                    Label(L("Словари и импорт"), systemImage: "books.vertical")
                 }
             }
 
-            Section(header: GothicHeader("Данные")) {
+            Section(header: GothicHeader(L("Данные"))) {
                 Button(role: .destructive) {
                     confirmReset = true
                 } label: {
-                    Label("Сбросить прогресс обучения", systemImage: "arrow.counterclockwise")
+                    Label(L("Сбросить прогресс обучения"), systemImage: "arrow.counterclockwise")
                 }
             }
 
-            Section(header: GothicHeader("О приложении")) {
+            Section(header: GothicHeader(L("О приложении"))) {
                 HStack {
-                    Text("Версия")
+                    Text(L("Версия"))
                     Spacer()
                     Text(appVersion)
                         .foregroundColor(.secondary)
@@ -118,22 +138,22 @@ struct SettingsView: View {
                 NavigationLink {
                     PrivacyInfoView()
                 } label: {
-                    Text("Конфиденциальность")
+                    Text(L("Конфиденциальность"))
                 }
-                Text("Словари составлены для европейского португальского (pt-PT), орфография — по Acordo Ortográfico. Шрифты Tiny5 и Jacquarda Bastarda 9 — SIL Open Font License 1.1.")
+                Text(L("Словари составлены для европейского португальского (pt-PT), орфография — по Acordo Ortográfico. Шрифты Tiny5 и Jacquarda Bastarda 9 — SIL Open Font License 1.1."))
                     .font(.footnote)
                     .foregroundColor(.secondary)
             }
         }
-        .navigationTitle("Настройки")
+        .navigationTitle(L("Настройки"))
         .navigationBarTitleDisplayMode(.inline)
-        .confirmationDialog("Сбросить весь прогресс?", isPresented: $confirmReset, titleVisibility: .visible) {
-            Button("Сбросить прогресс", role: .destructive) {
+        .confirmationDialog(L("Сбросить весь прогресс?"), isPresented: $confirmReset, titleVisibility: .visible) {
+            Button(L("Сбросить прогресс"), role: .destructive) {
                 model.resetProgress()
             }
-            Button("Отмена", role: .cancel) {}
+            Button(L("Отмена"), role: .cancel) {}
         } message: {
-            Text("Коллекции и слова останутся, но все слова станут «новыми». Это действие нельзя отменить.")
+            Text(L("Коллекции и слова останутся, но все слова станут «новыми». Это действие нельзя отменить."))
         }
     }
 }
@@ -144,13 +164,13 @@ struct PrivacyInfoView: View {
     var body: some View {
         GothicList {
             Section {
-                Text("Приложение не собирает, не передаёт и не продаёт никакие данные. У него нет аккаунтов, рекламы и аналитики.")
-                Text("Коллекции, прогресс и добавленные вами слова хранятся только на вашем устройстве. Если включено резервное копирование iCloud, они могут попасть в резервную копию устройства средствами iOS.")
-                Text("Импортируемые словари читаются только из выбранных вами файлов и никуда не отправляются.")
-                Text("Озвучка слов выполняется системным синтезатором речи прямо на устройстве.")
+                Text(L("Приложение не собирает, не передаёт и не продаёт никакие данные. У него нет аккаунтов, рекламы и аналитики."))
+                Text(L("Коллекции, прогресс и добавленные вами слова хранятся только на вашем устройстве. Если включено резервное копирование iCloud, они могут попасть в резервную копию устройства средствами iOS."))
+                Text(L("Импортируемые словари читаются только из выбранных вами файлов и никуда не отправляются."))
+                Text(L("Озвучка слов выполняется системным синтезатором речи прямо на устройстве."))
             }
         }
-        .navigationTitle("Конфиденциальность")
+        .navigationTitle(L("Конфиденциальность"))
         .navigationBarTitleDisplayMode(.inline)
     }
 }
@@ -167,8 +187,8 @@ struct DictionariesView: View {
 
     var body: some View {
         GothicList {
-            Section(header: GothicHeader("Установленные словари"),
-                    footer: Text("Отключённый словарь не участвует в поиске и упражнениях. Переводы из всех включённых словарей показываются на одной карточке слова.")) {
+            Section(header: GothicHeader(L("Установленные словари")),
+                    footer: Text(L("Отключённый словарь не участвует в поиске и упражнениях. Переводы из всех включённых словарей показываются на одной карточке слова."))) {
                 ForEach(model.packs) { pack in
                     Toggle(isOn: Binding(
                         get: { model.isPackEnabled(pack.id) },
@@ -176,7 +196,7 @@ struct DictionariesView: View {
                     )) {
                         VStack(alignment: .leading, spacing: 2) {
                             Text(pack.name)
-                            Text("\(pack.langName) · \(pack.entryCount) слов" + (pack.isBundled ? "" : " · добавлен вами"))
+                            Text(L("%@ · %d %@", Languages.name(pack.lang), pack.entryCount, Plural.words(pack.entryCount)) + (pack.isBundled ? "" : L(" · добавлен вами")))
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -191,20 +211,20 @@ struct DictionariesView: View {
                 }
             }
 
-            Section(header: GothicHeader("Добавить словарь")) {
+            Section(header: GothicHeader(L("Добавить словарь"))) {
                 Button {
                     showImporter = true
                 } label: {
-                    Label("Импортировать файл…", systemImage: "square.and.arrow.down")
+                    Label(L("Импортировать файл…"), systemImage: "square.and.arrow.down")
                 }
                 NavigationLink {
                     DictionaryFormatHelpView()
                 } label: {
-                    Label("Как составить свой словарь", systemImage: "questionmark.circle")
+                    Label(L("Как составить свой словарь"), systemImage: "questionmark.circle")
                 }
             }
         }
-        .navigationTitle("Словари")
+        .navigationTitle(L("Словари"))
         .navigationBarTitleDisplayMode(.inline)
         .fileImporter(
             isPresented: $showImporter,
@@ -218,7 +238,7 @@ struct DictionariesView: View {
                 message = text
             }
         }
-        .alert("Словари", isPresented: Binding(
+        .alert(L("Словари"), isPresented: Binding(
             get: { message != nil },
             set: { if !$0 { message = nil } }
         )) {
@@ -231,7 +251,7 @@ struct DictionariesView: View {
     private func handleImport(_ result: Result<[URL], Error>) {
         switch result {
         case .failure(let error):
-            message = "Не удалось открыть файл: \(error.localizedDescription)"
+            message = L("Не удалось открыть файл: %@", error.localizedDescription)
         case .success(let urls):
             guard let url = urls.first else { return }
             let accessed = url.startAccessingSecurityScopedResource()
@@ -242,7 +262,7 @@ struct DictionariesView: View {
                 let data = try Data(contentsOf: url)
                 if let pack = PackImporter.parseJSON(data) {
                     _ = try model.installPack(pack)
-                    message = "Словарь «\(pack.name)» добавлен: \(pack.entries.count) слов."
+                    message = L("Словарь «%@» добавлен: %d %@.", pack.name, pack.entries.count, Plural.words(pack.entries.count))
                 } else if let text = String(data: data, encoding: .utf8) ?? String(data: data, encoding: .windowsCP1251) {
                     pendingText = text
                     pendingName = url.deletingPathExtension().lastPathComponent
@@ -251,7 +271,7 @@ struct DictionariesView: View {
                     message = PackImporter.ImportError.unreadable.localizedDescription
                 }
             } catch {
-                message = "Не удалось прочитать файл: \(error.localizedDescription)"
+                message = L("Не удалось прочитать файл: %@", error.localizedDescription)
             }
         }
     }
@@ -275,11 +295,11 @@ struct CSVImportSheet: View {
     var body: some View {
         NavigationStack {
             GothicForm {
-                Section(header: GothicHeader("Название словаря")) {
-                    TextField("Например, Португальский ↔ украинский", text: $name)
+                Section(header: GothicHeader(L("Название словаря"))) {
+                    TextField(L("Например, Португальский ↔ украинский"), text: $name)
                 }
-                Section(header: GothicHeader("Язык переводов в файле")) {
-                    Picker("Язык", selection: $lang) {
+                Section(header: GothicHeader(L("Язык переводов в файле"))) {
+                    Picker(L("Язык"), selection: $lang) {
                         ForEach(Languages.importable, id: \.self) { code in
                             Text(Languages.name(code)).tag(code)
                         }
@@ -292,14 +312,14 @@ struct CSVImportSheet: View {
                     }
                 }
             }
-            .navigationTitle("Импорт файла")
+            .navigationTitle(L("Импорт файла"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Отмена") { dismiss() }
+                    Button(L("Отмена")) { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Импорт") { runImport() }
+                    Button(L("Импорт")) { runImport() }
                 }
             }
             .onAppear {
@@ -313,11 +333,11 @@ struct CSVImportSheet: View {
 
     private func runImport() {
         let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        let finalName = trimmed.isEmpty ? "Мой словарь" : trimmed
+        let finalName = trimmed.isEmpty ? L("Мой словарь") : trimmed
         do {
             let pack = try PackImporter.parseCSV(text: text, name: finalName, lang: lang)
             _ = try model.installPack(pack)
-            onDone("Словарь «\(finalName)» добавлен: \(pack.entries.count) слов.")
+            onDone(L("Словарь «%@» добавлен: %d %@.", finalName, pack.entries.count, Plural.words(pack.entries.count)))
             dismiss()
         } catch {
             errorText = error.localizedDescription
@@ -328,13 +348,13 @@ struct CSVImportSheet: View {
 // MARK: - Справка по формату
 
 struct DictionaryFormatHelpView: View {
-    private let csvExample = """
+    private let csvExample = """  // l10n-ok: пример файла словаря (украинский)
     casa; будинок | дім
     obrigado; дякую
     pequeno-almoço; сніданок
     """
 
-    private let jsonExample = """
+    private let jsonExample = """  // l10n-ok: пример файла словаря (украинский)
     {
       "id": "uk-pt-eu",
       "name": "Українська ↔ Португальська (Європа)",
@@ -348,31 +368,31 @@ struct DictionaryFormatHelpView: View {
 
     var body: some View {
         GothicList {
-            Section(header: GothicHeader("Самый простой способ: CSV или TXT")) {
-                Text("Текстовый файл в кодировке UTF-8. В каждой строке — португальское слово, затем точка с запятой (или табуляция) и перевод. Несколько переводов разделяйте знаком «|».")
+            Section(header: GothicHeader(L("Самый простой способ: CSV или TXT"))) {
+                Text(L("Текстовый файл в кодировке UTF-8. В каждой строке — португальское слово, затем точка с запятой (или табуляция) и перевод. Несколько переводов разделяйте знаком «|»."))
                     .font(.subheadline)
                 Text(csvExample)
                     .font(.system(.footnote, design: .monospaced))
-                Text("При импорте приложение спросит название словаря и язык переводов. Переводы добавятся к тем же португальским словам, которые уже есть в приложении.")
+                Text(L("При импорте приложение спросит название словаря и язык переводов. Переводы добавятся к тем же португальским словам, которые уже есть в приложении."))
                     .font(.footnote)
                     .foregroundColor(.secondary)
             }
 
-            Section(header: GothicHeader("Расширенный формат: JSON")) {
-                Text("Такой же файл, как у встроенных словарей. Можно указать часть речи (pos: n, v, adj, adv, phrase …), род (g: m, f, mf), женскую форму (f) и бразильский вариант (br).")
+            Section(header: GothicHeader(L("Расширенный формат: JSON"))) {
+                Text(L("Такой же файл, как у встроенных словарей. Можно указать часть речи (pos: n, v, adj, adv, phrase …), род (g: m, f, mf), женскую форму (f) и бразильский вариант (br)."))
                     .font(.subheadline)
                 Text(jsonExample)
                     .font(.system(.footnote, design: .monospaced))
             }
 
-            Section(header: GothicHeader("Советы")) {
-                Text("Для европейского португальского используйте орфографию Португалии: autocarro, comboio, telemóvel, pequeno-almoço.")
+            Section(header: GothicHeader(L("Советы"))) {
+                Text(L("Для европейского португальского используйте орфографию Португалии: autocarro, comboio, telemóvel, pequeno-almoço."))
                     .font(.footnote)
-                Text("Если слов в файле много, сначала проверьте на небольшом образце: импортированный словарь можно удалить свайпом на экране «Словари».")
+                Text(L("Если слов в файле много, сначала проверьте на небольшом образце: импортированный словарь можно удалить свайпом на экране «Словари»."))
                     .font(.footnote)
             }
         }
-        .navigationTitle("Свой словарь")
+        .navigationTitle(L("Свой словарь"))
         .navigationBarTitleDisplayMode(.inline)
     }
 }

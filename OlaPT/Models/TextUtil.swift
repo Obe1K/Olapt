@@ -75,7 +75,7 @@ enum TextUtil {
     ///     (так «be (permanent)» и «be (temporary)» не принимаются за синонимы)
     static func normalizeAnswer(_ text: String, lang: String, keepAccents: Bool, keepParentheses: Bool = false) -> String {
         var t = (keepParentheses ? text : stripParentheses(text)).lowercased()
-        t = t.replacingOccurrences(of: "ё", with: "е")
+        t = t.replacingOccurrences(of: "ё", with: "е")  // l10n-ok: нормализация поиска
         if lang == "pt" && !keepAccents {
             t = t.folding(options: [.diacriticInsensitive], locale: nil)
         }

@@ -19,7 +19,7 @@ struct WordCardView: View {
         GothicList {
             headerSection
 
-            ForEach(model.index.languages, id: \.self) { lang in
+            ForEach(model.displayLanguages, id: \.self) { lang in
                 if word.hasTranslation(lang: lang) {
                     Section(header: GothicHeader(Languages.name(lang))) {
                         ForEach(word.tr(lang), id: \.self) { t in
@@ -30,13 +30,13 @@ struct WordCardView: View {
             }
 
             if !word.brazilian.isEmpty {
-                Section(header: GothicHeader("В Бразилии говорят")) {
+                Section(header: GothicHeader(L("В Бразилии говорят"))) {
                     Text(word.brazilian)
                 }
             }
 
             if !word.note.isEmpty {
-                Section(header: GothicHeader("Заметка")) {
+                Section(header: GothicHeader(L("Заметка"))) {
                     Text(word.note)
                         .font(.subheadline)
                 }
@@ -47,7 +47,7 @@ struct WordCardView: View {
                     NavigationLink {
                         ConjugationView(verb: verb)
                     } label: {
-                        Label("Спряжение глагола", systemImage: "tablecells")
+                        Label(L("Спряжение глагола"), systemImage: "tablecells")
                     }
                 }
             }
@@ -58,7 +58,7 @@ struct WordCardView: View {
                 Button {
                     showPicker = true
                 } label: {
-                    Label("Сохранить в коллекцию", systemImage: "plus.rectangle.on.folder")
+                    Label(L("Сохранить в коллекцию"), systemImage: "plus.rectangle.on.folder")
                 }
             }
 
@@ -67,7 +67,7 @@ struct WordCardView: View {
                     Button(role: .destructive) {
                         confirmDelete = true
                     } label: {
-                        Label("Удалить своё слово", systemImage: "trash")
+                        Label(L("Удалить своё слово"), systemImage: "trash")
                     }
                 }
             }
@@ -77,12 +77,12 @@ struct WordCardView: View {
         .sheet(isPresented: $showPicker) {
             CollectionPickerSheet(wordIDs: [word.id])
         }
-        .confirmationDialog("Удалить слово «\(word.pt)»?", isPresented: $confirmDelete, titleVisibility: .visible) {
-            Button("Удалить", role: .destructive) {
+        .confirmationDialog(L("Удалить слово «%@»?", word.pt), isPresented: $confirmDelete, titleVisibility: .visible) {
+            Button(L("Удалить"), role: .destructive) {
                 model.deleteCustomWord(wordID: word.id)
                 dismiss()
             }
-            Button("Отмена", role: .cancel) {}
+            Button(L("Отмена"), role: .cancel) {}
         }
         .onAppear {
             if model.settings.autoSpeak {
@@ -109,11 +109,11 @@ struct WordCardView: View {
                         .foregroundColor(.secondary)
                 }
                 if !word.feminine.isEmpty && word.feminine != word.pt {
-                    Text("женский род: \(word.feminine)")
+                    Text(L("женский род: %@", word.feminine))
                         .font(.subheadline)
                 }
                 if !word.plural.isEmpty {
-                    Text("мн. число: \(word.plural)")
+                    Text(L("мн. число: %@", word.plural))
                         .font(.subheadline)
                 }
             }
@@ -123,20 +123,32 @@ struct WordCardView: View {
 
     // MARK: Прогресс
 
-    private static let dateFormatter: DateFormatter = {
+    private static let ruDateFormatter: DateFormatter = {
         let f = DateFormatter()
         f.locale = Locale(identifier: "ru_RU")
         f.dateFormat = "d MMMM"
         return f
     }()
 
+    private static let enDateFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.locale = Locale(identifier: "en_GB")
+        f.dateFormat = "d MMMM"
+        return f
+    }()
+
+    /// «25 октября» / «25 October» — по языку интерфейса.
+    private static var dateFormatter: DateFormatter {
+        return Loc.isEnglish ? enDateFormatter : ruDateFormatter
+    }
+
     /// «сегодня», «завтра», «через 5 дней (23 октября)»
     private func whenText(_ due: Date) -> String {
         let d = FSRS.days(from: Date(), to: due)
-        if d <= 0 { return "сегодня" }
-        if d == 1 { return "завтра" }
-        if d == 2 { return "послезавтра" }
-        return "через \(d) \(Plural.days(d)) (\(WordCardView.dateFormatter.string(from: due)))"
+        if d <= 0 { return L("сегодня") }
+        if d == 1 { return L("завтра") }
+        if d == 2 { return L("послезавтра") }
+        return L("через %d %@ (%@)", d, Plural.days(d), WordCardView.dateFormatter.string(from: due))
     }
 
     /// «4 дня», «2 недели», «3 месяца»
@@ -155,29 +167,29 @@ struct WordCardView: View {
         let p = model.progress(for: word.id)
         let status = model.status(for: word.id)
         let state = model.srsState(for: word.id)
-        return Section(header: GothicHeader("Прогресс"),
-                       footer: Text("«Выучено» — когда слово держится в памяти 3 недели и дольше.")) {
+        return Section(header: GothicHeader(L("Прогресс")),
+                       footer: Text(L("«Выучено» — когда слово держится в памяти 3 недели и дольше."))) {
             HStack {
                 StatusBadge(status: status, fraction: model.fraction(for: word.id))
                 Spacer()
                 if let s = state {
-                    Text("помню ≈ \(spanText(s.stability))")
+                    Text(L("помню ≈ %@", spanText(s.stability)))
                         .foregroundColor(.secondary)
                 }
             }
             MasteryBar(fraction: model.fraction(for: word.id))
             if let s = state {
-                Text("Следующее повторение: \(whenText(s.due))")
+                Text(L("Следующее повторение: %@", whenText(s.due)))
                     .font(.subheadline)
             }
             if p.attempts > 0 {
-                Text("Верных ответов: \(p.correct) · ошибок: \(p.wrong)")
+                Text(L("Верных ответов: %d · ошибок: %d", p.correct, p.wrong))
                     .font(.footnote)
                     .foregroundColor(.secondary)
             } else if state == nil {
                 Text(model.user.collections.contains { $0.wordIDs.contains(word.id) }
-                     ? "Слово появится в плане «Сегодня», когда до него дойдёт очередь новых слов."
-                     : "Добавьте слово в коллекцию — оно появится в плане «Сегодня».")
+                     ? L("Слово появится в плане «Сегодня», когда до него дойдёт очередь новых слов.")
+                     : L("Добавьте слово в коллекцию — оно появится в плане «Сегодня»."))
                     .font(.footnote)
                     .foregroundColor(.secondary)
             }
@@ -220,9 +232,9 @@ struct CollectionPickerSheet: View {
     var body: some View {
         NavigationStack {
             GothicList {
-                Section(header: GothicHeader("Мои коллекции")) {
+                Section(header: GothicHeader(L("Мои коллекции"))) {
                     if model.user.collections.isEmpty {
-                        Text("Коллекций пока нет. Создайте первую ниже.")
+                        Text(L("Коллекций пока нет. Создайте первую ниже."))
                             .foregroundColor(.secondary)
                     }
                     ForEach(model.user.collections) { c in
@@ -243,19 +255,19 @@ struct CollectionPickerSheet: View {
                         }
                     }
                 }
-                Section(header: GothicHeader("Новая коллекция")) {
-                    TextField("Название", text: $newName)
-                    Button("Создать и добавить") {
+                Section(header: GothicHeader(L("Новая коллекция"))) {
+                    TextField(L("Название"), text: $newName)
+                    Button(L("Создать и добавить")) {
                         createAndAdd()
                     }
                     .disabled(newName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 }
             }
-            .navigationTitle("В коллекцию")
+            .navigationTitle(L("В коллекцию"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Готово") { dismiss() }
+                    Button(L("Готово")) { dismiss() }
                 }
             }
         }

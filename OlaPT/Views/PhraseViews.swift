@@ -134,14 +134,14 @@ struct PhraseSessionView: View {
                 } else if let q = session.current {
                     questionView(q)
                 } else {
-                    Text("Нет фраз").foregroundColor(.secondary)
+                    Text(L("Нет фраз")).foregroundColor(.secondary)
                 }
             }
             .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Закрыть") { dismiss() }
+                    Button(L("Закрыть")) { dismiss() }
                 }
             }
         }
@@ -164,11 +164,11 @@ struct PhraseSessionView: View {
                                  fill: Theme.bloodBright)
                     .padding(.top, 8)
                 if q.isRetry {
-                    Text("Повторим фразу, в которой была ошибка")
+                    Text(L("Повторим фразу, в которой была ошибка"))
                         .font(.footnote)
                         .foregroundColor(Theme.ember)
                 }
-                Text(q.typing ? "Напишите по-португальски" : "Соберите фразу по-португальски")
+                Text(q.typing ? L("Напишите по-португальски") : L("Соберите фразу по-португальски"))
                     .font(.footnote)
                     .foregroundColor(Theme.textDim)
                 Text(q.line.ru)
@@ -198,13 +198,13 @@ struct PhraseSessionView: View {
                             session.giveUp(model: model)
                             fieldFocused = false
                         } label: {
-                            Text("Не знаю").frame(maxWidth: .infinity)
+                            Text(L("Не знаю")).frame(maxWidth: .infinity)
                         }
                         .buttonStyle(GothicButtonStyle(.secondary))
                         Button {
                             check(q)
                         } label: {
-                            Text("Проверить").frame(maxWidth: .infinity)
+                            Text(L("Проверить")).frame(maxWidth: .infinity)
                         }
                         .buttonStyle(GothicButtonStyle(.primary))
                         .disabled(q.typing ? typed.trimmingCharacters(in: .whitespaces).isEmpty : session.picked.isEmpty)
@@ -221,7 +221,7 @@ struct PhraseSessionView: View {
                 Button {
                     session.next()
                 } label: {
-                    Text(session.position + 1 >= session.queue.count ? "Завершить" : "Далее")
+                    Text(session.position + 1 >= session.queue.count ? L("Завершить") : L("Далее"))
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(GothicButtonStyle(.primary))
@@ -295,7 +295,7 @@ struct PhraseSessionView: View {
     @ViewBuilder
     private func typingArea(_ q: PhraseQuestion) -> some View {
         VStack(alignment: .leading, spacing: 6) {
-            TextField("Фраза по-португальски", text: $typed, axis: .vertical)
+            TextField(L("Фраза по-португальски"), text: $typed, axis: .vertical)
                 .textFieldStyle(.plain)
                 .font(.title3)
                 .foregroundColor(Theme.text)
@@ -310,7 +310,7 @@ struct PhraseSessionView: View {
                 .onSubmit { check(q) }
                 .accessibilityIdentifier("phrase-field")
             if !session.answered {
-                Text("Регистр и знаки препинания не важны. Забытый акцент засчитаем с напоминанием.")
+                Text(L("Регистр и знаки препинания не важны. Забытый акцент засчитаем с напоминанием."))
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
@@ -327,7 +327,7 @@ struct PhraseSessionView: View {
         }
         VStack(spacing: 10) {
             if session.lastCorrect && session.lastVerdict == .accentsOnly {
-                Label("Верно, но с акцентом", systemImage: "checkmark.circle.fill")
+                Label(L("Верно, но с акцентом"), systemImage: "checkmark.circle.fill")
                     .font(Theme.pixel(20, relativeTo: .title3))
                     .foregroundColor(Theme.goldBright)
                     .accessibilityIdentifier("accent-feedback")
@@ -335,12 +335,12 @@ struct PhraseSessionView: View {
                     .font(.title3.weight(.semibold))
                     .foregroundColor(Theme.text)
             } else if session.lastCorrect {
-                Label("Верно!", systemImage: "checkmark.circle.fill")
+                Label(L("Верно!"), systemImage: "checkmark.circle.fill")
                     .font(Theme.pixel(22, relativeTo: .title3))
                     .foregroundColor(Theme.moss)
                     .accessibilityIdentifier("phrase-correct")
             } else {
-                Label("Неверно", systemImage: "xmark.circle.fill")
+                Label(L("Неверно"), systemImage: "xmark.circle.fill")
                     .font(Theme.pixel(22, relativeTo: .title3))
                     .foregroundColor(Theme.red)
                     .accessibilityIdentifier("phrase-wrong")
@@ -355,7 +355,7 @@ struct PhraseSessionView: View {
             }
             let rest = session.lastCorrect ? others : Array(others.dropFirst())
             if !rest.isEmpty {
-                Text((session.lastCorrect ? "Можно и так: " : "Или: ") + rest.joined(separator: "  ·  "))
+                Text((session.lastCorrect ? L("Можно и так: ") : L("Или: ")) + rest.joined(separator: "  ·  "))
                     .font(.subheadline)
                     .foregroundColor(Theme.goldBright)
                     .multilineTextAlignment(.center)
@@ -382,21 +382,21 @@ struct PhraseSessionView: View {
                     Text("\(session.percent)%")
                         .font(Theme.pixel(54, relativeTo: .largeTitle))
                         .foregroundColor(session.percent >= 80 ? Theme.moss : Theme.ember)
-                    Text("Верно с первого раза: \(session.correctCount) из \(session.totalCount)")
+                    Text(L("Верно с первого раза: %d из %d", session.correctCount, session.totalCount))
                         .foregroundColor(.secondary)
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 8)
             }
             if !session.accentSlips.isEmpty {
-                Section(header: GothicHeader("Проверьте акценты"),
-                        footer: Text("Эти ответы засчитаны, но в них не хватало акцента.")) {
+                Section(header: GothicHeader(L("Проверьте акценты")),
+                        footer: Text(L("Эти ответы засчитаны, но в них не хватало акцента."))) {
                     ForEach(session.accentSlips) { slip in
                         VStack(alignment: .leading, spacing: 2) {
                             AccentHighlight.text(slip.answer, typed: slip.typed)
                                 .font(.headline)
                                 .foregroundColor(Theme.text)
-                            Text("вы написали: \(slip.typed)")
+                            Text(L("вы написали: %@", slip.typed))
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -404,7 +404,7 @@ struct PhraseSessionView: View {
                 }
             }
             if !session.mistakes.isEmpty {
-                Section(header: GothicHeader("Ошибки")) {
+                Section(header: GothicHeader(L("Ошибки"))) {
                     ForEach(session.mistakes) { q in
                         VStack(alignment: .leading, spacing: 2) {
                             Text(q.line.ru)
@@ -423,13 +423,13 @@ struct PhraseSessionView: View {
                         session.restart()
                         typed = ""
                     } label: {
-                        Label("Пройти ещё раз", systemImage: "arrow.clockwise")
+                        Label(L("Пройти ещё раз"), systemImage: "arrow.clockwise")
                     }
                 }
                 Button {
                     dismiss()
                 } label: {
-                    Label("Закончить", systemImage: "checkmark")
+                    Label(L("Закончить"), systemImage: "checkmark")
                 }
             }
         }
@@ -444,7 +444,7 @@ struct PhrasesView: View {
 
     var body: some View {
         GothicList {
-            Section(footer: Text("Выражения в лицах: «estar com fome» — «Estou com fome», «Ela está com fome». Новые фразы собираются из слов, знакомые — пишутся целиком. По три новые фразы в день попадают в план «Сегодня».")) {
+            Section(footer: Text(L("Выражения в лицах: «estar com fome» — «Estou com fome», «Ela está com fome». Новые фразы собираются из слов, знакомые — пишутся целиком. По три новые фразы в день попадают в план «Сегодня»."))) {
                 EmptyView()
             }
             ForEach(model.phrases.sets) { set in
@@ -452,7 +452,7 @@ struct PhrasesView: View {
                     Button {
                         training = set
                     } label: {
-                        Label("Тренировать набор (\(set.items.count) \(Plural.phrases(set.items.count)))",
+                        Label(L("Тренировать набор (%d %@)", set.items.count, Plural.phrases(set.items.count)),
                               systemImage: "text.word.spacing")
                             .foregroundColor(Theme.gold)
                     }
@@ -473,7 +473,7 @@ struct PhrasesView: View {
                 }
             }
         }
-        .navigationTitle("Фразы")
+        .navigationTitle(L("Фразы"))
         .navigationBarTitleDisplayMode(.inline)
         .fullScreenCover(item: $training) { set in
             PhraseSessionView(title: set.name) {
@@ -504,7 +504,7 @@ struct PhraseItemView: View {
                 }
                 .padding(.vertical, 4)
             }
-            Section(header: GothicHeader(item.isPerson ? "По лицам" : "Как сказать")) {
+            Section(header: GothicHeader(item.isPerson ? L("По лицам") : L("Как сказать"))) {
                 ForEach(item.lines, id: \.self) { line in
                     HStack(alignment: .top, spacing: 10) {
                         VStack(alignment: .leading, spacing: 3) {
@@ -525,7 +525,7 @@ struct PhraseItemView: View {
                 }
             }
         }
-        .navigationTitle(item.isPerson ? (item.pt.first ?? "") : "Фраза")
+        .navigationTitle(item.isPerson ? (item.pt.first ?? "") : L("Фраза"))
         .navigationBarTitleDisplayMode(.inline)
     }
 }

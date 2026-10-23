@@ -58,11 +58,11 @@ struct VerbsView: View {
                 NavigationLink {
                     VerbTrainerSetupView(initialCollectionID: nil)
                 } label: {
-                    Label("Тренировка спряжений", systemImage: "square.and.pencil")
+                    Label(L("Тренировка спряжений"), systemImage: "square.and.pencil")
                         .font(.headline)
                 }
             } footer: {
-                Text("Выберите времена и глаголы — приложение будет спрашивать формы по лицам. Для каждой пары «глагол + время» ведётся свой прогресс.")
+                Text(L("Выберите времена и глаголы — приложение будет спрашивать формы по лицам. Для каждой пары «глагол + время» ведётся свой прогресс."))
             }
 
             if TextUtil.fold(query).isEmpty {
@@ -74,14 +74,14 @@ struct VerbsView: View {
                 }
             } else {
                 let results = searchResults
-                Section(header: GothicHeader("Глаголы (\(results.count))")) {
+                Section(header: GothicHeader(L("Глаголы (%d)", results.count))) {
                     ForEach(results) { v in row(v) }
                 }
             }
         }
-        .navigationTitle("Глаголы")
+        .navigationTitle(L("Глаголы"))
         .navigationBarTitleDisplayMode(.inline)
-        .searchable(text: $query, prompt: "Глагол или его перевод")
+        .searchable(text: $query, prompt: L("Глагол или его перевод"))
         .autocorrectionDisabled()
         .textInputAutocapitalization(.never)
     }
@@ -101,7 +101,7 @@ struct VerbRow: View {
                 Text(verb.inf)
                     .font(.headline)
                 if verb.irregular {
-                    Text("неправильный")
+                    Text(L("неправильный"))
                         .font(.caption2.weight(.semibold))
                         .padding(.horizontal, 6)
                         .padding(.vertical, 2)
@@ -110,7 +110,7 @@ struct VerbRow: View {
                         .clipShape(Capsule())
                 }
                 if verb.reflexive {
-                    Text("возвратный")
+                    Text(L("возвратный"))
                         .font(.caption2.weight(.semibold))
                         .padding(.horizontal, 6)
                         .padding(.vertical, 2)
@@ -137,7 +137,7 @@ extension AppModel {
     func verbTranslation(_ verb: Verb, limit: Int = 2) -> String {
         guard let w = index.word(verb.wordID) else { return "" }
         var parts: [String] = []
-        for lang in index.languages {
+        for lang in displayLanguages {
             let text = w.translationText(lang: lang, limit: limit)
             if !text.isEmpty { parts.append(text) }
         }
@@ -149,7 +149,7 @@ extension AppModel {
     func verbExerciseTranslation(_ verb: Verb, limit: Int = 2) -> String {
         guard let w = index.word(verb.wordID) else { return "" }
         let pref = settings.exerciseLanguage
-        for lang in [pref, "ru"] + index.languages {
+        for lang in [pref] + displayLanguages {
             let text = w.translationText(lang: lang, limit: limit)
             if !text.isEmpty { return text }
         }
