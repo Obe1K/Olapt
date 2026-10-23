@@ -35,9 +35,9 @@ struct WordCardView: View {
                 }
             }
 
-            if !word.note.isEmpty {
+            if !word.localNote.isEmpty {
                 Section(header: GothicHeader(L("Заметка"))) {
-                    Text(word.note)
+                    Text(word.localNote)
                         .font(.subheadline)
                 }
             }

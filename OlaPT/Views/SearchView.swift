@@ -91,7 +91,7 @@ struct SearchView: View {
                     TopicWordsView(topic: topic)
                 } label: {
                     HStack {
-                        Text(topic.name)
+                        Text(topic.title)
                         Spacer()
                         Text("\(model.index.words(inTopic: topic.id).count)")
                             .foregroundColor(.secondary)
@@ -206,12 +206,12 @@ struct LevelTopicsView: View {
             Section(header: GothicHeader(L("По темам"))) {
                 ForEach(groups, id: \.topic.id) { g in
                     NavigationLink {
-                        WordSetView(title: "\(level) · \(g.topic.name)",
-                                    collectionName: "\(level) · \(g.topic.name)",
+                        WordSetView(title: "\(level) · \(g.topic.title)",
+                                    collectionName: "\(level) · \(g.topic.title)",
                                     words: g.words)
                     } label: {
                         HStack {
-                            Text(g.topic.name)
+                            Text(g.topic.title)
                             Spacer()
                             Text("\(g.words.count)")
                                 .foregroundColor(.secondary)
@@ -279,7 +279,7 @@ struct TopicsView: View {
                         TopicWordsView(topic: topic)
                     } label: {
                         HStack {
-                            Text(topic.name)
+                            Text(topic.title)
                             Spacer()
                             Text("\(model.index.words(inTopic: topic.id).count)")
                                 .foregroundColor(.secondary)
@@ -305,7 +305,7 @@ struct TopicWordsView: View {
         GothicList {
             Section {
                 Button {
-                    let created = model.createCollection(name: topic.name, wordIDs: words.map { $0.id })
+                    let created = model.createCollection(name: topic.title, wordIDs: words.map { $0.id })
                     createdMessage = L("Коллекция «%@» создана: %d %@. Найдите её на вкладке «Коллекции».", created.name, created.wordIDs.count, Plural.words(created.wordIDs.count))
                 } label: {
                     Label(L("Создать коллекцию из набора"), systemImage: "rectangle.stack.badge.plus")
@@ -321,7 +321,7 @@ struct TopicWordsView: View {
                 }
             }
         }
-        .navigationTitle(topic.name)
+        .navigationTitle(topic.title)
         .navigationBarTitleDisplayMode(.inline)
         .alert(L("Готово"), isPresented: Binding(
             get: { createdMessage != nil },

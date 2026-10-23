@@ -6,10 +6,17 @@ struct TenseInfo: Codable, Hashable, Identifiable {
     var id: String
     var name: String      // Pretérito Perfeito
     var ru: String        // пояснение по-русски
+    var en: String?       // пояснение по-английски
     var group: String
     var groupRu: String
+    var groupEn: String?
     var prefix: String    // que / se / quando / para — для сослагательного и личного инфинитива
     var labels: [String]  // eu, tu, ele/ela/você, nós, eles/elas/vocês (пустая строка — формы нет)
+
+    /// Пояснение на языке интерфейса: «Настоящее время» / «Present tense»
+    var desc: String { return Loc.isEnglish ? (en ?? ru) : ru }
+    /// Наклонение на языке интерфейса
+    var groupTitle: String { return Loc.isEnglish ? (groupEn ?? groupRu) : groupRu }
 }
 
 struct Verb: Codable, Hashable, Identifiable {
@@ -132,7 +139,7 @@ final class VerbLibrary {
         for t in tenses {
             if buckets[t.group] == nil {
                 order.append(t.group)
-                names[t.group] = t.groupRu
+                names[t.group] = t.groupTitle
                 buckets[t.group] = []
             }
             buckets[t.group]?.append(t)

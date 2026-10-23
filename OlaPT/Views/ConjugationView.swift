@@ -157,7 +157,7 @@ struct ConjugationView: View {
                         StatusBadge(status: status, fraction: model.verbFraction(verb: verb, tense: tense))
                     }
                 }
-                Text(tense.ru)
+                Text(tense.desc)
                     .font(.caption)
                     .foregroundColor(.secondary)
             }

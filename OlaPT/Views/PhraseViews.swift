@@ -171,7 +171,7 @@ struct PhraseSessionView: View {
                 Text(q.typing ? L("Напишите по-португальски") : L("Соберите фразу по-португальски"))
                     .font(.footnote)
                     .foregroundColor(Theme.textDim)
-                Text(q.line.ru)
+                Text(q.line.prompt)
                     .font(.system(size: 28, weight: .bold))
                     .foregroundColor(Theme.text)
                     .multilineTextAlignment(.center)
@@ -360,8 +360,8 @@ struct PhraseSessionView: View {
                     .foregroundColor(Theme.goldBright)
                     .multilineTextAlignment(.center)
             }
-            if !q.item.note.isEmpty {
-                Text(q.item.note)
+            if !q.item.localNote.isEmpty {
+                Text(q.item.localNote)
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
@@ -407,7 +407,7 @@ struct PhraseSessionView: View {
                 Section(header: GothicHeader(L("Ошибки"))) {
                     ForEach(session.mistakes) { q in
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(q.line.ru)
+                            Text(q.line.prompt)
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                             Text(q.line.show)
@@ -448,7 +448,7 @@ struct PhrasesView: View {
                 EmptyView()
             }
             ForEach(model.phrases.sets) { set in
-                Section(header: GothicHeader("\(set.name) · \(set.level)")) {
+                Section(header: GothicHeader(set.title + " · " + set.level)) {
                     Button {
                         training = set
                     } label: {
@@ -464,7 +464,7 @@ struct PhrasesView: View {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(item.title)
                                     .foregroundColor(Theme.text)
-                                Text(item.ru)
+                                Text(item.meaning)
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                             }
@@ -476,7 +476,7 @@ struct PhrasesView: View {
         .navigationTitle(L("Фразы"))
         .navigationBarTitleDisplayMode(.inline)
         .fullScreenCover(item: $training) { set in
-            PhraseSessionView(title: set.name) {
+            PhraseSessionView(title: set.title) {
                 set.items.map { PhraseQuestion.make(item: $0, typing: model.phraseTyping($0.id)) }.shuffled()
             }
         }
@@ -494,10 +494,10 @@ struct PhraseItemView: View {
                     Text(item.title)
                         .font(.title2.weight(.semibold))
                         .foregroundColor(Theme.text)
-                    Text(item.ru)
+                    Text(item.meaning)
                         .foregroundColor(Theme.goldBright)
-                    if !item.note.isEmpty {
-                        Text(item.note)
+                    if !item.localNote.isEmpty {
+                        Text(item.localNote)
                             .font(.footnote)
                             .foregroundColor(.secondary)
                     }
@@ -515,7 +515,7 @@ struct PhraseItemView: View {
                                     .font(.subheadline)
                                     .foregroundColor(Theme.gold)
                             }
-                            Text(line.ru)
+                            Text(line.prompt)
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }

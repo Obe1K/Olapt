@@ -20,6 +20,20 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import conj  # noqa: E402
 import phrasebank  # noqa: E402
+from content_en import topics as en_topics  # noqa: E402
+
+
+def english_notes():
+    """Пояснения к словам по-английски: Tools/content_en/notes_*.py («слово|часть речи» → текст)."""
+    import importlib
+    notes = {}
+    for path in sorted(glob.glob(os.path.join(HERE, "content_en", "notes_*.py"))):
+        mod = importlib.import_module("content_en." + os.path.basename(path)[:-3])
+        for k, v in mod.NOTES.items():
+            if k in notes:
+                raise SystemExit("Английское пояснение задано дважды: " + k)
+            notes[k] = v
+    return notes
 
 OUT = os.path.join(HERE, "..", "OlaPT", "Resources")
 
@@ -105,6 +119,20 @@ def main():
         raise SystemExit("\n".join(DUPES))
     os.makedirs(OUT, exist_ok=True)
 
+    # Английские пояснения: у каждого русского должна быть пара, лишних (с опечаткой в ключе) быть не должно
+    notes_en = english_notes()
+    missing = [e["pt"] + "|" + e["pos"] for e in entries if e.get("note") and (e["pt"] + "|" + e["pos"]) not in notes_en]
+    extra = sorted(set(notes_en) - {e["pt"] + "|" + e["pos"] for e in entries if e.get("note")})
+    if missing or extra:
+        raise SystemExit("Английские пояснения: нет для %d слов %s; лишние ключи: %s" % (len(missing), missing[:20], extra[:20]))
+    for e in entries:
+        if e.get("note"):
+            e["_note_en"] = notes_en[e["pt"] + "|" + e["pos"]]
+    missing_topics = [t["id"] for t in topics if t["id"] not in en_topics.TOPICS]
+    if missing_topics:
+        raise SystemExit("Нет английских названий тем: %s" % missing_topics)
+    topics = [dict(t, nameEn=en_topics.TOPICS[t["id"]]) for t in topics]
+
     # Банк фраз; выражения из него («estar com fome») попадают и в словарь — их узнаёт «Слова из фото»
     phrases, phrase_entries, phrase_count = phrasebank.build(conj)
     keys = {e["pt"].lower() + "|" + e["pos"] for e in entries}
@@ -119,6 +147,7 @@ def main():
              "_ru": [x.strip() for x in pe["ru"].split(",") if x.strip()]}
         if pe["note"]:
             e["note"] = pe["note"]
+            e["_note_en"] = pe["note_en"]
         entries.append(e)
         added += 1
     path = os.path.join(OUT, "phrases.json")
@@ -132,8 +161,10 @@ def main():
         for e in entries:
             item = {k: v for k, v in e.items() if not k.startswith("_")}
             item["tr"] = e["_en"] if pack["tr_index"] == 0 else e["_ru"]
-            if pack["lang"] != "ru":
-                item.pop("note", None)  # пояснения написаны по-русски
+            if pack["lang"] == "en":
+                item.pop("note", None)
+                if e.get("_note_en"):
+                    item["note"] = e["_note_en"]
             items.append(item)
         doc = {
             "format": 1,
@@ -157,7 +188,13 @@ def main():
             continue
         c = conj.conjugate(e["pt"])
         verbs.append(c)
-    doc = {"format": 1, "tenses": conj.tenses_meta(), "verbs": verbs}
+    tenses = conj.tenses_meta()
+    for t in tenses:
+        if t["id"] not in en_topics.TENSES or t["group"] not in en_topics.TENSE_GROUPS:
+            raise SystemExit("Нет английского описания времени: " + t["id"])
+        t["en"] = en_topics.TENSES[t["id"]]
+        t["groupEn"] = en_topics.TENSE_GROUPS[t["group"]]
+    doc = {"format": 1, "tenses": tenses, "verbs": verbs}
     path = os.path.join(OUT, "verbs.json")
     with open(path, "w", encoding="utf-8") as fh:
         json.dump(doc, fh, ensure_ascii=False, separators=(",", ":"))

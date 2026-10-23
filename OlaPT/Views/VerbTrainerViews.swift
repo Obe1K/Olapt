@@ -106,7 +106,7 @@ struct VerbTrainerSetupView: View {
                     Toggle(isOn: tenseBinding(t.id)) {
                         VStack(alignment: .leading, spacing: 2) {
                             Text(t.name)
-                            Text(t.ru)
+                            Text(t.desc)
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -398,7 +398,7 @@ struct VerbSessionView: View {
                     Text(q.tense.name)
                         .font(Theme.pixel(17, relativeTo: .headline))
                         .foregroundColor(Theme.goldBright)
-                    Text(q.tense.ru)
+                    Text(q.tense.desc)
                         .font(.caption)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)

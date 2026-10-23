@@ -7,6 +7,8 @@ struct PhraseLine: Codable, Hashable {
     /// Лицо: eu, tu, ele, ela, nós, eles; пусто — готовая фраза
     let p: String
     let ru: String
+    /// Подсказка по-английски (нет в старых файлах)
+    let en: String?
     /// Ответ, как его показывать: «Estou com fome.»
     let show: String
     /// Другие правильные варианты: «Tenho fome.»
@@ -17,6 +19,9 @@ struct PhraseLine: Codable, Hashable {
     let tiles: [String]
     /// Лишние слова-ловушки
     let extra: [String]
+
+    /// Подсказка на языке интерфейса: «Я хочу есть.» / «I'm hungry.»
+    var prompt: String { return Loc.isEnglish ? (en ?? ru) : ru }
 }
 
 struct PhraseItem: Codable, Identifiable, Hashable {
@@ -28,7 +33,13 @@ struct PhraseItem: Codable, Identifiable, Hashable {
     let en: String
     let ru: String
     let note: String
+    let noteEn: String?
     let lines: [PhraseLine]
+
+    /// Смысл на языке интерфейса: «хотеть есть» / «to be hungry»
+    var meaning: String { return Loc.isEnglish ? en : ru }
+    /// Пояснение на языке интерфейса (в английском — только английское)
+    var localNote: String { return Loc.isEnglish ? (noteEn ?? "") : note }
 
     var isPerson: Bool { return kind == "person" }
     /// Заголовок для списка: «estar com fome / ter fome»
@@ -38,8 +49,12 @@ struct PhraseItem: Codable, Identifiable, Hashable {
 struct PhraseSet: Codable, Identifiable, Hashable {
     let id: String
     let name: String
+    let nameEn: String?
     let level: String
     let items: [PhraseItem]
+
+    /// Название на языке интерфейса
+    var title: String { return Loc.isEnglish ? (nameEn ?? name) : name }
 }
 
 struct PhraseFile: Codable {

@@ -100,10 +100,11 @@ def parse(conj):
                     alts = [a.strip() for a in parts[0].split(" / ")]
                     item = person_item(conj, current, alts, parts[1], parts[2], parts[3:], note, where)
                     for a in alts:
+                        others = ", ".join(x.replace("*", "") for x in alts if x != a)
                         dict_entries.append({"pt": a.replace("*", ""), "en": parts[1], "ru": parts[2],
                                              "lv": current["level"],
-                                             "note": ("То же: " + ", ".join(x.replace("*", "") for x in alts if x != a) + ".")
-                                             if len(alts) > 1 else ""})
+                                             "note": ("То же: " + others + ".") if len(alts) > 1 else "",
+                                             "note_en": ("Also: " + others + ".") if len(alts) > 1 else ""})
                 elif kind == "=":
                     if len(parts) != 3:
                         raise SystemExit("Нужно 3 поля (фраза, en, ru): " + where)
@@ -195,7 +196,59 @@ def add_traps(set_):
             ln["extra"] = traps[:3]
 
 
+# Подсказки по-английски для выражений в лицах: «to be hungry» → «I'm hungry.», «Are you hungry?»…
+EN_BE = ["I'm %s.", ("Are you %s?", "You're %s."), "He's %s.", "She's %s.", "We're %s.", "They're %s."]
+EN_HAVE = ["I have %s.", ("Do you have %s?", "You have %s."), "He has %s.", "She has %s.", "We have %s.", "They have %s."]
+
+
+def english_person_lines(item):
+    first = re.split(r"[;,]", item["en"])[0].strip()
+    for prefix, forms in (("to be ", EN_BE), ("to have ", EN_HAVE)):
+        if first.startswith(prefix):
+            rest = first[len(prefix):]
+            out = []
+            for k, f in enumerate(forms):
+                if isinstance(f, tuple):
+                    f = f[0] if item["lines"][k]["ru"].endswith("?") else f[1]
+                elif item["lines"][k]["ru"].endswith("?"):
+                    raise SystemExit("Вопрос не во 2-м лице — нужна подсказка вручную: " + item["id"])
+                out.append(f % rest)
+            return out
+    return None
+
+
+def add_english(sets, dict_entries):
+    """Английские названия наборов, пояснения и подсказки (Tools/content_en/phrases.py)."""
+    from content_en import phrases as en
+    problems = []
+    for s in sets:
+        if s["id"] not in en.SETS:
+            problems.append("нет английского названия набора: " + s["id"])
+        s["nameEn"] = en.SETS.get(s["id"], s["name"])
+        for it in s["items"]:
+            if it["note"] and it["id"] not in en.NOTES:
+                problems.append("нет английского пояснения: " + it["id"])
+            it["noteEn"] = en.NOTES.get(it["id"], "")
+            if it["kind"] == "person":
+                lines = en.LINES.get(it["id"]) or english_person_lines(it)
+                if not lines or len(lines) != len(it["lines"]):
+                    problems.append("нет английских подсказок по лицам: " + it["id"])
+                    continue
+                for ln, text in zip(it["lines"], lines):
+                    ln["en"] = text
+            else:
+                for ln in it["lines"]:
+                    ln["en"] = it["en"]
+    known = {it["id"] for s in sets for it in s["items"]}
+    for k in list(en.NOTES) + list(en.LINES):
+        if k not in known:
+            problems.append("английский текст для несуществующей фразы: " + k)
+    if problems:
+        raise SystemExit("Фразы по-английски:\n  " + "\n  ".join(problems))
+
+
 def build(conj):
     sets, dict_entries = parse(conj)
+    add_english(sets, dict_entries)
     count = sum(len(s["items"]) for s in sets)
     return {"format": 1, "sets": sets}, dict_entries, count

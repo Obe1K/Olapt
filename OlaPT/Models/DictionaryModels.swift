@@ -18,6 +18,13 @@ struct PackFile: Codable {
 struct TopicInfo: Codable, Hashable, Identifiable {
     var id: String
     var name: String
+    /// Название по-английски (во встроенных словарях)
+    var nameEn: String?
+
+    /// Название на языке интерфейса
+    var title: String {
+        return Loc.isEnglish ? (nameEn ?? name) : name
+    }
 }
 
 struct PackEntry: Codable {
@@ -61,6 +68,14 @@ struct Word: Identifiable, Hashable {
     var isCustom: Bool
     /// Уровень CEFR («A1», «A2», «B1») или пустая строка.
     var level: String = ""
+    /// Пояснение по-английски (из английского словаря); `note` — по-русски или из других словарей.
+    var noteEn: String = ""
+
+    /// Пояснение на языке интерфейса. В английском интерфейсе русское не показываем.
+    var localNote: String {
+        if Loc.isEnglish { return noteEn }
+        return note.isEmpty ? noteEn : note
+    }
 
     static func makeID(pt: String, pos: String) -> String {
         return pt.lowercased() + "|" + pos

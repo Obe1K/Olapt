@@ -1,0 +1,2 @@
+/* Запрос доступа к камере (английский) */
+"NSCameraUsageDescription" = "The camera is used to photograph a text and find words in it. The photo is processed on your iPhone and is never sent anywhere.";

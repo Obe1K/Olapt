@@ -15,7 +15,7 @@ final class ScreenshotTests: XCTestCase {
         continueAfterFailure = true
         steps = []
         app = XCUIApplication(bundleIdentifier: bundleID)
-        app.launchArguments += ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU", "-uitest-static", "YES"]
+        app.launchArguments += ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU", "-ui-language", "ru", "-uitest-static", "YES"]
         app.launch()
         Thread.sleep(forTimeInterval: 1.5)
     }
@@ -35,6 +35,23 @@ final class ScreenshotTests: XCTestCase {
     private func isRussianOnly(_ text: String) -> Bool {
         return text.range(of: "[а-яё]", options: .regularExpression) != nil && !text.contains("·")
             && text.range(of: "[a-z]", options: .regularExpression) == nil
+    }
+
+    /// Английский интерфейс: на экране не должно быть кириллицы (кроме названия языка «Русский» в настройках).
+    private func checkNoCyrillic(_ screen: String) {
+        let allowed: Set<String> = ["Русский", "Язык · Language"]
+        var bad: [String] = []
+        for query in [app.staticTexts, app.buttons, app.textFields, app.searchFields, app.navigationBars] {
+            for e in query.allElementsBoundByIndex where e.exists {
+                for text in [e.label, (e.placeholderValue ?? "")] where !text.isEmpty && !allowed.contains(text) {
+                    if text.range(of: "[А-Яа-яЁё]", options: .regularExpression) != nil, !bad.contains(text) {
+                        bad.append(text)
+                    }
+                }
+            }
+        }
+        note(bad.isEmpty ? "CHECK ok: no Cyrillic on " + screen
+                         : "CHECK FAILED: Cyrillic on " + screen + ": " + bad.prefix(6).joined(separator: " | "))
     }
 
     private func note(_ text: String) {
@@ -135,7 +152,8 @@ final class ScreenshotTests: XCTestCase {
 
     /// Первая кнопка с вариантом ответа (не служебная).
     private func firstOptionButton() -> XCUIElement {
-        let service = ["Закрыть", "Произнести", "Далее", "Завершить", "Сегодня", "Словарь", "Коллекции", "Глаголы", "Настройки", "Не знаю", "Проверить"]
+        let service = ["Закрыть", "Произнести", "Далее", "Завершить", "Сегодня", "Словарь", "Коллекции", "Глаголы", "Настройки", "Не знаю", "Проверить",
+                       "Close", "Pronounce", "Next", "Finish", "Today", "Dictionary", "Collections", "Verbs", "Settings", "I don't know", "Check"]
         let predicate = NSPredicate(format: "NOT (label IN %@)", service as NSArray)
         return app.buttons.matching(predicate).element(boundBy: 0)
     }
@@ -590,7 +608,7 @@ final class ScreenshotTests: XCTestCase {
         ]
         for (mood, room, items) in variants {
             app.terminate()
-            app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU", "-uitest-pet", mood,
+            app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU", "-ui-language", "ru", "-uitest-pet", mood,
                                    "-uitest-room", room, "-uitest-items", String(items)]
             let withNews = mood == "happy" && room == "hall"
             if withNews {
@@ -613,7 +631,7 @@ final class ScreenshotTests: XCTestCase {
     /// Башня с вещами, полный гримуар и бой с боссом: приложение запускается с 260 словами «в памяти».
     func testI_TowerGrimoireBoss() {
         app.terminate()
-        app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU", "-uitest-static", "YES", "-uitest-seed", "260"]
+        app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU", "-ui-language", "ru", "-uitest-static", "YES", "-uitest-seed", "260"]
         app.launch()
         Thread.sleep(forTimeInterval: 1.5)
         tapTab("Сегодня")
@@ -756,82 +774,93 @@ final class ScreenshotTests: XCTestCase {
 
     /// Скриншоты для App Store (полный размер, файлы store_*): башня, фразы, словарь, фото, глаголы, босс, гримуар.
     func testZ_StoreScreenshots() {
+        storeScreenshots(lang: "ru", prefix: "store_")
+    }
+
+    /// Те же скриншоты на английском (файлы store_en_*) — для английской страницы в App Store.
+    func testZ2_StoreScreenshotsEnglish() {
+        storeScreenshots(lang: "en", prefix: "store_en_")
+    }
+
+    private func storeScreenshots(lang: String, prefix: String) {
+        let en = lang == "en"
+        func t(_ ru: String, _ english: String) -> String { return en ? english : ru }
         app.terminate()
-        app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU", "-uitest-static", "YES",
-                               "-uitest-seed", "260", "-uitest-scan-sample"]
+        app.launchArguments = ["-AppleLanguages", en ? "(en)" : "(ru)", "-AppleLocale", en ? "en_GB" : "ru_RU",
+                               "-ui-language", lang, "-uitest-static", "YES", "-uitest-seed", "260", "-uitest-scan-sample"]
         app.launch()
         Thread.sleep(forTimeInterval: 1.5)
 
         // коллекция «Уровень A1» — чтобы в плане были новые слова
-        tapTab("Коллекции")
-        let levels = app.staticTexts["Наборы по уровням (A1, A2…)"]
+        tapTab(t("Коллекции", "Collections"))
+        let levels = app.staticTexts[t("Наборы по уровням (A1, A2…)", "Sets by level (A1, A2…)")]
         scrollUntilVisible(levels)
         tap(levels, "levels link")
         tap(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH 'A1'")).firstMatch, "open A1")
-        tap(app.staticTexts["Все слова уровня"].firstMatch, "all A1 words")
-        if tap(app.buttons["Создать коллекцию из набора"], "create A1 collection") {
+        tap(app.staticTexts[t("Все слова уровня", "All words of the level")].firstMatch, "all A1 words")
+        if tap(app.buttons[t("Создать коллекцию из набора", "Create a collection from this set")], "create A1 collection") {
             tap(app.alerts.buttons["OK"], "alert OK")
         }
         back(); back(); back()
 
         // 1. Сегодня: маг в башне и план
-        tapTab("Сегодня")
+        tapTab(t("Сегодня", "Today"))
         Thread.sleep(forTimeInterval: 1.0)
-        shot("store_01_today")
+        shot(prefix + "01_today")
 
         // 2. Фразы: собрать из слов
         let phrases = app.buttons["phrases-start"]
         scrollUntilVisible(phrases, maxSwipes: 6)
         if tap(phrases, "start phrases") {
             _ = app.buttons["tile-0"].waitForExistence(timeout: 3)
-            shot("store_02_phrases")
-            tap(app.buttons["Закрыть"], "close phrases")
+            shot(prefix + "02_phrases")
+            tap(app.buttons[t("Закрыть", "Close")], "close phrases")
         }
 
         // 3. Словарь: карточка слова
-        tapTab("Словарь")
+        tapTab(t("Словарь", "Dictionary"))
         let field = app.searchFields.firstMatch
         typeInto(field, "saudade", "search field")
         dismissKeyboard()
         tap(app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'saudade'")).firstMatch, "result saudade")
         Thread.sleep(forTimeInterval: 0.8)
-        shot("store_03_word_card")
+        shot(prefix + "03_word_card")
         back()
 
         // 4. Слова из фото
-        tapTab("Коллекции")
+        tapTab(t("Коллекции", "Collections"))
         let open = app.buttons["open-scan"]
         scrollUntilVisible(open)
         tap(open, "open scan")
         tap(app.buttons["scan-sample-text"], "sample text")
         _ = app.staticTexts["scan-summary"].waitForExistence(timeout: 10)
-        shot("store_04_photo_words")
-        tap(app.buttons["Закрыть"], "close scan")
+        shot(prefix + "04_photo_words")
+        tap(app.buttons[t("Закрыть", "Close")], "close scan")
 
         // 5. Глаголы: таблица спряжения
-        tapTab("Глаголы")
+        tapTab(t("Глаголы", "Verbs"))
         typeInto(app.searchFields.firstMatch, "fazer", "verb search")
         dismissKeyboard()
         tap(app.staticTexts["fazer"].firstMatch, "open verb fazer")
         tap(app.staticTexts["Pretérito Perfeito"].firstMatch, "expand Pretérito Perfeito")
-        shot("store_05_verbs")
+        shot(prefix + "05_verbs")
         back()
 
         // 6. Босс недели
-        tapTab("Сегодня")
+        tapTab(t("Сегодня", "Today"))
         let boss = app.buttons["boss-start"]
         scrollUntilVisible(boss, maxSwipes: 6)
         if tap(boss, "start boss") {
             Thread.sleep(forTimeInterval: 0.8)
-            shot("store_06_boss")
-            tap(app.buttons["Закрыть"], "close boss")
+            shot(prefix + "06_boss")
+            tap(app.buttons[t("Закрыть", "Close")], "close boss")
         }
 
         // 7. Гримуар
         let grimoire = app.buttons["open-grimoire"]
         scrollUntilVisible(grimoire, maxSwipes: 6)
         if tap(grimoire, "open grimoire") {
-            shot("store_07_grimoire")
+            shot(prefix + "07_grimoire")
             back()
         }
 
@@ -840,7 +869,108 @@ final class ScreenshotTests: XCTestCase {
         scrollUntilVisible(all, maxSwipes: 6)
         if tap(all, "open phrases") {
             tap(app.staticTexts["estar com fome / ter fome"].firstMatch, "open phrase card")
-            shot("store_08_phrase_card")
+            shot(prefix + "08_phrase_card")
+        }
+    }
+
+    /// Английский интерфейс: основные экраны без кириллицы, английские пояснения и подсказки,
+    /// переключение языка в настройках туда и обратно.
+    func testL_English() {
+        app.terminate()
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_GB", "-ui-language", "en",
+                               "-uitest-static", "YES", "-uitest-seed", "260", "-uitest-scan-sample"]
+        app.launch()
+        Thread.sleep(forTimeInterval: 1.5)
+
+        // Сегодня
+        note(app.tabBars.buttons["Today"].waitForExistence(timeout: 5) ? "CHECK ok: English tab bar" : "CHECK FAILED: no English tab bar")
+        shot("en_01_today")
+        checkNoCyrillic("Today")
+
+        // Глаголы на сегодня: перевод по-английски, местоимение в рамке
+        let verbs = app.buttons["verbs-start"]
+        scrollUntilVisible(verbs)
+        if tap(verbs, "start daily verbs") {
+            let tr = app.staticTexts["verb-translation"]
+            note(tr.waitForExistence(timeout: 3) && tr.label.range(of: "[А-Яа-яЁё]", options: .regularExpression) == nil
+                 ? "CHECK ok: English verb translation: " + tr.label : "CHECK FAILED: verb translation: " + tr.label)
+            note(app.descendants(matching: .any)["verb-prompt"].exists ? "CHECK ok: pronoun prompt shown" : "CHECK FAILED: no pronoun prompt")
+            shot("en_02_verb_question")
+            checkNoCyrillic("verb question")
+            tap(app.buttons["Close"], "close verbs")
+        }
+
+        // Фразы на сегодня: подсказка по-английски
+        let phrases = app.buttons["phrases-start"]
+        scrollUntilVisible(phrases, maxSwipes: 6)
+        if tap(phrases, "start phrases") {
+            let prompt = app.staticTexts["phrase-prompt"]
+            note(prompt.waitForExistence(timeout: 3) ? "CHECK info: phrase prompt = " + prompt.label : "CHECK FAILED: no phrase prompt")
+            shot("en_03_phrase")
+            checkNoCyrillic("phrase question")
+            tap(app.buttons["Close"], "close phrases")
+        }
+
+        // Словарь: карточка с английским пояснением
+        tapTab("Dictionary")
+        typeInto(app.searchFields.firstMatch, "obrigado", "search obrigado")
+        dismissKeyboard()
+        tap(app.staticTexts["obrigado"].firstMatch, "open obrigado")
+        let noteText = app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH 'A man says'")).firstMatch
+        note(noteText.waitForExistence(timeout: 3) ? "CHECK ok: English note on word card" : "CHECK FAILED: English note missing")
+        shot("en_04_word_card")
+        checkNoCyrillic("word card")
+        back()
+
+        // Коллекции и наборы по темам
+        tapTab("Collections")
+        shot("en_05_collections")
+        checkNoCyrillic("Collections")
+        let topics = app.staticTexts["Word sets by topic"]
+        scrollUntilVisible(topics)
+        if tap(topics, "topic sets") {
+            note(app.staticTexts["Food and drink"].waitForExistence(timeout: 3) ? "CHECK ok: English topic names" : "CHECK FAILED: topic names")
+            checkNoCyrillic("topic sets")
+            back()
+        }
+
+        // Слова из фото
+        let open = app.buttons["open-scan"]
+        scrollUntilVisible(open)
+        if tap(open, "open scan") {
+            tap(app.buttons["scan-sample-text"], "sample text")
+            _ = app.staticTexts["scan-summary"].waitForExistence(timeout: 10)
+            shot("en_06_photo_words")
+            checkNoCyrillic("photo words")
+            tap(app.buttons["Close"], "close scan")
+        }
+
+        // Глаголы: список по алфавиту и таблица спряжения
+        tapTab("Verbs")
+        shot("en_07_verbs_list")
+        checkNoCyrillic("Verbs list")
+        typeInto(app.searchFields.firstMatch, "fazer", "verb search")
+        dismissKeyboard()
+        tap(app.staticTexts["fazer"].firstMatch, "open verb fazer")
+        note(app.staticTexts["Present tense"].waitForExistence(timeout: 3) ? "CHECK ok: English tense description" : "CHECK FAILED: tense description")
+        shot("en_08_conjugation")
+        checkNoCyrillic("conjugation")
+        back()
+
+        // Настройки: переключить на русский и обратно
+        tapTab("Settings")
+        shot("en_09_settings")
+        checkNoCyrillic("Settings")
+        let picker = app.segmentedControls["ui-language"]
+        if picker.waitForExistence(timeout: 3) {
+            tap(picker.buttons["Русский"], "switch to Russian")
+            note(app.tabBars.buttons["Сегодня"].waitForExistence(timeout: 4) ? "CHECK ok: switched to Russian live" : "CHECK FAILED: no Russian after switch")
+            note(app.segmentedControls["ui-language"].waitForExistence(timeout: 3) ? "CHECK ok: stayed on Settings after switch" : "CHECK FAILED: left Settings after switch")
+            shot("en_10_switched_ru")
+            tap(app.segmentedControls["ui-language"].buttons["English"], "switch back to English")
+            note(app.tabBars.buttons["Today"].waitForExistence(timeout: 4) ? "CHECK ok: switched back to English" : "CHECK FAILED: no English after switching back")
+        } else {
+            note("CHECK FAILED: language picker missing")
         }
     }
 }

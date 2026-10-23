@@ -79,7 +79,7 @@ final class DictionaryIndex {
                         id: Word.makeID(pt: pt, pos: pos),
                         pt: pt, pos: pos,
                         gender: e.g ?? "", feminine: e.f ?? "", plural: e.pl ?? "",
-                        topic: e.topic ?? "", brazilian: e.br ?? "", note: e.note ?? "",
+                        topic: e.topic ?? "", brazilian: e.br ?? "", note: "",
                         translations: [:], isCustom: false, level: e.lv ?? "")
                     ordered.append(w)
                     let newIndex = ordered.count - 1
@@ -93,7 +93,14 @@ final class DictionaryIndex {
                 if ordered[i].plural.isEmpty, let p = e.pl { ordered[i].plural = p }
                 if ordered[i].topic.isEmpty, let tp = e.topic { ordered[i].topic = tp }
                 if ordered[i].brazilian.isEmpty, let b = e.br { ordered[i].brazilian = b }
-                if ordered[i].note.isEmpty, let n = e.note { ordered[i].note = n }
+                if let n = e.note, !n.isEmpty {
+                    // Пояснения из английского словаря — английские, из остальных — на их языке
+                    if pack.lang == "en" {
+                        if ordered[i].noteEn.isEmpty { ordered[i].noteEn = n }
+                    } else if ordered[i].note.isEmpty {
+                        ordered[i].note = n
+                    }
+                }
                 if ordered[i].level.isEmpty, let lv = e.lv { ordered[i].level = lv }
                 var list = ordered[i].translations[pack.lang] ?? []
                 for t in e.tr {
@@ -255,7 +262,7 @@ final class DictionaryIndex {
     }
 
     func topicName(_ id: String) -> String {
-        return topics.first(where: { $0.id == id })?.name ?? id
+        return topics.first(where: { $0.id == id })?.title ?? id
     }
 
     func words(inLevel level: String) -> [Word] {
