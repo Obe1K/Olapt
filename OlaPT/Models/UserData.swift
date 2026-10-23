@@ -196,9 +196,11 @@ struct UserData: Codable {
     var verbSRS: [String: SRSState]
     /// Интервальные повторения фраз: id фразы («states:estar com fome») → состояние
     var phraseSRS: [String: SRSState]
+    /// Сколько секунд приложение было открыто на экране (с версии 1.3)
+    var timeInApp: Double
 
     enum CodingKeys: String, CodingKey {
-        case collections, progress, verbProgress, customWords, settings, srs, pet, boss, verbSRS, phraseSRS
+        case collections, progress, verbProgress, customWords, settings, srs, pet, boss, verbSRS, phraseSRS, timeInApp
     }
 
     init() {
@@ -212,6 +214,7 @@ struct UserData: Codable {
         boss = BossData()
         verbSRS = [:]
         phraseSRS = [:]
+        timeInApp = 0
     }
 
     init(from decoder: Decoder) throws {
@@ -232,6 +235,7 @@ struct UserData: Codable {
         boss = try c.decodeIfPresent(BossData.self, forKey: .boss) ?? BossData()
         verbSRS = try c.decodeIfPresent([String: SRSState].self, forKey: .verbSRS) ?? [:]
         phraseSRS = try c.decodeIfPresent([String: SRSState].self, forKey: .phraseSRS) ?? [:]
+        timeInApp = try c.decodeIfPresent(Double.self, forKey: .timeInApp) ?? 0
     }
 }
 

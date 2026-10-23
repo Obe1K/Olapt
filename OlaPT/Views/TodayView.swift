@@ -464,6 +464,14 @@ struct TodayView: View {
             }
             .accessibilityIdentifier("open-grimoire")
             Rectangle().fill(Theme.goldDark).frame(height: 1).padding(.horizontal, 8)
+            // Сколько времени проведено в приложении; пока экран открыт, обновляется раз в 30 секунд
+            TimelineView(.periodic(from: Date(), by: 30)) { _ in
+                statRow(icon: "hourglass", title: L("Время в приложении"),
+                        value: AppModel.durationText(model.totalTimeInApp))
+            }
+            .accessibilityElement(children: .combine)
+            .accessibilityIdentifier("time-in-app")
+            Rectangle().fill(Theme.goldDark).frame(height: 1).padding(.horizontal, 8)
             NavigationLink {
                 PhrasesView()
             } label: {
@@ -479,6 +487,23 @@ struct TodayView: View {
             .accessibilityIdentifier("open-difficult")
         }
         .pixelPanel(padding: 6)
+    }
+
+    /// Строка со значением, но без перехода (без стрелки).
+    private func statRow(icon: String, title: String, value: String) -> some View {
+        return HStack(spacing: 10) {
+            Image(systemName: icon)
+                .foregroundColor(Theme.gold)
+                .frame(width: 24)
+            Text(title)
+                .foregroundColor(Theme.text)
+            Spacer()
+            Text(value)
+                .foregroundColor(Theme.goldBright)
+                .monospacedDigit()
+        }
+        .padding(.vertical, 10)
+        .padding(.horizontal, 8)
     }
 
     private func linkRow(icon: String, title: String, value: String) -> some View {

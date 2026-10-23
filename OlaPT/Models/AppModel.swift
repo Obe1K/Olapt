@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import UIKit
 
 /// Главная модель приложения: словари, коллекции, прогресс, настройки.
 final class AppModel: ObservableObject {
@@ -18,6 +19,10 @@ final class AppModel: ObservableObject {
     private var packFiles: [PackFile] = []
     private var bundledIDs: Set<String> = []
     private var saveWork: DispatchWorkItem?
+    /// Начало текущего отрезка, пока приложение открыто на экране
+    private var activeSince: Date?
+    /// Один непрерывный отрезок засчитываем не больше чем за 6 часов (на случай скачка часов)
+    private static let maxActiveStretch: TimeInterval = 6 * 3600
 
     // MARK: - Загрузка
 
@@ -67,6 +72,43 @@ final class AppModel: ObservableObject {
         migrateProgressToSRS()
         applySoundSettings()
         seedForUITests()
+        // Время в приложении: системные события «стало активным / уходит с экрана»
+        let center = NotificationCenter.default
+        center.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.appBecameActive()
+        }
+        center.addObserver(forName: UIApplication.willResignActiveNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.appResignedActive()
+        }
+        if UIApplication.shared.applicationState == .active { appBecameActive() }
+    }
+
+    // MARK: - Время в приложении
+
+    func appBecameActive() {
+        if activeSince == nil { activeSince = Date() }
+    }
+
+    func appResignedActive() {
+        guard let start = activeSince else { return }
+        activeSince = nil
+        let elapsed = min(max(0, Date().timeIntervalSince(start)), AppModel.maxActiveStretch)
+        user.timeInApp += elapsed
+        saveNow()
+    }
+
+    /// Всего секунд на экране, включая текущий отрезок.
+    var totalTimeInApp: TimeInterval {
+        let current = activeSince.map { min(max(0, Date().timeIntervalSince($0)), AppModel.maxActiveStretch) } ?? 0
+        return user.timeInApp + current
+    }
+
+    /// «45 мин», «3 ч 12 мин», «120 ч» / «45 min», «3 h 12 min».
+    static func durationText(_ seconds: TimeInterval) -> String {
+        let minutes = Int(seconds / 60)
+        if minutes < 60 { return L("%d мин", minutes) }
+        if minutes >= 100 * 60 { return L("%d ч", minutes / 60) }
+        return L("%d ч %d мин", minutes / 60, minutes % 60)
     }
 
     /// Только для UI-тестов: -uitest-seed N — N слов A1 «в памяти»,

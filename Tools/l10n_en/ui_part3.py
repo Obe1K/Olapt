@@ -81,6 +81,10 @@ T = {
     "Сюда сами попадают слова, в которых вы ошиблись 2 раза и больше. Слово уходит из списка, когда становится «выученным».":
         "Words you've got wrong 2 or more times land here automatically. A word leaves the list once it's “learned”.",
     "ошибок: %d": "mistakes: %d",
+    "Время в приложении": "Time in the app",
+    "%d мин": "%d min",
+    "%d ч": "%d h",
+    "%d ч %d мин": "%d h %d min",
     # UserData
     "Коллекция": "Collection",
     "Новое": "New",

@@ -560,6 +560,12 @@ final class ScreenshotTests: XCTestCase {
         let tower = app.descendants(matching: .any)["tower-card"]
         note(tower.waitForExistence(timeout: 3) ? "CHECK ok: tower card: " + tower.label : "CHECK FAILED: tower card missing")
 
+        // Время в приложении — под гримуаром
+        let timeRow = app.descendants(matching: .any)["time-in-app"]
+        scrollUntilVisible(timeRow, maxSwipes: 8)
+        note(timeRow.exists && timeRow.label.contains("Время в приложении") && timeRow.label.contains("мин")
+             ? "CHECK ok: time in app: " + timeRow.label : "CHECK FAILED: time in app: " + (timeRow.exists ? timeRow.label : "missing"))
+
         // Глаголы на сегодня
         let verbs = app.buttons["verbs-start"]
         scrollUntilVisible(verbs)
@@ -904,6 +910,11 @@ final class ScreenshotTests: XCTestCase {
         note(app.tabBars.buttons["Today"].waitForExistence(timeout: 5) ? "CHECK ok: English tab bar" : "CHECK FAILED: no English tab bar")
         shot("en_01_today")
         checkNoCyrillic("Today")
+        let timeRow = app.descendants(matching: .any)["time-in-app"]
+        scrollUntilVisible(timeRow, maxSwipes: 8)
+        note(timeRow.exists && timeRow.label.contains("Time in the app") && timeRow.label.contains("min")
+             ? "CHECK ok: English time in app: " + timeRow.label : "CHECK FAILED: English time in app: " + (timeRow.exists ? timeRow.label : "missing"))
+        app.swipeDown(); app.swipeDown(); app.swipeDown()
 
         // Тренажёр спряжений: перевод по-английски, местоимение в рамке
         tapTab("Verbs")
