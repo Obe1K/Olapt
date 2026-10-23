@@ -37,6 +37,17 @@ final class ScreenshotTests: XCTestCase {
             && text.range(of: "[a-z]", options: .regularExpression) == nil
     }
 
+    /// «Сегодня» → «Фразы» → «Тренировать набор (…)» первого набора.
+    @discardableResult
+    private func openPhraseSetPractice(english: Bool) -> Bool {
+        let all = app.buttons["open-phrases"]
+        scrollUntilVisible(all, maxSwipes: 8)
+        guard tap(all, "open phrases") else { return false }
+        let label = english ? "Practise the set" : "Тренировать набор"
+        let start = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", label)).firstMatch
+        return tap(start, "practise phrase set")
+    }
+
     /// Английский интерфейс: на экране не должно быть кириллицы (кроме названия языка «Русский» в настройках).
     private func checkNoCyrillic(_ screen: String) {
         let allowed: Set<String> = ["Русский", "Язык · Language"]
@@ -811,10 +822,17 @@ final class ScreenshotTests: XCTestCase {
         // 2. Фразы: собрать из слов
         let phrases = app.buttons["phrases-start"]
         scrollUntilVisible(phrases, maxSwipes: 6)
-        if tap(phrases, "start phrases") {
+        if phrases.exists && phrases.isHittable {
+            tap(phrases, "start phrases")
             _ = app.buttons["tile-0"].waitForExistence(timeout: 3)
             shot(prefix + "02_phrases")
             tap(app.buttons[t("Закрыть", "Close")], "close phrases")
+        } else if openPhraseSetPractice(english: en) {
+            // фраз на сегодня нет (план дня ещё не пройден) — берём набор целиком
+            _ = app.buttons["tile-0"].waitForExistence(timeout: 3)
+            shot(prefix + "02_phrases")
+            tap(app.buttons[t("Закрыть", "Close")], "close phrases")
+            back()
         }
 
         // 3. Словарь: карточка слова
@@ -887,10 +905,10 @@ final class ScreenshotTests: XCTestCase {
         shot("en_01_today")
         checkNoCyrillic("Today")
 
-        // Глаголы на сегодня: перевод по-английски, местоимение в рамке
-        let verbs = app.buttons["verbs-start"]
-        scrollUntilVisible(verbs)
-        if tap(verbs, "start daily verbs") {
+        // Тренажёр спряжений: перевод по-английски, местоимение в рамке
+        tapTab("Verbs")
+        tap(app.staticTexts["Conjugation practice"].firstMatch, "conjugation practice")
+        if tap(app.buttons["Start"], "start verb trainer") {
             let tr = app.staticTexts["verb-translation"]
             note(tr.waitForExistence(timeout: 3) && tr.label.range(of: "[А-Яа-яЁё]", options: .regularExpression) == nil
                  ? "CHECK ok: English verb translation: " + tr.label : "CHECK FAILED: verb translation: " + tr.label)
@@ -898,18 +916,24 @@ final class ScreenshotTests: XCTestCase {
             shot("en_02_verb_question")
             checkNoCyrillic("verb question")
             tap(app.buttons["Close"], "close verbs")
+        } else {
+            note("CHECK FAILED: verb trainer did not start")
         }
+        back()
 
-        // Фразы на сегодня: подсказка по-английски
-        let phrases = app.buttons["phrases-start"]
-        scrollUntilVisible(phrases, maxSwipes: 6)
-        if tap(phrases, "start phrases") {
+        // Фразы: набор целиком, подсказка по-английски
+        tapTab("Today")
+        if openPhraseSetPractice(english: true) {
             let prompt = app.staticTexts["phrase-prompt"]
-            note(prompt.waitForExistence(timeout: 3) ? "CHECK info: phrase prompt = " + prompt.label : "CHECK FAILED: no phrase prompt")
+            note(prompt.waitForExistence(timeout: 3) && prompt.label.range(of: "[А-Яа-яЁё]", options: .regularExpression) == nil
+                 ? "CHECK ok: English phrase prompt: " + prompt.label : "CHECK FAILED: phrase prompt: " + prompt.label)
             shot("en_03_phrase")
             checkNoCyrillic("phrase question")
             tap(app.buttons["Close"], "close phrases")
+        } else {
+            note("CHECK FAILED: phrase set practice did not start")
         }
+        back()
 
         // Словарь: карточка с английским пояснением
         tapTab("Dictionary")

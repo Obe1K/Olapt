@@ -58,7 +58,7 @@ T = {
     "· неправильный": "· irregular",
     "· возвратный": "· reflexive",
     "Герундий: %@  ·  Причастие: %@": "Gerund: %@  ·  Participle: %@",
-    "Выбрать форму": "Choose a form",
+    "Выбрать форму": "Choose the form",
     # DictionaryIndex
     "форма слова «%@»": "form of “%@”",
     "форма глагола «%@»": "form of the verb “%@”",
