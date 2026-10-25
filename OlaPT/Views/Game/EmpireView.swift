@@ -8,7 +8,7 @@ enum MapLayout {
     static let height: CGFloat = 480
 
     static let towns: [CGPoint] = [
-        CGPoint(x: 95, y: 64), CGPoint(x: 46, y: 242), CGPoint(x: 181, y: 258),
+        CGPoint(x: 95, y: 64), CGPoint(x: 46, y: 242), CGPoint(x: 174, y: 242),
         CGPoint(x: 250, y: 132), CGPoint(x: 238, y: 350),
     ]
     /// Размер поселения на карте (картинки — втрое подробнее, Tools/game/build_game_assets.py)
