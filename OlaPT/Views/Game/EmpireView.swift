@@ -2,37 +2,42 @@ import SwiftUI
 
 // MARK: - Вкладка «Империя»: карта Акта 1, войско, указы
 
-/// Места на карте 320×480 (та же схема, что во вкладке «Правила Акта 1»).
+/// Места на карте 320×480. Поселения, дороги и города юга нарисованы прямо на карте автора
+/// (Tools/game/art/map_act1_base.png) — здесь их центры, площади для нажатия и места обелисков.
 enum MapLayout {
     static let width: CGFloat = 320
     static let height: CGFloat = 480
 
+    /// Центры поселений на карте
     static let towns: [CGPoint] = [
-        CGPoint(x: 95, y: 64), CGPoint(x: 46, y: 242), CGPoint(x: 174, y: 242),
-        CGPoint(x: 250, y: 132), CGPoint(x: 238, y: 350),
+        CGPoint(x: 98, y: 58), CGPoint(x: 50, y: 236), CGPoint(x: 181, y: 235),
+        CGPoint(x: 254, y: 123), CGPoint(x: 240, y: 342),
     ]
-    /// Размер поселения на карте (картинки — втрое подробнее, Tools/game/build_game_assets.py)
+    /// Сколько места поселение занимает на карте: сюда нажимают, под ним — подпись
+    static let townSize: [CGSize] = [
+        CGSize(width: 72, height: 76), CGSize(width: 88, height: 58), CGSize(width: 78, height: 70),
+        CGSize(width: 84, height: 74), CGSize(width: 94, height: 94),
+    ]
+    /// Картинки поселений для шапки карточки (втрое подробнее, Tools/game/build_game_assets.py)
+    static let sprites = ["settle_0_calada", "settle_1_redes", "settle_2_trigo", "settle_3_souto", "settle_4_monte"]
     static let spriteSize: [CGSize] = [
         CGSize(width: 96, height: 112), CGSize(width: 96, height: 96), CGSize(width: 96, height: 96),
         CGSize(width: 96, height: 96), CGSize(width: 112, height: 112),
     ]
-    static let sprites = ["settle_0_calada", "settle_1_redes", "settle_2_trigo", "settle_3_souto", "settle_4_monte"]
-    static let south = CGPoint(x: 84, y: 428)
+    /// Большие города юга в тумане
+    static let south = CGPoint(x: 97, y: 422)
 
-    /// Место для обелиска: на дороге или чуть в стороне от неё (поле, лес).
+    /// Места для обелисков: «дорога» — на нарисованной дороге, «поле» и «лес» — рядом с ней.
+    static let spots: [CGPoint] = [
+        CGPoint(x: 92, y: 145),  CGPoint(x: 110, y: 185),   // башня — сети
+        CGPoint(x: 115, y: 241), CGPoint(x: 110, y: 278),   // сети — долина
+        CGPoint(x: 190, y: 186), CGPoint(x: 224, y: 178),   // долина — роща
+        CGPoint(x: 202, y: 295), CGPoint(x: 218, y: 280),   // долина — крепость
+        CGPoint(x: 276, y: 196), CGPoint(x: 252, y: 265),   // роща — крепость
+    ]
+
     static func spot(_ id: Int) -> CGPoint {
-        let s = Act1.spots[id]
-        let a = towns[s.between.0], b = towns[s.between.1]
-        let first = Act1.spots.first(where: { $0.between == s.between })?.id == id
-        let t: CGFloat = first ? 0.40 : 0.60
-        var p = CGPoint(x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t)
-        if s.terrain != .road {
-            let dx = b.x - a.x, dy = b.y - a.y
-            let len = max(1, (dx * dx + dy * dy).squareRoot())
-            p.x += -dy / len * 14
-            p.y += dx / len * 14
-        }
-        return p
+        return spots[id]
     }
 }
 
@@ -203,19 +208,13 @@ struct EmpireView: View {
                         .position(x: (MapLayout.towns[p.from].x + MapLayout.towns[p.target].x) / 2 * s,
                                   y: (MapLayout.towns[p.from].y + MapLayout.towns[p.target].y) / 2 * s)
                 }
-                Image("south_city")
-                    .interpolation(.high)
-                    .resizable()
-                    .frame(width: 120 * s, height: 80 * s)
-                    .opacity(0.9)
-                    .position(x: MapLayout.south.x * s, y: MapLayout.south.y * s)
                 Text(L("Большие города юга"))
                     .font(Theme.pixel(10, relativeTo: .caption2))
                     .foregroundColor(Theme.textDim)
                     .padding(.horizontal, 4)
                     .background(Theme.panelDeep.opacity(0.75))
                     .fixedSize()
-                    .position(x: MapLayout.south.x * s, y: (MapLayout.south.y + 42) * s)
+                    .position(x: MapLayout.south.x * s, y: (MapLayout.south.y + 32) * s)
             }
         }
         .aspectRatio(MapLayout.width / MapLayout.height, contentMode: .fit)
@@ -228,17 +227,16 @@ struct EmpireView: View {
     @ViewBuilder
     private func townMarker(_ i: Int, scale s: CGFloat) -> some View {
         let t = game.towns[i]
-        let size = MapLayout.spriteSize[i]
+        let size = MapLayout.townSize[i]
         let p = MapLayout.towns[i]
         Button {
             town = TownRef(id: i)
         } label: {
             ZStack(alignment: .top) {
-                Image(MapLayout.sprites[i])
-                    .interpolation(.high)
-                    .resizable()
+                // само поселение нарисовано на карте — здесь только место для нажатия
+                Color.clear
                     .frame(width: size.width * s, height: size.height * s)
-                    .saturation(t.owner == .mask ? 1 : 0.75)
+                    .contentShape(Rectangle())
                 VStack(spacing: 1) {
                     Text(GameTexts.townName(i))
                         .font(Theme.pixel(10, relativeTo: .caption2))
