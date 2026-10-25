@@ -30,8 +30,8 @@ SETTLEMENTS = [
     ("settle_4_monte", 112, 112),
 ]
 MAP = ("map_act1", 320, 480)
-# Долина и большие города юга нарисованы прямо на карте (map_act1_base.png),
-# остальные поселения — отдельными картинками поверх неё.
+# Поселения, дороги и большие города юга нарисованы прямо на карте (map_act1_base.png);
+# отдельные картинки поселений нужны для шапки карточки поселения.
 
 
 def imageset(name, img, scales=(1,), template=False, folder=OUT):
@@ -70,28 +70,38 @@ def graded(img, k, tint, sat):
     return Image.fromarray(np.dstack([np.clip(out, 0, 255), al]).astype("uint8"))
 
 
-# Под старые картинки поселений — поляны с первой карты автора (map_act1_v1.png): на новой карте
-# (map_act1_base.png) поселения уже нарисованы, и без подложки они торчали бы из-под картинок.
-# Долина (Vale do Trigo) остаётся такой, как нарисована на новой карте.
-# (центр, полуоси) в точках карты 320×480
-UNDER_SPRITES = [
-    ((98, 58), (40, 44)),    # Vila Calada
-    ((50, 237), (48, 34)),   # Aldeia das Redes
-    ((254, 123), (46, 42)),  # Souto das Sombras
-    ((240, 342), (50, 52)),  # Monte Sombrio
-]
+# Карта темнее и мрачнее рисунка автора: (яркость, гамма, насыщенность, виньетка).
+# Огни окон, факелов и фиолетовые руны почти не трогаем — на тёмной карте они горят ярче.
+MAP_GRADE = (0.82, 1.16, 0.75, 0.30)
 
 
-def map_with_clearings(new, old):
-    """Новая карта, а под старыми картинками поселений — поляны первой карты (края размыты)."""
-    k = new.width / MAP[1]
-    old = old.resize(new.size, Image.LANCZOS)
-    mask = Image.new("L", new.size, 0)
-    d = ImageDraw.Draw(mask)
-    for (cx, cy), (rx, ry) in UNDER_SPRITES:
-        d.ellipse([(cx - rx) * k, (cy - ry) * k, (cx + rx) * k, (cy + ry) * k], fill=255)
-    mask = mask.filter(ImageFilter.GaussianBlur(5 * k))
-    return Image.composite(old, new, mask)
+def grim(img, k, gamma, sat, vignette):
+    import numpy as np
+    a = np.asarray(img.convert("RGB")).astype(float) / 255
+    hsv = np.asarray(img.convert("RGB").convert("HSV")).astype(float)
+    hue, s, v = hsv[..., 0], hsv[..., 1] / 255, hsv[..., 2] / 255
+
+    def smooth(x, lo, hi):
+        t = np.clip((x - lo) / (hi - lo), 0, 1)
+        return t * t * (3 - 2 * t)
+
+    warm = (hue < 35) | (hue > 245)
+    purple = (hue > 185) & (hue < 235)
+    light = smooth(v, 0.62, 0.85) * smooth(s, 0.35, 0.6) * (warm | purple)
+    light = Image.fromarray((light * 255).astype("uint8")).filter(ImageFilter.GaussianBlur(1.2))
+    light = np.asarray(light).astype(float)[..., None] / 255 * 0.85
+    out = a ** gamma * k
+    grey = (out * np.array([0.30, 0.55, 0.15])).sum(2, keepdims=True)
+    out = grey + (out - grey) * sat
+    # тени холоднее
+    shadow = 1 - np.clip(grey / 0.35, 0, 1)
+    out = out * (1 + shadow * np.array([-0.04, -0.02, 0.08]))
+    h, w = out.shape[:2]
+    yy, xx = np.mgrid[0:h, 0:w]
+    d = np.sqrt(((xx - w / 2) / (w / 2)) ** 2 + ((yy - h / 2) / (h / 2)) ** 2) / np.sqrt(2)
+    out = out * (1 - vignette * smooth(d, 0.45, 1.0))[..., None]
+    out = out * (1 - light) + a * light
+    return Image.fromarray((np.clip(out, 0, 1) * 255).astype("uint8"))
 
 
 def sprite_from_art(path, w, h, colors=None):
@@ -259,12 +269,9 @@ def main():
         imageset(name, img)
     path = os.path.join(ART, "map_act1_base.png")
     if os.path.exists(path):
-        img = Image.open(path).convert("RGB")
-        first = os.path.join(ART, "map_act1_v1.png")
-        if os.path.exists(first):
-            img = map_with_clearings(img, Image.open(first).convert("RGB"))
+        img = grim(Image.open(path).convert("RGB"), *MAP_GRADE)
         img = img.resize((MAP[1] * SCALE, MAP[2] * SCALE), Image.LANCZOS)
-        report.append("карта: рисунок автора, под поселениями — поляны первой карты")
+        report.append("карта: рисунок автора (темнее и мрачнее)")
     else:
         img = map_placeholder().resize((MAP[1] * SCALE, MAP[2] * SCALE), Image.NEAREST)
         report.append("карта: заглушка по схеме")
