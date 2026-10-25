@@ -136,8 +136,12 @@ struct PixelStage: View {
         .mask(
             LinearGradient(stops: fade ? [
                 .init(color: .clear, location: 0),
-                .init(color: .black, location: 0.06),
-                .init(color: .black, location: 0.72),
+                .init(color: .black.opacity(0.6), location: 0.04),
+                .init(color: .black, location: 0.12),
+                .init(color: .black, location: 0.62),
+                .init(color: .black.opacity(0.75), location: 0.74),
+                .init(color: .black.opacity(0.4), location: 0.86),
+                .init(color: .black.opacity(0.12), location: 0.95),
                 .init(color: .clear, location: 1),
             ] : [
                 .init(color: .black, location: 0),

@@ -63,9 +63,12 @@ struct TodayView: View {
         let _ = refreshTick
         let plan = model.dailyPlan()
         ScrollView {
-            VStack(spacing: 14) {
-                // Сцена во всю ширину, без рамки: снизу растворяется в каменном фоне.
+            VStack(spacing: 0) {
+                // Сцена во всю ширину, без рамки и без панели навигации: сверху и снизу растворяется
+                // в тёмном фоне, а кладка стены проступает только ниже — шва между картинкой и экраном нет.
                 PetView(isVisible: active == nil)
+                    .overlay(alignment: .top) { sceneHeader }
+                    .zIndex(1)
 
                 VStack(spacing: 14) {
                     towerCard
@@ -80,25 +83,26 @@ struct TodayView: View {
                     linksCard
                 }
                 .padding(.horizontal, 16)
+                .padding(.top, 6)
+                .padding(.bottom, 24)
+                .background(alignment: .top) {
+                    // кладка проступает постепенно, ниже сцены
+                    StoneBackground()
+                        .mask(
+                            VStack(spacing: 0) {
+                                LinearGradient(colors: [.clear, .black], startPoint: .top, endPoint: .bottom)
+                                    .frame(height: 140)
+                                Color.black
+                            }
+                        )
+                        .padding(.top, -40)
+                }
             }
-            .padding(.bottom, 24)
         }
-        .background(StoneBackground().ignoresSafeArea())
+        .background(Theme.background.ignoresSafeArea())
         .navigationTitle(L("Сегодня"))
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink {
-                    SettingsView()
-                } label: {
-                    Image("tab-gear")
-                        .renderingMode(.template)
-                        .foregroundColor(Theme.gold)
-                }
-                .accessibilityLabel(L("Настройки"))
-                .accessibilityIdentifier("open-settings")
-            }
-        }
+        .toolbar(.hidden, for: .navigationBar)
         .onChange(of: scenePhase) { phase in
             if phase == .active {
                 refreshTick += 1
@@ -134,6 +138,35 @@ struct TodayView: View {
     }
 
     // MARK: Башня
+
+    /// Заголовок и шестерёнка настроек — прямо на картинке, вместо панели навигации.
+    private var sceneHeader: some View {
+        ZStack {
+            Text(L("Сегодня"))
+                .font(Theme.pixel(20, relativeTo: .headline))
+                .foregroundColor(Theme.goldBright)
+                .shadow(color: .black, radius: 0, x: 1, y: 1)
+                .shadow(color: .black.opacity(0.8), radius: 4)
+                .accessibilityAddTraits(.isHeader)
+            HStack {
+                Spacer()
+                NavigationLink {
+                    SettingsView()
+                } label: {
+                    Image("tab-gear")
+                        .renderingMode(.template)
+                        .foregroundColor(Theme.gold)
+                        .shadow(color: .black, radius: 2)
+                        .padding(10)
+                        .contentShape(Rectangle())
+                }
+                .accessibilityLabel(L("Настройки"))
+                .accessibilityIdentifier("open-settings")
+            }
+        }
+        .padding(.horizontal, 8)
+        .padding(.top, 2)
+    }
 
     private var towerCard: some View {
         let inMemory = model.wordsInMemory()
