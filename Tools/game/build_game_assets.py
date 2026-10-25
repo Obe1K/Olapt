@@ -30,8 +30,8 @@ SETTLEMENTS = [
     ("settle_4_monte", 112, 112),
 ]
 MAP = ("map_act1", 320, 480)
-# Поселения и большие города юга нарисованы прямо на карте (map_act1_base.png);
-# отдельные картинки поселений нужны только для шапки карточки поселения.
+# Долина и большие города юга нарисованы прямо на карте (map_act1_base.png),
+# остальные поселения — отдельными картинками поверх неё.
 
 
 def imageset(name, img, scales=(1,), template=False, folder=OUT):
@@ -70,37 +70,28 @@ def graded(img, k, tint, sat):
     return Image.fromarray(np.dstack([np.clip(out, 0, 255), al]).astype("uint8"))
 
 
-def darker_calada_streets(img):
-    """Молчаливая деревня на карте автора: светлые улицы и площадь у башни — темнее,
-    как дороги остальной карты. Фиолетовые огни и окна не трогаем."""
-    import numpy as np
-    w0, h0 = img.size
-    k = w0 / 1024
-    a = np.asarray(img).astype(float)
-    hsv = np.asarray(img.convert("HSV")).astype(float)
-    s, v = hsv[..., 1], hsv[..., 2]
+# Под старые картинки поселений — поляны с первой карты автора (map_act1_v1.png): на новой карте
+# (map_act1_base.png) поселения уже нарисованы, и без подложки они торчали бы из-под картинок.
+# Долина (Vale do Trigo) остаётся такой, как нарисована на новой карте.
+# (центр, полуоси) в точках карты 320×480
+UNDER_SPRITES = [
+    ((98, 58), (40, 44)),    # Vila Calada
+    ((50, 237), (48, 34)),   # Aldeia das Redes
+    ((254, 123), (46, 42)),  # Souto das Sombras
+    ((240, 342), (50, 52)),  # Monte Sombrio
+]
 
-    def smooth(x, lo, hi):
-        t = np.clip((x - lo) / (hi - lo), 0, 1)
-        return t * t * (3 - 2 * t)
 
-    # плато деревни (в точках картинки 1024×1536)
-    poly = [(205, 170), (240, 140), (350, 115), (385, 110), (450, 145), (460, 190), (435, 230),
-            (410, 275), (360, 290), (350, 320), (315, 340), (290, 320), (255, 300), (210, 275), (190, 240)]
-    area = Image.new("L", img.size, 0)
-    ImageDraw.Draw(area).polygon([(x * k, y * k) for x, y in poly], fill=255)
-    area = np.asarray(area.filter(ImageFilter.GaussianBlur(6 * k))).astype(float) / 255
-    # светлая и не слишком цветная «мостовая», но не яркие сердцевины огней
-    wgt = smooth(v, 60, 105) * (1 - smooth(s, 105, 150)) * (1 - smooth(v, 170, 215))
-    lights = (s > 120) & (v > 150)
-    halo = np.asarray(Image.fromarray((lights * 255).astype("uint8")).filter(ImageFilter.MaxFilter(7))) > 0
-    wgt[halo] *= 0.35
-    wgt[lights] = 0
-    wgt = np.asarray(Image.fromarray((wgt * 255).astype("uint8")).filter(ImageFilter.GaussianBlur(0.8))).astype(float) / 255
-    wgt *= area
-    out = a * (1 - 0.5 * wgt)[..., None]
-    out = out * (1 - 0.5 * wgt[..., None] * (1 - np.array([0.98, 0.94, 1.04])))
-    return Image.fromarray(np.clip(out, 0, 255).astype("uint8"))
+def map_with_clearings(new, old):
+    """Новая карта, а под старыми картинками поселений — поляны первой карты (края размыты)."""
+    k = new.width / MAP[1]
+    old = old.resize(new.size, Image.LANCZOS)
+    mask = Image.new("L", new.size, 0)
+    d = ImageDraw.Draw(mask)
+    for (cx, cy), (rx, ry) in UNDER_SPRITES:
+        d.ellipse([(cx - rx) * k, (cy - ry) * k, (cx + rx) * k, (cy + ry) * k], fill=255)
+    mask = mask.filter(ImageFilter.GaussianBlur(5 * k))
+    return Image.composite(old, new, mask)
 
 
 def sprite_from_art(path, w, h, colors=None):
@@ -268,9 +259,12 @@ def main():
         imageset(name, img)
     path = os.path.join(ART, "map_act1_base.png")
     if os.path.exists(path):
-        img = darker_calada_streets(Image.open(path).convert("RGB"))
+        img = Image.open(path).convert("RGB")
+        first = os.path.join(ART, "map_act1_v1.png")
+        if os.path.exists(first):
+            img = map_with_clearings(img, Image.open(first).convert("RGB"))
         img = img.resize((MAP[1] * SCALE, MAP[2] * SCALE), Image.LANCZOS)
-        report.append("карта: рисунок автора (улицы Молчаливой деревни темнее)")
+        report.append("карта: рисунок автора, под поселениями — поляны первой карты")
     else:
         img = map_placeholder().resize((MAP[1] * SCALE, MAP[2] * SCALE), Image.NEAREST)
         report.append("карта: заглушка по схеме")

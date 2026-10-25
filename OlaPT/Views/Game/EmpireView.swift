@@ -2,28 +2,31 @@ import SwiftUI
 
 // MARK: - Вкладка «Империя»: карта Акта 1, войско, указы
 
-/// Места на карте 320×480. Поселения, дороги и города юга нарисованы прямо на карте автора
-/// (Tools/game/art/map_act1_base.png) — здесь их центры, площади для нажатия и места обелисков.
+/// Места на карте 320×480. Карта автора — Tools/game/art/map_act1_base.png: дороги, долина
+/// и большие города юга нарисованы на ней, остальные поселения — картинками поверх.
 enum MapLayout {
     static let width: CGFloat = 320
     static let height: CGFloat = 480
 
     /// Центры поселений на карте
     static let towns: [CGPoint] = [
-        CGPoint(x: 98, y: 58), CGPoint(x: 50, y: 236), CGPoint(x: 181, y: 235),
-        CGPoint(x: 254, y: 123), CGPoint(x: 240, y: 342),
+        CGPoint(x: 95, y: 64), CGPoint(x: 46, y: 242), CGPoint(x: 181, y: 235),
+        CGPoint(x: 250, y: 132), CGPoint(x: 238, y: 350),
     ]
-    /// Сколько места поселение занимает на карте: сюда нажимают, под ним — подпись
-    static let townSize: [CGSize] = [
-        CGSize(width: 72, height: 76), CGSize(width: 88, height: 58), CGSize(width: 78, height: 70),
-        CGSize(width: 84, height: 74), CGSize(width: 94, height: 94),
-    ]
-    /// Картинки поселений для шапки карточки (втрое подробнее, Tools/game/build_game_assets.py)
+    /// Картинки поселений и их размер в точках карты (хранятся втрое подробнее, Tools/game/build_game_assets.py)
     static let sprites = ["settle_0_calada", "settle_1_redes", "settle_2_trigo", "settle_3_souto", "settle_4_monte"]
     static let spriteSize: [CGSize] = [
         CGSize(width: 96, height: 112), CGSize(width: 96, height: 96), CGSize(width: 96, height: 96),
         CGSize(width: 96, height: 96), CGSize(width: 112, height: 112),
     ]
+    /// Нарисованы прямо на карте — поверх картинку не кладём (в карточке поселения она остаётся).
+    /// Значение — сколько места поселение занимает на карте.
+    static let drawnOnMap: [Int: CGSize] = [2: CGSize(width: 78, height: 70)]
+
+    /// Место поселения на карте: сюда нажимают, под ним — подпись
+    static func size(_ i: Int) -> CGSize {
+        return drawnOnMap[i] ?? spriteSize[i]
+    }
     /// Большие города юга в тумане
     static let south = CGPoint(x: 97, y: 422)
 
@@ -31,7 +34,7 @@ enum MapLayout {
     static let spots: [CGPoint] = [
         CGPoint(x: 92, y: 145),  CGPoint(x: 110, y: 185),   // башня — сети
         CGPoint(x: 115, y: 241), CGPoint(x: 110, y: 278),   // сети — долина
-        CGPoint(x: 190, y: 186), CGPoint(x: 224, y: 178),   // долина — роща
+        CGPoint(x: 190, y: 186), CGPoint(x: 222, y: 196),   // долина — роща
         CGPoint(x: 202, y: 295), CGPoint(x: 218, y: 280),   // долина — крепость
         CGPoint(x: 276, y: 196), CGPoint(x: 252, y: 265),   // роща — крепость
     ]
@@ -227,16 +230,23 @@ struct EmpireView: View {
     @ViewBuilder
     private func townMarker(_ i: Int, scale s: CGFloat) -> some View {
         let t = game.towns[i]
-        let size = MapLayout.townSize[i]
+        let size = MapLayout.size(i)
         let p = MapLayout.towns[i]
         Button {
             town = TownRef(id: i)
         } label: {
             ZStack(alignment: .top) {
-                // само поселение нарисовано на карте — здесь только место для нажатия
-                Color.clear
-                    .frame(width: size.width * s, height: size.height * s)
-                    .contentShape(Rectangle())
+                if MapLayout.drawnOnMap[i] != nil {
+                    // поселение нарисовано на карте — здесь только место для нажатия
+                    Color.clear
+                        .frame(width: size.width * s, height: size.height * s)
+                        .contentShape(Rectangle())
+                } else {
+                    Image(MapLayout.sprites[i])
+                        .interpolation(.high)
+                        .resizable()
+                        .frame(width: size.width * s, height: size.height * s)
+                }
                 VStack(spacing: 1) {
                     Text(GameTexts.townName(i))
                         .font(Theme.pixel(10, relativeTo: .caption2))
