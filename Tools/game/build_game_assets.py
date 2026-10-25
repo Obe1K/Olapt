@@ -50,6 +50,26 @@ def imageset(name, img, scales=(1,), template=False, folder=OUT):
         json.dump(meta, f, indent=2)
 
 
+# Подгонка света под ночную карту: (яркость, оттенок RGB, насыщенность). Окна и факелы не трогаем.
+GRADE = {
+    # долина пришла заметно светлее и золотистее остальных поселений
+    "settle_2_trigo": (0.72, (1.0, 0.92, 1.08), 0.72),
+}
+
+
+def graded(img, k, tint, sat):
+    import numpy as np
+    a = np.asarray(img.convert("RGBA")).astype(float)
+    rgb, al = a[..., :3], a[..., 3]
+    hsv = np.asarray(img.convert("RGB").convert("HSV")).astype(float)
+    lights = ((hsv[..., 2] > 200) & (hsv[..., 1] > 120) & (hsv[..., 0] < 40))[..., None].astype(float)
+    out = rgb * np.array(tint) * k
+    g = out.mean(2, keepdims=True)
+    out = g + (out - g) * sat
+    out = out * (1 - lights) + rgb * lights
+    return Image.fromarray(np.dstack([np.clip(out, 0, 255), al]).astype("uint8"))
+
+
 def sprite_from_art(path, w, h, colors=None):
     """Картинка автора → спрайт: обрезать по содержимому и уменьшить (colors — свести к палитре)."""
     src = Image.open(path).convert("RGBA")
@@ -206,7 +226,9 @@ def main():
         path = os.path.join(ART, name + ".png")
         if os.path.exists(path):
             img = sprite_from_art(path, w * SCALE, h * SCALE)
-            report.append(name + ": рисунок автора")
+            if name in GRADE:
+                img = graded(img, *GRADE[name])
+            report.append(name + ": рисунок автора" + (" (свет подогнан под карту)" if name in GRADE else ""))
         else:
             img = placeholder(name, w, h, seed=i).resize((w * SCALE, h * SCALE), Image.NEAREST)
             report.append(name + ": заглушка")
