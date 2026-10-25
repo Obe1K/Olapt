@@ -3,34 +3,23 @@ import UIKit
 
 // MARK: - Маг на экране «Сегодня»
 
-/// Сцена в стиле тёмного пиксельного фэнтези: маг в башне (или в темнице, если голодает).
-/// Без рамки: картинка во всю ширину и снизу растворяется в фоне страницы.
+/// Зал башни по картинкам автора: маг читает, скучает, пьёт зелье, колдует или, голодая, сидит в темнеющем зале.
+/// Без рамки: картинка во всю ширину и сверху и снизу растворяется в фоне страницы.
 struct PetView: View {
     @EnvironmentObject var model: AppModel
-    /// false, пока поверх открыта тренировка: анимацию еды показываем, когда экран снова виден
+    /// false, пока поверх открыта тренировка: как пьёт зелье, показываем, когда экран снова виден
     let isVisible: Bool
 
     @State private var eatingStart: Date?
     @State private var reactionStart: Date?
 
     static let tickSeconds = 0.5
-    static let eatingFrames = 10
+    /// Сколько тиков пьёт зелье после занятий и колдует после касания
+    static let eatingFrames = 8
     static let reactionFrames = 6
 
-    /// Для UI-тестов: -uitest-pet happy|ok|angry|skeleton|eating — застывший кадр.
+    /// Для UI-тестов: -uitest-pet happy|ok|angry|skeleton|eating|cast — застывший кадр.
     private static let testOverride: String? = UserDefaults.standard.string(forKey: "uitest-pet")
-    /// Для UI-тестов: -uitest-room cellar|hall|library|summit и -uitest-items N.
-    private static let testRoom: PetRoom? = {
-        switch UserDefaults.standard.string(forKey: "uitest-room") {
-        case "cellar": return .cellar
-        case "hall": return .hall
-        case "library": return .library
-        case "summit": return .summit
-        default: return nil
-        }
-    }()
-    private static let testItems: Int? = UserDefaults.standard.object(forKey: "uitest-items") != nil
-        ? UserDefaults.standard.integer(forKey: "uitest-items") : nil
     /// Для UI-тестов: без анимации, чтобы не мешать ожиданию «приложение простаивает».
     private static let isStatic: Bool = testOverride != nil || ProcessInfo.processInfo.arguments.contains("-uitest-static")
 
@@ -38,16 +27,16 @@ struct PetView: View {
         return Int(date.timeIntervalSinceReferenceDate / PetView.tickSeconds)
     }
 
-    private func frame(since start: Date?, at date: Date, length: Int) -> Int? {
-        guard let start = start else { return nil }
+    private func running(since start: Date?, at date: Date, length: Int) -> Bool {
+        guard let start = start else { return false }
         let f = Int(date.timeIntervalSince(start) / PetView.tickSeconds)
-        return (f >= 0 && f < length) ? f : nil
+        return f >= 0 && f < length
     }
 
     private var food: Double {
         if let o = PetView.testOverride {
             switch o {
-            case "happy", "eating": return 100
+            case "happy", "eating", "cast": return 100
             case "ok": return 60
             case "angry": return 25
             case "skeleton": return 0
@@ -60,18 +49,15 @@ struct PetView: View {
     var body: some View {
         let food = self.food
         let mood = PetRules.mood(food: food)
-        let room = PetView.testRoom ?? model.towerRoom
-        let items = PetView.testItems ?? model.towerItems
-        let lit = PetRules.hearts(food: food)
         Group {
             if PetView.isStatic {
-                let eating: Int? = PetView.testOverride == "eating" ? 3 : nil
-                stage(room: room, mood: mood, lit: lit, items: items, tick: 2, eating: eating, reaction: nil)
+                stage(mood: mood, tick: 2,
+                      eating: PetView.testOverride == "eating", reacting: PetView.testOverride == "cast")
             } else {
                 TimelineView(.periodic(from: Date(), by: PetView.tickSeconds)) { context in
-                    stage(room: room, mood: mood, lit: lit, items: items, tick: tick(context.date),
-                          eating: frame(since: eatingStart, at: context.date, length: PetView.eatingFrames),
-                          reaction: frame(since: reactionStart, at: context.date, length: PetView.reactionFrames))
+                    stage(mood: mood, tick: tick(context.date),
+                          eating: running(since: eatingStart, at: context.date, length: PetView.eatingFrames),
+                          reacting: running(since: reactionStart, at: context.date, length: PetView.reactionFrames))
                 }
             }
         }
@@ -79,13 +65,21 @@ struct PetView: View {
         .onChange(of: isVisible) { _ in startMealIfNeeded(mood: PetRules.mood(food: model.petFood())) }
     }
 
-    private func stage(room: PetRoom, mood: PetMood, lit: Int, items: Int, tick: Int,
-                       eating: Int?, reaction: Int?) -> some View {
-        let caption = eating != nil ? PetRules.eatingCaption : PetRules.caption(mood)
-        let layers = PetComposer.compose(room: room, mood: mood, lit: lit, items: items, tick: tick,
-                                         eating: eating, reaction: reaction)
+    private func stage(mood: PetMood, tick: Int, eating: Bool, reacting: Bool) -> some View {
+        let hungry = mood == .angry || mood == .skeleton
+        let pose: TowerPose
+        if reacting && !hungry {
+            pose = .cast
+        } else if eating {
+            pose = .drink
+        } else {
+            pose = TowerPose.resting(mood)
+        }
+        let caption = eating ? PetRules.eatingCaption : PetRules.caption(mood)
+        let layers = TowerScene.compose(pose: pose, tick: tick, hungry: hungry, flash: reacting && hungry)
         // Подписи нет: сцена должна читаться без слов. Текст — только для VoiceOver.
-        return PixelStage(layers: layers)
+        return PixelStage(layers: layers, width: TowerAtlas.width, height: TowerAtlas.height,
+                          darkness: TowerScene.darkness(mood))
             .contentShape(Rectangle())
             .onTapGesture {
                 reactionStart = Date()
@@ -97,7 +91,7 @@ struct PetView: View {
             .accessibilityIdentifier("pet-screen")
     }
 
-    /// Покормили — показываем, как пьёт зелье (только если он уже не голодный и не скелет).
+    /// Покормили — показываем, как пьёт зелье (только если он не голодает).
     private func startMealIfNeeded(mood: PetMood) {
         guard isVisible, !PetView.isStatic, model.user.pet.pendingMeal else { return }
         model.consumePendingMeal()
@@ -107,15 +101,20 @@ struct PetView: View {
     }
 }
 
-/// Рисует слои сцены 192×120 без сглаживания, во всю ширину; низ плавно уходит в фон страницы.
+/// Рисует слои пиксельной сцены без сглаживания, во всю ширину; верх и низ плавно уходят в фон страницы.
 struct PixelStage: View {
     let layers: [PlacedLayer]
+    /// Размер сцены в пикселях: старая сцена 192×120, зал башни 320×200
+    var width: Int = PetAtlas.width
+    var height: Int = PetAtlas.height
+    /// Затемнение всей сцены (0…1): голодный маг — зал погружается во тьму
+    var darkness: Double = 0
     /// Плавно растворять верх и низ в фоне страницы
     var fade: Bool = true
 
     var body: some View {
         GeometryReader { geo in
-            let s = geo.size.width / CGFloat(PetAtlas.width)
+            let s = geo.size.width / CGFloat(width)
             ZStack(alignment: .topLeading) {
                 ForEach(layers) { l in
                     Image(l.name)
@@ -124,11 +123,16 @@ struct PixelStage: View {
                         .frame(width: CGFloat(l.w) * s, height: CGFloat(l.h) * s)
                         .offset(x: CGFloat(l.x) * s, y: CGFloat(l.y) * s)
                 }
+                if darkness > 0 {
+                    Color.black.opacity(darkness)
+                        .frame(width: geo.size.width, height: CGFloat(height) * s)
+                        .animation(.easeInOut(duration: 1.5), value: darkness)
+                }
             }
-            .frame(width: geo.size.width, height: CGFloat(PetAtlas.height) * s, alignment: .topLeading)
+            .frame(width: geo.size.width, height: CGFloat(height) * s, alignment: .topLeading)
             .clipped()
         }
-        .aspectRatio(CGFloat(PetAtlas.width) / CGFloat(PetAtlas.height), contentMode: .fit)
+        .aspectRatio(CGFloat(width) / CGFloat(height), contentMode: .fit)
         .mask(
             LinearGradient(stops: fade ? [
                 .init(color: .clear, location: 0),

@@ -20,7 +20,6 @@ struct TodayView: View {
     /// Меняется при возвращении в приложение, чтобы план пересчитался после полуночи.
     @State private var refreshTick = 0
     /// «В башне появилось: Ворон» — показывается несколько секунд поверх сцены
-    @State private var announcement: String?
 
     private static let ruDayFormatter: DateFormatter = {
         let f = DateFormatter()
@@ -65,19 +64,6 @@ struct TodayView: View {
             VStack(spacing: 14) {
                 // Сцена во всю ширину, без рамки: снизу растворяется в каменном фоне.
                 PetView(isVisible: active == nil)
-                    .overlay(alignment: .top) {
-                        if let text = announcement {
-                            Text(text)
-                                .font(Theme.pixel(14, relativeTo: .subheadline))
-                                .foregroundColor(Theme.goldBright)
-                                .multilineTextAlignment(.center)
-                                .pixelPanel(fill: Theme.panelDeep, padding: 10)
-                                .padding(.top, 10)
-                                .padding(.horizontal, 24)
-                                .transition(.opacity.combined(with: .move(edge: .top)))
-                                .accessibilityIdentifier("tower-news")
-                        }
-                    }
 
                 VStack(spacing: 14) {
                     towerCard
@@ -110,10 +96,6 @@ struct TodayView: View {
         .onAppear {
             refreshTick += 1
             SoundFX.shared.startMusic()
-            announceTowerNews()
-        }
-        .onChange(of: active == nil) { visible in
-            if visible { announceTowerNews() }
         }
         .onDisappear { SoundFX.shared.stopMusic() }
         .fullScreenCover(item: $active) { kind in
@@ -140,44 +122,13 @@ struct TodayView: View {
 
     // MARK: Башня
 
-    private func announceTowerNews() {
-        // Для UI-тестов: -uitest-news "текст" — объявление висит, не исчезая.
-        if let sample = UserDefaults.standard.string(forKey: "uitest-news") {
-            announcement = sample
-            return
-        }
-        guard let news = model.takeTowerNews() else { return }
-        SoundFX.shared.play(.unlock)
-        withAnimation(.easeOut(duration: 0.3)) { announcement = news }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4.5) {
-            withAnimation(.easeIn(duration: 0.4)) { announcement = nil }
-        }
-    }
-
     private var towerCard: some View {
-        let room = model.towerRoom
         let inMemory = model.wordsInMemory()
         return VStack(alignment: .leading, spacing: 10) {
-            GothicHeader("\(room.title) · \(room.level)")
+            GothicHeader(L("Башня"))
             Text(L("Слов в памяти: %d", inMemory))
                 .font(Theme.pixel(17, relativeTo: .headline))
                 .foregroundColor(Theme.text)
-            if let next = model.nextRoomProgress() {
-                progressRow(title: L("До этажа «%@»: %d / %d слов %@", next.room.title, next.have, next.need, next.level),
-                            fraction: Double(next.have) / Double(max(1, next.need)))
-            } else {
-                Text(L("Вы на вершине башни."))
-                    .font(.subheadline)
-                    .foregroundColor(Theme.textDim)
-            }
-            if let item = model.nextItemProgress() {
-                progressRow(title: L("Следующая вещь в башне — %@: ещё %d %@", item.title, max(0, item.need - item.have), Plural.words(max(0, item.need - item.have))),
-                            fraction: Double(item.have % AppModel.wordsPerItem) / Double(AppModel.wordsPerItem))
-            } else {
-                Text(L("Башня обставлена полностью."))
-                    .font(.subheadline)
-                    .foregroundColor(Theme.textDim)
-            }
             Text(L("Слово «в памяти», если вы помните его хотя бы неделю."))
                 .font(.caption)
                 .foregroundColor(Theme.textDim)
@@ -186,16 +137,6 @@ struct TodayView: View {
         .pixelPanel()
         .accessibilityElement(children: .combine)
         .accessibilityIdentifier("tower-card")
-    }
-
-    private func progressRow(title: String, fraction: Double) -> some View {
-        return VStack(alignment: .leading, spacing: 6) {
-            Text(title)
-                .font(.subheadline)
-                .foregroundColor(Theme.text)
-                .fixedSize(horizontal: false, vertical: true)
-            PixelProgressBar(fraction: fraction)
-        }
     }
 
     // MARK: План

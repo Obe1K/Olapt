@@ -115,11 +115,13 @@ T = {
     "Не удалось прочитать файл. Нужен текстовый файл в кодировке UTF-8.": "Couldn't read the file. It must be a UTF-8 text file.",
     "В файле не найдено ни одного слова.": "No words found in the file.",
     # Pet
+    "Башня": "Tower",
     "Сыт и доволен — читает книгу заклинаний за кафедрой в своей башне": "Well fed and content — reading his spellbook at the lectern in his tower",
     "Проголодался: забросил книгу и мечтает о зелье": "Hungry: he has dropped his book and dreams of a potion",
-    "Голодает в темнице и проклинает вас. Пройдите план на сегодня — и он вернётся в башню":
-        "Starving in the dungeon and cursing you. Finish today's plan and he'll return to the tower",
-    "Совсем зачах в темнице… Пара упражнений — и он оживёт": "He has withered away in the dungeon… A couple of exercises will bring him back to life",
+    "Голодает: свет рун в башне почти погас. Пройдите план на сегодня — и зал снова оживёт":
+        "Starving: the light of the runes in the tower has almost gone out. Finish today's plan and the hall will come back to life",
+    "Совсем ослаб, и башня погрузилась во тьму… Пара упражнений — и он оживёт":
+        "He has grown too weak, and the tower has sunk into darkness… A couple of exercises will bring him back to life",
     "Пьёт зелье — спасибо за занятия!": "Drinking his potion — thanks for practising!",
     # PetAtlas
     "Котёл с зельем": "Potion cauldron",

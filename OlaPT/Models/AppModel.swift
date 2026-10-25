@@ -131,8 +131,6 @@ final class AppModel: ObservableObject {
         user.srs = srs
         user.pet.food = 100
         user.pet.updated = now
-        user.pet.seenRoom = towerRoom.rawValue
-        user.pet.seenItems = towerItems
     }
 
     private static func makeInfos(files: [PackFile], bundled: Set<String>) -> [PackInfo] {
@@ -531,12 +529,10 @@ final class AppModel: ObservableObject {
         }
     }
 
-    // MARK: - Башня: этажи и вещи
+    // MARK: - Слова в памяти
 
     /// Слово «в памяти», если держится хотя бы неделю.
     static let memoryStability = 7.0
-    /// Каждые 50 слов в памяти — новая вещь в башне.
-    static let wordsPerItem = 50
 
     /// Сколько слов в памяти (всего или определённого уровня).
     func wordsInMemory(level: String? = nil) -> Int {
@@ -549,58 +545,6 @@ final class AppModel: ObservableObject {
             }
         }
         return n
-    }
-
-    /// Самый высокий открытый этаж.
-    var towerRoom: PetRoom {
-        var room = PetRoom.cellar
-        for r in PetRoom.allCases.dropFirst() {
-            guard let req = r.requirement else { continue }
-            if wordsInMemory(level: req.level) >= req.count {
-                room = r
-            } else {
-                break
-            }
-        }
-        return room
-    }
-
-    var towerItems: Int {
-        return min(PetAtlas.items.count, wordsInMemory() / AppModel.wordsPerItem)
-    }
-
-    /// Новые вещи и этаж с прошлого раза: текст объявления (и отметка «увидено»).
-    func takeTowerNews() -> String? {
-        var news: [String] = []
-        let room = towerRoom.rawValue
-        if room > user.pet.seenRoom {
-            news.append(L("Маг поднялся на новый этаж: %@!", towerRoom.title))
-        }
-        let items = towerItems
-        if items > user.pet.seenItems {
-            let titles = PetAtlas.items[user.pet.seenItems..<items].map { $0.title }
-            news.append(L("В башне появилось: ") + titles.joined(separator: ", "))
-        }
-        if room != user.pet.seenRoom || items != user.pet.seenItems {
-            user.pet.seenRoom = room
-            user.pet.seenItems = items
-        }
-        return news.isEmpty ? nil : news.joined(separator: "\n")
-    }
-
-    /// Следующий этаж и сколько до него осталось.
-    func nextRoomProgress() -> (room: PetRoom, level: String, have: Int, need: Int)? {
-        let current = towerRoom
-        guard let next = PetRoom(rawValue: current.rawValue + 1), let req = next.requirement else { return nil }
-        return (next, req.level, min(req.count, wordsInMemory(level: req.level)), req.count)
-    }
-
-    /// Следующая вещь в башне.
-    func nextItemProgress() -> (title: String, have: Int, need: Int)? {
-        let count = towerItems
-        guard count < PetAtlas.items.count else { return nil }
-        let need = (count + 1) * AppModel.wordsPerItem
-        return (PetAtlas.items[count].title, wordsInMemory(), need)
     }
 
     // MARK: - Босс недели

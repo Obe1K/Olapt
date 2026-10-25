@@ -618,34 +618,30 @@ final class ScreenshotTests: XCTestCase {
         note(nextReview.exists ? "CHECK ok: word card: " + nextReview.label : "CHECK FAILED: word card has no next review")
         shot("76_word_card_srs")
 
-        // Все состояния питомца (застывший кадр)
-        let variants: [(String, String, Int)] = [
-            ("happy", "cellar", 1), ("happy", "hall", 4), ("happy", "library", 7), ("happy", "summit", 10),
-            ("ok", "library", 3), ("eating", "hall", 5), ("angry", "cellar", 0), ("skeleton", "cellar", 0)
-        ]
-        for (mood, room, items) in variants {
+        shootTowerPoses()
+    }
+
+    /// Только зал башни: все позы мага (быстрый прогон для проверки картинок).
+    func testP_TowerPoses() {
+        shootTowerPoses()
+    }
+
+    /// Все состояния мага в зале башни (застывший кадр): сыт, проголодался, пьёт, колдует, голодает, совсем ослаб.
+    private func shootTowerPoses() {
+        for mood in ["happy", "ok", "eating", "cast", "angry", "skeleton"] {
             app.terminate()
-            app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU", "-ui-language", "ru", "-uitest-pet", mood,
-                                   "-uitest-room", room, "-uitest-items", String(items)]
-            let withNews = mood == "happy" && room == "hall"
-            if withNews {
-                app.launchArguments += ["-uitest-news", "Маг поднялся на новый этаж: Зал!\nВ башне появилось: Ворон"]
-            }
+            app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU", "-ui-language", "ru", "-uitest-pet", mood]
             app.launch()
             Thread.sleep(forTimeInterval: 1.5)
             tapTab("Сегодня")
             let screen = app.descendants(matching: .any)["pet-screen"]
             note(screen.waitForExistence(timeout: 4) ? "CHECK ok: pet " + mood + ": " + screen.label : "CHECK FAILED: pet " + mood + " missing")
-            if withNews {
-                let news = app.descendants(matching: .any)["tower-news"]
-                note(news.waitForExistence(timeout: 3) ? "CHECK ok: tower news shown" : "CHECK FAILED: tower news missing")
-            }
             note(app.staticTexts["pet-caption"].exists ? "CHECK FAILED: caption under pet still shown" : "CHECK ok: no caption under pet")
-            shot("77_pet_" + mood + "_" + room)
+            shot("77_pet_" + mood)
         }
     }
 
-    /// Башня с вещами, полный гримуар и бой с боссом: приложение запускается с 260 словами «в памяти».
+    /// Полный гримуар и бой с боссом: приложение запускается с 260 словами «в памяти».
     func testI_TowerGrimoireBoss() {
         app.terminate()
         app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU", "-ui-language", "ru", "-uitest-static", "YES", "-uitest-seed", "260"]
