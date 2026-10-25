@@ -711,9 +711,9 @@ final class ScreenshotTests: XCTestCase {
         var shotArena = false
         while steps < 120 && !app.buttons["battle-report-ok"].exists {
             steps += 1
-            if app.descendants(matching: .any)["battle-result"].exists {
+            if app.buttons["battle-continue"].exists {
                 shot("90_battle_summary_\(steps)")
-                tap(app.buttons["Закончить"], "finish battle stage")
+                tap(app.buttons["battle-continue"], "finish battle stage")
                 Thread.sleep(forTimeInterval: 1.5)
                 continue
             }

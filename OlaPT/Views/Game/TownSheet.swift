@@ -55,9 +55,9 @@ struct TownSheet: View {
         Section {
             HStack(spacing: 14) {
                 Image(MapLayout.sprites[townID])
-                    .interpolation(.none)
+                    .interpolation(.high)
                     .resizable()
-                    .frame(width: MapLayout.spriteSize[townID].width, height: MapLayout.spriteSize[townID].height)
+                    .frame(width: MapLayout.spriteSize[townID].width * 1.2, height: MapLayout.spriteSize[townID].height * 1.2)
                 VStack(alignment: .leading, spacing: 4) {
                     Text(Act1.towns[townID].pt)
                         .font(.subheadline.italic())

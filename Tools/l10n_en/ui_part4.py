@@ -205,7 +205,7 @@ T = {
     "Оборона": "Defence",
     "Бой окончен": "The battle is over",
     "Бой проигран": "Battle lost",
-    "Нажмите «Закончить» — дальше решит кубик.": "Tap “Finish” — the die decides the rest.",
+    "Дальше": "Continue",
     "Бросок кубика: %d": "Die roll: %d",
     "Чистая 20 — всегда удача": "A natural 20 always succeeds",
     "Чистая 1 — всегда провал": "A natural 1 always fails",

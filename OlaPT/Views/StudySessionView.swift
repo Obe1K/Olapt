@@ -551,10 +551,9 @@ struct StudySessionView: View {
                                 .font(Theme.pixel(24, relativeTo: .title2))
                                 .foregroundColor(Theme.goldBright)
                         }
-                        Text(L("Нажмите «Закончить» — дальше решит кубик."))
-                            .font(.subheadline)
-                            .foregroundColor(Theme.text)
-                            .multilineTextAlignment(.center)
+                        Button(L("Дальше")) { dismiss() }
+                            .buttonStyle(GothicButtonStyle(.primary))
+                            .accessibilityIdentifier("battle-continue")
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 6)

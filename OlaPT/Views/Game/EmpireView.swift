@@ -8,12 +8,13 @@ enum MapLayout {
     static let height: CGFloat = 480
 
     static let towns: [CGPoint] = [
-        CGPoint(x: 95, y: 95), CGPoint(x: 70, y: 215), CGPoint(x: 155, y: 240),
+        CGPoint(x: 95, y: 95), CGPoint(x: 62, y: 212), CGPoint(x: 162, y: 244),
         CGPoint(x: 225, y: 170), CGPoint(x: 265, y: 285),
     ]
+    /// Размер поселения на карте (картинки — втрое подробнее, Tools/game/build_game_assets.py)
     static let spriteSize: [CGSize] = [
-        CGSize(width: 80, height: 96), CGSize(width: 80, height: 80), CGSize(width: 80, height: 80),
-        CGSize(width: 80, height: 80), CGSize(width: 96, height: 96),
+        CGSize(width: 96, height: 112), CGSize(width: 96, height: 96), CGSize(width: 96, height: 96),
+        CGSize(width: 96, height: 96), CGSize(width: 112, height: 112),
     ]
     static let sprites = ["settle_0_calada", "settle_1_redes", "settle_2_trigo", "settle_3_souto", "settle_4_monte"]
     static let south = CGPoint(x: 80, y: 420)
@@ -173,7 +174,7 @@ struct EmpireView: View {
             let s = geo.size.width / MapLayout.width
             ZStack(alignment: .topLeading) {
                 Image("map_act1")
-                    .interpolation(.none)
+                    .interpolation(.high)
                     .resizable()
                     .frame(width: MapLayout.width * s, height: MapLayout.height * s)
                 // зоны обелисков: подсветка поселений, до которых дотягиваются горящие обелиски
@@ -182,15 +183,16 @@ struct EmpireView: View {
                         Circle()
                             .fill(Color(red: 0.55, green: 0.3, blue: 0.9).opacity(0.16))
                             .overlay(Circle().stroke(Color(red: 0.65, green: 0.4, blue: 1).opacity(0.5), lineWidth: 1))
-                            .frame(width: 92 * s, height: 92 * s)
+                            .frame(width: 104 * s, height: 104 * s)
                             .position(x: MapLayout.towns[i].x * s, y: MapLayout.towns[i].y * s)
                     }
                 }
-                ForEach(0..<Act1.towns.count, id: \.self) { i in
-                    townMarker(i, scale: s)
-                }
+                // места для обелисков — под поселениями, чтобы не закрывать названия
                 ForEach(Act1.spots.map { $0.id }, id: \.self) { id in
                     spotMarker(id, scale: s)
+                }
+                ForEach(0..<Act1.towns.count, id: \.self) { i in
+                    townMarker(i, scale: s)
                 }
                 if let p = game.patrol, !p.defended {
                     Image(systemName: "shield.lefthalf.filled")
@@ -202,9 +204,9 @@ struct EmpireView: View {
                                   y: (MapLayout.towns[p.from].y + MapLayout.towns[p.target].y) / 2 * s)
                 }
                 Image("south_city")
-                    .interpolation(.none)
+                    .interpolation(.high)
                     .resizable()
-                    .frame(width: 64 * s, height: 48 * s)
+                    .frame(width: 72 * s, height: 54 * s)
                     .opacity(0.9)
                     .position(x: MapLayout.south.x * s, y: MapLayout.south.y * s)
                 Text(L("Большие города юга"))
@@ -233,7 +235,7 @@ struct EmpireView: View {
         } label: {
             ZStack(alignment: .top) {
                 Image(MapLayout.sprites[i])
-                    .interpolation(.none)
+                    .interpolation(.high)
                     .resizable()
                     .frame(width: size.width * s, height: size.height * s)
                     .saturation(t.owner == .mask ? 1 : 0.75)

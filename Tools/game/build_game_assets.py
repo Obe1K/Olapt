@@ -18,17 +18,20 @@ ART = os.path.join(ROOT, "Tools", "game", "art")
 OUT = os.path.join(ROOT, "OlaPT", "Assets.xcassets", "Game")
 TAB = os.path.join(ROOT, "OlaPT", "Assets.xcassets", "tab-mask.imageset")
 
-# Поселения: имя файла и итоговый размер (ТЗ, пакет 2)
+# Карта — 320×480 точек; картинки хранятся втрое подробнее (как экран iPhone @3x),
+# чтобы рисунки автора не превращались на телефоне в кашу из крупных пикселей.
+SCALE = 3
+# Поселения: имя файла и размер на карте в точках карты (Swift: MapLayout.spriteSize)
 SETTLEMENTS = [
-    ("settle_0_calada", 80, 96),
-    ("settle_1_redes", 80, 80),
-    ("settle_2_trigo", 80, 80),
-    ("settle_3_souto", 80, 80),
-    ("settle_4_monte", 96, 96),
+    ("settle_0_calada", 96, 112),
+    ("settle_1_redes", 96, 96),
+    ("settle_2_trigo", 96, 96),
+    ("settle_3_souto", 96, 96),
+    ("settle_4_monte", 112, 112),
 ]
 MAP = ("map_act1", 320, 480)
 # Большие города юга в тумане: закрыты в Акте 1
-SOUTH = ("south_city", 64, 48)
+SOUTH = ("south_city", 72, 54)
 
 
 def imageset(name, img, scales=(1,), template=False, folder=OUT):
@@ -47,8 +50,8 @@ def imageset(name, img, scales=(1,), template=False, folder=OUT):
         json.dump(meta, f, indent=2)
 
 
-def sprite_from_art(path, w, h, colors=32):
-    """Картинка автора → пиксельный спрайт: обрезать по содержимому, уменьшить, свести к палитре."""
+def sprite_from_art(path, w, h, colors=None):
+    """Картинка автора → спрайт: обрезать по содержимому и уменьшить (colors — свести к палитре)."""
     src = Image.open(path).convert("RGBA")
     a = src.split()[3].point(lambda v: 255 if v >= 128 else 0)
     src.putalpha(a)
@@ -59,8 +62,9 @@ def sprite_from_art(path, w, h, colors=32):
     sw, sh = max(1, round(src.width * k)), max(1, round(src.height * k))
     small = src.resize((sw, sh), Image.LANCZOS)
     alpha = small.split()[3].point(lambda v: 255 if v >= 110 else 0)
-    rgb = small.convert("RGB").quantize(colors, method=Image.Quantize.MEDIANCUT,
-                                        dither=Image.Dither.NONE).convert("RGB")
+    rgb = small.convert("RGB")
+    if colors:
+        rgb = rgb.quantize(colors, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE).convert("RGB")
     rgb.putalpha(alpha)
     out = Image.new("RGBA", (w, h), (0, 0, 0, 0))
     out.paste(rgb, ((w - sw) // 2, h - sh), rgb)
@@ -201,23 +205,22 @@ def main():
     for i, (name, w, h) in enumerate(SETTLEMENTS):
         path = os.path.join(ART, name + ".png")
         if os.path.exists(path):
-            img = sprite_from_art(path, w, h)
+            img = sprite_from_art(path, w * SCALE, h * SCALE)
             report.append(name + ": рисунок автора")
         else:
-            img = placeholder(name, w, h, seed=i)
+            img = placeholder(name, w, h, seed=i).resize((w * SCALE, h * SCALE), Image.NEAREST)
             report.append(name + ": заглушка")
         imageset(name, img)
     path = os.path.join(ART, SOUTH[0] + ".png")
     if os.path.exists(path):
-        imageset(SOUTH[0], sprite_from_art(path, SOUTH[1], SOUTH[2]))
+        imageset(SOUTH[0], sprite_from_art(path, SOUTH[1] * SCALE, SOUTH[2] * SCALE))
         report.append(SOUTH[0] + ": рисунок автора")
     path = os.path.join(ART, "map_act1_base.png")
     if os.path.exists(path):
-        img = Image.open(path).convert("RGB").resize((MAP[1], MAP[2]), Image.LANCZOS)
-        img = img.quantize(40, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE).convert("RGB")
+        img = Image.open(path).convert("RGB").resize((MAP[1] * SCALE, MAP[2] * SCALE), Image.LANCZOS)
         report.append("карта: рисунок автора")
     else:
-        img = map_placeholder()
+        img = map_placeholder().resize((MAP[1] * SCALE, MAP[2] * SCALE), Image.NEAREST)
         report.append("карта: заглушка по схеме")
     imageset(MAP[0], img)
     imageset("tab-mask", tab_icon(), scales=(1, 2, 3), template=True, folder=TAB)

@@ -13,11 +13,11 @@ W, H, S = 320, 480, 3
 
 # 0 — деревня с башней, 1–4 — поселения Акта 1, "S" — большие города юга (закрыто).
 P = {
-    0: (95, 95, 24, "start"),
-    1: (70, 215, 22, "vil"),
-    2: (155, 240, 24, "vil"),
-    3: (225, 170, 26, "vil"),
-    4: (265, 285, 32, "fort"),
+    0: (95, 95, 30, "start"),
+    1: (62, 212, 30, "vil"),
+    2: (162, 244, 30, "vil"),
+    3: (225, 170, 30, "vil"),
+    4: (265, 285, 36, "fort"),
     "S": (80, 420, 30, "south"),
 }
 ROADS = [(0, 1), (1, 2), (2, 3), (3, 4), (2, 4)]
@@ -122,7 +122,31 @@ def make(numbered):
     return img
 
 
+def make_guide():
+    """Схема для нейросети: только местность, дороги и пустые поляны — без колец, крестика и подписей."""
+    img = Image.new("RGB", (s(W), s(H)))
+    d = ImageDraw.Draw(img)
+    base(d)
+    img = img.filter(ImageFilter.GaussianBlur(s(3)))
+    d = ImageDraw.Draw(img)
+    for a, b in ROADS + CLOSED:
+        ax, ay = P[a][:2]
+        bx, by = P[b][:2]
+        d.line([s(ax), s(ay), s(bx), s(by)], fill=C["road"], width=s(3))
+    for k, (x, y, r, kind) in P.items():
+        if kind != "south":
+            d.ellipse([s(x - r), s(y - r), s(x + r), s(y + r)], fill=C["clear"])
+    over = Image.new("RGBA", img.size, (0, 0, 0, 0))
+    od = ImageDraw.Draw(over)
+    for i in range(60):
+        y = 335 + i * 2.4
+        od.rectangle([0, s(y), s(W), s(y + 2.4)], fill=C["fog"] + (min(170, 40 + i * 3),))
+    od.rectangle([0, s(335 + 60 * 2.4), s(W), s(H)], fill=C["fog"] + (170,))
+    return Image.alpha_composite(img.convert("RGBA"), over).convert("RGB")
+
+
 os.makedirs(OUT, exist_ok=True)
+make_guide().save(os.path.join(OUT, "map_act1_guide.png"))
 make(True).save(os.path.join(OUT, "map_act1_layout.png"))
 make(False).save(os.path.join(OUT, "map_act1_layout_clean.png"))
 print("ok")
