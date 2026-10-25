@@ -56,6 +56,16 @@ jobs:
           echo "::notice title=Музыка башни::$(printf '%s\n%s' "$INFO" "$OUT" | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')"
           exit $RC
 
+      - name: Игра, Акт 1 (правила и бот на 90 дней)
+        run: |
+          mkdir -p build/game
+          swiftc -O OlaPT/Models/Game/*.swift Tools/game/swift_check/main.swift -o build/game/check
+          RC=0
+          OUT=$(build/game/check 2>&1) || RC=$?
+          printf '%s\n' "$OUT"
+          echo "::notice title=Игра, Акт 1::$(printf '%s' "$OUT" | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')"
+          exit $RC
+
       - name: Показать ошибки в сводке
         if: always()
         run: |
