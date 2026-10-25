@@ -8,8 +8,8 @@ enum MapLayout {
     static let height: CGFloat = 480
 
     static let towns: [CGPoint] = [
-        CGPoint(x: 95, y: 95), CGPoint(x: 62, y: 212), CGPoint(x: 162, y: 244),
-        CGPoint(x: 225, y: 170), CGPoint(x: 265, y: 285),
+        CGPoint(x: 95, y: 95), CGPoint(x: 62, y: 240), CGPoint(x: 162, y: 272),
+        CGPoint(x: 228, y: 135), CGPoint(x: 252, y: 335),
     ]
     /// Размер поселения на карте (картинки — втрое подробнее, Tools/game/build_game_assets.py)
     static let spriteSize: [CGSize] = [
@@ -17,7 +17,7 @@ enum MapLayout {
         CGSize(width: 96, height: 96), CGSize(width: 112, height: 112),
     ]
     static let sprites = ["settle_0_calada", "settle_1_redes", "settle_2_trigo", "settle_3_souto", "settle_4_monte"]
-    static let south = CGPoint(x: 80, y: 420)
+    static let south = CGPoint(x: 80, y: 432)
 
     /// Место для обелиска: на дороге или чуть в стороне от неё (поле, лес).
     static func spot(_ id: Int) -> CGPoint {

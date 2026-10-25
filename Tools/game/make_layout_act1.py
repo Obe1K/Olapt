@@ -14,11 +14,11 @@ W, H, S = 320, 480, 3
 # 0 — деревня с башней, 1–4 — поселения Акта 1, "S" — большие города юга (закрыто).
 P = {
     0: (95, 95, 30, "start"),
-    1: (62, 212, 30, "vil"),
-    2: (162, 244, 30, "vil"),
-    3: (225, 170, 30, "vil"),
-    4: (265, 285, 36, "fort"),
-    "S": (80, 420, 30, "south"),
+    1: (62, 240, 30, "vil"),
+    2: (162, 272, 30, "vil"),
+    3: (228, 135, 30, "vil"),
+    4: (252, 335, 36, "fort"),
+    "S": (80, 432, 30, "south"),
 }
 ROADS = [(0, 1), (1, 2), (2, 3), (3, 4), (2, 4)]
 CLOSED = [(1, "S")]
@@ -42,10 +42,12 @@ def pts(seq):
 
 def base(d):
     d.rectangle([0, 0, s(W), s(H)], fill=C["land"])
-    d.polygon(pts([(150, 40), (320, 40), (320, 330), (290, 300), (240, 250), (190, 215), (175, 130)]),
+    # лес на востоке; выступом на запад он подходит вплотную к башне Маски
+    d.polygon(pts([(150, 40), (320, 40), (320, 290), (285, 280), (240, 262), (200, 235), (185, 175),
+                   (172, 140), (150, 126), (136, 110), (134, 80), (148, 62)]),
               fill=C["forest"])
-    d.polygon(pts([(225, 250), (320, 245), (320, 340), (270, 335), (225, 310)]), fill=C["hills"])
-    d.polygon(pts([(100, 190), (205, 200), (215, 285), (150, 300), (95, 270)]), fill=C["fields"])
+    d.polygon(pts([(205, 300), (320, 292), (320, 392), (262, 388), (205, 365)]), fill=C["hills"])
+    d.polygon(pts([(100, 215), (205, 225), (215, 310), (150, 325), (95, 295)]), fill=C["fields"])
     d.polygon(pts(COAST), fill=C["sea"])
     # Северная граница — река
     d.line(pts([(46, 34), (120, 26), (200, 36), (260, 24), (320, 32)]), fill=C["river"], width=s(5))
@@ -85,9 +87,9 @@ def fog(img):
     over = Image.new("RGBA", img.size, (0, 0, 0, 0))
     od = ImageDraw.Draw(over)
     for i in range(60):
-        y = 335 + i * 2.4
+        y = 382 + i * 1.6
         od.rectangle([0, s(y), s(W), s(y + 2.4)], fill=C["fog"] + (min(170, 40 + i * 3),))
-    od.rectangle([0, s(335 + 60 * 2.4), s(W), s(H)], fill=C["fog"] + (170,))
+    od.rectangle([0, s(382 + 60 * 1.6), s(W), s(H)], fill=C["fog"] + (170,))
     x, y, r, _ = P["S"]
     od.rounded_rectangle([s(x - r), s(y - r * 0.7), s(x + r), s(y + r * 0.7)], radius=s(4),
                          outline=(150, 140, 160, 255), width=s(2))
@@ -139,9 +141,9 @@ def make_guide():
     over = Image.new("RGBA", img.size, (0, 0, 0, 0))
     od = ImageDraw.Draw(over)
     for i in range(60):
-        y = 335 + i * 2.4
+        y = 382 + i * 1.6
         od.rectangle([0, s(y), s(W), s(y + 2.4)], fill=C["fog"] + (min(170, 40 + i * 3),))
-    od.rectangle([0, s(335 + 60 * 2.4), s(W), s(H)], fill=C["fog"] + (170,))
+    od.rectangle([0, s(382 + 60 * 1.6), s(W), s(H)], fill=C["fog"] + (170,))
     return Image.alpha_composite(img.convert("RGBA"), over).convert("RGB")
 
 
