@@ -8,8 +8,8 @@ enum MapLayout {
     static let height: CGFloat = 480
 
     static let towns: [CGPoint] = [
-        CGPoint(x: 95, y: 95), CGPoint(x: 56, y: 242), CGPoint(x: 162, y: 272),
-        CGPoint(x: 250, y: 132), CGPoint(x: 252, y: 335),
+        CGPoint(x: 95, y: 95), CGPoint(x: 56, y: 242), CGPoint(x: 181, y: 258),
+        CGPoint(x: 250, y: 132), CGPoint(x: 238, y: 350),
     ]
     /// Размер поселения на карте (картинки — втрое подробнее, Tools/game/build_game_assets.py)
     static let spriteSize: [CGSize] = [
@@ -17,7 +17,7 @@ enum MapLayout {
         CGSize(width: 96, height: 96), CGSize(width: 112, height: 112),
     ]
     static let sprites = ["settle_0_calada", "settle_1_redes", "settle_2_trigo", "settle_3_souto", "settle_4_monte"]
-    static let south = CGPoint(x: 80, y: 432)
+    static let south = CGPoint(x: 84, y: 428)
 
     /// Место для обелиска: на дороге или чуть в стороне от неё (поле, лес).
     static func spot(_ id: Int) -> CGPoint {
@@ -206,7 +206,7 @@ struct EmpireView: View {
                 Image("south_city")
                     .interpolation(.high)
                     .resizable()
-                    .frame(width: 72 * s, height: 54 * s)
+                    .frame(width: 120 * s, height: 80 * s)
                     .opacity(0.9)
                     .position(x: MapLayout.south.x * s, y: MapLayout.south.y * s)
                 Text(L("Большие города юга"))
@@ -215,7 +215,7 @@ struct EmpireView: View {
                     .padding(.horizontal, 4)
                     .background(Theme.panelDeep.opacity(0.75))
                     .fixedSize()
-                    .position(x: MapLayout.south.x * s, y: (MapLayout.south.y + 30) * s)
+                    .position(x: MapLayout.south.x * s, y: (MapLayout.south.y + 42) * s)
             }
         }
         .aspectRatio(MapLayout.width / MapLayout.height, contentMode: .fit)

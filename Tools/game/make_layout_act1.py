@@ -15,10 +15,10 @@ W, H, S = 320, 480, 3
 P = {
     0: (95, 95, 30, "start"),
     1: (56, 242, 30, "vil"),
-    2: (162, 272, 30, "vil"),
+    2: (181, 258, 30, "vil"),
     3: (250, 132, 30, "vil"),
-    4: (252, 335, 36, "fort"),
-    "S": (80, 432, 30, "south"),
+    4: (238, 350, 36, "fort"),
+    "S": (84, 428, 30, "south"),
 }
 ROADS = [(0, 1), (1, 2), (2, 3), (3, 4), (2, 4)]
 CLOSED = [(1, "S")]
@@ -49,8 +49,8 @@ def base(d):
     d.polygon(pts([(137, 34), (320, 34), (320, 290), (285, 280), (240, 262), (205, 215), (190, 182),
                    (164, 161), (145, 153), (139, 123), (135, 80), (138, 70)]),
               fill=C["forest"])
-    d.polygon(pts([(205, 300), (320, 292), (320, 392), (262, 388), (205, 365)]), fill=C["hills"])
-    d.polygon(pts([(100, 215), (205, 225), (215, 310), (150, 325), (95, 295)]), fill=C["fields"])
+    d.polygon(pts([(191, 315), (320, 307), (320, 407), (248, 403), (191, 380)]), fill=C["hills"])
+    d.polygon(pts([(119, 205), (205, 218), (228, 292), (169, 311), (114, 281)]), fill=C["fields"])
     d.polygon(pts(COAST), fill=C["sea"])
     # Северная граница — река
     d.line(pts([(46, 34), (120, 26), (200, 36), (260, 24), (320, 32)]), fill=C["river"], width=s(5))
@@ -90,9 +90,9 @@ def fog(img):
     over = Image.new("RGBA", img.size, (0, 0, 0, 0))
     od = ImageDraw.Draw(over)
     for i in range(60):
-        y = 382 + i * 1.6
+        y = 395 + i * 1.4
         od.rectangle([0, s(y), s(W), s(y + 2.4)], fill=C["fog"] + (min(170, 40 + i * 3),))
-    od.rectangle([0, s(382 + 60 * 1.6), s(W), s(H)], fill=C["fog"] + (170,))
+    od.rectangle([0, s(395 + 60 * 1.4), s(W), s(H)], fill=C["fog"] + (170,))
     x, y, r, _ = P["S"]
     od.rounded_rectangle([s(x - r), s(y - r * 0.7), s(x + r), s(y + r * 0.7)], radius=s(4),
                          outline=(150, 140, 160, 255), width=s(2))
@@ -144,9 +144,9 @@ def make_guide():
     over = Image.new("RGBA", img.size, (0, 0, 0, 0))
     od = ImageDraw.Draw(over)
     for i in range(60):
-        y = 382 + i * 1.6
+        y = 395 + i * 1.4
         od.rectangle([0, s(y), s(W), s(y + 2.4)], fill=C["fog"] + (min(170, 40 + i * 3),))
-    od.rectangle([0, s(382 + 60 * 1.6), s(W), s(H)], fill=C["fog"] + (170,))
+    od.rectangle([0, s(395 + 60 * 1.4), s(W), s(H)], fill=C["fog"] + (170,))
     return Image.alpha_composite(img.convert("RGBA"), over).convert("RGB")
 
 

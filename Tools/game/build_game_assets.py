@@ -31,7 +31,7 @@ SETTLEMENTS = [
 ]
 MAP = ("map_act1", 320, 480)
 # Большие города юга в тумане: закрыты в Акте 1
-SOUTH = ("south_city", 72, 54)
+SOUTH = ("south_city", 120, 80)
 
 
 def imageset(name, img, scales=(1,), template=False, folder=OUT):
