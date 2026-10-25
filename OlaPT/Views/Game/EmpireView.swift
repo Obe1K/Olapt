@@ -185,10 +185,12 @@ struct EmpireView: View {
                 // зоны обелисков: подсветка поселений, до которых дотягиваются горящие обелиски
                 ForEach(0..<Act1.towns.count, id: \.self) { i in
                     if game.coverCharge(i) != nil {
+                        // только тонкий размытый ободок, чтобы не закрывать карту
                         Circle()
-                            .fill(Color(red: 0.55, green: 0.3, blue: 0.9).opacity(0.16))
-                            .overlay(Circle().stroke(Color(red: 0.65, green: 0.4, blue: 1).opacity(0.5), lineWidth: 1))
+                            .stroke(Color(red: 0.69, green: 0.47, blue: 1).opacity(0.6), lineWidth: 2 * s)
+                            .blur(radius: 1.3 * s)
                             .frame(width: 104 * s, height: 104 * s)
+                            .allowsHitTesting(false)
                             .position(x: MapLayout.towns[i].x * s, y: MapLayout.towns[i].y * s)
                     }
                 }
