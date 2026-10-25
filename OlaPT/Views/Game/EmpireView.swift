@@ -201,10 +201,19 @@ struct EmpireView: View {
                         .position(x: (MapLayout.towns[p.from].x + MapLayout.towns[p.target].x) / 2 * s,
                                   y: (MapLayout.towns[p.from].y + MapLayout.towns[p.target].y) / 2 * s)
                 }
+                Image("south_city")
+                    .interpolation(.none)
+                    .resizable()
+                    .frame(width: 64 * s, height: 48 * s)
+                    .opacity(0.9)
+                    .position(x: MapLayout.south.x * s, y: MapLayout.south.y * s)
                 Text(L("Большие города юга"))
-                    .font(Theme.pixel(11, relativeTo: .caption2))
+                    .font(Theme.pixel(10, relativeTo: .caption2))
                     .foregroundColor(Theme.textDim)
-                    .position(x: MapLayout.south.x * s + 40 * s, y: MapLayout.south.y * s)
+                    .padding(.horizontal, 4)
+                    .background(Theme.panelDeep.opacity(0.75))
+                    .fixedSize()
+                    .position(x: MapLayout.south.x * s, y: (MapLayout.south.y + 30) * s)
             }
         }
         .aspectRatio(MapLayout.width / MapLayout.height, contentMode: .fit)

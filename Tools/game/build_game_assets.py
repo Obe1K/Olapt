@@ -27,6 +27,8 @@ SETTLEMENTS = [
     ("settle_4_monte", 96, 96),
 ]
 MAP = ("map_act1", 320, 480)
+# Большие города юга в тумане: закрыты в Акте 1
+SOUTH = ("south_city", 64, 48)
 
 
 def imageset(name, img, scales=(1,), template=False, folder=OUT):
@@ -205,6 +207,10 @@ def main():
             img = placeholder(name, w, h, seed=i)
             report.append(name + ": заглушка")
         imageset(name, img)
+    path = os.path.join(ART, SOUTH[0] + ".png")
+    if os.path.exists(path):
+        imageset(SOUTH[0], sprite_from_art(path, SOUTH[1], SOUTH[2]))
+        report.append(SOUTH[0] + ": рисунок автора")
     path = os.path.join(ART, "map_act1_base.png")
     if os.path.exists(path):
         img = Image.open(path).convert("RGB").resize((MAP[1], MAP[2]), Image.LANCZOS)
