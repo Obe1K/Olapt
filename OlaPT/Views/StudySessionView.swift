@@ -134,6 +134,10 @@ struct StudySessionView: View {
     let isDaily: Bool
     /// Бой с боссом недели
     let boss: BossConfig?
+    /// Бой Империи слов (штурм, бой с боссом поселения, вылазка, оборона)
+    let battle: BattleSpec?
+    @State private var exerciseBegun = false
+    @State private var battleReported = false
 
     @State private var typed = ""
     @State private var fieldFocused = false
@@ -143,22 +147,42 @@ struct StudySessionView: View {
     @State private var inputLocked = false
 
     init(level: ExerciseLevel?, title: String? = nil, collectionID: UUID?, isDaily: Bool = false,
-         boss: BossConfig? = nil, generator: @escaping () -> [WordQuestion]) {
+         boss: BossConfig? = nil, battle: BattleSpec? = nil, generator: @escaping () -> [WordQuestion]) {
         self.level = level
         self.title = title ?? level?.shortTitle ?? L("Тренировка")
         self.collectionID = collectionID
         self.isDaily = isDaily
         self.boss = boss
+        self.battle = battle
         let s = WordStudySession(generator: generator)
-        if let b = boss {
+        if let b = battle?.arena ?? boss {
             s.stopWhen = { [unowned s] in s.hits >= b.hp || s.misses >= b.hearts }
         }
         _session = StateObject(wrappedValue: s)
     }
 
+    /// Противник на арене: босс недели или босс поселения
+    private var arena: BossConfig? {
+        return battle?.arena ?? boss
+    }
+
     private var bossWon: Bool {
-        guard let b = boss else { return false }
+        guard let b = arena else { return false }
         return session.hits >= b.hp
+    }
+
+    /// Режим для Авры (защита от «фарма»): тот же режим за день — 100%, 50%, 25%, потом ничего.
+    private var exerciseMode: String? {
+        if battle != nil { return nil }
+        if boss != nil { return "boss" }
+        if isDaily { return "words.daily" }
+        if let lv = level { return "words.level\(lv.rawValue)" }
+        return "words.other"
+    }
+
+    private func battleScore() -> BattleScore {
+        return BattleScore(correct: session.correctCount, total: session.totalCount,
+                           hits: session.hits, misses: session.misses, won: bossWon)
     }
 
     private var currentIsChoice: Bool {
@@ -206,24 +230,39 @@ struct StudySessionView: View {
         }
         .onDisappear {
             advanceWork?.cancel()
+            model.endExercise()
+            reportBattle()
         }
         .onChange(of: session.finished) { done in
             if done {
                 saveBestScore()
+                model.endExercise()
                 if isDaily && model.dailyPlan().isEmpty {
                     model.feedPetFull()
                 }
                 if bossWon {
-                    model.recordBossVictory()
+                    if battle == nil { model.recordBossVictory() }
                     SoundFX.shared.play(.victory)
                 }
+                reportBattle()
             }
         }
         .onAppear {
+            if !exerciseBegun {
+                exerciseBegun = true
+                model.beginExercise(exerciseMode)
+            }
             if !currentIsChoice && !session.finished {
                 fieldFocused = true
             }
         }
+    }
+
+    /// Итог боя — один раз: когда бой закончен или его бросили на середине.
+    private func reportBattle() {
+        guard let b = battle, !battleReported else { return }
+        battleReported = true
+        b.onFinish(battleScore())
     }
 
     private func saveBestScore() {
@@ -246,7 +285,7 @@ struct StudySessionView: View {
     private func questionView(_ q: WordQuestion) -> some View {
         ScrollView {
             VStack(spacing: 18) {
-                if let b = boss {
+                if let b = arena {
                     BossArenaView(boss: b, hits: session.hits, misses: session.misses,
                                   answered: session.answered, lastCorrect: session.lastCorrect)
                         .padding(.horizontal, -20)
@@ -498,7 +537,32 @@ struct StudySessionView: View {
 
     private var summaryView: some View {
         GothicList {
-            if let b = boss {
+            if battle != nil {
+                Section {
+                    VStack(spacing: 10) {
+                        if let b = battle?.arena {
+                            BossArenaView(boss: b, hits: session.hits, misses: session.misses,
+                                          answered: false, lastCorrect: false, defeated: bossWon)
+                            Text(bossWon ? L("%@ повержен!", b.title) : L("Бой проигран"))
+                                .font(Theme.pixel(24, relativeTo: .title2))
+                                .foregroundColor(bossWon ? Theme.goldBright : Theme.red)
+                        } else {
+                            Text(L("Бой окончен"))
+                                .font(Theme.pixel(24, relativeTo: .title2))
+                                .foregroundColor(Theme.goldBright)
+                        }
+                        Text(L("Нажмите «Закончить» — дальше решит кубик."))
+                            .font(.subheadline)
+                            .foregroundColor(Theme.text)
+                            .multilineTextAlignment(.center)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 6)
+                    .accessibilityElement(children: .combine)
+                    .accessibilityIdentifier("battle-result")
+                }
+                .listRowBackground(Color.clear)
+            } else if let b = boss {
                 Section {
                     VStack(spacing: 10) {
                         BossArenaView(boss: b, hits: session.hits, misses: session.misses,
@@ -599,10 +663,11 @@ struct StudySessionView: View {
             }
 
             Section {
-                if !isDaily && !bossWon {
+                if !isDaily && !bossWon && battle == nil {
                 Button {
                     advanceWork?.cancel()
                     session.restart()
+                    model.beginExercise(exerciseMode)
                     typed = ""
                     if !currentIsChoice {
                         fieldFocused = true

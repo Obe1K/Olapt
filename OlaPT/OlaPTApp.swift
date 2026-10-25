@@ -36,7 +36,7 @@ struct RootView: View {
     var body: some View {
         TabView(selection: $tab) {
             NavigationStack {
-                TodayView()
+                TodayView(openEmpire: { tab = 4 })
             }
             .tabItem {
                 Label { Text(L("Сегодня")) } icon: { Image("tab-candle") }
@@ -69,11 +69,12 @@ struct RootView: View {
             .tag(3)
 
             NavigationStack {
-                SettingsView()
+                EmpireView()
             }
             .tabItem {
-                Label { Text(L("Настройки")) } icon: { Image("tab-gear") }
+                Label { Text(L("Империя")) } icon: { Image("tab-mask") }
             }
+            .badge(model.user.game.events.count)
             .tag(4)
         }
     }

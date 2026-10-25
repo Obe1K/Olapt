@@ -363,6 +363,7 @@ struct VerbSessionView: View {
             if !started {
                 session.restart(library: model.verbs, progress: model.user.verbProgress)
                 started = true
+                model.beginExercise(exerciseMode)
                 if session.currentIsTyping {
                     fieldFocused = true
                 }
@@ -374,9 +375,20 @@ struct VerbSessionView: View {
                 fieldFocused = true
             }
         }
+        .onChange(of: session.finished) { done in
+            if done { model.endExercise() }
+        }
+        .onDisappear {
+            model.endExercise()
+        }
     }
 
     @State private var started = false
+
+    /// Режим для Авры (защита от «фарма»)
+    private var exerciseMode: String {
+        return request.dailyPairs.isEmpty ? "verbs.\(request.mode.rawValue)" : "verbs.daily"
+    }
 
     // MARK: Вопрос
 
@@ -680,6 +692,7 @@ struct VerbSessionView: View {
             Section {
                 Button {
                     session.restart(library: model.verbs, progress: model.user.verbProgress)
+                    model.beginExercise(exerciseMode)
                     typed = ""
                     if session.currentIsTyping {
                         fieldFocused = true

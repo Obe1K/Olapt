@@ -125,6 +125,12 @@ final class ScreenshotTests: XCTestCase {
         }
     }
 
+    /// Настройки теперь — шестерёнка на «Сегодня» (вкладку заняла «Империя»).
+    private func openSettings(english: Bool = false) {
+        tapTab(english ? "Today" : "Сегодня")
+        tap(app.buttons["open-settings"], "open settings (gear)")
+    }
+
     private func back() {
         let button = app.navigationBars.buttons.element(boundBy: 0)
         if button.waitForExistence(timeout: 3) {
@@ -163,8 +169,8 @@ final class ScreenshotTests: XCTestCase {
 
     /// Первая кнопка с вариантом ответа (не служебная).
     private func firstOptionButton() -> XCUIElement {
-        let service = ["Закрыть", "Произнести", "Далее", "Завершить", "Сегодня", "Словарь", "Коллекции", "Глаголы", "Настройки", "Не знаю", "Проверить",
-                       "Close", "Pronounce", "Next", "Finish", "Today", "Dictionary", "Collections", "Verbs", "Settings", "I don't know", "Check"]
+        let service = ["Закрыть", "Произнести", "Далее", "Завершить", "Сегодня", "Словарь", "Коллекции", "Глаголы", "Настройки", "Империя", "Не знаю", "Проверить",
+                       "Close", "Pronounce", "Next", "Finish", "Today", "Dictionary", "Collections", "Verbs", "Settings", "Empire", "I don't know", "Check"]
         let predicate = NSPredicate(format: "NOT (label IN %@)", service as NSArray)
         return app.buttons.matching(predicate).element(boundBy: 0)
     }
@@ -327,7 +333,7 @@ final class ScreenshotTests: XCTestCase {
     }
 
     func testD_Settings() {
-        tapTab("Настройки")
+        openSettings()
         shot("40_settings")
         tap(app.staticTexts["Словари и импорт"], "dictionaries link")
         shot("42_dictionaries")
@@ -644,7 +650,8 @@ final class ScreenshotTests: XCTestCase {
     /// Полный гримуар и бой с боссом: приложение запускается с 260 словами «в памяти».
     func testI_TowerGrimoireBoss() {
         app.terminate()
-        app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU", "-ui-language", "ru", "-uitest-static", "YES", "-uitest-seed", "260"]
+        app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU", "-ui-language", "ru", "-uitest-static", "YES", "-uitest-seed", "260",
+                               "-uitest-game", "rich"]
         app.launch()
         Thread.sleep(forTimeInterval: 1.5)
         tapTab("Сегодня")
@@ -662,37 +669,83 @@ final class ScreenshotTests: XCTestCase {
             back()
         }
 
-        app.swipeDown(); app.swipeDown()
-        let boss = app.buttons["boss-start"]
-        scrollUntilVisible(boss, maxSwipes: 4)
-        shot("85_boss_card")
-        if tap(boss, "start boss") {
-            let arena = app.descendants(matching: .any)["boss-arena"]
-            note(arena.waitForExistence(timeout: 4) ? "CHECK ok: boss arena: " + arena.label : "CHECK FAILED: boss arena missing")
-            shot("80_boss_arena")
-            var answered = 0
-            while answered < 40 && !app.descendants(matching: .any)["boss-result"].exists {
-                if app.buttons["Не знаю"].exists {
-                    app.buttons["Не знаю"].tap()
-                    let next = app.buttons["Далее"].exists ? app.buttons["Далее"] : app.buttons["Завершить"]
-                    if next.waitForExistence(timeout: 3) { next.tap() }
-                } else {
-                    let option = firstOptionButton()
-                    if option.exists && option.isHittable {
-                        option.tap()
-                        if answered == 0 { shot("81_boss_answer") }
-                        Thread.sleep(forTimeInterval: 2.8)
-                    } else {
-                        Thread.sleep(forTimeInterval: 0.5)
-                    }
-                }
-                answered += 1
+        empireBattle()
+    }
+
+    /// Империя: карта, карточка поселения и штурм Деревни сетей (бой с боссом, бой, бросок кубика).
+    func testQ_EmpireBattle() {
+        app.terminate()
+        app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU", "-ui-language", "ru", "-uitest-static", "YES",
+                               "-uitest-seed", "260", "-uitest-game", "rich"]
+        app.launch()
+        Thread.sleep(forTimeInterval: 1.5)
+        empireBattle()
+        // Середина игры: две деревни ваши, обелиски, пленники
+        app.terminate()
+        app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU", "-ui-language", "ru", "-uitest-static", "YES",
+                               "-uitest-seed", "260", "-uitest-game", "midgame"]
+        app.launch()
+        Thread.sleep(forTimeInterval: 1.5)
+        tapTab("Империя")
+        shot("93_empire_midgame")
+        app.swipeUp()
+        shot("94_empire_army")
+        tap(app.buttons["town-2"], "open Vale do Trigo")
+        shot("95_town_owned")
+    }
+
+    private func empireBattle() {
+        tapTab("Империя")
+        let map = app.descendants(matching: .any)["empire-map"]
+        note(map.waitForExistence(timeout: 4) ? "CHECK ok: empire map" : "CHECK FAILED: empire map missing")
+        shot("87_empire")
+        guard tap(app.buttons["town-1"], "open Aldeia das Redes") else { return }
+        let odds = app.descendants(matching: .any)["assault-odds"]
+        scrollUntilVisible(odds, maxSwipes: 4)
+        note(odds.exists ? "CHECK ok: assault odds: " + odds.label : "CHECK FAILED: no assault odds")
+        shot("88_town_sheet")
+        let start = app.buttons["start-assault"]
+        scrollUntilVisible(start, maxSwipes: 4)
+        guard tap(start, "start assault") else { return }
+        var steps = 0
+        var shotArena = false
+        while steps < 120 && !app.buttons["battle-report-ok"].exists {
+            steps += 1
+            if app.descendants(matching: .any)["battle-result"].exists {
+                shot("90_battle_summary_\(steps)")
+                tap(app.buttons["Закончить"], "finish battle stage")
+                Thread.sleep(forTimeInterval: 1.5)
+                continue
             }
-            let result = app.descendants(matching: .any)["boss-result"]
-            note(result.waitForExistence(timeout: 4) ? "CHECK ok: boss result: " + result.label : "CHECK FAILED: no boss result after \(answered)")
-            shot("86_boss_result")
+            if app.buttons["Не знаю"].exists {
+                app.buttons["Не знаю"].tap()
+                let next = app.buttons["Далее"].exists ? app.buttons["Далее"] : app.buttons["Завершить"]
+                if next.waitForExistence(timeout: 3) { next.tap() }
+            } else {
+                let option = firstOptionButton()
+                if option.exists && option.isHittable {
+                    if !shotArena && app.descendants(matching: .any)["boss-arena"].exists {
+                        shot("89_boss_arena")
+                        shotArena = true
+                    }
+                    option.tap()
+                    Thread.sleep(forTimeInterval: 2.0)
+                } else {
+                    Thread.sleep(forTimeInterval: 0.5)
+                }
+            }
+        }
+        let report = app.buttons["battle-report-ok"]
+        if report.waitForExistence(timeout: 6) {
+            Thread.sleep(forTimeInterval: 2.0)   // кубик докатился
+            let title = app.staticTexts["battle-report-title"]
+            note("CHECK ok: battle report: " + (title.exists ? title.label : "?"))
+            shot("91_battle_report")
+            report.tap()
+            Thread.sleep(forTimeInterval: 0.8)
+            shot("92_empire_after")
         } else {
-            note("CHECK FAILED: boss not available with seeded words")
+            note("CHECK FAILED: no battle report after \(steps) steps")
         }
     }
 
@@ -800,7 +853,8 @@ final class ScreenshotTests: XCTestCase {
         func t(_ ru: String, _ english: String) -> String { return en ? english : ru }
         app.terminate()
         app.launchArguments = ["-AppleLanguages", en ? "(en)" : "(ru)", "-AppleLocale", en ? "en_GB" : "ru_RU",
-                               "-ui-language", lang, "-uitest-static", "YES", "-uitest-seed", "260", "-uitest-scan-sample"]
+                               "-ui-language", lang, "-uitest-static", "YES", "-uitest-seed", "260", "-uitest-scan-sample",
+                               "-uitest-game", "midgame"]
         app.launch()
         Thread.sleep(forTimeInterval: 1.5)
 
@@ -866,17 +920,13 @@ final class ScreenshotTests: XCTestCase {
         shot(prefix + "05_verbs")
         back()
 
-        // 6. Босс недели
-        tapTab(t("Сегодня", "Today"))
-        let boss = app.buttons["boss-start"]
-        scrollUntilVisible(boss, maxSwipes: 6)
-        if tap(boss, "start boss") {
-            Thread.sleep(forTimeInterval: 0.8)
-            shot(prefix + "06_boss")
-            tap(app.buttons[t("Закрыть", "Close")], "close boss")
-        }
+        // 6. Империя: карта Акта 1
+        tapTab(t("Империя", "Empire"))
+        Thread.sleep(forTimeInterval: 0.8)
+        shot(prefix + "06_empire")
 
         // 7. Гримуар
+        tapTab(t("Сегодня", "Today"))
         let grimoire = app.buttons["open-grimoire"]
         scrollUntilVisible(grimoire, maxSwipes: 6)
         if tap(grimoire, "open grimoire") {
@@ -989,7 +1039,7 @@ final class ScreenshotTests: XCTestCase {
         back()
 
         // Настройки: переключить на русский и обратно
-        tapTab("Settings")
+        openSettings(english: true)
         shot("en_09_settings")
         checkNoCyrillic("Settings")
         let picker = app.segmentedControls["ui-language"]

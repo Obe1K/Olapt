@@ -15,6 +15,8 @@ enum TodaySession: Int, Identifiable {
 
 struct TodayView: View {
     @EnvironmentObject var model: AppModel
+    /// Открыть вкладку «Империя» (строка владений под башней)
+    var openEmpire: () -> Void = {}
     @Environment(\.scenePhase) private var scenePhase
     @State private var active: TodaySession?
     /// Меняется при возвращении в приложение, чтобы план пересчитался после полуночи.
@@ -73,9 +75,6 @@ struct TodayView: View {
                         planCard(plan)
                         verbsCard
                         phrasesCard
-                        if model.bossAvailable {
-                            bossCard
-                        }
                         forecastCard
                     }
                     linksCard
@@ -87,6 +86,19 @@ struct TodayView: View {
         .background(StoneBackground().ignoresSafeArea())
         .navigationTitle(L("Сегодня"))
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink {
+                    SettingsView()
+                } label: {
+                    Image("tab-gear")
+                        .renderingMode(.template)
+                        .foregroundColor(Theme.gold)
+                }
+                .accessibilityLabel(L("Настройки"))
+                .accessibilityIdentifier("open-settings")
+            }
+        }
         .onChange(of: scenePhase) { phase in
             if phase == .active {
                 refreshTick += 1
@@ -95,6 +107,7 @@ struct TodayView: View {
         }
         .onAppear {
             refreshTick += 1
+            model.gameTick()
             SoundFX.shared.startMusic()
         }
         .onDisappear { SoundFX.shared.stopMusic() }
@@ -124,10 +137,33 @@ struct TodayView: View {
 
     private var towerCard: some View {
         let inMemory = model.wordsInMemory()
+        let game = model.user.game
         return VStack(alignment: .leading, spacing: 10) {
             GothicHeader(L("Башня"))
+            Button(action: openEmpire) {
+                HStack {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(L("Авра %d · марионетки %d", Int(game.avra), game.army))
+                            .font(Theme.pixel(17, relativeTo: .headline))
+                            .foregroundColor(Theme.text)
+                        if let p = game.patrol, !p.defended {
+                            Text(L("Под угрозой: %@", GameTexts.townName(p.target)))
+                                .font(.subheadline)
+                                .foregroundColor(Theme.red)
+                        } else {
+                            Text(L("Владений: %d из 4", game.owned.count))
+                                .font(.subheadline)
+                                .foregroundColor(Theme.textDim)
+                        }
+                    }
+                    Spacer()
+                    Image(systemName: "chevron.right").foregroundColor(Theme.textDim)
+                }
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("open-empire")
             Text(L("Слов в памяти: %d", inMemory))
-                .font(Theme.pixel(17, relativeTo: .headline))
+                .font(.subheadline)
                 .foregroundColor(Theme.text)
             Text(L("Слово «в памяти», если вы помните его хотя бы неделю."))
                 .font(.caption)
@@ -135,7 +171,7 @@ struct TodayView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .pixelPanel()
-        .accessibilityElement(children: .combine)
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("tower-card")
     }
 

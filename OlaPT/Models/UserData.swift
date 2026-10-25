@@ -198,9 +198,11 @@ struct UserData: Codable {
     var phraseSRS: [String: SRSState]
     /// Сколько секунд приложение было открыто на экране (с версии 1.3)
     var timeInApp: Double
+    /// Империя слов, Акт 1 (с версии 1.4)
+    var game: GameState
 
     enum CodingKeys: String, CodingKey {
-        case collections, progress, verbProgress, customWords, settings, srs, pet, boss, verbSRS, phraseSRS, timeInApp
+        case collections, progress, verbProgress, customWords, settings, srs, pet, boss, verbSRS, phraseSRS, timeInApp, game
     }
 
     init() {
@@ -215,6 +217,7 @@ struct UserData: Codable {
         verbSRS = [:]
         phraseSRS = [:]
         timeInApp = 0
+        game = GameState()
     }
 
     init(from decoder: Decoder) throws {
@@ -236,6 +239,7 @@ struct UserData: Codable {
         verbSRS = try c.decodeIfPresent([String: SRSState].self, forKey: .verbSRS) ?? [:]
         phraseSRS = try c.decodeIfPresent([String: SRSState].self, forKey: .phraseSRS) ?? [:]
         timeInApp = try c.decodeIfPresent(Double.self, forKey: .timeInApp) ?? 0
+        game = (try? c.decodeIfPresent(GameState.self, forKey: .game)) ?? GameState()
     }
 }
 

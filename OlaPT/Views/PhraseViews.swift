@@ -149,10 +149,22 @@ struct PhraseSessionView: View {
             typed = ""
             fieldFocused = session.current?.typing ?? false
         }
+        .onChange(of: session.finished) { done in
+            if done { model.endExercise() }
+        }
         .onAppear {
+            if !exerciseBegun {
+                exerciseBegun = true
+                model.beginExercise(isDaily ? "phrases.daily" : "phrases")
+            }
             fieldFocused = session.current?.typing ?? false
         }
+        .onDisappear {
+            model.endExercise()
+        }
     }
+
+    @State private var exerciseBegun = false
 
     // MARK: Вопрос
 
@@ -421,6 +433,7 @@ struct PhraseSessionView: View {
                 if !isDaily {
                     Button {
                         session.restart()
+                        model.beginExercise("phrases")
                         typed = ""
                     } label: {
                         Label(L("Пройти ещё раз"), systemImage: "arrow.clockwise")

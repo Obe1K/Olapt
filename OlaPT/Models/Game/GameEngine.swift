@@ -118,6 +118,21 @@ extension GameState {
         return amount
     }
 
+    /// Начало упражнения: доля Авры с учётом повторов режима за день (100%, 50%, 25%, потом 0).
+    /// mode == nil — бой, вылазка или оборона: каждый — отдельное упражнение, всегда 100%.
+    mutating func beginExercise(mode: String?) -> Double {
+        guard let m = mode else { return 1 }
+        let n = repeats[m] ?? 0
+        repeats[m] = n + 1
+        return n < Act1.repeatShares.count ? Act1.repeatShares[n] : 0
+    }
+
+    /// Авра за ответы по ходу упражнения (доля уже учтена вызывающим). Любой ответ — день с занятиями.
+    mutating func earn(_ amount: Double) {
+        avra += max(0, amount)
+        studied = true
+    }
+
     /// План «Сегодня» пройден целиком: +20 и обелиски на ночь заряжаются.
     mutating func completePlan() {
         guard !planDone else { return }

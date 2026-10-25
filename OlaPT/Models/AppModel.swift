@@ -19,6 +19,8 @@ final class AppModel: ObservableObject {
     private var packFiles: [PackFile] = []
     private var bundledIDs: Set<String> = []
     private var saveWork: DispatchWorkItem?
+    /// Упражнение, за которое сейчас начисляется Авра (Империя слов)
+    var gameExercise: GameExercise?
     /// Начало текущего отрезка, пока приложение открыто на экране
     private var activeSince: Date?
     /// Один непрерывный отрезок засчитываем не больше чем за 6 часов (на случай скачка часов)
@@ -114,6 +116,7 @@ final class AppModel: ObservableObject {
     /// Только для UI-тестов: -uitest-seed N — N слов A1 «в памяти»,
     /// чтобы снять башню с вещами, заполненный гримуар и босса.
     private func seedForUITests() {
+        seedGameForUITests()
         let n = UserDefaults.standard.integer(forKey: "uitest-seed")
         guard n > 0 else { return }
         let now = Date()
@@ -131,6 +134,35 @@ final class AppModel: ObservableObject {
         user.srs = srs
         user.pet.food = 100
         user.pet.updated = now
+    }
+
+    /// Только для UI-тестов: -uitest-game rich — новая игра с запасом Авры;
+    /// midgame — Деревня сетей и долина уже ваши, обелиски горят, в подвале пленники.
+    private func seedGameForUITests() {
+        guard let mode = UserDefaults.standard.string(forKey: "uitest-game") else { return }
+        var g = GameState(started: Date(), seed: 42)
+        g.avra = 1500
+        if mode == "midgame" {
+            g.capture(1, way: .assault)
+            g.towns[1].dolls = 50
+            g.towns[1].pop = 50
+            g.towns[1].guards = 0
+            g.towns[1].cultists = 0
+            g.towns[1].obelisk = Obelisk(state: .lit, charge: 80)
+            g.capture(2, way: .infiltration)
+            g.towns[2].dolls = 60
+            g.towns[2].obelisk = Obelisk(state: .lit, charge: 100)
+            g.towns[2].garrison = 4
+            g.towns[3].alert = 35
+            g.towns[3].agents = 3
+            g.spots[5] = Obelisk(state: .lit, charge: 90)
+            g.army = 34
+            g.captives = [Captive(until: 5, town: 3, key: nil), Captive(until: 6, town: nil, key: nil)]
+            g.bodies = [2, 2, 2]
+            g.events = []
+            g.avra = 840
+        }
+        user.game = g
     }
 
     private static func makeInfos(files: [PackFile], bundled: Set<String>) -> [PackInfo] {
@@ -361,6 +393,7 @@ final class AppModel: ObservableObject {
         }
         user.srs[wordID] = FSRS.review(previous, rating: rating, now: now)
         feedPet(correct ? PetRules.foodPerCorrect : PetRules.foodPerWrong, now: now)
+        gameAnswer(correct: correct, typed: !recognition, level: index.word(wordID)?.level, isNew: previous == nil)
     }
 
     func counts(for wordIDs: [String]) -> (new: Int, learning: Int, learned: Int) {
@@ -647,6 +680,7 @@ final class AppModel: ObservableObject {
         if previous == nil && recognition && rating == .good { rating = .hard }
         user.verbSRS[key] = FSRS.review(previous, rating: rating)
         feedPet(correct ? PetRules.foodPerCorrect : PetRules.foodPerWrong)
+        gameAnswer(correct: correct, typed: !recognition, level: nil)
     }
 
     // MARK: - Глаголы в плане «Сегодня»
@@ -790,6 +824,8 @@ final class AppModel: ObservableObject {
         if previous == nil && recognition && rating == .good { rating = .hard }
         user.phraseSRS[id] = FSRS.review(previous, rating: rating, now: now)
         feedPet(correct ? PetRules.foodPerCorrect : PetRules.foodPerWrong, now: now)
+        // во фразах любой верный ответ — 2 Авры (собрать фразу тоже значит написать её)
+        gameAnswer(correct: correct, typed: true, level: nil)
     }
 
     // MARK: - Свои слова
