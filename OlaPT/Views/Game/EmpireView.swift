@@ -437,7 +437,7 @@ struct EmpireView: View {
     // MARK: Бои
 
     private func arena(for st: BattleStage) -> BossConfig? {
-        guard st.kind == .boss, let boss = Act1.towns[st.town].def.boss else { return nil }
+        guard st.kind == .boss, let boss = Act1.towns[st.town].boss else { return nil }
         // Пока нет портретов боссов поселений, на арене — противники из старого боя с боссом недели
         let sprite: String
         switch boss {
