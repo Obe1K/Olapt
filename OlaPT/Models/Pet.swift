@@ -66,6 +66,8 @@ struct BossConfig {
     let hp: Int
     /// Сколько ошибок выдержит маг
     let hearts: Int
+    /// Портрет автора вместо пиксельного спрайта (боссы «Империи слов»)
+    var portrait: String? = nil
 }
 
 enum PetMood: String, CaseIterable {

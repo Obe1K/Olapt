@@ -450,7 +450,7 @@ struct DecreesSheet: View {
         }
     }
 
-    /// Значок пути указов: печать страха нарисована, печать слова — пока системный значок.
+    /// Значок пути указов: печать страха или печать слова.
     @ViewBuilder
     private func decreeIcon(_ path: DecreePath) -> some View {
         switch path {
@@ -461,8 +461,10 @@ struct DecreesSheet: View {
                 .scaledToFit()
                 .frame(width: 24, height: 24)
         case .word:
-            Image(systemName: "seal.fill")
-                .foregroundColor(Theme.goldBright)
+            Image("icon_law_word")
+                .interpolation(.high)
+                .resizable()
+                .scaledToFit()
                 .frame(width: 24, height: 24)
         }
     }

@@ -495,16 +495,17 @@ struct EmpireView: View {
 
     private func arena(for st: BattleStage) -> BossConfig? {
         guard st.kind == .boss, let boss = Act1.towns[st.town].boss else { return nil }
-        // Пока нет портретов боссов поселений, на арене — противники из старого боя с боссом недели
+        // Портреты автора; спрайт старого боя с боссом недели — запасной
         let sprite: String
+        let portrait: String
         switch boss {
-        case .pastor: sprite = "lich"
-        case .captain: sprite = "goblin"
-        case .crimsonPriest: sprite = "spider"
-        default: sprite = "dragon"
+        case .pastor: sprite = "lich"; portrait = "portrait_pastor"
+        case .captain: sprite = "goblin"; portrait = "portrait_captain"
+        case .crimsonPriest: sprite = "spider"; portrait = "portrait_crimson"
+        default: sprite = "dragon"; portrait = "portrait_lord"
         }
         return BossConfig(key: sprite, title: GameTexts.bossTitle(boss), hp: Act1.bossPass,
-                          hearts: Act1.bossQuestions - Act1.bossPass + 1)
+                          hearts: Act1.bossQuestions - Act1.bossPass + 1, portrait: portrait)
     }
 
     private func stageTitle(_ st: BattleStage) -> String {

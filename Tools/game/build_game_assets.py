@@ -130,7 +130,16 @@ ICONS = [
     ("icon_st_guard", "st_guard.png"), ("icon_st_walls", "st_walls.png"),
     ("icon_st_faith", "st_faith.png"), ("icon_st_alert", "st_alert.png"),
     ("icon_st_charge", "st_charge.png"), ("icon_law_fear", "law_fear.png"),
+    ("icon_law_word", "law_word.png"),
 ]
+# Портреты (по пояс, лицом вправо): боссы на арене и ключевые люди. Путь — от Tools/game/art.
+PORTRAITS = [
+    ("portrait_pastor", "portraits/npc_pastor.png"),
+    ("portrait_captain", "portraits/npc_guard_captain.png"),
+    ("portrait_crimson", "portraits/crimson_priest.png"),
+    ("portrait_lord", "ref/lord_alvaro.png"),
+]
+PORTRAIT_PX = 288   # 96 точек сцены арены × 3
 ICON_PX = 120
 
 
@@ -244,6 +253,47 @@ def build_fire(sizes, report):
         imageset("%s%d" % (name, i), frame)
     sizes[name] = size
     report.append("%s: рисунок автора, %d кадра, %.1f × %.1f точек карты" % ((name, frames) + size))
+
+
+def cut_checker(img):
+    """«Прозрачность» шахматкой: заливка от краёв по светлым серым клеткам."""
+    import numpy as np
+    from scipy import ndimage as nd
+    rgb = np.asarray(img.convert("RGB")).astype(float)
+    hsv = np.asarray(img.convert("RGB").convert("HSV")).astype(float)
+    light = (rgb.min(2) >= 185) & (hsv[..., 1] <= 30)
+    lab, n = nd.label(light)
+    edge = set(np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))) - {0}
+    bg = np.isin(lab, list(edge))
+    bg = nd.binary_dilation(bg, iterations=1) & (rgb.min(2) >= 150)
+    alpha = (~bg).astype(float)
+    alpha = nd.gaussian_filter(alpha, 0.6)
+    return Image.fromarray(np.dstack([rgb, alpha * 255]).astype("uint8"), "RGBA")
+
+
+def build_portraits(report):
+    """Вырезать фон, вписать по нижнему краю в квадрат и растворить низ (портрет «по пояс»)."""
+    import numpy as np
+    for name, rel in PORTRAITS:
+        path = os.path.join(ART, rel)
+        if not os.path.exists(path):
+            continue
+        src = Image.open(path)
+        has_alpha = src.mode == "RGBA" and np.asarray(src)[..., 3].min() < 128
+        img = cut_alpha(src) if has_alpha else cut_checker(src)
+        img = img.crop(img.getbbox())
+        k = PORTRAIT_PX / max(img.width, img.height)
+        small = img.resize((max(1, round(img.width * k)), max(1, round(img.height * k))), Image.LANCZOS)
+        out = Image.new("RGBA", (PORTRAIT_PX, PORTRAIT_PX), (0, 0, 0, 0))
+        out.alpha_composite(small, ((PORTRAIT_PX - small.width) // 2, PORTRAIT_PX - small.height))
+        a = np.asarray(out).astype(float)
+        fade = np.ones(PORTRAIT_PX)
+        start = int(PORTRAIT_PX * 0.72)
+        fade[start:] = np.linspace(1, 0, PORTRAIT_PX - start) ** 1.3
+        a[..., 3] *= fade[:, None]
+        # тот же мрачный фильтр, что у карты: на тёмной арене яркий портрет выпадал
+        imageset(name, graded_mark(Image.fromarray(a.astype("uint8"), "RGBA")))
+        report.append(name + ": портрет автора")
 
 
 def build_icons(report):
@@ -494,6 +544,7 @@ def main():
     imageset(MAP[0], img)
     build_marks(report)
     build_icons(report)
+    build_portraits(report)
     imageset("tab-mask", tab_icon(), scales=(1, 2, 3), template=True, folder=TAB)
     print("\n".join(report))
 

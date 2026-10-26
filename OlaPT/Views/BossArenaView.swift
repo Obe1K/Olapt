@@ -26,7 +26,9 @@ struct BossArenaView: View {
         let justHit = answered && lastCorrect
         let justHurt = answered && !lastCorrect
         add(justHurt ? "pet_battle_mage_hurt" : "pet_battle_mage", dx: justHurt ? -2 : 0)
-        if defeated {
+        if boss.portrait != nil {
+            // босс-портрет рисуется поверх сцены (portraitLayer)
+        } else if defeated {
             // поверженный босс: вспышка и лежит ниже
             add("pet_boss_\(boss.key)_hit", dy: 8)
         } else if justHit {
@@ -55,10 +57,36 @@ struct BossArenaView: View {
         }
     }
 
+    /// Портрет босса справа, лицом к магу: дышит, от удара вздрагивает и краснеет, побеждённый — гаснет и оседает.
+    @ViewBuilder
+    private func portraitLayer(tick: Int) -> some View {
+        if let p = boss.portrait {
+            GeometryReader { geo in
+                let s = geo.size.width / CGFloat(PetAtlas.width)
+                let justHit = answered && lastCorrect && !defeated
+                let dx: CGFloat = justHit ? 3 : 0
+                let dy: CGFloat = defeated ? 10 : (tick % 2 == 0 ? 0 : 1)
+                Image(p)
+                    .interpolation(.high)
+                    .resizable()
+                    .scaleEffect(x: -1, y: 1)
+                    .frame(width: 92 * s, height: 92 * s)
+                    .colorMultiply(justHit ? Color(red: 1, green: 0.55, blue: 0.55) : .white)
+                    .saturation(defeated ? 0 : 1)
+                    .brightness(defeated ? -0.35 : 0)
+                    .opacity(defeated ? 0.75 : 1)
+                    .offset(x: (102 + dx) * s, y: (26 + dy) * s)
+            }
+            .clipped()
+            .allowsHitTesting(false)
+        }
+    }
+
     private func stage(tick: Int) -> some View {
         let bossHP = max(0, boss.hp - hits)
         let hearts = max(0, boss.hearts - misses)
         return PixelStage(layers: layers(tick: tick), fade: false)
+            .overlay { portraitLayer(tick: tick) }
             .overlay(alignment: .top) {
                 HStack(alignment: .center) {
                     HStack(spacing: 3) {
