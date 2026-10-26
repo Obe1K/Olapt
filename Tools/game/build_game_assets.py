@@ -138,6 +138,7 @@ PORTRAITS = [
     ("portrait_captain", "portraits/npc_guard_captain.png"),
     ("portrait_crimson", "portraits/crimson_priest.png"),
     ("portrait_lord", "ref/lord_alvaro.png"),
+    ("portrait_fisher_elder", "portraits/npc_fisher_elder.png"),
 ]
 PORTRAIT_PX = 288   # 96 точек сцены арены × 3
 ICON_PX = 120
@@ -202,7 +203,10 @@ def cut_black(img, thr=10):
     low = rgb.max(2) <= thr
     lab, n = nd.label(low)
     edge = set(np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))) - {0}
-    alpha = (~np.isin(lab, list(edge))).astype(float)
+    fg = ~np.isin(lab, list(edge))
+    # тёмные складки у края фигуры не должны становиться дырами: сначала «закрыть» щели, потом залить дыры
+    fg = nd.binary_fill_holes(nd.binary_closing(fg, iterations=6))
+    alpha = fg.astype(float)
     alpha = nd.gaussian_filter(alpha, 0.7)
     return Image.fromarray(np.dstack([rgb, alpha * 255]).astype("uint8"), "RGBA")
 
@@ -280,7 +284,12 @@ def build_portraits(report):
             continue
         src = Image.open(path)
         has_alpha = src.mode == "RGBA" and np.asarray(src)[..., 3].min() < 128
-        img = cut_alpha(src) if has_alpha else cut_checker(src)
+        if has_alpha:
+            img = cut_alpha(src)
+        elif max(src.convert("RGB").getpixel((3, 3))) <= 12:
+            img = cut_black(src, thr=4)    # ровный чёрный фон
+        else:
+            img = cut_checker(src)
         img = img.crop(img.getbbox())
         k = PORTRAIT_PX / max(img.width, img.height)
         small = img.resize((max(1, round(img.width * k)), max(1, round(img.height * k))), Image.LANCZOS)
