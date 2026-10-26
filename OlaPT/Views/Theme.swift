@@ -240,16 +240,27 @@ struct GothicForm<Content: View>: View {
 /// Заголовок раздела: золотые пиксельные буквы между ромбиками.
 struct GothicHeader: View {
     let title: String
+    /// Значок автора вместо ромбика (картинка из Assets)
+    let icon: String?
 
-    init(_ title: String) {
+    init(_ title: String, icon: String? = nil) {
         self.title = title
+        self.icon = icon
     }
 
     var body: some View {
         HStack(spacing: 6) {
-            Diamond()
-                .fill(Theme.gold)
-                .frame(width: 6, height: 6)
+            if let icon = icon {
+                Image(icon)
+                    .interpolation(.high)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 22, height: 22)
+            } else {
+                Diamond()
+                    .fill(Theme.gold)
+                    .frame(width: 6, height: 6)
+            }
             Text(title)
                 .font(Theme.pixel(13, relativeTo: .footnote))
                 .foregroundColor(Theme.gold)

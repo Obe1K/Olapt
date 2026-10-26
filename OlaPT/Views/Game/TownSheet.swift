@@ -79,10 +79,10 @@ struct TownSheet: View {
         Section(header: GothicHeader(L("Условия"))) {
             row(L("Жителей"), "\(t.pop)")
             if townID != 0 {
-                row(L("Куклы"), "\(t.dolls) · \(GameTexts.percent(t.pop > 0 ? Double(t.dolls) / Double(t.pop) : 0))")
+                row(L("Куклы"), icon: "icon_st_control", "\(t.dolls) · \(GameTexts.percent(t.pop > 0 ? Double(t.dolls) / Double(t.pop) : 0))")
             }
             if t.owner == .lord && townID != 0 {
-                row(L("Стража"), String(format: "%.0f", t.effectiveGuards))
+                row(L("Стража"), icon: "icon_st_guard", String(format: "%.0f", t.effectiveGuards))
                 row(L("Укрепления"), GameTexts.walls(t.def.wallsKind))
                 row(L("Культисты"), "\(t.cultists)")
                 row(L("Вера"), GameTexts.faith(t.faith))
@@ -113,8 +113,15 @@ struct TownSheet: View {
         }
     }
 
-    private func row(_ title: String, _ value: String) -> some View {
-        HStack {
+    private func row(_ title: String, icon: String? = nil, _ value: String) -> some View {
+        HStack(spacing: 6) {
+            if let icon = icon {
+                Image(icon)
+                    .interpolation(.high)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 18, height: 18)
+            }
             Text(title).foregroundColor(Theme.textDim)
             Spacer()
             Text(value)
@@ -147,7 +154,7 @@ struct TownSheet: View {
         Section(header: GothicHeader(L("Обелиск"))) {
             obeliskControls
         }
-        Section(header: GothicHeader(L("Гарнизон"))) {
+        Section(header: GothicHeader(L("Гарнизон"), icon: "icon_puppets")) {
             Text(L("Марионетки в поселении стерегут обелиск от культистов, а против стражи каждая спасает двух кукол."))
                 .font(.caption)
                 .foregroundColor(Theme.textDim)
@@ -166,7 +173,7 @@ struct TownSheet: View {
                     .accessibilityIdentifier("garrison-add")
             }
         }
-        Section(header: GothicHeader(L("Куклы в войско"))) {
+        Section(header: GothicHeader(L("Куклы в войско"), icon: "icon_puppets")) {
             let room = game.room(t)
             Text(room > 0 ? L("Можно забрать ещё %d — не больше половины исходных жителей.", room)
                           : L("Больше забирать нельзя: иначе поселение опустеет."))
@@ -231,7 +238,7 @@ struct TownSheet: View {
 
     private var assaultSection: some View {
         let odds = game.assaultOdds(townID, squad: squad)
-        return Section(header: GothicHeader(L("Штурм"))) {
+        return Section(header: GothicHeader(L("Штурм"), icon: "icon_act_assault")) {
             Stepper(value: $squad, in: 1...max(1, game.army)) {
                 Text(L("Марионеток в бой: %d", squad)).foregroundColor(Theme.text)
             }
@@ -290,7 +297,7 @@ struct TownSheet: View {
     // MARK: Вылазка
 
     private var sortieSection: some View {
-        Section(header: GothicHeader(L("Вылазка"))) {
+        Section(header: GothicHeader(L("Вылазка"), icon: "icon_act_abduct")) {
             Text(L("Отряд из трёх марионеток. %d вопросов, каждый верный — +1 к броску d20; стража и настороженность дают −%d. Итог 1–5 — из отряда не вернётся никто.",
                    Act1.sortieQuestions, game.sortiePenalty(townID)))
                 .font(.caption)
@@ -326,7 +333,7 @@ struct TownSheet: View {
     private var agentsSection: some View {
         let free = Act1.maxAgents - t.agents
         let feed = Act1.agentFeed * game.priceFactor(townID)
-        return Section(header: GothicHeader(L("Инфильтрация"))) {
+        return Section(header: GothicHeader(L("Инфильтрация"), icon: "icon_act_infiltrate")) {
             Text(L("Агенты обращают по жителю в день, набожных — за два дня. Подпитка — %@ Авры в день за агента; без неё через три дня агентов начнут раскрывать.",
                    String(format: "%.1f", feed)))
                 .font(.caption)

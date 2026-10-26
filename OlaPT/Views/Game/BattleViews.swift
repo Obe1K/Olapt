@@ -163,10 +163,20 @@ struct EventCardView: View {
     var body: some View {
         let t = GameTexts.event(event)
         VStack(spacing: 14) {
-            Image(systemName: icon)
-                .font(.system(size: 34))
-                .foregroundColor(tint)
-                .padding(.top, 6)
+            Group {
+                if let art = art {
+                    Image(art)
+                        .interpolation(.high)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 56, height: 56)
+                } else {
+                    Image(systemName: icon)
+                        .font(.system(size: 34))
+                        .foregroundColor(tint)
+                }
+            }
+            .padding(.top, 6)
             Text(t.title)
                 .font(Theme.pixel(22, relativeTo: .title2))
                 .foregroundColor(Theme.goldBright)
@@ -184,6 +194,16 @@ struct EventCardView: View {
         .padding(.horizontal, 28)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("event-card")
+    }
+
+    /// Значок автора, если он уже нарисован
+    private var art: String? {
+        switch event {
+        case .captured: return "icon_st_control"
+        case .agentExposed: return "icon_act_infiltrate"
+        case .patrolComing, .patrolBrokeThrough: return "icon_st_guard"
+        default: return nil
+        }
     }
 
     private var icon: String {
