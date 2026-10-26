@@ -83,12 +83,12 @@ struct TownSheet: View {
             }
             if t.owner == .lord && townID != 0 {
                 row(L("Стража"), icon: "icon_st_guard", String(format: "%.0f", t.effectiveGuards))
-                row(L("Укрепления"), GameTexts.walls(t.def.wallsKind))
+                row(L("Укрепления"), icon: "icon_st_walls", GameTexts.walls(t.def.wallsKind))
                 row(L("Культисты"), "\(t.cultists)")
-                row(L("Вера"), GameTexts.faith(t.faith))
+                row(L("Вера"), icon: "icon_st_faith", GameTexts.faith(t.faith))
                 row(L("Сила обороны"), String(format: "%.0f", t.defense))
                 VStack(alignment: .leading, spacing: 6) {
-                    row(L("Настороженность"), "\(Int(t.alert))")
+                    row(L("Настороженность"), icon: "icon_st_alert", "\(Int(t.alert))")
                     PixelProgressBar(fraction: min(1, t.alert / 100), fill: Theme.red)
                 }
             } else if townID != 0 {
@@ -139,7 +139,7 @@ struct TownSheet: View {
                 .font(.subheadline)
                 .foregroundColor(Theme.text)
                 .fixedSize(horizontal: false, vertical: true)
-            row(L("Заряд башни"), GameTexts.percent(game.towerCharge / 100))
+            row(L("Заряд башни"), icon: "icon_st_charge", GameTexts.percent(game.towerCharge / 100))
             PixelProgressBar(fraction: game.towerCharge / 100, fill: Color(red: 0.6, green: 0.35, blue: 0.95))
             Text(L("День, когда пройден план «Сегодня», — +20%. День совсем без занятий — −25%."))
                 .font(.caption)
@@ -202,7 +202,7 @@ struct TownSheet: View {
             case .building:
                 Text(L("Поставлен — загорится этой ночью.")).foregroundColor(Theme.text)
             case .lit:
-                row(L("Заряд"), GameTexts.percent(o.charge / 100))
+                row(L("Заряд"), icon: "icon_st_charge", GameTexts.percent(o.charge / 100))
                 PixelProgressBar(fraction: o.charge / 100, fill: Color(red: 0.6, green: 0.35, blue: 0.95))
                 if !o.upgraded {
                     Button(L("Усилить · 300")) { act { try model.user.game.upgradeObelisk(town: townID) } }
@@ -450,6 +450,23 @@ struct DecreesSheet: View {
         }
     }
 
+    /// Значок пути указов: печать страха нарисована, печать слова — пока системный значок.
+    @ViewBuilder
+    private func decreeIcon(_ path: DecreePath) -> some View {
+        switch path {
+        case .fear:
+            Image("icon_law_fear")
+                .interpolation(.high)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 24, height: 24)
+        case .word:
+            Image(systemName: "seal.fill")
+                .foregroundColor(Theme.goldBright)
+                .frame(width: 24, height: 24)
+        }
+    }
+
     @ViewBuilder
     private func tierSection(_ tier: Int) -> some View {
         let game = model.user.game
@@ -458,7 +475,10 @@ struct DecreesSheet: View {
         Section(header: GothicHeader(GameTexts.decreeTier(tier))) {
             if tier < game.decrees.count {
                 let d = GameTexts.decree(tier, game.decrees[tier])
-                Label(d.title, systemImage: "seal.fill").foregroundColor(Theme.goldBright)
+                HStack(spacing: 8) {
+                    decreeIcon(game.decrees[tier])
+                    Text(d.title).foregroundColor(Theme.goldBright)
+                }
                 Text(d.text).font(.caption).foregroundColor(Theme.textDim)
             } else if tier > game.decrees.count {
                 Text(L("Сначала — предыдущая ступень.")).foregroundColor(Theme.textDim)
@@ -468,11 +488,14 @@ struct DecreesSheet: View {
                 ForEach([DecreePath.fear, DecreePath.word], id: \.self) { path in
                     let d = GameTexts.decree(tier, path)
                     VStack(alignment: .leading, spacing: 4) {
-                        Button("\(d.title) · \(Int(Act1.decreeCost[tier]))") {
-                            try? model.user.game.decree(path)
+                        HStack(spacing: 8) {
+                            decreeIcon(path)
+                            Button("\(d.title) · \(Int(Act1.decreeCost[tier]))") {
+                                try? model.user.game.decree(path)
+                            }
+                            .buttonStyle(GothicButtonStyle(path == .fear ? .primary : .secondary))
+                            .disabled(!open || game.avra < Act1.decreeCost[tier])
                         }
-                        .buttonStyle(GothicButtonStyle(path == .fear ? .primary : .secondary))
-                        .disabled(!open || game.avra < Act1.decreeCost[tier])
                         Text(d.text).font(.caption).foregroundColor(Theme.textDim)
                     }
                 }

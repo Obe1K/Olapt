@@ -142,8 +142,7 @@ struct EmpireView: View {
         HStack(spacing: 14) {
             resource(image: "icon_aura", value: GameTexts.avra(game.avra), title: L("Авра"))
             resource(image: "icon_puppets", value: "\(game.army)", title: L("Марионетки"))
-            resource(icon: "sparkles", tint: Theme.ember,
-                     value: GameTexts.percent(game.towerCharge / 100), title: L("Башня"))
+            resource(image: "icon_st_charge", value: GameTexts.percent(game.towerCharge / 100), title: L("Башня"))
         }
         .frame(maxWidth: .infinity)
         .pixelPanel(padding: 10)
@@ -160,21 +159,6 @@ struct EmpireView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 22, height: 22)
-                Text(value)
-                    .font(Theme.pixel(20, relativeTo: .title3))
-                    .foregroundColor(Theme.text)
-            }
-            Text(title)
-                .font(.caption)
-                .foregroundColor(Theme.textDim)
-        }
-        .frame(maxWidth: .infinity)
-    }
-
-    private func resource(icon: String, tint: Color, value: String, title: String) -> some View {
-        VStack(spacing: 2) {
-            HStack(spacing: 4) {
-                Image(systemName: icon).foregroundColor(tint)
                 Text(value)
                     .font(Theme.pixel(20, relativeTo: .title3))
                     .foregroundColor(Theme.text)

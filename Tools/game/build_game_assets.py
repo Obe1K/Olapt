@@ -127,7 +127,9 @@ ICONS = [
     ("icon_aura", "aura.png"), ("icon_puppets", "puppets.png"),
     ("icon_act_assault", "act_assault.png"), ("icon_act_infiltrate", "act_infiltrate.png"),
     ("icon_act_abduct", "act_abduct.png"), ("icon_st_control", "st_control.png"),
-    ("icon_st_guard", "st_guard.png"),
+    ("icon_st_guard", "st_guard.png"), ("icon_st_walls", "st_walls.png"),
+    ("icon_st_faith", "st_faith.png"), ("icon_st_alert", "st_alert.png"),
+    ("icon_st_charge", "st_charge.png"), ("icon_law_fear", "law_fear.png"),
 ]
 ICON_PX = 120
 
