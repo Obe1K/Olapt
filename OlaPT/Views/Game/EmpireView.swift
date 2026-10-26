@@ -26,14 +26,10 @@ enum MapLayout {
     ]
     /// Большие города юга в тумане
     static let south = CGPoint(x: 105, y: 422)
-    /// Где у поселения стоит его обелиск и флажок владельца (точка на земле; картинки — MapMarks)
+    /// Где у поселения стоит его обелиск (точка на земле; картинки — MapMarks)
     static let townObelisk: [CGPoint] = [
         CGPoint(x: 142, y: 94), CGPoint(x: 96, y: 228), CGPoint(x: 146, y: 262),
         CGPoint(x: 212, y: 156), CGPoint(x: 188, y: 344),
-    ]
-    static let townBanner: [CGPoint] = [
-        CGPoint(x: 118, y: 32), CGPoint(x: 66, y: 212), CGPoint(x: 212, y: 212),
-        CGPoint(x: 284, y: 108), CGPoint(x: 278, y: 316),
     ]
     /// Огонь над крышами поселения, где стража подняла тревогу (основание пламени)
     static let townFire: [CGPoint] = [
@@ -204,11 +200,8 @@ struct EmpireView: View {
                 // зоны обелисков: подсветка поселений, до которых дотягиваются горящие обелиски
                 ForEach(0..<Act1.towns.count, id: \.self) { i in
                     if game.coverCharge(i) != nil {
-                        // только тонкий размытый ободок, чтобы не закрывать карту
-                        Circle()
-                            .stroke(Color(red: 0.69, green: 0.47, blue: 1).opacity(0.6), lineWidth: 2 * s)
-                            .blur(radius: 1.3 * s)
-                            .frame(width: 104 * s, height: 104 * s)
+                        // едва заметный тёмно-фиолетовый туман над поселением
+                        markImage("fx_fog", scale: s)
                             .allowsHitTesting(false)
                             .position(x: MapLayout.towns[i].x * s, y: MapLayout.towns[i].y * s)
                     }
@@ -217,7 +210,7 @@ struct EmpireView: View {
                 ForEach(Act1.spots.map { $0.id }, id: \.self) { id in
                     spotMarker(id, scale: s)
                 }
-                // обелиски и флажки поселений
+                // обелиски поселений
                 ForEach(0..<Act1.towns.count, id: \.self) { i in
                     if let o = game.towns[i].obelisk {
                         obeliskMark(o, scale: s)
@@ -229,9 +222,6 @@ struct EmpireView: View {
                         .position(x: MapLayout.townObelisk[i].x * s, y: (MapLayout.townObelisk[i].y - 14) * s)
                         .accessibilityIdentifier("town-obelisk-\(i)")
                     }
-                    markImage(game.towns[i].owner == .mask ? "banner_mask" : "banner_lord", scale: s)
-                        .allowsHitTesting(false)
-                        .position(x: MapLayout.townBanner[i].x * s, y: MapLayout.townBanner[i].y * s)
                 }
                 // тревога у феодала: над крышами огонь
                 ForEach(0..<Act1.towns.count, id: \.self) { i in

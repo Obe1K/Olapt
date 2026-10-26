@@ -115,8 +115,6 @@ MARKS = [
     ("obelisk_dark", "alpha", (525, 1310), OBELISK),
     ("obelisk_lit", "glow", (525, 1310), OBELISK),      # правка тёмного: тот же силуэт + свечение
     ("obelisk_broken", "rubble", (500, 1275), OBELISK * 1.2),  # нарисован мельче — подгоняем
-    ("banner_mask", "alpha", (468, 1195), 26 / 1186),   # флажок с древком — 26 точек
-    ("banner_lord", "alpha", (468, 1195), 26 / 1186),
     ("map_patrol", "alpha", (660, 1160), 30 / 1069),     # двое стражников с копьями — 30 точек
     ("map_legion", "legion", None, 24 / 508),           # колонна марионеток — 24 точки в высоту
 ]
@@ -240,6 +238,34 @@ def cut_glowing_black(img):
     m = alpha > 0.01
     rgb[m] = np.clip(rgb[m] / alpha[m, None], 0, 255)
     return Image.fromarray(np.dstack([rgb, alpha * 255]).astype("uint8"), "RGBA")
+
+
+# Зона обелиска на карте: едва заметный тёмно-фиолетовый туман вокруг поселения
+FOG = ("fx_fog", 140)          # имя и сторона в точках карты
+
+
+def build_fog(report):
+    """Туман из нескольких слоёв размытого шума, круглый, края растворяются; цвет — тёмный фиолет."""
+    import numpy as np
+    from scipy import ndimage as nd
+    name, side = FOG
+    n = side * SCALE
+    rng = np.random.default_rng(7)
+    field = np.zeros((n, n))
+    for sigma, w in ((n / 6, 0.5), (n / 14, 0.3), (n / 30, 0.2)):
+        f = nd.gaussian_filter(rng.standard_normal((n, n)), sigma, mode="wrap")
+        field += w * (f - f.min()) / (f.max() - f.min())
+    yy, xx = np.mgrid[0:n, 0:n]
+    r = np.hypot(xx - n / 2, yy - n / 2) / (n / 2)
+    fall = 1 - smooth(r, 0.35, 1.0)
+    alpha = np.clip(smooth(field, 0.3, 0.7) * 0.8 + 0.2, 0, 1) * fall * 0.5
+    rgb = np.zeros((n, n, 3))
+    rgb[...] = (50, 20, 84)
+    rgb += (field[..., None] - 0.5) * np.array([24, 10, 36])
+    img = Image.fromarray(np.dstack([np.clip(rgb, 0, 255), alpha * 255]).astype("uint8"), "RGBA")
+    imageset(name, img)
+    report.append("%s: туман зоны обелиска, %d точек" % (name, side))
+    return side
 
 
 def build_fire(sizes, report):
@@ -440,6 +466,7 @@ def build_marks(report):
         sizes[name] = size
         report.append(name + ": рисунок автора, %.1f × %.1f точек карты" % size)
     build_fire(sizes, report)
+    sizes["fx_fog"] = (build_fog(report),) * 2
     lines = ["import CoreGraphics", "",
              "// Создано Tools/game/build_game_assets.py — не править руками.",
              "/// Метки на карте: размер холста в точках карты. Точка «на земле» — в центре холста.",
