@@ -75,7 +75,7 @@ struct BossArenaView: View {
                     .interpolation(.high)
                     .resizable()
                     .frame(width: side * s, height: side * s)
-                    .offset(x: (justHurt ? -16 : -12) * s, y: (44 + breathe) * s)
+                    .offset(x: (justHurt ? -6 : -2) * s, y: (44 + breathe) * s)
                 Image(portrait)
                     .interpolation(.high)
                     .resizable()
@@ -85,13 +85,13 @@ struct BossArenaView: View {
                     .saturation(defeated ? 0 : 1)
                     .brightness(defeated ? -0.35 : 0)
                     .opacity(defeated ? 0.75 : 1)
-                    .offset(x: (justHit ? 159 : 156) * s, y: (defeated ? 54 : 45 - breathe) * s)
+                    .offset(x: (justHit ? 153 : 150) * s, y: (defeated ? 54 : 45 - breathe) * s)
                 if justHit {
                     Image("duel_bolt")
                         .interpolation(.high)
                         .resizable()
                         .frame(width: DuelLayout.bolt.width * s, height: DuelLayout.bolt.height * s)
-                        .offset(x: (112 + CGFloat(tick % 2) * 8) * s, y: 96 * s)
+                        .offset(x: (118 + CGFloat(tick % 2) * 8) * s, y: 96 * s)
                 }
             }
             .frame(width: geo.size.width, height: DuelLayout.height * s, alignment: .topLeading)

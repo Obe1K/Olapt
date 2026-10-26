@@ -696,6 +696,8 @@ final class ScreenshotTests: XCTestCase {
         }
         app.swipeUp()
         shot("94_empire_army")
+        app.swipeDown()
+        Thread.sleep(forTimeInterval: 0.6)
         tap(app.buttons["town-2"], "open Vale do Trigo")
         shot("95_town_owned")
     }
