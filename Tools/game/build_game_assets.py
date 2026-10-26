@@ -104,6 +104,128 @@ def grim(img, k, gamma, sat, vignette):
     return Image.fromarray((np.clip(out, 0, 1) * 255).astype("uint8"))
 
 
+# ---------- метки на карте ----------
+
+MARKS_DIR = os.path.join(ART, "marks")
+SWIFT_MARKS = os.path.join(ROOT, "OlaPT", "Views", "Game", "MapMarks.swift")
+# (имя, как вырезать, точка «на земле» в пикселях исходника, сколько точек карты в пикселе исходника).
+# Метка ложится на холст так, что точка на земле — ровно в центре: в Swift её ставят .position(точка).
+OBELISK = 30 / 1369          # обелиск от острия до края земли — 30 точек карты (заметно выше домов)
+MARKS = [
+    ("obelisk_dark", "alpha", (525, 1310), OBELISK),
+    ("obelisk_lit", "glow", (525, 1310), OBELISK),      # правка тёмного: тот же силуэт + свечение
+    ("obelisk_broken", "rubble", (500, 1275), OBELISK * 1.2),  # нарисован мельче — подгоняем
+    ("banner_mask", "alpha", (468, 1195), 26 / 1186),   # флажок с древком — 26 точек
+    ("banner_lord", "alpha", (468, 1195), 26 / 1186),
+]
+
+
+def smooth(x, lo, hi):
+    import numpy as np
+    t = np.clip((x - lo) / (hi - lo), 0, 1)
+    return t * t * (3 - 2 * t)
+
+
+def cut_alpha(img):
+    """Настоящая прозрачность: только убрать почти невидимую дымку по краям."""
+    import numpy as np
+    a = np.asarray(img.convert("RGBA")).copy()
+    a[..., 3][a[..., 3] < 20] = 0
+    return Image.fromarray(a, "RGBA")
+
+
+def cut_glow(img, base):
+    """Горящий обелиск на тёмном фоне: силуэт берём у тёмного, вокруг — фиолетовое свечение."""
+    import numpy as np
+    rgb = np.asarray(img.convert("RGB")).astype(float)
+    hsv = np.asarray(img.convert("RGB").convert("HSV")).astype(float)
+    hue, v = hsv[..., 0], hsv[..., 2]
+    da = np.asarray(base.convert("RGBA"))[..., 3].astype(float) / 255
+    glow = smooth(v, 40, 120) * ((hue > 170) & (hue < 235)) * 0.9
+    alpha = np.maximum(da, glow)
+    m = (da < 0.5) & (alpha > 0.01)
+    rgb[m] = np.clip(rgb[m] / alpha[m, None], 0, 255)
+    return Image.fromarray(np.dstack([rgb, alpha * 255]).astype("uint8"), "RGBA")
+
+
+def cut_rubble(img):
+    """Сломанный обелиск на чёрном фоне с тёплым светом у земли: камни целиком, земля — пятном."""
+    import numpy as np
+    from scipy import ndimage as nd
+    rgb = np.asarray(img.convert("RGB")).astype(float)
+    hsv = np.asarray(img.convert("RGB").convert("HSV")).astype(float)
+    hue, sat, v = hsv[..., 0], hsv[..., 1], hsv[..., 2]
+    stone = (v > 24) & ((sat < 110) | ((hue > 150) & (hue < 255)))
+    stone = nd.binary_fill_holes(nd.binary_closing(stone, iterations=2))
+    stone = nd.binary_opening(stone, iterations=1)
+    lab, n = nd.label(stone)
+    sizes = nd.sum(stone, lab, range(1, n + 1))
+    stone = np.isin(lab, 1 + np.nonzero(sizes >= 60)[0])
+    w, h = img.size
+    ground = Image.new("L", img.size, 0)
+    ImageDraw.Draw(ground).ellipse([w * 0.093, h * 0.729, w * 0.913, h * 0.941], fill=255)
+    ground = np.asarray(ground.filter(ImageFilter.GaussianBlur(28))).astype(float) / 255
+    warm = (hue < 40) | (hue > 240)
+    alpha = np.maximum(stone.astype(float), ground * smooth(v, 22, 55) * warm)
+    alpha = nd.gaussian_filter(alpha, 0.8)
+    return Image.fromarray(np.dstack([rgb, alpha * 255]).astype("uint8"), "RGBA")
+
+
+def placed(img, anchor, upp):
+    """Обрезать по содержимому и положить на холст точкой на земле в центр; SCALE пикселей на точку карты."""
+    box = img.getbbox()
+    ax, ay = anchor
+    half_w = max(ax - box[0], box[2] - ax) * upp
+    half_h = max(ay - box[1], box[3] - ay) * upp
+    k = upp * SCALE
+    crop = img.crop(box)
+    small = crop.resize((max(1, round(crop.width * k)), max(1, round(crop.height * k))), Image.LANCZOS)
+    cw, ch = round(half_w * 2 * SCALE), round(half_h * 2 * SCALE)
+    out = Image.new("RGBA", (cw, ch), (0, 0, 0, 0))
+    out.paste(small, (round(cw / 2 - (ax - box[0]) * k), round(ch / 2 - (ay - box[1]) * k)), small)
+    return out, (cw / SCALE, ch / SCALE)
+
+
+def graded_mark(img):
+    """Тот же мрачный фильтр, что у карты (без виньетки), прозрачность не трогаем."""
+    alpha = img.split()[3]
+    out = grim(img.convert("RGB"), *MAP_GRADE[:3], 0).convert("RGBA")
+    out.putalpha(alpha)
+    return out
+
+
+def build_marks(report):
+    sizes = {}
+    for name, how, anchor, upp in MARKS:
+        path = os.path.join(MARKS_DIR, name + ".png")
+        if not os.path.exists(path):
+            continue
+        img = Image.open(path)
+        if how == "glow":
+            img = cut_glow(img, Image.open(os.path.join(MARKS_DIR, "obelisk_dark.png")))
+        elif how == "rubble":
+            img = cut_rubble(img)
+        else:
+            img = cut_alpha(img)
+        img, size = placed(img, anchor, upp)
+        # обелиски — часть местности, темнеют вместе с картой; флажки — знак владельца, их видно издалека
+        imageset(name, graded_mark(img) if name.startswith("obelisk") else img)
+        sizes[name] = size
+        report.append(name + ": рисунок автора, %.1f × %.1f точек карты" % size)
+    lines = ["import CoreGraphics", "",
+             "// Создано Tools/game/build_game_assets.py — не править руками.",
+             "/// Метки на карте: размер холста в точках карты. Точка «на земле» — в центре холста.",
+             "enum MapMarks {",
+             "    static let size: [String: CGSize] = ["]
+    for name in sorted(sizes):
+        w, h = sizes[name]
+        lines.append('        "%s": CGSize(width: %.1f, height: %.1f),' % (name, w, h))
+    lines += ["    ]", "", "    static func size(_ name: String) -> CGSize {",
+              "        return size[name] ?? CGSize(width: 10, height: 10)", "    }", "}", ""]
+    with open(SWIFT_MARKS, "w") as f:
+        f.write("\n".join(lines))
+
+
 def sprite_from_art(path, w, h, colors=None):
     """Картинка автора → спрайт: обрезать по содержимому и уменьшить (colors — свести к палитре)."""
     src = Image.open(path).convert("RGBA")
@@ -276,6 +398,7 @@ def main():
         img = map_placeholder().resize((MAP[1] * SCALE, MAP[2] * SCALE), Image.NEAREST)
         report.append("карта: заглушка по схеме")
     imageset(MAP[0], img)
+    build_marks(report)
     imageset("tab-mask", tab_icon(), scales=(1, 2, 3), template=True, folder=TAB)
     print("\n".join(report))
 

@@ -26,6 +26,15 @@ enum MapLayout {
     ]
     /// Большие города юга в тумане
     static let south = CGPoint(x: 105, y: 422)
+    /// Где у поселения стоит его обелиск и флажок владельца (точка на земле; картинки — MapMarks)
+    static let townObelisk: [CGPoint] = [
+        CGPoint(x: 142, y: 94), CGPoint(x: 96, y: 228), CGPoint(x: 146, y: 262),
+        CGPoint(x: 212, y: 156), CGPoint(x: 188, y: 344),
+    ]
+    static let townBanner: [CGPoint] = [
+        CGPoint(x: 118, y: 32), CGPoint(x: 66, y: 212), CGPoint(x: 212, y: 212),
+        CGPoint(x: 284, y: 108), CGPoint(x: 278, y: 316),
+    ]
 
     /// Места для обелисков: «дорога» — на нарисованной дороге, «поле» и «лес» — рядом с ней.
     static let spots: [CGPoint] = [
@@ -198,6 +207,22 @@ struct EmpireView: View {
                 ForEach(Act1.spots.map { $0.id }, id: \.self) { id in
                     spotMarker(id, scale: s)
                 }
+                // обелиски и флажки поселений
+                ForEach(0..<Act1.towns.count, id: \.self) { i in
+                    if let o = game.towns[i].obelisk {
+                        obeliskMark(o, scale: s)
+                            .position(x: MapLayout.townObelisk[i].x * s, y: MapLayout.townObelisk[i].y * s)
+                        Button { town = TownRef(id: i) } label: {
+                            obeliskTapArea(scale: s)
+                        }
+                        .buttonStyle(.plain)
+                        .position(x: MapLayout.townObelisk[i].x * s, y: (MapLayout.townObelisk[i].y - 14) * s)
+                        .accessibilityIdentifier("town-obelisk-\(i)")
+                    }
+                    markImage(game.towns[i].owner == .mask ? "banner_mask" : "banner_lord", scale: s)
+                        .allowsHitTesting(false)
+                        .position(x: MapLayout.townBanner[i].x * s, y: MapLayout.townBanner[i].y * s)
+                }
                 ForEach(0..<Act1.towns.count, id: \.self) { i in
                     townMarker(i, scale: s)
                 }
@@ -253,14 +278,6 @@ struct EmpireView: View {
                     }
                 }
                 .offset(y: size.height * s - 6 * s)
-                ownerFlag(t)
-                    .frame(width: 12 * s, height: 16 * s)
-                    .offset(x: size.width * s * 0.28, y: -4 * s)
-                if let o = t.obelisk {
-                    obeliskIcon(o)
-                        .frame(width: 8 * s, height: 18 * s)
-                        .offset(x: -size.width * s * 0.36, y: size.height * s * 0.35)
-                }
             }
         }
         .buttonStyle(.plain)
@@ -280,60 +297,54 @@ struct EmpireView: View {
         }
     }
 
-    /// Флаг владельца: багровый с маской — Маска, тёмный с башней — феодал.
-    private func ownerFlag(_ t: TownState) -> some View {
-        ZStack(alignment: .topLeading) {
-            Rectangle().fill(Theme.goldDark).frame(width: 1.5)
-            Path { p in
-                p.move(to: .zero)
-                p.addLine(to: CGPoint(x: 10, y: 0))
-                p.addLine(to: CGPoint(x: 8, y: 4))
-                p.addLine(to: CGPoint(x: 10, y: 8))
-                p.addLine(to: CGPoint(x: 0, y: 8))
+    /// Метка на карте: картинка из MapMarks, точка «на земле» — в центре кадра.
+    private func markImage(_ name: String, scale s: CGFloat) -> some View {
+        let size = MapMarks.size(name)
+        return Image(name)
+            .interpolation(.high)
+            .resizable()
+            .frame(width: size.width * s, height: size.height * s)
+    }
+
+    /// Обелиск: горящий светится тем ярче, чем больше заряд; строящийся — бледный; сломанный — обломки.
+    @ViewBuilder
+    private func obeliskMark(_ o: Obelisk, scale s: CGFloat) -> some View {
+        switch o.state {
+        case .lit:
+            ZStack {
+                markImage("obelisk_dark", scale: s)
+                markImage("obelisk_lit", scale: s)
+                    .opacity(0.35 + 0.65 * min(1, max(0, o.charge / 100)))
             }
-            .fill(t.owner == .mask ? Theme.bloodBright : Color(red: 0.22, green: 0.24, blue: 0.3))
-            .offset(x: 1.5)
+            .allowsHitTesting(false)
+        case .building:
+            markImage("obelisk_dark", scale: s)
+                .opacity(0.55)
+                .allowsHitTesting(false)
+        case .broken:
+            markImage("obelisk_broken", scale: s)
+                .allowsHitTesting(false)
         }
     }
 
-    private func obeliskIcon(_ o: Obelisk) -> some View {
-        let color: Color
-        switch o.state {
-        case .lit: color = Color(red: 0.7, green: 0.45, blue: 1).opacity(0.4 + 0.6 * o.charge / 100)
-        case .building: color = Theme.textDim
-        case .broken: color = Theme.red
-        }
-        return Path { p in
-            p.move(to: CGPoint(x: 4, y: 0))
-            p.addLine(to: CGPoint(x: 8, y: 4))
-            p.addLine(to: CGPoint(x: 7, y: 18))
-            p.addLine(to: CGPoint(x: 1, y: 18))
-            p.addLine(to: CGPoint(x: 0, y: 4))
-            p.closeSubpath()
-        }
-        .fill(color)
-        .overlay(
-            Path { p in
-                p.move(to: CGPoint(x: 4, y: 0))
-                p.addLine(to: CGPoint(x: 8, y: 4))
-                p.addLine(to: CGPoint(x: 7, y: 18))
-                p.addLine(to: CGPoint(x: 1, y: 18))
-                p.addLine(to: CGPoint(x: 0, y: 4))
-                p.closeSubpath()
-            }
-            .stroke(Color.black.opacity(0.7), lineWidth: 1)
-        )
+    /// Куда нажимать на обелиск: сам обелиск над точкой на земле, а не весь прозрачный кадр.
+    private func obeliskTapArea(scale s: CGFloat) -> some View {
+        return Color.clear
+            .frame(width: 16 * s, height: 32 * s)
+            .contentShape(Rectangle())
     }
 
     @ViewBuilder
     private func spotMarker(_ id: Int, scale s: CGFloat) -> some View {
         let p = MapLayout.spot(id)
         if let o = game.spots[id] {
+            obeliskMark(o, scale: s)
+                .position(x: p.x * s, y: p.y * s)
             Button { spot = SpotRef(id: id) } label: {
-                obeliskIcon(o).frame(width: 8, height: 18).scaleEffect(s)
+                obeliskTapArea(scale: s)
             }
             .buttonStyle(.plain)
-            .position(x: p.x * s, y: p.y * s)
+            .position(x: p.x * s, y: (p.y - 14) * s)
             .accessibilityIdentifier("spot-\(id)")
         } else if game.spotAvailable(id) {
             Button { spot = SpotRef(id: id) } label: {
