@@ -700,6 +700,29 @@ final class ScreenshotTests: XCTestCase {
         shot("95_town_owned")
     }
 
+    /// Карточка поселения феодала целиком: условия, штурм, вылазка, инфильтрация (снимки по прокрутке).
+    func testR_TownMenu() {
+        app.terminate()
+        app.launchArguments = ["-AppleLanguages", "(ru)", "-AppleLocale", "ru_RU", "-ui-language", "ru", "-uitest-static", "YES",
+                               "-uitest-seed", "260", "-uitest-game", "rich"]
+        app.launch()
+        Thread.sleep(forTimeInterval: 1.5)
+        tapTab("Империя")
+        for town in [1, 3] {
+            guard tap(app.buttons["town-\(town)"], "open town \(town)") else { continue }
+            Thread.sleep(forTimeInterval: 0.8)
+            shot("96_town\(town)_0")
+            for n in 1...5 {
+                app.swipeUp()
+                Thread.sleep(forTimeInterval: 0.6)
+                shot("96_town\(town)_\(n)")
+            }
+            let close = app.buttons["Закрыть"]
+            if close.exists { close.tap() } else { app.swipeDown(velocity: .fast) }
+            Thread.sleep(forTimeInterval: 0.8)
+        }
+    }
+
     private func empireBattle() {
         tapTab("Империя")
         let map = app.descendants(matching: .any)["empire-map"]
