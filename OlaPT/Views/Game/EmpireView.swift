@@ -201,7 +201,7 @@ struct EmpireView: View {
                 ForEach(0..<Act1.towns.count, id: \.self) { i in
                     if game.coverCharge(i) != nil {
                         // едва заметный тёмно-фиолетовый туман над поселением
-                        markImage("fx_fog", scale: s)
+                        fogMark(i, scale: s)
                             .allowsHitTesting(false)
                             .position(x: MapLayout.towns[i].x * s, y: MapLayout.towns[i].y * s)
                     }
@@ -337,6 +337,15 @@ struct EmpireView: View {
             markImage("obelisk_broken", scale: s)
                 .allowsHitTesting(false)
         }
+    }
+
+    /// Туман зоны обелиска: у каждого поселения свой рисунок облаков.
+    private func fogMark(_ i: Int, scale s: CGFloat) -> some View {
+        let size = MapMarks.size("fx_fog")
+        return Image("fx_fog\(i % 5)")
+            .interpolation(.high)
+            .resizable()
+            .frame(width: size.width * s, height: size.height * s)
     }
 
     /// Огонь над крышами: три кадра по кругу.

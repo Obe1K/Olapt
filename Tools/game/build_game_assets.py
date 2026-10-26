@@ -242,29 +242,44 @@ def cut_glowing_black(img):
 
 # Зона обелиска на карте: едва заметный тёмно-фиолетовый туман вокруг поселения
 FOG = ("fx_fog", 140)          # имя и сторона в точках карты
+FOG_ALPHA = 0.32               # непрозрачность самых плотных клубов
 
 
-def build_fog(report):
-    """Туман из нескольких слоёв размытого шума, круглый, края растворяются; цвет — тёмный фиолет."""
+def fog_image(seed):
+    """Облачный туман: фрактальный шум (клубы с просветами), края растворяются; тёмный фиолет
+    с чуть светлыми верхними кромками клубов, чтобы читалась фактура облаков."""
     import numpy as np
     from scipy import ndimage as nd
     name, side = FOG
     n = side * SCALE
-    rng = np.random.default_rng(7)
+    rng = np.random.default_rng(seed)
     field = np.zeros((n, n))
-    for sigma, w in ((n / 6, 0.5), (n / 14, 0.3), (n / 30, 0.2)):
+    w, total = 1.0, 0.0
+    for sigma in (n / 5, n / 10, n / 20, n / 40, n / 80, n / 160):
         f = nd.gaussian_filter(rng.standard_normal((n, n)), sigma, mode="wrap")
-        field += w * (f - f.min()) / (f.max() - f.min())
+        field += w * (f - f.mean()) / f.std()
+        total += w
+        w *= 0.55
+    field = (field / total - field.min() / total) / ((field.max() - field.min()) / total)
     yy, xx = np.mgrid[0:n, 0:n]
     r = np.hypot(xx - n / 2, yy - n / 2) / (n / 2)
-    fall = 1 - smooth(r, 0.35, 1.0)
-    alpha = np.clip(smooth(field, 0.3, 0.7) * 0.8 + 0.2, 0, 1) * fall * 0.34
+    fall = 1 - smooth(r, 0.3, 1.0)
+    cloud = smooth(field, 0.42, 0.72)                       # клубы и просветы между ними
+    # кромка: где облако «поднимается» вверх — светлее (объём)
+    rim = np.clip(nd.gaussian_filter(cloud, 3) - nd.shift(nd.gaussian_filter(cloud, 3), (6, 0), order=1), 0, 1)
+    alpha = (cloud * 0.9 + 0.1 * field) * fall * FOG_ALPHA
     rgb = np.zeros((n, n, 3))
-    rgb[...] = (50, 20, 84)
-    rgb += (field[..., None] - 0.5) * np.array([24, 10, 36])
-    img = Image.fromarray(np.dstack([np.clip(rgb, 0, 255), alpha * 255]).astype("uint8"), "RGBA")
-    imageset(name, img)
-    report.append("%s: туман зоны обелиска, %d точек" % (name, side))
+    rgb[...] = (46, 20, 78)
+    rgb += cloud[..., None] * np.array([18, 8, 30]) + (rim * 4)[..., None] * np.array([40, 26, 60])
+    return Image.fromarray(np.dstack([np.clip(rgb, 0, 255), np.clip(alpha, 0, 1) * 255]).astype("uint8"), "RGBA")
+
+
+def build_fog(report):
+    """Свой рисунок облаков у каждого поселения, чтобы туман не повторялся."""
+    name, side = FOG
+    for i in range(5):
+        imageset("%s%d" % (name, i), fog_image(11 + i * 7))
+    report.append("%s0…4: облачный туман зоны обелиска, %d точек" % (name, side))
     return side
 
 
