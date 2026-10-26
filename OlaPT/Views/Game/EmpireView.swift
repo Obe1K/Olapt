@@ -141,7 +141,7 @@ struct EmpireView: View {
     private var resourceBar: some View {
         HStack(spacing: 14) {
             resource(image: "icon_aura", value: GameTexts.avra(game.avra), title: L("Авра"))
-            resource(icon: "figure.stand", tint: Theme.text, value: "\(game.army)", title: L("Марионетки"))
+            resource(image: "icon_puppets", value: "\(game.army)", title: L("Марионетки"))
             resource(icon: "sparkles", tint: Theme.ember,
                      value: GameTexts.percent(game.towerCharge / 100), title: L("Башня"))
         }

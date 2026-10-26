@@ -123,7 +123,7 @@ MARKS = [
 # Огонь над крышами: три кадра в ряд на чёрном фоне; основание пламени — точка «на земле».
 FIRE = ("fx_fire", 3, 22 / 680)
 # Значки интерфейса: квадрат, картинка по центру с полями (Tools/game/art/icons)
-ICONS = [("icon_aura", "aura.png")]
+ICONS = [("icon_aura", "aura.png"), ("icon_puppets", "puppets.png")]
 ICON_PX = 120
 
 
