@@ -79,7 +79,7 @@ struct EmpireView: View {
                     patrolBanner(p)
                 }
                 if game.finished {
-                    Text(L("Акт 1 пройден: Dom Álvaro — ваша кукла."))
+                    Text(L("Акт 1 пройден: Dom Álvaro — ваш calado."))
                         .font(Theme.pixel(17, relativeTo: .headline))
                         .foregroundColor(Theme.goldBright)
                         .frame(maxWidth: .infinity)
@@ -138,8 +138,8 @@ struct EmpireView: View {
 
     private var resourceBar: some View {
         HStack(spacing: 14) {
-            resource(image: "icon_aura", value: GameTexts.avra(game.avra), title: L("Авра"))
-            resource(image: "icon_puppets", value: "\(game.army)", title: L("Марионетки"))
+            resource(image: "icon_aura", value: GameTexts.avra(game.avra), title: L("Avra"))
+            resource(image: "icon_puppets", value: "\(game.army)", title: L("Calados"))
             resource(image: "icon_st_charge", value: GameTexts.percent(game.towerCharge / 100), title: L("Башня"))
         }
         .frame(maxWidth: .infinity)
@@ -173,7 +173,7 @@ struct EmpireView: View {
             Text(L("Отряд стражи идёт на «%@»", GameTexts.townName(p.target)))
                 .font(Theme.pixel(17, relativeTo: .headline))
                 .foregroundColor(Theme.red)
-            Text(L("Подойдёт этой ночью. Оборона — %d слов, которые вы помните хуже всего; нужно %d верных. Отбили — +20 Авры.",
+            Text(L("Подойдёт этой ночью. Оборона — %d слов, которые вы помните хуже всего; нужно %d верных. Отбили — +20 Avra.",
                    Act1.patrolQuestions, Act1.patrolPass))
                 .font(.subheadline)
                 .foregroundColor(Theme.text)
@@ -421,7 +421,7 @@ struct EmpireView: View {
     private var armyCard: some View {
         VStack(alignment: .leading, spacing: 10) {
             GothicHeader(L("Войско"))
-            Text(L("Марионеток в войске: %d. Взять под контроль — 10 Авры за каждую.", game.army))
+            Text(L("Calados в войске: %d. Взять под контроль — 10 Avra за каждого.", game.army))
                 .font(.subheadline)
                 .foregroundColor(Theme.text)
                 .fixedSize(horizontal: false, vertical: true)
@@ -448,7 +448,7 @@ struct EmpireView: View {
                 }()
                 let home = (c.key == .pastor || c.key == .headman) && c.town.map { game.towns[$0].owner == .lord } == true
                 bindRow(title: who,
-                        detail: home ? L("вернётся домой куклой и будет обращать по двое в день · ещё %d дн.", left)
+                        detail: home ? L("вернётся домой calado и будет обращать по двое в день · ещё %d дн.", left)
                                      : L("в подвале ещё %d дн.", left),
                         enabled: true, id: "bind-captive-\(pair.offset)") {
                     try? model.user.game.bind(.captive(index: pair.offset))
@@ -506,7 +506,7 @@ struct EmpireView: View {
     }
 
     private var rulesHint: some View {
-        Text(L("Авру дают любые упражнения. Пока вы занимаетесь, обелиски заряжены и куклы спят; забросите — куклы проснутся, и поселения уйдут к феодалу."))
+        Text(L("Avra дают любые упражнения. Пока вы занимаетесь, обелиски заряжены и calados спят; забросите — calados проснутся, и поселения уйдут к феодалу."))
             .font(.caption)
             .foregroundColor(Theme.textDim)
             .fixedSize(horizontal: false, vertical: true)
@@ -575,7 +575,7 @@ struct EmpireView: View {
         case .defense:
             let ok = model.user.game.resolveDefense(correct: sc.correct)
             report = BattleReport(title: ok ? L("Стража отбита") : L("Не отбили"),
-                                  lines: ok ? [L("+20 Авры. Отряд повернул назад.")]
+                                  lines: ok ? [L("+20 Avra. Отряд повернул назад.")]
                                             : [L("Верных: %d из %d, нужно %d. Можно попробовать ещё раз до ночи.", sc.correct, st.questions, Act1.patrolPass)],
                                   roll: nil, bonus: 0, good: ok)
         }
@@ -589,13 +589,13 @@ struct EmpireView: View {
         var lines: [String] = []
         switch r.outcome {
         case .bossLost:
-            lines.append(L("Штурм отбит. Половина отряда пала — их можно поднять марионетками три дня."))
+            lines.append(L("Штурм отбит. Половина отряда пала — их можно поднять как calados ещё три дня."))
         case .fail:
-            lines.append(L("Поселение не взято. Потеряно марионеток: %d.", r.lost))
+            lines.append(L("Поселение не взято. Потеряно calados: %d.", r.lost))
         default:
-            lines.append(L("%@ — ваша. Потеряно марионеток: %d.", GameTexts.townName(town), r.lost))
-            lines.append(L("Жителей погибло: %d, бежало: %d, стали куклами: %d.", r.killed, r.fled, r.dolls))
-            lines.append(L("Павших можно поднять марионетками в течение трёх дней."))
+            lines.append(L("%@ — ваша. Потеряно calados: %d.", GameTexts.townName(town), r.lost))
+            lines.append(L("Жителей погибло: %d, бежало: %d, стали calados: %d.", r.killed, r.fled, r.dolls))
+            lines.append(L("Павших можно поднять как calados в течение трёх дней."))
         }
         let good = r.outcome != .fail && r.outcome != .bossLost
         return BattleReport(title: GameTexts.outcome(r.outcome), lines: lines,

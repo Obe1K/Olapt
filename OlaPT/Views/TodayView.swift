@@ -176,7 +176,7 @@ struct TodayView: View {
             Button(action: openEmpire) {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(L("Авра %d · марионетки %d", Int(game.avra), game.army))
+                        Text(L("Avra %d · calados %d", Int(game.avra), game.army))
                             .font(Theme.pixel(17, relativeTo: .headline))
                             .foregroundColor(Theme.text)
                         if let p = game.patrol, !p.defended {

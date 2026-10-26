@@ -7,7 +7,7 @@ T = {
     "Пшеничная долина": "Wheat Valley",
     "Тенистая роща": "Shadow Grove",
     "Сумрачный холм": "Gloomy Hill",
-    "Деревня у башни. Уцелевшие — уже ваши куклы.": "The village by the tower. Those who survived are already your dolls.",
+    "Деревня у башни. Уцелевшие — уже ваши calados.": "The village by the tower. Those who survived are already your calados.",
     "Рыбацкая деревня на побережье.": "A fishing village on the coast.",
     "Фермерский городок: огороды и поля.": "A farming town: vegetable plots and fields.",
     "Городок у леса, гнездо Церкви Эссеш.": "A town by the forest, the nest of the Church of Esses.",
@@ -44,15 +44,15 @@ T = {
     "Разгром": "Rout",
     # Карточки событий
     "%@ — ваша": "%@ is yours",
-    "Куклы внутри взяли верх. Тихо: соседи ничего не узнали.": "The dolls inside took over. Quietly: the neighbours learned nothing.",
-    "Кто остался — уже куклы. Поставьте обелиск, иначе через неделю они начнут просыпаться.":
-        "Everyone left is a doll now. Raise an obelisk, or in a week they will start to wake up.",
+    "Calados внутри взяли верх. Тихо: соседи ничего не узнали.": "The calados inside took over. Quietly: the neighbours learned nothing.",
+    "Кто остался — уже calados. Поставьте обелиск, иначе через неделю они начнут просыпаться.":
+        "Everyone left is a calado now. Raise an obelisk, or in a week they will start to wake up.",
     "%@ больше не ваша": "%@ is no longer yours",
     "Люди проснулись и ничего не помнят. Феодал снова поставил там стражу.":
         "The people woke up and remember nothing. The lord has posted a guard there again.",
     "Обелиск разбит": "Obelisk broken",
-    "%@: куклы в его зоне начнут просыпаться. Восстановить — 100 Авры.":
-        "%@: the dolls in its zone will start to wake up. Restoring it costs 100 Avra.",
+    "%@: calados в его зоне начнут просыпаться. Восстановить — 100 Avra.":
+        "%@: the calados in its zone will start to wake up. Restoring it costs 100 Avra.",
     "Обелиск %@ нашли и разбили.": "The obelisk %@ was found and broken.",
     "Агенты раскрыты": "Agents exposed",
     "%@: потеряно агентов — %d. Настороженность растёт.": "%@: agents lost — %d. Alertness is rising.",
@@ -60,16 +60,16 @@ T = {
     "Из поселения «%@» идёт отряд на «%@». Подойдёт этой ночью — отбейте его.":
         "A squad is marching from “%@” on “%@”. It arrives tonight — beat it back.",
     "Стража прорвалась": "The guard broke through",
-    "%@: освобождено кукол — %d, обелиск разбит.": "%@: dolls freed — %d, the obelisk is broken.",
+    "%@: освобождено calados — %d, обелиск разбит.": "%@: calados freed — %d, the obelisk is broken.",
     "Багровый Поп бежал на юг": "The Crimson Priest fled south",
     "Церковь потеряла гнездо: вера по всей области слабеет на ступень.":
         "The Church has lost its nest: faith drops a step across the whole region.",
     "Из вылазки никто не вернулся": "No one came back from the raid",
-    "%@: отряд из трёх марионеток пропал.": "%@: a squad of three marionettes is gone.",
-    "Марионетки просыпаются": "Marionettes are waking up",
-    "Башня слабеет: ушло марионеток — %d. Занимайтесь, чтобы заряд вернулся.":
-        "The tower is weakening: marionettes gone — %d. Study to restore its charge.",
-    "Сеньор стал куклой": "The lord is a doll now",
+    "%@: отряд из трёх calados пропал.": "%@: a squad of three calados is gone.",
+    "Calados просыпаются": "Calados are waking up",
+    "Башня слабеет: ушло calados — %d. Занимайтесь, чтобы заряд вернулся.":
+        "The tower is weakening: calados gone — %d. Study to restore its charge.",
+    "Сеньор стал calado": "The lord is a calado now",
     "Dom Álvaro в вашей власти. Акт 1 пройден — его руками Маска войдёт во второй акт.":
         "Dom Álvaro is in your power. Act 1 is complete — through his hands the Mask will enter the second act.",
     # Указы
@@ -77,12 +77,12 @@ T = {
     "II. Неправильные в Presente: 6 из 8": "II. Irregular Presente: 6 of 8",
     "III. Pretérito Perfeito: 10 глаголов": "III. Pretérito Perfeito: 10 verbs",
     "Комендантский час": "Curfew",
-    "Поселение теряется, только когда кукол меньше 40%, а не 50%.": "A settlement is lost only when dolls drop below 40%, not 50%.",
+    "Поселение теряется, только когда calados меньше 40%, а не 50%.": "A settlement is lost only when calados drop below 40%, not 50%.",
     "Глашатаи": "Heralds",
-    "+10% Авры за новые слова.": "+10% Avra for new words.",
+    "+10% Avra за новые слова.": "+10% Avra for new words.",
     "Железная рука": "Iron Hand",
-    "Марионетки гарнизона против стражи и культистов считаются за двоих.":
-        "Garrison marionettes count double against guards and cultists.",
+    "Calados гарнизона против стражи и культистов считаются за двоих.":
+        "Garrison calados count double against guards and cultists.",
     "Лжепророки": "False Prophets",
     "В поселении под инфильтрацией вера слабеет на ступень.": "Faith drops a step in a settlement under infiltration.",
     "Маска на воротах": "Mask on the Gates",
@@ -90,44 +90,43 @@ T = {
     "Шёпот": "Whisper",
     "Раскрытый агент не поднимает настороженность.": "An exposed agent doesn't raise alertness.",
     "Указы": "Decrees",
-    "Три ступени. Каждую открывает грамматика, стоит Авры и предлагает выбор из двух указов — Страх или Слово. Выбор окончательный на весь акт.":
+    "Три ступени. Каждую открывает грамматика, стоит Avra и предлагает выбор из двух указов — Страх или Слово. Выбор окончательный на весь акт.":
         "Three tiers. Each is unlocked by grammar, costs Avra and offers a choice of two decrees — Fear or Word. The choice is final for the whole act.",
     "Сначала — предыдущая ступень.": "The previous tier comes first.",
     "Глаголов в памяти: %d из %d": "Verbs in memory: %d of %d",
     "Пока ни одного. Ступени открывает грамматика.": "None yet. Grammar unlocks the tiers.",
     # Империя
     "Империя": "Empire",
-    "Авра": "Avra",
-    "Марионетки": "Marionettes",
-    "Авра %d · марионетки %d": "Avra %d · marionettes %d",
+    "Avra": "Avra",
+    "Calados": "Calados",
+    "Avra %d · calados %d": "Avra %d · calados %d",
     "Владений: %d из 4": "Holdings: %d of 4",
     "Под угрозой: %@": "Under threat: %@",
-    "Акт 1 пройден: Dom Álvaro — ваша кукла.": "Act 1 complete: Dom Álvaro is your doll.",
+    "Акт 1 пройден: Dom Álvaro — ваш calado.": "Act 1 complete: Dom Álvaro is your calado.",
     "Отряд стражи идёт на «%@»": "A guard squad is marching on “%@”",
-    "Подойдёт этой ночью. Оборона — %d слов, которые вы помните хуже всего; нужно %d верных. Отбили — +20 Авры.":
+    "Подойдёт этой ночью. Оборона — %d слов, которые вы помните хуже всего; нужно %d верных. Отбили — +20 Avra.":
         "It arrives tonight. Defence: the %d words you remember worst; you need %d right. Beat it back for +20 Avra.",
     "Отбить": "Beat back",
     "Войско": "Army",
-    "Марионеток в войске: %d. Взять под контроль — 10 Авры за каждую.": "Marionettes in the army: %d. Taking control costs 10 Avra each.",
+    "Calados в войске: %d. Взять под контроль — 10 Avra за каждого.": "Calados in the army: %d. Taking control costs 10 Avra each.",
     "Кладбище Молчаливой деревни": "Silent Village cemetery",
     "сегодня можно поднять: %d": "can raise today: %d",
     "Павшие на поле": "The fallen on the field",
     "%d — лежат до трёх дней": "%d — they lie there up to three days",
     "%@ из «%@»": "%@ from “%@”",
     "Пленник в подвале": "Captive in the cellar",
-    "вернётся домой куклой и будет обращать по двое в день · ещё %d дн.":
-        "will return home as a doll and convert two a day · %d more days",
+    "вернётся домой calado и будет обращать по двое в день · ещё %d дн.":
+        "will return home as a calado and convert two a day · %d more days",
     "в подвале ещё %d дн.": "%d more days in the cellar",
     "Взять · 10": "Take · 10",
-    "Авру дают любые упражнения. Пока вы занимаетесь, обелиски заряжены и куклы спят; забросите — куклы проснутся, и поселения уйдут к феодалу.":
-        "Any exercise gives Avra. While you study, the obelisks stay charged and the dolls sleep; stop, and the dolls wake up and the settlements go back to the lord.",
+    "Avra дают любые упражнения. Пока вы занимаетесь, обелиски заряжены и calados спят; забросите — calados проснутся, и поселения уйдут к феодалу.":
+        "Any exercise gives Avra. While you study, the obelisks stay charged and the calados sleep; stop, and the calados wake up and the settlements go back to the lord.",
     "Понятно": "Got it",
     # Поселение
     "Под властью Маски": "Under the Mask",
     "Под властью сеньора": "Under the lord",
     "Условия": "Conditions",
     "Жителей": "Inhabitants",
-    "Куклы": "Dolls",
     "Стража": "Guard",
     "Укрепления": "Defences",
     "Культисты": "Cultists",
@@ -140,61 +139,61 @@ T = {
     "Ключевые люди": "Key people",
     "В зоне обелиска: штурм, агенты и вылазки на четверть дешевле.": "In an obelisk zone: assaults, agents and raids cost a quarter less.",
     "Вне зон обелисков: штурм, агенты и вылазки в полтора раза дороже.": "Outside obelisk zones: assaults, agents and raids cost one and a half times more.",
-    "Башня — первый обелиск: её зона накрывает Молчаливую деревню и Деревню сетей. Заряд держит и марионеток войска: ниже половины они начинают просыпаться.":
-        "The tower is the first obelisk: its zone covers the Silent Village and the Village of Nets. Its charge also holds the army's marionettes: below half, they start to wake up.",
+    "Башня — первый обелиск: её зона накрывает Молчаливую деревню и Деревню сетей. Заряд держит и calados войска: ниже половины они начинают просыпаться.":
+        "The tower is the first obelisk: its zone covers the Silent Village and the Village of Nets. Its charge also holds the army's calados: below half, they start to wake up.",
     "Заряд башни": "Tower charge",
     "День, когда пройден план «Сегодня», — +20%. День совсем без занятий — −25%.":
         "A day you finish the Today plan: +20%. A day with no study at all: −25%.",
     "Обелиск": "Obelisk",
-    "Марионетки в поселении стерегут обелиск от культистов, а против стражи каждая спасает двух кукол.":
-        "Marionettes in the settlement guard the obelisk from cultists, and against the guard each one saves two dolls.",
+    "Calados гарнизона стерегут обелиск от культистов, а против стражи каждый из них спасает двоих.":
+        "Calados in the settlement guard the obelisk from cultists, and against the guard each one saves two calados.",
     "Забрать": "Take back",
     "Оставить": "Leave",
-    "Куклы в войско": "Dolls into the army",
+    "Calados в войско": "Calados into the army",
     "Можно забрать ещё %d — не больше половины исходных жителей.": "You can take %d more — no more than half of the original inhabitants.",
     "Больше забирать нельзя: иначе поселение опустеет.": "You can't take more: the settlement would be left empty.",
-    "Взять куклу в войско · 10": "Take a doll into the army · 10",
-    "Оставшиеся культисты по ночам рвут нити: каждые двое освобождают куклу в день. Их можно уводить на вылазках — похищенный культист станет марионеткой.":
-        "The remaining cultists cut the threads at night: every two free a doll a day. You can carry them off on raids — a captured cultist becomes a marionette.",
+    "Взять calado в войско · 10": "Take a calado into the army · 10",
+    "Оставшиеся культисты по ночам рвут нити: каждые двое освобождают одного calado в день. Их можно уводить на вылазках — похищенный культист станет calado.":
+        "The remaining cultists cut the threads at night: every two free a calado a day. You can carry them off on raids — a captured cultist becomes a calado.",
     "Вылазка на культистов": "Raid on the cultists",
     "Поставлен — загорится этой ночью.": "Raised — it will light up tonight.",
     "Заряд": "Charge",
     "Усилить · 300": "Strengthen · 300",
     "Усиленный дотягивается на одну дорогу дальше.": "A strengthened obelisk reaches one road further.",
     "Усилен: дотягивается на одну дорогу дальше.": "Strengthened: reaches one road further.",
-    "Разбит: куклы в его зоне просыпаются.": "Broken: the dolls in its zone are waking up.",
+    "Разбит: calados в его зоне просыпаются.": "Broken: the calados in its zone are waking up.",
     "Восстановить · 100": "Restore · 100",
     "Поселение в зоне другого обелиска. Свой обелиск дотянется до соседей.": "The settlement is in another obelisk's zone. Its own obelisk would reach the neighbours.",
-    "Ни один обелиск сюда не дотягивается: после семи дней куклы начнут просыпаться.": "No obelisk reaches here: after seven days the dolls will start to wake up.",
+    "Ни один обелиск сюда не дотягивается: после семи дней calados начнут просыпаться.": "No obelisk reaches here: after seven days the calados will start to wake up.",
     "Поставить обелиск · 200": "Raise an obelisk · 200",
     "Штурм": "Assault",
-    "Марионеток в бой: %d": "Marionettes into battle: %d",
+    "Calados в бой: %d": "Calados into battle: %d",
     "Перевес": "Advantage",
     "Цена": "Cost",
-    "%d Авры": "%d Avra",
+    "%d Avra": "%d Avra",
     "Сначала бой с боссом: %@. 20 вопросов, для победы нужно 13 верных. Поражение — штурм отбит.":
         "First, a boss fight: %@. 20 questions, 13 right to win. Losing means the assault is repelled.",
-    "Бой — %d вопросов на слова, которые вы учите. Каждая ошибка стоит марионетки. Потом бросок d20: +%d к броску за перевес и бой.":
-        "The battle: %d questions on words you are learning. Every mistake costs a marionette. Then a d20 roll: +%d to the roll for advantage and the fight.",
+    "Бой — %d вопросов на слова, которые вы учите. Каждая ошибка стоит одного calado. Потом бросок d20: +%d к броску за перевес и бой.":
+        "The battle: %d questions on words you are learning. Every mistake costs a calado. Then a d20 roll: +%d to the roll for advantage and the fight.",
     "Отбит %@ · тяжёлая %@ · уверенная %@ · разгром %@": "Repelled %@ · hard %@ · clear %@ · rout %@",
     "Начать штурм": "Start the assault",
     "Для боя нужно хотя бы 4 начатых слова.": "You need at least 4 words in progress to fight.",
     "Вылазка": "Raid",
-    "Отряд из трёх марионеток. %d вопросов, каждый верный — +1 к броску d20; стража и настороженность дают −%d. Итог 1–5 — из отряда не вернётся никто.":
-        "A squad of three marionettes. %d questions, each right answer is +1 to the d20 roll; guards and alertness give −%d. A total of 1–5 — no one from the squad comes back.",
+    "Отряд из трёх calados. %d вопросов, каждый верный — +1 к броску d20; стража и настороженность дают −%d. Итог 1–5 — из отряда не вернётся никто.":
+        "A squad of three calados. %d questions, each right answer is +1 to the d20 roll; guards and alertness give −%d. A total of 1–5 — no one from the squad comes back.",
     "Увести жителей": "Carry off people",
     "Похитить: %@": "Abduct: %@",
     "10 вопросов, нужен итог 15. Даст: %@.": "10 questions, you need a total of 15. Gives: %@.",
     "Инфильтрация": "Infiltration",
-    "Агенты обращают по жителю в день, набожных — за два дня. Подпитка — %@ Авры в день за агента; без неё через три дня агентов начнут раскрывать.":
+    "Агенты обращают по жителю в день, набожных — за два дня. Подпитка — %@ Avra в день за агента; без неё через три дня агентов начнут раскрывать.":
         "Agents convert one inhabitant a day, the devout take two days. Upkeep is %@ Avra a day per agent; without it, agents start being exposed after three days.",
     "Агентов": "Agents",
     "Заслать: %d": "Send: %d",
     "Заслать агентов": "Send agents",
-    "Здесь инфильтрация одна не возьмёт поселение: нужен штурм. Но каждая кукла внутри сражается за двоих.":
-        "Infiltration alone won't take this settlement: it needs an assault. But every doll inside fights for two.",
-    "Не хватает Авры.": "Not enough Avra.",
-    "Не хватает марионеток.": "Not enough marionettes.",
+    "Здесь инфильтрация одна не возьмёт поселение: нужен штурм. Но каждый calado внутри сражается за двоих.":
+        "Infiltration alone won't take this settlement: it needs an assault. But every calado inside fights for two.",
+    "Не хватает Avra.": "Not enough Avra.",
+    "Не хватает calados.": "Not enough calados.",
     "Сейчас это сделать нельзя.": "You can't do that right now.",
     "Место для обелиска": "Obelisk site",
     "Между «%@» и «%@», %@. Зона накрывает оба поселения.": "Between “%@” and “%@”, %@. Its zone covers both settlements.",
@@ -211,14 +210,14 @@ T = {
     "Чистая 1 — всегда провал": "A natural 1 always fails",
     "Стража отбита": "The guard is beaten back",
     "Не отбили": "Not beaten back",
-    "+20 Авры. Отряд повернул назад.": "+20 Avra. The squad turned back.",
+    "+20 Avra. Отряд повернул назад.": "+20 Avra. The squad turned back.",
     "Верных: %d из %d, нужно %d. Можно попробовать ещё раз до ночи.": "Right: %d of %d, you need %d. You can try again before nightfall.",
-    "Штурм отбит. Половина отряда пала — их можно поднять марионетками три дня.":
-        "Assault repelled. Half the squad fell — you can raise them as marionettes for three days.",
-    "Поселение не взято. Потеряно марионеток: %d.": "The settlement wasn't taken. Marionettes lost: %d.",
-    "%@ — ваша. Потеряно марионеток: %d.": "%@ is yours. Marionettes lost: %d.",
-    "Жителей погибло: %d, бежало: %d, стали куклами: %d.": "Inhabitants killed: %d, fled: %d, became dolls: %d.",
-    "Павших можно поднять марионетками в течение трёх дней.": "The fallen can be raised as marionettes within three days.",
+    "Штурм отбит. Половина отряда пала — их можно поднять как calados ещё три дня.":
+        "Assault repelled. Half the squad fell — you can raise them as calados for three days.",
+    "Поселение не взято. Потеряно calados: %d.": "The settlement wasn't taken. Calados lost: %d.",
+    "%@ — ваша. Потеряно calados: %d.": "%@ is yours. Calados lost: %d.",
+    "Жителей погибло: %d, бежало: %d, стали calados: %d.": "Inhabitants killed: %d, fled: %d, became calados: %d.",
+    "Павших можно поднять как calados в течение трёх дней.": "The fallen can be raised as calados within three days.",
     "Вылазка провалена": "Raid failed",
     "Из отряда не вернулся никто. Настороженность +10.": "No one from the squad came back. Alertness +10.",
     "Похищен: %@": "Abducted: %@",

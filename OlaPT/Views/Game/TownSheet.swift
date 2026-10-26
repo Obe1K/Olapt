@@ -79,7 +79,7 @@ struct TownSheet: View {
         Section(header: GothicHeader(L("Условия"))) {
             row(L("Жителей"), "\(t.pop)")
             if townID != 0 {
-                row(L("Куклы"), icon: "icon_st_control", "\(t.dolls) · \(GameTexts.percent(t.pop > 0 ? Double(t.dolls) / Double(t.pop) : 0))")
+                row(L("Calados"), icon: "icon_st_control", "\(t.dolls) · \(GameTexts.percent(t.pop > 0 ? Double(t.dolls) / Double(t.pop) : 0))")
             }
             if t.owner == .lord && townID != 0 {
                 row(L("Стража"), icon: "icon_st_guard", String(format: "%.0f", t.effectiveGuards))
@@ -135,7 +135,7 @@ struct TownSheet: View {
 
     private var towerSection: some View {
         Section(header: GothicHeader(L("Башня"))) {
-            Text(L("Башня — первый обелиск: её зона накрывает Молчаливую деревню и Деревню сетей. Заряд держит и марионеток войска: ниже половины они начинают просыпаться."))
+            Text(L("Башня — первый обелиск: её зона накрывает Молчаливую деревню и Деревню сетей. Заряд держит и calados войска: ниже половины они начинают просыпаться."))
                 .font(.subheadline)
                 .foregroundColor(Theme.text)
                 .fixedSize(horizontal: false, vertical: true)
@@ -155,7 +155,7 @@ struct TownSheet: View {
             obeliskControls
         }
         Section(header: GothicHeader(L("Гарнизон"), icon: "icon_puppets")) {
-            Text(L("Марионетки в поселении стерегут обелиск от культистов, а против стражи каждая спасает двух кукол."))
+            Text(L("Calados гарнизона стерегут обелиск от культистов, а против стражи каждый из них спасает двоих."))
                 .font(.caption)
                 .foregroundColor(Theme.textDim)
             HStack {
@@ -173,20 +173,20 @@ struct TownSheet: View {
                     .accessibilityIdentifier("garrison-add")
             }
         }
-        Section(header: GothicHeader(L("Куклы в войско"), icon: "icon_puppets")) {
+        Section(header: GothicHeader(L("Calados в войско"), icon: "icon_puppets")) {
             let room = game.room(t)
             Text(room > 0 ? L("Можно забрать ещё %d — не больше половины исходных жителей.", room)
                           : L("Больше забирать нельзя: иначе поселение опустеет."))
                 .font(.subheadline)
                 .foregroundColor(Theme.text)
-            Button(L("Взять куклу в войско · 10")) { act { try model.user.game.bind(.town(townID)) } }
+            Button(L("Взять calado в войско · 10")) { act { try model.user.game.bind(.town(townID)) } }
                 .buttonStyle(GothicButtonStyle(.secondary))
                 .disabled(room == 0 || game.avra < Act1.bindCost)
                 .accessibilityIdentifier("bind-town")
         }
         if t.cultists > 0 {
             Section(header: GothicHeader(L("Культисты"))) {
-                Text(L("Оставшиеся культисты по ночам рвут нити: каждые двое освобождают куклу в день. Их можно уводить на вылазках — похищенный культист станет марионеткой."))
+                Text(L("Оставшиеся культисты по ночам рвут нити: каждые двое освобождают одного calado в день. Их можно уводить на вылазках — похищенный культист станет calado."))
                     .font(.caption)
                     .foregroundColor(Theme.textDim)
                     .fixedSize(horizontal: false, vertical: true)
@@ -215,7 +215,7 @@ struct TownSheet: View {
                     Text(L("Усилен: дотягивается на одну дорогу дальше.")).font(.caption).foregroundColor(Theme.textDim)
                 }
             case .broken:
-                Text(L("Разбит: куклы в его зоне просыпаются.")).foregroundColor(Theme.red)
+                Text(L("Разбит: calados в его зоне просыпаются.")).foregroundColor(Theme.red)
                 Button(L("Восстановить · 100")) { act { try model.user.game.restoreObelisk(town: townID) } }
                     .buttonStyle(GothicButtonStyle(.primary))
                     .disabled(game.avra < Act1.obeliskRestore)
@@ -223,7 +223,7 @@ struct TownSheet: View {
         } else {
             Text(game.coverCharge(townID) != nil
                  ? L("Поселение в зоне другого обелиска. Свой обелиск дотянется до соседей.")
-                 : L("Ни один обелиск сюда не дотягивается: после семи дней куклы начнут просыпаться."))
+                 : L("Ни один обелиск сюда не дотягивается: после семи дней calados начнут просыпаться."))
                 .font(.subheadline)
                 .foregroundColor(Theme.text)
                 .fixedSize(horizontal: false, vertical: true)
@@ -240,18 +240,18 @@ struct TownSheet: View {
         let odds = game.assaultOdds(townID, squad: squad)
         return Section(header: GothicHeader(L("Штурм"), icon: "icon_act_assault")) {
             Stepper(value: $squad, in: 1...max(1, game.army)) {
-                Text(L("Марионеток в бой: %d", squad)).foregroundColor(Theme.text)
+                Text(L("Calados в бой: %d", squad)).foregroundColor(Theme.text)
             }
             .accessibilityIdentifier("squad-stepper")
             row(L("Перевес"), String(format: "×%.1f", odds.ratio))
-            row(L("Цена"), L("%d Авры", Int(odds.cost.rounded())))
+            row(L("Цена"), L("%d Avra", Int(odds.cost.rounded())))
             if odds.bossFight, let boss = t.def.boss {
                 Text(L("Сначала бой с боссом: %@. 20 вопросов, для победы нужно 13 верных. Поражение — штурм отбит.", GameTexts.bossTitle(boss)))
                     .font(.caption)
                     .foregroundColor(Theme.ember)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            Text(L("Бой — %d вопросов на слова, которые вы учите. Каждая ошибка стоит марионетки. Потом бросок d20: +%d к броску за перевес и бой.",
+            Text(L("Бой — %d вопросов на слова, которые вы учите. Каждая ошибка стоит одного calado. Потом бросок d20: +%d к броску за перевес и бой.",
                    odds.questions, max(0, odds.bonus)))
                 .font(.caption)
                 .foregroundColor(Theme.textDim)
@@ -298,7 +298,7 @@ struct TownSheet: View {
 
     private var sortieSection: some View {
         Section(header: GothicHeader(L("Вылазка"), icon: "icon_act_abduct")) {
-            Text(L("Отряд из трёх марионеток. %d вопросов, каждый верный — +1 к броску d20; стража и настороженность дают −%d. Итог 1–5 — из отряда не вернётся никто.",
+            Text(L("Отряд из трёх calados. %d вопросов, каждый верный — +1 к броску d20; стража и настороженность дают −%d. Итог 1–5 — из отряда не вернётся никто.",
                    Act1.sortieQuestions, game.sortiePenalty(townID)))
                 .font(.caption)
                 .foregroundColor(Theme.textDim)
@@ -334,7 +334,7 @@ struct TownSheet: View {
         let free = Act1.maxAgents - t.agents
         let feed = Act1.agentFeed * game.priceFactor(townID)
         return Section(header: GothicHeader(L("Инфильтрация"), icon: "icon_act_infiltrate")) {
-            Text(L("Агенты обращают по жителю в день, набожных — за два дня. Подпитка — %@ Авры в день за агента; без неё через три дня агентов начнут раскрывать.",
+            Text(L("Агенты обращают по жителю в день, набожных — за два дня. Подпитка — %@ Avra в день за агента; без неё через три дня агентов начнут раскрывать.",
                    String(format: "%.1f", feed)))
                 .font(.caption)
                 .foregroundColor(Theme.textDim)
@@ -350,7 +350,7 @@ struct TownSheet: View {
                     .accessibilityIdentifier("send-agents")
             }
             if let boss = t.def.boss, !boss.abductable {
-                Text(L("Здесь инфильтрация одна не возьмёт поселение: нужен штурм. Но каждая кукла внутри сражается за двоих."))
+                Text(L("Здесь инфильтрация одна не возьмёт поселение: нужен штурм. Но каждый calado внутри сражается за двоих."))
                     .font(.caption)
                     .foregroundColor(Theme.ember)
                     .fixedSize(horizontal: false, vertical: true)
@@ -366,9 +366,9 @@ struct TownSheet: View {
             problem = nil
             SoundFX.shared.play(.tap)
         } catch GameError.notEnoughAvra {
-            problem = L("Не хватает Авры.")
+            problem = L("Не хватает Avra.")
         } catch GameError.notEnoughArmy {
-            problem = L("Не хватает марионеток.")
+            problem = L("Не хватает calados.")
         } catch {
             problem = L("Сейчас это сделать нельзя.")
         }
@@ -431,7 +431,7 @@ struct DecreesSheet: View {
         NavigationStack {
             GothicList {
                 Section {
-                    Text(L("Три ступени. Каждую открывает грамматика, стоит Авры и предлагает выбор из двух указов — Страх или Слово. Выбор окончательный на весь акт."))
+                    Text(L("Три ступени. Каждую открывает грамматика, стоит Avra и предлагает выбор из двух указов — Страх или Слово. Выбор окончательный на весь акт."))
                         .font(.subheadline)
                         .foregroundColor(Theme.text)
                         .fixedSize(horizontal: false, vertical: true)
