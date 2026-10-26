@@ -140,7 +140,15 @@ PORTRAITS = [
     ("portrait_lord", "ref/lord_alvaro.png"),
     ("portrait_fisher_elder", "portraits/npc_fisher_elder.png"),
 ]
-PORTRAIT_PX = 288   # 96 точек сцены арены × 3
+PORTRAIT_PX = 468   # 156 точек сцены дуэли × 3
+# Дуэль (бой с боссом-портретом): сцена 300×200 точек, картинки втрое подробнее.
+DUEL_DIR = os.path.join(ART, "duel")
+DUEL_W, DUEL_H = 300, 200
+# Позы мага — правки одной картинки, поэтому кадр общий: рисунок не обрезаем по содержимому
+MAGE_POSES = [("duel_mage_idle", "mage_duel_idle.png"), ("duel_mage_cast", "mage_duel_cast.png"),
+              ("duel_mage_hurt", "mage_duel_hurt.png")]
+DUEL_PORTRAIT = 156     # сторона портрета на сцене дуэли, точек
+BOLT_W = 84             # длина снаряда, точек
 ICON_PX = 120
 
 
@@ -303,6 +311,73 @@ def build_portraits(report):
         # тот же мрачный фильтр, что у карты: на тёмной арене яркий портрет выпадал
         imageset(name, graded_mark(Image.fromarray(a.astype("uint8"), "RGBA")))
         report.append(name + ": портрет автора")
+
+
+def cut_black_glow(img):
+    """Фигура на чёрном с фиолетовым свечением: тело — заливкой от краёв, свечение — по яркости."""
+    import numpy as np
+    body = np.asarray(cut_black(img, thr=4))[..., 3].astype(float) / 255
+    rgb = np.asarray(img.convert("RGB")).astype(float)
+    glow = smooth(rgb.max(2), 10, 90)
+    alpha = np.maximum(body, glow)
+    m = (body < 0.5) & (alpha > 0.01)
+    rgb[m] = np.clip(rgb[m] / alpha[m, None], 0, 255)
+    return Image.fromarray(np.dstack([rgb, alpha * 255]).astype("uint8"), "RGBA")
+
+
+def faded_bottom(img, start=0.72):
+    import numpy as np
+    a = np.asarray(img.convert("RGBA")).astype(float)
+    h = a.shape[0]
+    fade = np.ones(h)
+    s = int(h * start)
+    fade[s:] = np.linspace(1, 0, h - s) ** 1.3
+    a[..., 3] *= fade[:, None]
+    return Image.fromarray(a.astype("uint8"), "RGBA")
+
+
+def build_duel(report):
+    import numpy as np
+    path = os.path.join(DUEL_DIR, "arena_bg.png")
+    if os.path.exists(path):
+        bg = Image.open(path).convert("RGB")
+        # 3:2 → кадр сцены (тоже 3:2), затемнить как карту
+        bg = grim(bg, *MAP_GRADE).resize((DUEL_W * SCALE, DUEL_H * SCALE), Image.LANCZOS)
+        imageset("duel_bg", bg)
+        report.append("duel_bg: фон дуэли автора")
+    px = DUEL_PORTRAIT * SCALE
+    for name, file in MAGE_POSES:
+        path = os.path.join(DUEL_DIR, file)
+        if not os.path.exists(path):
+            continue
+        src = Image.open(path)
+        has_alpha = src.mode == "RGBA" and np.asarray(src)[..., 3].min() < 128
+        img = cut_alpha(src) if has_alpha else cut_black_glow(src)
+        img = img.resize((px, px), Image.LANCZOS)          # весь кадр: позы не прыгают
+        imageset(name, graded_mark(faded_bottom(img)))
+        report.append(name + ": поза мага автора")
+    path = os.path.join(DUEL_DIR, "fx_bolt.png")
+    if os.path.exists(path):
+        img = cut_glowing_black(Image.open(path))
+        img = img.crop(img.getbbox())
+        w = BOLT_W * SCALE
+        img = img.resize((w, max(1, round(img.height * w / img.width))), Image.LANCZOS)
+        imageset("duel_bolt", img)
+        report.append("duel_bolt: снаряд автора, %d × %d точек" % (BOLT_W, img.height // SCALE))
+    # размеры для Swift
+    lines = ["import CoreGraphics", "",
+             "// Создано Tools/game/build_game_assets.py — не править руками.",
+             "/// Сцена дуэли с боссом-портретом (точки сцены).",
+             "enum DuelLayout {",
+             "    static let width: CGFloat = %d" % DUEL_W,
+             "    static let height: CGFloat = %d" % DUEL_H,
+             "    static let portrait: CGFloat = %d" % DUEL_PORTRAIT,
+             "    static let bolt = CGSize(width: %d, height: %.1f)" % (
+                 BOLT_W, (Image.open(os.path.join(OUT, "duel_bolt.imageset", "duel_bolt.png")).height / SCALE)
+                 if os.path.exists(os.path.join(OUT, "duel_bolt.imageset", "duel_bolt.png")) else 20),
+             "}", ""]
+    with open(os.path.join(ROOT, "OlaPT", "Views", "Game", "DuelLayout.swift"), "w") as f:
+        f.write("\n".join(lines))
 
 
 def build_icons(report):
@@ -554,6 +629,7 @@ def main():
     build_marks(report)
     build_icons(report)
     build_portraits(report)
+    build_duel(report)
     imageset("tab-mask", tab_icon(), scales=(1, 2, 3), template=True, folder=TAB)
     print("\n".join(report))
 
