@@ -258,7 +258,7 @@ def build_fog(report):
     yy, xx = np.mgrid[0:n, 0:n]
     r = np.hypot(xx - n / 2, yy - n / 2) / (n / 2)
     fall = 1 - smooth(r, 0.35, 1.0)
-    alpha = np.clip(smooth(field, 0.3, 0.7) * 0.8 + 0.2, 0, 1) * fall * 0.5
+    alpha = np.clip(smooth(field, 0.3, 0.7) * 0.8 + 0.2, 0, 1) * fall * 0.34
     rgb = np.zeros((n, n, 3))
     rgb[...] = (50, 20, 84)
     rgb += (field[..., None] - 0.5) * np.array([24, 10, 36])
