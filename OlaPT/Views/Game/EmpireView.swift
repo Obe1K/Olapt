@@ -66,6 +66,8 @@ struct EmpireView: View {
     @State private var bossCorrect: Int?
     @State private var report: BattleReport?
     @State private var showDecrees = false
+    /// Зоны обелисков на карте — только по нажатию на кнопку
+    @State private var showZones = false
 
     private var game: GameState { return model.user.game }
 
@@ -197,14 +199,19 @@ struct EmpireView: View {
                     .interpolation(.high)
                     .resizable()
                     .frame(width: MapLayout.width * s, height: MapLayout.height * s)
-                // зоны обелисков: подсветка поселений, до которых дотягиваются горящие обелиски
-                ForEach(0..<Act1.towns.count, id: \.self) { i in
-                    if game.coverCharge(i) != nil {
-                        // едва заметный тёмно-фиолетовый туман над поселением
-                        fogMark(i, scale: s)
-                            .allowsHitTesting(false)
-                            .position(x: MapLayout.towns[i].x * s, y: MapLayout.towns[i].y * s)
+                // зоны обелисков: тонкий прозрачный ободок, только когда включены кнопкой на карте
+                if showZones {
+                    ForEach(0..<Act1.towns.count, id: \.self) { i in
+                        if game.coverCharge(i) != nil {
+                            Circle()
+                                .stroke(Color(red: 0.69, green: 0.47, blue: 1).opacity(0.35), lineWidth: 1.5 * s)
+                                .blur(radius: 1 * s)
+                                .frame(width: 104 * s, height: 104 * s)
+                                .allowsHitTesting(false)
+                                .position(x: MapLayout.towns[i].x * s, y: MapLayout.towns[i].y * s)
+                        }
                     }
+                    .transition(.opacity)
                 }
                 // места для обелисков — под поселениями, чтобы не закрывать названия
                 ForEach(Act1.spots.map { $0.id }, id: \.self) { id in
@@ -247,6 +254,8 @@ struct EmpireView: View {
                                   y: (MapLayout.towns[p.from].y + MapLayout.towns[p.target].y) / 2 * s)
                         .accessibilityIdentifier("map-patrol")
                 }
+                zonesToggle
+                    .position(x: geo.size.width - 24, y: 24)
                 Text(L("Большие города юга"))
                     .font(Theme.pixel(10, relativeTo: .caption2))
                     .foregroundColor(Theme.textDim)
@@ -339,13 +348,26 @@ struct EmpireView: View {
         }
     }
 
-    /// Туман зоны обелиска: у каждого поселения свой рисунок облаков.
-    private func fogMark(_ i: Int, scale s: CGFloat) -> some View {
-        let size = MapMarks.size("fx_fog")
-        return Image("fx_fog\(i % 5)")
-            .interpolation(.high)
-            .resizable()
-            .frame(width: size.width * s, height: size.height * s)
+    /// Кнопка на карте: показать или спрятать зоны обелисков.
+    private var zonesToggle: some View {
+        Button {
+            withAnimation(.easeInOut(duration: 0.25)) { showZones.toggle() }
+        } label: {
+            Image("icon_st_charge")
+                .interpolation(.high)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 22, height: 22)
+                .padding(7)
+                .background(Circle().fill(Theme.panelDeep.opacity(0.85)))
+                .overlay(Circle().stroke(showZones ? Color(red: 0.69, green: 0.47, blue: 1) : Theme.goldDark,
+                                         lineWidth: showZones ? 1.5 : 1))
+                .contentShape(Circle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(L("Зоны обелисков"))
+        .accessibilityValue(showZones ? L("показаны") : L("скрыты"))
+        .accessibilityIdentifier("toggle-zones")
     }
 
     /// Огонь над крышами: три кадра по кругу.

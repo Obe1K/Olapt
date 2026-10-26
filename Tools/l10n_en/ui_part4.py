@@ -228,4 +228,7 @@ T = {
     "Увели: %d": "Carried off: %d",
     "Вернулись ни с чем": "Came back with nothing",
     "Пленники ждут в подвале башни 7 дней — возьмите их под контроль.": "The captives wait in the tower cellar for 7 days — take control of them.",
+    "Зоны обелисков": "Obelisk zones",
+    "показаны": "shown",
+    "скрыты": "hidden",
 }

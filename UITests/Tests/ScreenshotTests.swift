@@ -688,6 +688,12 @@ final class ScreenshotTests: XCTestCase {
         Thread.sleep(forTimeInterval: 1.5)
         tapTab("Империя")
         shot("93_empire_midgame")
+        // зоны обелисков — только по кнопке на карте
+        if tap(app.buttons["toggle-zones"], "show obelisk zones") {
+            Thread.sleep(forTimeInterval: 0.5)
+            shot("93_empire_zones")
+            tap(app.buttons["toggle-zones"], "hide obelisk zones")
+        }
         app.swipeUp()
         shot("94_empire_army")
         tap(app.buttons["town-2"], "open Vale do Trigo")

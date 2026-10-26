@@ -240,49 +240,6 @@ def cut_glowing_black(img):
     return Image.fromarray(np.dstack([rgb, alpha * 255]).astype("uint8"), "RGBA")
 
 
-# Зона обелиска на карте: едва заметный тёмно-фиолетовый туман вокруг поселения
-FOG = ("fx_fog", 140)          # имя и сторона в точках карты
-FOG_ALPHA = 0.32               # непрозрачность самых плотных клубов
-
-
-def fog_image(seed):
-    """Облачный туман: фрактальный шум (клубы с просветами), края растворяются; тёмный фиолет
-    с чуть светлыми верхними кромками клубов, чтобы читалась фактура облаков."""
-    import numpy as np
-    from scipy import ndimage as nd
-    name, side = FOG
-    n = side * SCALE
-    rng = np.random.default_rng(seed)
-    field = np.zeros((n, n))
-    w, total = 1.0, 0.0
-    for sigma in (n / 5, n / 10, n / 20, n / 40, n / 80, n / 160):
-        f = nd.gaussian_filter(rng.standard_normal((n, n)), sigma, mode="wrap")
-        field += w * (f - f.mean()) / f.std()
-        total += w
-        w *= 0.55
-    field = (field / total - field.min() / total) / ((field.max() - field.min()) / total)
-    yy, xx = np.mgrid[0:n, 0:n]
-    r = np.hypot(xx - n / 2, yy - n / 2) / (n / 2)
-    fall = 1 - smooth(r, 0.3, 1.0)
-    cloud = smooth(field, 0.42, 0.72)                       # клубы и просветы между ними
-    # кромка: где облако «поднимается» вверх — светлее (объём)
-    rim = np.clip(nd.gaussian_filter(cloud, 3) - nd.shift(nd.gaussian_filter(cloud, 3), (6, 0), order=1), 0, 1)
-    alpha = (cloud * 0.9 + 0.1 * field) * fall * FOG_ALPHA
-    rgb = np.zeros((n, n, 3))
-    rgb[...] = (46, 20, 78)
-    rgb += cloud[..., None] * np.array([18, 8, 30]) + (rim * 4)[..., None] * np.array([40, 26, 60])
-    return Image.fromarray(np.dstack([np.clip(rgb, 0, 255), np.clip(alpha, 0, 1) * 255]).astype("uint8"), "RGBA")
-
-
-def build_fog(report):
-    """Свой рисунок облаков у каждого поселения, чтобы туман не повторялся."""
-    name, side = FOG
-    for i in range(5):
-        imageset("%s%d" % (name, i), fog_image(11 + i * 7))
-    report.append("%s0…4: облачный туман зоны обелиска, %d точек" % (name, side))
-    return side
-
-
 def build_fire(sizes, report):
     import numpy as np
     name, frames, upp = FIRE
@@ -481,7 +438,6 @@ def build_marks(report):
         sizes[name] = size
         report.append(name + ": рисунок автора, %.1f × %.1f точек карты" % size)
     build_fire(sizes, report)
-    sizes["fx_fog"] = (build_fog(report),) * 2
     lines = ["import CoreGraphics", "",
              "// Создано Tools/game/build_game_assets.py — не править руками.",
              "/// Метки на карте: размер холста в точках карты. Точка «на земле» — в центре холста.",

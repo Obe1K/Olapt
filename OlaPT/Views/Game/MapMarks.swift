@@ -5,7 +5,6 @@ import CoreGraphics
 enum MapMarks {
     static let size: [String: CGSize] = [
         "fx_fire": CGSize(width: 15.0, height: 44.0),
-        "fx_fog": CGSize(width: 140.0, height: 140.0),
         "map_legion": CGSize(width: 50.3, height: 47.7),
         "map_patrol": CGSize(width: 31.3, height: 59.3),
         "obelisk_broken": CGSize(width: 24.3, height: 40.3),
