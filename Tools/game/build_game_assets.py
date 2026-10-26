@@ -117,7 +117,14 @@ MARKS = [
     ("obelisk_broken", "rubble", (500, 1275), OBELISK * 1.2),  # нарисован мельче — подгоняем
     ("banner_mask", "alpha", (468, 1195), 26 / 1186),   # флажок с древком — 26 точек
     ("banner_lord", "alpha", (468, 1195), 26 / 1186),
+    ("map_patrol", "alpha", (660, 1160), 30 / 1069),     # двое стражников с копьями — 30 точек
+    ("map_legion", "legion", None, 24 / 508),           # колонна марионеток — 24 точки в высоту
 ]
+# Огонь над крышами: три кадра в ряд на чёрном фоне; основание пламени — точка «на земле».
+FIRE = ("fx_fire", 3, 22 / 680)
+# Значки интерфейса: квадрат, картинка по центру с полями (Tools/game/art/icons)
+ICONS = [("icon_aura", "aura.png")]
+ICON_PX = 120
 
 
 def smooth(x, lo, hi):
@@ -171,9 +178,86 @@ def cut_rubble(img):
     return Image.fromarray(np.dstack([rgb, alpha * 255]).astype("uint8"), "RGBA")
 
 
-def placed(img, anchor, upp):
+def cut_black(img, thr=10):
+    """Ровный чёрный фон: заливка от краёв по пикселям темнее thr, край чуть смягчён."""
+    import numpy as np
+    from scipy import ndimage as nd
+    rgb = np.asarray(img.convert("RGB")).astype(float)
+    low = rgb.max(2) <= thr
+    lab, n = nd.label(low)
+    edge = set(np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))) - {0}
+    alpha = (~np.isin(lab, list(edge))).astype(float)
+    alpha = nd.gaussian_filter(alpha, 0.7)
+    return Image.fromarray(np.dstack([rgb, alpha * 255]).astype("uint8"), "RGBA")
+
+
+def cut_legion(img):
+    """Колонна марионеток: из четырёх фигур берём три (вторая, согнутая, читается хуже) и сдвигаем вплотную."""
+    cut = cut_black(img)
+    pieces = [cut.crop((27, 280, 393, 812)), cut.crop((815, 280, 1489, 812))]
+    gap = 24
+    out = Image.new("RGBA", (sum(p.width for p in pieces) + gap, 532), (0, 0, 0, 0))
+    x = 0
+    for piece in pieces:
+        out.alpha_composite(piece, (x, 0))
+        x += piece.width + gap
+    return out, (out.width / 2, 515)
+
+
+def cut_glowing_black(img):
+    """Огонь и дым на чёрном: прозрачность по яркости, цвет «расправлен», чтобы дым не грязнел."""
+    import numpy as np
+    rgb = np.asarray(img.convert("RGB")).astype(float)
+    alpha = smooth(rgb.max(2), 6, 70)
+    m = alpha > 0.01
+    rgb[m] = np.clip(rgb[m] / alpha[m, None], 0, 255)
+    return Image.fromarray(np.dstack([rgb, alpha * 255]).astype("uint8"), "RGBA")
+
+
+def build_fire(sizes, report):
+    import numpy as np
+    name, frames, upp = FIRE
+    path = os.path.join(MARKS_DIR, name + ".png")
+    if not os.path.exists(path):
+        return
+    src = Image.open(path).convert("RGB")
+    fw = src.width // frames
+    cut = []
+    for i in range(frames):
+        part = src.crop((i * fw, 0, (i + 1) * fw, src.height))
+        v = np.asarray(part).max(2)
+        hy, hx = np.nonzero(v > 200)
+        cut.append((cut_glowing_black(part), (hx.mean(), hy.max())))
+    # общий холст для всех кадров, чтобы пламя не прыгало
+    half_w = max(max(ax - im.getbbox()[0], im.getbbox()[2] - ax) for im, (ax, ay) in cut)
+    half_h = max(max(ay - im.getbbox()[1], im.getbbox()[3] - ay) for im, (ax, ay) in cut)
+    for i, (im, (ax, ay)) in enumerate(cut):
+        box = (round(ax - half_w), round(ay - half_h), round(ax + half_w), round(ay + half_h))
+        frame, size = placed(im.crop(box), (half_w, half_h), upp, keep_canvas=True)
+        imageset("%s%d" % (name, i), frame)
+    sizes[name] = size
+    report.append("%s: рисунок автора, %d кадра, %.1f × %.1f точек карты" % ((name, frames) + size))
+
+
+def build_icons(report):
+    for name, file in ICONS:
+        path = os.path.join(ART, "icons", file)
+        if not os.path.exists(path):
+            continue
+        img = cut_alpha(Image.open(path))
+        img = img.crop(img.getbbox())
+        inner = round(ICON_PX * 0.92)
+        k = inner / max(img.width, img.height)
+        small = img.resize((max(1, round(img.width * k)), max(1, round(img.height * k))), Image.LANCZOS)
+        out = Image.new("RGBA", (ICON_PX, ICON_PX), (0, 0, 0, 0))
+        out.alpha_composite(small, ((ICON_PX - small.width) // 2, (ICON_PX - small.height) // 2))
+        imageset(name, out)
+        report.append(name + ": значок автора")
+
+
+def placed(img, anchor, upp, keep_canvas=False):
     """Обрезать по содержимому и положить на холст точкой на земле в центр; SCALE пикселей на точку карты."""
-    box = img.getbbox()
+    box = (0, 0, img.width, img.height) if keep_canvas else img.getbbox()
     ax, ay = anchor
     half_w = max(ax - box[0], box[2] - ax) * upp
     half_h = max(ay - box[1], box[3] - ay) * upp
@@ -205,6 +289,8 @@ def build_marks(report):
             img = cut_glow(img, Image.open(os.path.join(MARKS_DIR, "obelisk_dark.png")))
         elif how == "rubble":
             img = cut_rubble(img)
+        elif how == "legion":
+            img, anchor = cut_legion(img)
         else:
             img = cut_alpha(img)
         img, size = placed(img, anchor, upp)
@@ -212,6 +298,7 @@ def build_marks(report):
         imageset(name, graded_mark(img) if name.startswith("obelisk") else img)
         sizes[name] = size
         report.append(name + ": рисунок автора, %.1f × %.1f точек карты" % size)
+    build_fire(sizes, report)
     lines = ["import CoreGraphics", "",
              "// Создано Tools/game/build_game_assets.py — не править руками.",
              "/// Метки на карте: размер холста в точках карты. Точка «на земле» — в центре холста.",
@@ -399,6 +486,7 @@ def main():
         report.append("карта: заглушка по схеме")
     imageset(MAP[0], img)
     build_marks(report)
+    build_icons(report)
     imageset("tab-mask", tab_icon(), scales=(1, 2, 3), template=True, folder=TAB)
     print("\n".join(report))
 

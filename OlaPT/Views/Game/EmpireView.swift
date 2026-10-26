@@ -35,6 +35,13 @@ enum MapLayout {
         CGPoint(x: 118, y: 32), CGPoint(x: 66, y: 212), CGPoint(x: 212, y: 212),
         CGPoint(x: 284, y: 108), CGPoint(x: 278, y: 316),
     ]
+    /// Огонь над крышами поселения, где стража подняла тревогу (основание пламени)
+    static let townFire: [CGPoint] = [
+        CGPoint(x: 96, y: 58), CGPoint(x: 52, y: 232), CGPoint(x: 186, y: 228),
+        CGPoint(x: 258, y: 122), CGPoint(x: 240, y: 334),
+    ]
+    /// Войско Маски ждёт у башни
+    static let legion = CGPoint(x: 128, y: 140)
 
     /// Места для обелисков: «дорога» — на нарисованной дороге, «поле» и «лес» — рядом с ней.
     static let spots: [CGPoint] = [
@@ -133,8 +140,7 @@ struct EmpireView: View {
 
     private var resourceBar: some View {
         HStack(spacing: 14) {
-            resource(icon: "drop.fill", tint: Color(red: 0.62, green: 0.4, blue: 0.95),
-                     value: GameTexts.avra(game.avra), title: L("Авра"))
+            resource(image: "icon_aura", value: GameTexts.avra(game.avra), title: L("Авра"))
             resource(icon: "figure.stand", tint: Theme.text, value: "\(game.army)", title: L("Марионетки"))
             resource(icon: "sparkles", tint: Theme.ember,
                      value: GameTexts.percent(game.towerCharge / 100), title: L("Башня"))
@@ -143,6 +149,26 @@ struct EmpireView: View {
         .pixelPanel(padding: 10)
         .accessibilityElement(children: .combine)
         .accessibilityIdentifier("empire-resources")
+    }
+
+    /// Ресурс со значком автора (картинка) вместо системного.
+    private func resource(image: String, value: String, title: String) -> some View {
+        VStack(spacing: 2) {
+            HStack(spacing: 4) {
+                Image(image)
+                    .interpolation(.high)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 22, height: 22)
+                Text(value)
+                    .font(Theme.pixel(20, relativeTo: .title3))
+                    .foregroundColor(Theme.text)
+            }
+            Text(title)
+                .font(.caption)
+                .foregroundColor(Theme.textDim)
+        }
+        .frame(maxWidth: .infinity)
     }
 
     private func resource(icon: String, tint: Color, value: String, title: String) -> some View {
@@ -223,17 +249,29 @@ struct EmpireView: View {
                         .allowsHitTesting(false)
                         .position(x: MapLayout.townBanner[i].x * s, y: MapLayout.townBanner[i].y * s)
                 }
+                // тревога у феодала: над крышами огонь
+                ForEach(0..<Act1.towns.count, id: \.self) { i in
+                    if game.towns[i].owner == .lord && game.towns[i].alert >= Act1.reinforceAt {
+                        fireMark(scale: s)
+                            .position(x: MapLayout.townFire[i].x * s, y: MapLayout.townFire[i].y * s)
+                    }
+                }
+                if game.army > 0 {
+                    markImage("map_legion", scale: s)
+                        .allowsHitTesting(false)
+                        .position(x: MapLayout.legion.x * s, y: MapLayout.legion.y * s)
+                }
                 ForEach(0..<Act1.towns.count, id: \.self) { i in
                     townMarker(i, scale: s)
                 }
                 if let p = game.patrol, !p.defended {
-                    Image(systemName: "shield.lefthalf.filled")
-                        .font(.system(size: 18 * s, weight: .bold))
-                        .foregroundColor(Theme.red)
-                        .padding(4 * s)
-                        .background(Circle().fill(Theme.panelDeep.opacity(0.8)))
+                    // стража нарисована идущей влево — вправо отражаем
+                    markImage("map_patrol", scale: s)
+                        .scaleEffect(x: MapLayout.towns[p.target].x > MapLayout.towns[p.from].x ? -1 : 1, y: 1)
+                        .allowsHitTesting(false)
                         .position(x: (MapLayout.towns[p.from].x + MapLayout.towns[p.target].x) / 2 * s,
                                   y: (MapLayout.towns[p.from].y + MapLayout.towns[p.target].y) / 2 * s)
+                        .accessibilityIdentifier("map-patrol")
                 }
                 Text(L("Большие города юга"))
                     .font(Theme.pixel(10, relativeTo: .caption2))
@@ -325,6 +363,19 @@ struct EmpireView: View {
             markImage("obelisk_broken", scale: s)
                 .allowsHitTesting(false)
         }
+    }
+
+    /// Огонь над крышами: три кадра по кругу.
+    private func fireMark(scale s: CGFloat) -> some View {
+        let size = MapMarks.size("fx_fire")
+        return TimelineView(.periodic(from: .now, by: 0.16)) { context in
+            let frame = Int(context.date.timeIntervalSinceReferenceDate / 0.16) % 3
+            Image("fx_fire\(frame)")
+                .interpolation(.high)
+                .resizable()
+                .frame(width: size.width * s, height: size.height * s)
+        }
+        .allowsHitTesting(false)
     }
 
     /// Куда нажимать на обелиск: сам обелиск над точкой на земле, а не весь прозрачный кадр.

@@ -155,6 +155,7 @@ final class AppModel: ObservableObject {
             g.towns[2].garrison = 4
             g.towns[3].alert = 35
             g.towns[3].agents = 3
+            g.towns[4].alert = 60      // стража Сумрачного холма в тревоге — над крышами огонь
             g.spots[5] = Obelisk(state: .lit, charge: 90)
             g.army = 34
             g.captives = [Captive(until: 5, town: 3, key: nil), Captive(until: 6, town: nil, key: nil)]
