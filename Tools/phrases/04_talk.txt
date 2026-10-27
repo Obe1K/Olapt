@@ -1,0 +1,85 @@
+# Разговор: вежливые просьбы, приветствия и прощания, короткие реакции, просьбы и запреты (добавлено в 1.4).
+# Из учебников автора: Passo a Passo 1 (блоки 1–2) и Gramática Ativa 1 (уроки 20, 24–27, 41–45, 49, 53).
+
+## polite | Вежливые просьбы | A2
+= Podia dizer-me onde fica o metro? / Pode dizer-me onde fica o metro? / Podia dizer-me onde é o metro? | Could you tell me where the metro is? | Не подскажете, где метро? || Прошедшее «podia» вместо «pode» звучит вежливее.
+= Trazia-me um copo de água? / Pode trazer-me um copo de água? | Could you bring me a glass of water? | Не принесёте мне стакан воды?
+= Passava-me o sal, por favor? / Passa-me o sal, por favor? / Pode passar-me o sal, por favor? | Could you pass me the salt, please? | Не передадите соль?
+= Posso fazer-lhe uma pergunta? | May I ask you a question? | Можно задать вам вопрос?
+= Queria falar com o senhor Nunes, por favor. | I'd like to speak to Mr Nunes, please. | Я хотел (хотела) бы поговорить с сеньором Нунешем.
+= Uma bica, se faz favor. / Queria uma bica, se faz favor. / Uma bica, por favor. / Queria uma bica, por favor. | An espresso, please. | Бику (эспрессо), пожалуйста. || «Bica» — эспрессо в Лиссабоне; «se faz favor» — то же, что «por favor».
+= Gostava de fazer uma grande viagem. / Gostaria de fazer uma grande viagem. | I'd like to go on a big trip. | Я бы хотел (хотела) отправиться в большое путешествие. || «Gostava de» — вежливое «хотел бы»; «gostaria de» — ещё официальнее.
+= Gostava muito de ir, mas não posso. / Gostaria muito de ir, mas não posso. | I'd love to go, but I can't. | Я бы с радостью пошёл (пошла), но не могу.
+= Preferia ir ao teatro. | I'd rather go to the theatre. | Я бы лучше пошёл (пошла) в театр.
+= Não me importava nada. / Não me importaria nada. | I wouldn't mind at all. | Я был бы (была бы) совсем не против.
+= Não era melhor comprar já os bilhetes? / Não seria melhor comprar já os bilhetes? | Wouldn't it be better to buy the tickets now? | Не лучше ли купить билеты сразу?
+= Devias falar com o médico. / Deverias falar com o médico. | You should talk to the doctor. | Тебе стоило бы поговорить с врачом.
+= Posso entrar? | May I come in? | Можно войти?
+= Pode, pode. | Sure, go ahead. | Да-да, конечно, можно. || Глагол повторяют, чтобы охотно согласиться.
+= Ajudas-me? / Podes ajudar-me? | Will you help me? | Поможешь мне?
+= Ajudo-te já, é só um minuto. | I'll help you in a moment, just a minute. | Сейчас помогу, одну минуту.
+= Este lugar está livre? / Esse lugar está livre? | Is this seat free? | Это место свободно?
+= Apetece-te alguma coisa? | Do you fancy anything? | Хочешь чего-нибудь? || «Apetecer» — хотеться: «apetece-me um gelado» — мне хочется мороженого.
+= Apetece-me um gelado. | I fancy an ice cream. | Мне хочется мороженого.
+
+## greet | Приветствия и прощания | A1
+= Como está? / Como vai? | How are you? | Как вы поживаете?
+= Estás bom? / Estás boa? | Are you well? | Ты как, всё хорошо? || Мужчине — «estás bom?», женщине — «estás boa?».
+= Mais ou menos. | So-so. | Так себе.
+= Igualmente! | Likewise! | Взаимно!
+= Até já! | See you in a minute! | Сейчас увидимся! || «Até já» — увидимся через минуту; «até logo» — позже сегодня.
+= Até logo! | See you later! | Увидимся позже!
+= Até à próxima! | Until next time! | До следующего раза!
+= Até segunda! / Até segunda-feira! | See you on Monday! | До понедельника!
+= Olha, esta é a minha amiga Júlia. | Look, this is my friend Júlia. | Смотри, это моя подруга Жулия.
+= Apresento-te o meu amigo. | Let me introduce my friend. | Позволь представить тебе моего друга.
+= Fala muito bem português! | You speak Portuguese very well! | Вы прекрасно говорите по-португальски!
+= Encontramo-nos amanhã? | Shall we meet tomorrow? | Встретимся завтра?
+= Então, falamos amanhã. | So, we'll talk tomorrow. | Тогда созвонимся завтра.
+= Bem, vamos embora. | Well, let's go. | Ну, пойдём.
+~ ter de ir / ter que ir | to have to go | надо идти | Мне надо идти. | Тебе надо идти? | Ему надо идти. | Ей надо идти. | Нам надо идти. | Им надо идти.
+= Sejam bem-vindos! / Bem-vindos! | Welcome! | Добро пожаловать! (гостям) || Одному гостю — «seja bem-vindo» или «seja bem-vinda».
+= Sente-se, por favor. / Por favor, sente-se. | Please, have a seat. | Садитесь, пожалуйста.
+= Esteja à vontade! / Fique à vontade! | Make yourself at home! | Будьте как дома!
+= Lembra-se de mim? | Do you remember me? | Вы меня помните?
+
+## react | Короткие реакции | A1
+= Que pena! | What a pity! | Как жаль!
+= Que giro! | How cool! | Как здорово! || «Giro» — разговорное «классный, милый» (Португалия).
+= Pois é! | Exactly! | Вот именно!
+= Combinado! | Deal! | Договорились!
+= Boa ideia! | Good idea! | Хорошая идея!
+= Não acredito! | I don't believe it! | Не может быть!
+= Quem sabe? | Who knows? | Кто знает?
+= O que é que se passa? / O que se passa? | What's going on? | Что происходит?
+= O que é que aconteceu? / O que aconteceu? / O que é que houve? | What happened? | Что случилось?
+= O que é que tens? / O que tens? | What's wrong with you? | Что с тобой?
+= Tens toda a razão. | You're absolutely right. | Ты совершенно прав (права).
+= Concordo contigo. | I agree with you. | Я с тобой согласен (согласна).
+= Cuidado! | Careful! | Осторожно!
+= Tive tanta sorte! | I was so lucky! | Мне так повезло!
+= Que festa tão animada! | What a lively party! | Какой весёлый праздник!
+= Tanta gente! | So many people! | Сколько народу!
+= Afinal não vou. / Afinal já não vou. | I'm not going after all. | В итоге я не пойду. || «Afinal» — в итоге, всё-таки.
+~ estar farto* | to be fed up | надоело | Мне надоело. | Тебе надоело? | Ему надоело. | Ей надоело. | Нам надоело. | Им надоело.
+~ estar zangado* | to be angry | злиться | Я злюсь. | Ты злишься? | Он злится. | Она злится. | Мы злимся. | Они злятся.
+
+## orders | Просьбы и запреты | A2
+= Despachem-se! | Hurry up! | Поторапливайтесь!
+= Falem mais baixo! | Speak more quietly! | Говорите тише!
+= Fala mais alto, não ouço nada! | Speak up, I can't hear a thing! | Говори громче, я ничего не слышу!
+= Calem-se! | Be quiet! | Замолчите!
+= Está quieto! | Keep still! | Не вертись!
+= Chega aqui, por favor. | Come here, please. | Подойди сюда, пожалуйста.
+= Pede desculpa! | Say sorry! | Извинись!
+= Não te atrases! | Don't be late! | Не опаздывай!
+= Esperem por mim! | Wait for me! | Подождите меня!
+= Vão andando, que eu já vou. | Go on ahead, I'll catch up. | Идите, я догоню.
+= Não digas asneiras! | Don't talk nonsense! | Не говори глупостей!
+= Não te rias de mim! | Don't laugh at me! | Не смейся надо мной!
+= Agarra-te ao corrimão. | Hold on to the handrail. | Держись за перила.
+= Nunca desistas! | Never give up! | Никогда не сдавайся!
+= Não sejas teimoso! / Não sejas teimosa! | Don't be stubborn! | Не упрямься!
+= Não saias do pé de mim! | Don't leave my side! | Не отходи от меня!
+= Estou farto de esperar, vou-me embora! / Estou farta de esperar, vou-me embora! | I'm tired of waiting, I'm leaving! | Мне надоело ждать, я ухожу!
+= Não devias fumar. | You shouldn't smoke. | Тебе не стоит курить.

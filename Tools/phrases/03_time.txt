@@ -1,0 +1,79 @@
+# Время: который час, во сколько, дни и даты, как часто и как долго (добавлено в 1.4).
+# Из учебников автора: Passo a Passo 1 (стр. 84, 91, приложение) и Gramática Ativa 1 (уроки 1, 16–24, 48, 54).
+# Формат — как в 01_states.txt. Запас и источники — backlog_books.md.
+
+## clock | Который час | A1
+= Que horas são? | What time is it? | Который час?
+= Pode dizer-me as horas, por favor? / Podia dizer-me as horas, por favor? / Pode dizer-me as horas? / Podia dizer-me as horas? | Could you tell me the time, please? | Не подскажете, который час?
+= É uma da tarde. / É uma hora da tarde. / São treze horas. | It's one in the afternoon. | Сейчас час дня. || «Uma» — единственное число: «é uma», но «são duas».
+= São duas da manhã. / São duas horas da manhã. | It's two in the morning. | Сейчас два часа ночи. || «Da manhã» говорят и о ночных часах до рассвета.
+= São dez da manhã. / São dez horas da manhã. | It's ten in the morning. | Сейчас десять утра.
+= É meio-dia. | It's noon. | Сейчас полдень.
+= É meia-noite. | It's midnight. | Сейчас полночь.
+= São três e um quarto. / São três e quinze. | It's a quarter past three. | Сейчас четверть четвёртого. || «E um quarto» — «и четверть»: 3:15.
+= São oito e meia. / São oito e trinta. | It's half past eight. | Сейчас половина девятого. || «E meia» — «и половина»: 8:30. По-русски считают от следующего часа, по-португальски — от текущего.
+= São nove e meia da noite. / São vinte e uma e trinta. | It's half past nine in the evening. | Сейчас половина десятого вечера.
+= São dez menos um quarto. / É um quarto para as dez. / São nove e quarenta e cinco. | It's a quarter to ten. | Сейчас без четверти десять. || Два способа: «dez menos um quarto» — десять минус четверть, «um quarto para as dez» — четверть до десяти.
+= São cinco menos dez. / São dez para as cinco. / São quatro e cinquenta. | It's ten to five. | Сейчас без десяти пять. || «Para as» — сколько осталось до часа: «dez para as cinco» — десять минут до пяти.
+= São cinco para as seis. / São seis menos cinco. / São cinco e cinquenta e cinco. | It's five to six. | Сейчас без пяти шесть.
+= É uma e meia. / É uma e trinta. | It's half past one. | Сейчас половина второго. || Опять «é uma», но «são duas e meia».
+
+## attime | Во сколько | A1
+= A que horas é que acordas? / A que horas acordas? | What time do you wake up? | Во сколько ты просыпаешься?
+= Acordo às sete e meia. | I wake up at half past seven. | Я просыпаюсь в половине восьмого. || «Às» + час: «às sete». Но «à uma», «ao meio-dia», «à meia-noite».
+= Almoçamos ao meio-dia. | We have lunch at noon. | Мы обедаем в полдень.
+= A festa acabou à meia-noite e meia. | The party ended at half past midnight. | Праздник закончился в половине первого ночи.
+= O comboio parte às cinco menos um quarto. / O comboio parte a um quarto para as cinco. / O comboio parte às quatro e quarenta e cinco. | The train leaves at a quarter to five. | Поезд отправляется без четверти пять.
+= Encontramo-nos às onze no café. | Let's meet at eleven at the café. | Встречаемся в одиннадцать в кафе.
+= Chego por volta das três. | I'll get there around three. | Я приду около трёх. || «Por volta das» — около (о времени).
+= O concerto deve acabar pelas dez da noite. | The concert should end around ten at night. | Концерт должен закончиться около десяти вечера. || «Pelas» — тоже «около»: «pelas dez».
+= Trabalho das nove às cinco. | I work from nine to five. | Я работаю с девяти до пяти. || «Das … às …» — с … до …
+= Preciso disto para as seis. | I need this by six. | Мне это нужно к шести. || «Para as» + час — к сроку.
+= Cheguei a horas. | I arrived on time. | Я пришёл (пришла) вовремя. || «Chegar a horas» — прийти вовремя.
+= Já é muito tarde. / Já é tardíssimo. | It's already very late. | Уже очень поздно.
+= São horas de ir para a cama. | It's time for bed. | Пора спать.
+= Peço desculpa pelo atraso. / Desculpe o atraso. | Sorry I'm late. | Простите за опоздание.
+
+## when | Дни и даты | A1
+= Que dia é hoje? | What day is it today? | Какой сегодня день?
+= Hoje é sexta-feira. | Today is Friday. | Сегодня пятница.
+= Hoje é dia três de maio. | Today is the third of May. | Сегодня третье мая.
+= Em que mês estamos? | What month is it? | Какой сейчас месяц?
+= Estamos em dezembro. | It's December. | Сейчас декабрь.
+= Estamos no inverno. | It's winter. | Сейчас зима.
+= Faço anos a quinze de janeiro. / Faço anos no dia quinze de janeiro. | My birthday is on the fifteenth of January. | У меня день рождения пятнадцатого января. || «Fazer anos» — праздновать день рождения.
+= Em que ano nasceste? | What year were you born? | В каком году ты родился (родилась)?
+= O Natal é a vinte e cinco de dezembro. | Christmas is on the twenty-fifth of December. | Рождество — двадцать пятого декабря.
+= Ao sábado jantamos sempre fora. / Aos sábados jantamos sempre fora. | On Saturdays we always eat out. | По субботам мы всегда ужинаем не дома. || «Ao sábado» — по субботам, по привычке; «no sábado» — в эту субботу, один раз.
+= No sábado vamos a uma festa. | This Saturday we're going to a party. | В эту субботу мы идём на праздник.
+= Telefona-me à noite. | Call me in the evening. | Позвони мне вечером.
+= À tarde nunca estou em casa. | I'm never at home in the afternoon. | Днём меня никогда не бывает дома.
+= Trabalho de segunda a sexta. | I work from Monday to Friday. | Я работаю с понедельника по пятницу.
+= As aulas começam em setembro. | Classes start in September. | Занятия начинаются в сентябре.
+= Para o ano vou a Portugal. / No próximo ano vou a Portugal. / Para o ano que vem vou a Portugal. | Next year I'm going to Portugal. | В следующем году я поеду в Португалию. || «Para o ano» — в следующем году; «para a semana» — на следующей неделе.
+= Eles chegam para a semana. / Eles chegam na próxima semana. | They arrive next week. | Они приезжают на следующей неделе.
+= Vêm a Portugal pelo Natal. | They come to Portugal around Christmas. | Они приезжают в Португалию на Рождество. || «Pelo Natal» — около Рождества, к Рождеству.
+= A reunião foi adiada para sábado. | The meeting was postponed to Saturday. | Встречу перенесли на субботу.
+= Ontem à noite fiquei em casa. | Last night I stayed at home. | Вчера вечером я был (была) дома.
+
+## howlong | Как часто и как долго | A2
+= Vou ao ginásio três vezes por semana. | I go to the gym three times a week. | Я хожу в спортзал три раза в неделю.
+= Tomo o comprimido três vezes por dia. | I take the pill three times a day. | Я принимаю таблетку три раза в день.
+= O autocarro passa de dez em dez minutos. | The bus comes every ten minutes. | Автобус ходит каждые десять минут. || «De … em …» — раз в столько-то: «de dez em dez minutos», «de quinze em quinze dias».
+= Vou ao Porto de quinze em quinze dias. | I go to Porto every fortnight. | Я езжу в Порту раз в две недели.
+= Costumo deitar-me à meia-noite. | I usually go to bed at midnight. | Я обычно ложусь в полночь. || «Costumar» + инфинитив — обычно что-то делать.
+= Às vezes perco o autocarro. | Sometimes I miss the bus. | Иногда я опаздываю на автобус.
+= Quanto tempo demora a viagem? | How long does the trip take? | Сколько длится поездка?
+= Demora uma hora. | It takes an hour. | Это занимает час.
+= Há quanto tempo estás à espera? | How long have you been waiting? | Сколько ты уже ждёшь?
+= Estou à espera há meia hora. / Há meia hora que estou à espera. | I've been waiting for half an hour. | Я жду уже полчаса. || «Há» + срок — сколько уже длится: «há meia hora». С прошедшим временем — «назад».
+= Ela saiu há dez minutos. | She left ten minutes ago. | Она ушла десять минут назад.
+= Desde quando vives aqui? / Desde quando é que vives aqui? | Since when have you lived here? | С каких пор ты здесь живёшь?
+= Vivo aqui desde dezembro. | I've lived here since December. | Я живу здесь с декабря. || «Desde» — с какого момента, «há» — как долго.
+= Não o vejo há muito tempo. / Não o vejo há imenso tempo. | I haven't seen him for a long time. | Я давно его не видел (не видела).
+= Conheço-a desde criança. | I've known her since childhood. | Я знаю её с детства.
+= Ele acabou de sair. / Acabou de sair. | He has just left. | Он только что ушёл. || «Acabar de» + инфинитив — только что что-то сделать.
+= O banco está quase a fechar. | The bank is about to close. | Банк вот-вот закроется. || «Estar quase a» — вот-вот.
+= Ultimamente tenho tido muito trabalho. | Lately I've had a lot of work. | В последнее время у меня много работы.
+= Antigamente vivíamos no campo. | We used to live in the countryside. | Раньше мы жили в деревне.
+= Fiquei o dia todo em casa. / Fiquei todo o dia em casa. | I stayed at home all day. | Я весь день просидел (просидела) дома.

@@ -1,0 +1,156 @@
+# Жизнь: самочувствие, погода, дом, дорога, где что находится, учёба и работа, праздники, вывески (добавлено в 1.4).
+# Из учебников автора: Passo a Passo 1 (блоки 3–4, приложение) и Gramática Ativa 1 (уроки 1–36, 40–50).
+
+## health | Самочувствие | A2
+= Hoje sinto-me melhor. / Hoje estou melhor. | I feel better today. | Сегодня мне лучше.
+= Sentes-te bem? | Do you feel all right? | Ты хорошо себя чувствуешь?
+~ estar com febre / ter febre | to have a fever | (у меня) температура | У меня температура. | У тебя температура? | У него температура. | У неё температура. | У нас температура. | У них температура.
+~ estar maldisposto* / estar mal disposto* | to be feeling sick | (мне) нехорошо, мутит | Мне нехорошо. | Тебе нехорошо? | Ему нехорошо. | Ей нехорошо. | Нам нехорошо. | Им нехорошо.
+= Tive gripe. | I had the flu. | У меня был грипп.
+= Deve estar com gripe. | He must have the flu. | Наверное, у него грипп. || «Dever» здесь значит «наверное».
+= Fiquei com dores de cabeça. | I got a headache. | У меня разболелась голова.
+= Dói-me a garganta. | My throat hurts. | У меня болит горло.
+= Doem-me os pés. | My feet hurt. | У меня болят ноги (ступни). || «Doer» согласуется с тем, что болит: «dói-me a garganta», «doem-me os pés».
+= Vou tomar um comprimido. | I'm going to take a pill. | Я приму таблетку.
+= Ele partiu o braço. | He broke his arm. | Он сломал руку.
+= O café faz-me mal. | Coffee doesn't agree with me. | Мне от кофе плохо. || «Fazer mal» — вредить; «fazer bem» — идти на пользу.
+= Faz mal à saúde. | It's bad for your health. | Это вредно для здоровья.
+= Faz bem à saúde. | It's good for your health. | Это полезно для здоровья.
+= Estou a fazer dieta. | I'm on a diet. | Я на диете.
+= Estou cheíssimo. / Estou cheíssima. / Estou cheio. / Estou cheia. | I'm stuffed. | Я объелся (объелась).
+= Não vejo bem ao longe. | I can't see well at a distance. | Я плохо вижу вдаль.
+= Sem óculos não vejo nada. | Without glasses I can't see anything. | Без очков я ничего не вижу.
+= Tenho de ir ao médico. / Tenho que ir ao médico. | I have to go to the doctor. | Мне надо к врачу.
+
+## weather | Погода | A1
+= Como está o tempo? | What's the weather like? | Какая погода?
+= Hoje está calor. | It's hot today. | Сегодня жарко.
+= Está muito frio lá fora. | It's very cold outside. | На улице очень холодно.
+= Está a chover. | It's raining. | Идёт дождь. || «Estar a» + инфинитив — то, что идёт прямо сейчас.
+= É melhor levar o guarda-chuva. / É melhor levar o chapéu de chuva. | You'd better take an umbrella. | Лучше взять зонт. || Зонт — «guarda-chuva» или «chapéu de chuva».
+= Será que vai chover? | I wonder if it's going to rain. | Интересно, пойдёт ли дождь? || «Será que…?» — «интересно, …?»: вопрос самому себе.
+= Tem feito muito calor. / Tem feito imenso calor. | It's been very hot lately. | В последнее время очень жарко.
+= À sombra está-se bem. | It's nice in the shade. | В тени хорошо.
+= Ao sol está muito calor. | It's very hot in the sun. | На солнце очень жарко.
+= Ontem o tempo estava mau. | Yesterday the weather was bad. | Вчера была плохая погода.
+= Hoje ainda está pior. | Today it's even worse. | Сегодня ещё хуже.
+= No inverno chove muito. | It rains a lot in winter. | Зимой часто идут дожди.
+= Choveu o dia todo. / Choveu todo o dia. | It rained all day. | Весь день шёл дождь.
+= Vamos apanhar sol. | Let's sunbathe. | Пойдём позагораем.
+= Que calor! | It's so hot! | Какая жара!
+
+## home | Дом и распорядок дня | A2
+= Aos sábados durmo até mais tarde. / Ao sábado durmo até mais tarde. | On Saturdays I sleep in. | По субботам я сплю подольше.
+= Vou tomar duche. / Vou tomar um duche. | I'm going to take a shower. | Я пойду в душ.
+= Ainda não tomei o pequeno-almoço. | I haven't had breakfast yet. | Я ещё не завтракал (не завтракала).
+= Saio de casa às oito. | I leave home at eight. | Я выхожу из дома в восемь.
+= Chego a casa às sete. | I get home at seven. | Я прихожу домой в семь.
+= Vou às compras. / Vou fazer compras. | I'm going shopping. | Я иду за покупками.
+= Hoje jantamos fora. | Tonight we're eating out. | Сегодня мы ужинаем не дома.
+= Quem põe a mesa? | Who's setting the table? | Кто накрывает на стол?
+= Fazes as camas? | Will you make the beds? | Заправишь кровати?
+= Tenho de limpar o pó. / Tenho que limpar o pó. | I have to dust. | Мне надо вытереть пыль.
+= Vou estender a roupa. | I'm going to hang out the washing. | Пойду развешу бельё.
+= Fecha a porta à chave. | Lock the door. | Запри дверь на ключ.
+= Estão a tocar à campainha. / Estão a tocar à porta. | Someone's ringing the doorbell. | В дверь звонят.
+= Descalça os sapatos. | Take your shoes off. | Разуйся.
+= Esqueci-me das chaves. | I forgot my keys. | Я забыл (забыла) ключи.
+= O elevador está avariado. | The lift is out of order. | Лифт сломан.
+= O relógio parou. | The clock has stopped. | Часы остановились.
+= Mudei de casa. | I've moved house. | Я переехал (переехала).
+= Comprei isto nos saldos. | I bought this in the sales. | Я купил (купила) это на распродаже.
+= Essas calças ficam-te muito bem. | Those trousers really suit you. | Эти брюки тебе очень идут. || «Ficar bem a alguém» — идти, быть к лицу.
+
+## travel | Транспорт и дорога | A2
+= Vou a pé. | I'm going on foot. | Я пойду пешком.
+= Vou de metro. | I'm going by metro. | Я поеду на метро.
+= De táxi é mais rápido. | It's quicker by taxi. | На такси быстрее.
+= Perdi o autocarro. | I missed the bus. | Я опоздал (опоздала) на автобус.
+= Queres ir no meu carro? | Do you want to go in my car? | Хочешь поехать на моей машине? || Обычно «de carro», «de metro», но «no meu carro», «no comboio das sete» — о конкретной машине или рейсе.
+= Vou no comboio das sete e meia. | I'm taking the half past seven train. | Я еду на поезде в половине восьмого.
+= Levo-te a casa. | I'll take you home. | Я отвезу тебя домой.
+= Como é que se vai para a estação? / Como se vai para a estação? | How do you get to the station? | Как добраться до вокзала?
+= Vá por esta rua. | Go along this street. | Идите по этой улице.
+= Viemos pela ponte. | We came over the bridge. | Мы приехали через мост.
+= Este autocarro passa pelo hospital? | Does this bus go past the hospital? | Этот автобус проходит мимо больницы?
+= Vou a casa buscar o casaco e volto já. | I'll pop home for my coat and be right back. | Сбегаю домой за курткой и сразу вернусь. || «Ir a» — ненадолго, «ir para» — надолго. «Ir buscar» — сходить за чем-то.
+= Vou buscar o carro à garagem. | I'll go and get the car from the garage. | Я схожу за машиной в гараж.
+= Um bilhete de ida e volta, por favor. | A return ticket, please. | Билет туда и обратно, пожалуйста.
+= A camioneta já partiu. | The coach has already left. | Междугородний автобус уже ушёл. || «Camioneta» — междугородний автобус, «autocarro» — городской.
+= O último autocarro acabou de partir. | The last bus has just left. | Последний автобус только что ушёл.
+= Fomos diretos para o hotel. | We went straight to the hotel. | Мы поехали прямо в отель.
+= Desfizemos as malas. | We unpacked. | Мы распаковали чемоданы.
+= Boa viagem! / Façam boa viagem! | Have a good trip! | Счастливого пути!
+= Ela vai estudar para Inglaterra. | She's going to study in England. | Она уезжает учиться в Англию.
+
+## where | Где что находится | A2
+= A casa de banho é ao fundo do corredor. / A casa de banho fica ao fundo do corredor. | The toilet is at the end of the corridor. | Туалет в конце коридора.
+= Fica ao lado da escola. | It's next to the school. | Это рядом со школой.
+= Fica em frente do restaurante. / Fica em frente ao restaurante. | It's opposite the restaurant. | Это напротив ресторана.
+= Fica perto de casa. / Fica ao pé de casa. | It's near home. | Это недалеко от дома.
+= Está atrás da porta. | It's behind the door. | Это за дверью.
+= Está debaixo da mesa. | It's under the table. | Это под столом.
+= Está em cima do armário. | It's on top of the wardrobe. | Это на шкафу.
+= Está dentro da mala. | It's inside the bag. | Это в сумке.
+= Coimbra fica entre Lisboa e o Porto. | Coimbra is between Lisbon and Porto. | Коимбра находится между Лиссабоном и Порту.
+= Ela está sentada à janela. | She's sitting by the window. | Она сидит у окна.
+= Estão sentados à mesa. | They're sitting at the table. | Они сидят за столом.
+= Encontramo-nos à porta do cinema. | Let's meet at the cinema entrance. | Встретимся у входа в кино.
+~ estar de pé | to be standing | стоять | Я стою. | Ты стоишь? | Он стоит. | Она стоит. | Мы стоим. | Они стоят.
+= Está muita gente à minha frente. | There are a lot of people in front of me. | Передо мной много людей.
+= Procurei em toda a parte. | I looked everywhere. | Я искал (искала) везде.
+= Desculpe, esta é a Avenida da Liberdade? | Excuse me, is this Avenida da Liberdade? | Простите, это Авенида да Либердаде?
+
+## study | Учёба и работа | A2
+= Ando no segundo ano. | I'm in my second year. | Я учусь на втором курсе. || «Andar no … ano» — учиться в таком-то классе или на таком-то курсе.
+= Ele anda na universidade. | He's at university. | Он учится в университете.
+= Tive boa nota no teste. | I got a good mark on the test. | Я получил (получила) хорошую оценку за тест.
+= Chumbei no exame. | I failed the exam. | Я провалил (провалила) экзамен.
+= O exame correu-me bem. | The exam went well for me. | Экзамен у меня прошёл хорошо. || «Correr bem / mal» — пройти хорошо или плохо.
+= Porque é que faltaste às aulas? / Porque faltaste às aulas? | Why did you skip classes? | Почему ты пропустил (пропустила) занятия?
+= Tenho de estudar para o teste. / Tenho que estudar para o teste. | I have to study for the test. | Мне надо готовиться к тесту.
+= Qual é a sua profissão? | What do you do for a living? | Кем вы работаете?
+= Trabalho num banco. | I work in a bank. | Я работаю в банке.
+= Trabalho em part-time. | I work part-time. | Я работаю на полставки.
+= Ela ganha bem. | She earns well. | Она хорошо зарабатывает.
+= Hoje tenho de fazer serão. / Hoje tenho que fazer serão. | Today I have to work late. | Сегодня мне придётся задержаться на работе. || «Fazer serão» — задерживаться на работе вечером.
+= Só em agosto é que posso tirar férias. | I can only take holidays in August. | Я могу взять отпуск только в августе.
+= Ele foi despedido. | He was fired. | Его уволили.
+= A secretária despediu-se. | The secretary quit. | Секретарша уволилась (сама). || «Ser despedido» — когда увольняют; «despedir-se» — уволиться самому (или попрощаться).
+= Ele foi lá em negócios. | He went there on business. | Он ездил туда по делам.
+= A reunião está marcada para segunda. / A reunião está marcada para segunda-feira. | The meeting is set for Monday. | Встреча назначена на понедельник.
+= Posso contar contigo? | Can I count on you? | Могу я на тебя рассчитывать?
+= Podes contar comigo. / Conta comigo. | You can count on me. | Можешь на меня рассчитывать.
+= Estou farto de receber ordens. / Estou farta de receber ordens. | I'm fed up with taking orders. | Мне надоело выполнять приказы.
+
+## holiday | Праздники и встречи | A2
+~ fazer anos | to have a birthday | праздновать день рождения | У меня день рождения. | У тебя день рождения? | У него день рождения. | У неё день рождения. | У нас день рождения. | У них день рождения. || «Faço anos» — у меня (сегодня) день рождения; «faço anos em maio» — мой день рождения в мае.
+= Quantos anos fazes? | How old are you turning? | Сколько тебе исполняется?
+= Parabéns! / Muitos parabéns! | Congratulations! | Поздравляю!
+= Dá os parabéns à avó! | Wish Grandma a happy birthday! | Поздравь бабушку!
+= Ontem fomos aos anos do Pedro. | Yesterday we went to Pedro's birthday party. | Вчера мы были на дне рождения у Педру. || «Ir aos anos de alguém» — пойти на чей-то день рождения.
+= Onde é que vais passar o Natal? / Onde vais passar o Natal? | Where are you spending Christmas? | Где ты встречаешь Рождество?
+= Passamos a Páscoa com a família. | We spend Easter with the family. | Пасху мы проводим с семьёй.
+= No Natal come-se bacalhau. | At Christmas people eat salt cod. | На Рождество едят треску. || Безличное «se»: «come-se» — едят (все, так принято).
+= As férias grandes estão a chegar. | The summer holidays are coming. | Скоро летние каникулы.
+= Combinámos ir ao concerto. | We agreed to go to the concert. | Мы договорились пойти на концерт.
+= Está tudo combinado. | It's all arranged. | Всё договорено.
+= A festa estava muito animada. | The party was very lively. | Праздник был очень весёлый.
+= Ficámos até à meia-noite. | We stayed until midnight. | Мы остались до полуночи.
+= Toma, isto é para ti. | Here, this is for you. | Держи, это тебе.
+= Para mim? Muito obrigado! / Para mim? Muito obrigada! | For me? Thank you so much! | Мне? Большое спасибо!
+= Os miúdos estão desejosos de abrir as prendas. | The kids can't wait to open the presents. | Детям не терпится открыть подарки.
+= Boas Festas! | Happy holidays! | С праздниками!
+
+## signs | Вывески и объявления | A2
+= Fala-se inglês. | English spoken. | Здесь говорят по-английски. || На вывесках — безличное «se»: «fala-se», «aceitam-se», «vendem-se».
+= Aceitam-se cartões. / Aceitam-se cartões de crédito. | Cards accepted. | Принимаем банковские карты.
+= Não se aceitam cheques. | No cheques. | Чеки не принимаются.
+= Alugam-se quartos. | Rooms to let. | Сдаются комнаты.
+= Vendem-se apartamentos. | Flats for sale. | Продаются квартиры.
+= Precisa-se de motorista. | Driver wanted. | Требуется водитель. || «Precisa-se de» — требуется.
+= Servem-se pequenos-almoços. | Breakfast served. | Подаём завтраки.
+= Não se pode fumar aqui. | You can't smoke here. | Здесь нельзя курить.
+= Não pode estacionar aqui. | You can't park here. | Здесь нельзя парковаться.
+= Em Portugal bebe-se muito café. | In Portugal people drink a lot of coffee. | В Португалии пьют много кофе.
+= Já se sabe o nome do vencedor. | The winner's name is already known. | Имя победителя уже известно.
