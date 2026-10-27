@@ -31,6 +31,16 @@
   «марионетки»; валюта — **Avra** латиницей, не «Авра». В русском тексте оба слова не склоняются
   («10 Avra», «Не хватает calados», «ваш calado»). В командах для ChatGPT по-английски можно писать marionette.
 
+## Запас фраз из учебников (на потом)
+
+- Автор просил (27 октября): со временем добавить в упражнение «Фразы» устойчивые выражения из его
+  учебников (Passo a Passo 1, Gramática Ativa 1). **Не сейчас**, только по команде.
+- Всё выписано в `Tools/phrases/backlog_books.md` (~290 фраз по темам, с русским смыслом и страницей/уроком).
+  Первыми — выражения времени (разделы 1–3, ⭐): «São dez menos um quarto / É um quarto para as dez»,
+  «três e um quarto», «oito e meia», «dez para as cinco», «por volta das», «desde / há».
+- При добавлении: перенести в `Tools/phrases/03_….txt` (формат `= pt | en | ru || пояснение`), сверить
+  с `01_states.txt` и `02_everyday.txt`, собрать `python3 Tools/phrasebank.py`.
+
 ## Документы
 
 Claude Docs, проект `3a6e0ace-cee0-41cb-88e6-6b1408ba55c2`
