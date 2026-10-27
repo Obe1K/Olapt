@@ -865,6 +865,20 @@ final class ScreenshotTests: XCTestCase {
             tap(app.staticTexts["estar com fome / ter fome"].firstMatch, "open phrase card")
             shot("98_phrase_card")
             back()
+            // наборы из учебников автора: «Который час» — список и карточка «без четверти десять»
+            let clock = app.buttons["train-clock"]
+            scrollUntilVisible(clock, maxSwipes: 15)
+            note(clock.exists ? "CHECK ok: clock set listed" : "CHECK FAILED: clock set missing")
+            app.swipeUp()
+            shot("97a_phrases_clock")
+            let quarter = app.staticTexts["São dez menos um quarto."].firstMatch
+            scrollUntilVisible(quarter, maxSwipes: 4)
+            if tap(quarter, "open clock phrase") {
+                shot("98a_phrase_clock_card")
+                back()
+            } else {
+                note("CHECK FAILED: clock phrase missing")
+            }
             back()
         }
     }
